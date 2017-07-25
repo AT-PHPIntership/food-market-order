@@ -67,16 +67,16 @@ Vagrant.configure("2") do |config|
      sudo apt update
      sudo apt upgrade
 
-     ECHO "INSTALL PHP7.0 AND PHP7.0 MODULE"
+     echo "INSTALL PHP7.0 AND PHP7.0 MODULE"
 
      sudo apt install -y php7.0 php7.0-cgi php7.0-curl php7.0-mysql php7.0-xml php7.0-json php7.0-mbstring php7.0-zip
 
-     ECHO "INSTALL APACHE2"
+     echo "INSTALL APACHE2"
 
      sudo apt install -y apache2
      sudo apt install -y libapache2-mod-php7.0
 
-     ECHO "ENABLE APACHE2 REWITE MOD"
+     echo "ENABLE APACHE2 REWITE MOD"
 
      sudo a2enmod rewite
      sudo service apache2 restart
