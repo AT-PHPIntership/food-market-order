@@ -66,16 +66,29 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
      sudo apt update
      sudo apt upgrade
+     echo "INSTALL PHP7.0 AND PHP7.0 MODULE"
      sudo apt install -y php7.0 php7.0-cgi php7.0-curl php7.0-mysql php7.0-xml php7.0-json php7.0-mbstring php7.0-zip
+     echo "INSTALL APACHE2"
      sudo apt install -y apache2
      sudo apt install -y libapache2-mod-php7.0
+     echo "ENABLE APACHE2 REWITE MOD"
+     sudo a2enmod rewite
+     sudo service apache2 restart
+     echo "INSTALL COMPOSER"
      php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
      php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
      sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
      php -r "unlink('composer-setup.php');"
      sudo chmod -R 777 .composer
+     echo "INSTALL LARAVEL"
      composer global require "laravel/installer"
      echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
      source ~/.bashrc
+   
+     echo "INSTALL MYSQL-SERVER"
+     sudo apt-get install -y debconf-utils > /dev/null
+     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password 1234"
+     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password 1234"
+     sudo apt install -y mysql-server > /dev/null
   SHELL
 end
