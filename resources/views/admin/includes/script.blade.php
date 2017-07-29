@@ -1,6 +1,7 @@
-<!-- REQUIRED JS SCRIPTS -->
+
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
 <!-- jQuery 2.2.3 -->
 <script src="{{ asset("/admin-lte/plugins/jQuery/jquery-2.2.3.min.js") }}"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -13,9 +14,9 @@
 <script src="{{ asset("/admin-lte/plugins/datatables/jquery.dataTables.min.js") }}"></script>
 
 <script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable();
-    $('#example3').DataTable();
-  });
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable();
+        $('#example3').DataTable();
+    });
 </script>

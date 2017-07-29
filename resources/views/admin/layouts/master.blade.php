@@ -5,43 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Food-market-order</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
     @include('admin.includes.style')
+
 </head>
+
 <body class="hold-transition skin-blue sidebar-mini">
-  <div class="wrapper">
+<div class="wrapper">
 
-      <!-- Header -->
-      @include('admin.includes.header')
-      <!-- Left side column. contains the logo and sidebar -->
-      @include('admin.includes.aside')
+    <!-- Header -->
+    @include('admin.includes.header')
+    <!-- Left side column. contains the logo and sidebar -->
+    @include('admin.includes.aside')
 
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-          @include('admin.includes.main-header')
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        @include('admin.includes.main-header')
 
-          <!-- Main content -->
-          <section class="content">
+        <!-- Main content -->
+        <section class="content">
 
-              <!-- Your Page Content Here -->
-              @yield('main-content')
+            <!-- Your Page Content Here -->
+            @yield('main-content')
 
-          </section>
-          <!-- /.content -->
+        </section>
+        <!-- /.content -->
 
-      </div>
-      <!-- /.content-wrapper -->
+    </div>
+    <!-- /.content-wrapper -->
 
-      <!-- Main Footer -->
-      @include('admin.includes.footer')
+    <!-- Main Footer -->
+    @include('admin.includes.footer')
 
-      @include('admin.includes.header-control')
-      <!-- Add the sidebar's background. This div must be placed
-           immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
-  </div>
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
 <!-- ./wrapper -->
 
-@include('admin.includes.script');
+<!-- REQUIRED JS SCRIPTS -->
+
+@include('admin.includes.script')
 
 </body>
 </html>
