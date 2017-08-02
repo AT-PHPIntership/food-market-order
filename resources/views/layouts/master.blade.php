@@ -6,7 +6,7 @@
     <title>Food-market-order</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    @include('layouts.partials.style')
+    @include('admin.layouts.partials.style')
 
 </head>
 
@@ -14,13 +14,14 @@
 <div class="wrapper">
 
     <!-- Header -->
-    @include('layouts.partials.header')
+
+    @include('admin.layouts.partials.header')
     <!-- Left side column. contains the logo and sidebar -->
-    @include('layouts.partials.aside')
+    @include('admin.layouts.partials.aside')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @include('layouts.partials.main-header')
+        @include('admin.layouts.partials.main-header')
 
         <!-- Main content -->
         <section class="content">
@@ -35,7 +36,8 @@
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    @include('layouts.partials.footer')
+
+    @include('admin.layouts.partials.footer')
 
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
@@ -45,8 +47,7 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 
-@include('layouts.partials.script')
-@yield('main-js')
+@include('admin.layouts.partials.script')
 
 </body>
 </html>

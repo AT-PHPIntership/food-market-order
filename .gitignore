@@ -1,10 +1,12 @@
-/public/bower_components
+node_modules
 /public/storage
 /public/hot
 /storage/*.key
 /vendor
 /.idea
+.env
 Homestead.json
 Homestead.yaml
 .vagrant
 ubuntu-xenial-16.04-cloudimg-console.log
+/public/bower_components
