@@ -15,13 +15,13 @@
 
     <!-- Header -->
 
-    @include('admin.layouts.partials.header')
+    @include('layouts.partials.header')
     <!-- Left side column. contains the logo and sidebar -->
-    @include('admin.layouts.partials.aside')
+    @include('layouts.partials.aside')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @include('admin.layouts.partials.main-header')
+        @include('layouts.partials.main-header')
 
         <!-- Main content -->
         <section class="content">
@@ -37,7 +37,7 @@
 
     <!-- Main Footer -->
 
-    @include('admin.layouts.partials.footer')
+    @include('layouts.partials.footer')
 
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
@@ -47,7 +47,7 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 
-@include('admin.layouts.partials.script')
+@include('layouts.partials.script')
 
 </body>
 </html>
