@@ -21,7 +21,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @include('layouts.partials.main-header')
+        @include('layouts.partials.main_header')
 
         <!-- Main content -->
         <section class="content">
