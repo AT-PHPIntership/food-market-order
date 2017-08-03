@@ -1,0 +1,14 @@
+{
+  "name": "food-market-order",
+  "description": "My food market project",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/bower_component",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#^2.3.11"
+  }
+}
