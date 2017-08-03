@@ -102,5 +102,11 @@ Vagrant.configure("2") do |config|
      echo "INSTALL bower"
      npm install -g bower
 
+     echo "INSTALL PHP-UNIT"
+     wget https://phar.phpunit.de/phpunit.phar
+     chmod +x phpunit.phar
+     sudo mv phpunit.phar /usr/bin/phpunit
+     sudo chown root:root /usr/bin/phpunit
+
   SHELL
 end
