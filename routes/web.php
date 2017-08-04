@@ -11,12 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('users', 'UserController');
+
+Route::resource('categories', 'CategoryController');
+
+Route::resource('suppliers', 'SupplierController');
+
+Route::resource('daily-menus', 'DailyMenuController');
+
+Route::resource('foods', 'FoodController');
+
+Route::resource('materials', 'MaterialController');
+
+Route::resource('orders', 'OrderController');
 
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
-Route::resource('dailymenu', 'DailyMenuController'); //route for dailymenu

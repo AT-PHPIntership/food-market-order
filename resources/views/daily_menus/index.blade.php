@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <a href="{{ route('dailymenu.create') }}" class="btn btn-xl btn-primary" style="float: right">
+                        <a href="{{ route('daily-menus.create') }}" class="btn btn-xl btn-primary" style="float: right">
                             Create New Daily Menu
                         </a>
                     </div>
@@ -34,10 +34,10 @@
                                 <tr>
                                     <td><h4>{{ $dailyMenu->date }}</h4></td>
                                     <td>
-                                        <a href="{{ route('dailymenu.show', ['date' => $dailyMenu->date]) }}"><span class="btn-xl btn-success btn">Detail</span></a>
+                                        <a href="{{ route('daily-menus.show', ['date' => $dailyMenu->date]) }}"><span class="btn-xl btn-success btn">Detail</span></a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('dailymenu.edit', ['date' => $dailyMenu->date]) }}"><span class="btn-xl btn-warning btn">Edit</span></a>
+                                        <a href="{{ route('daily-menus.edit', ['date' => $dailyMenu->date]) }}"><span class="btn-xl btn-warning btn">Edit</span></a>
                                     </td>
                                 </tr>
                             @endforeach
