@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('users', 'UserController');
+
+Route::resource('categories', 'CategoryController');;
+
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
