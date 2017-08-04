@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
      sudo apt install -y apache2
      sudo apt install -y libapache2-mod-php7.0
      echo "ENABLE APACHE2 REWITE MOD"
-     sudo a2enmod rewrite
+     sudo a2enmod rerwite
      sudo service apache2 restart
      echo "INSTALL COMPOSER"
      php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
      composer global require "laravel/installer"
      echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
      source ~/.bashrc
-
+   
      echo "INSTALL MYSQL-SERVER"
      sudo apt-get install -y debconf-utils > /dev/null
      sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password 1234"
