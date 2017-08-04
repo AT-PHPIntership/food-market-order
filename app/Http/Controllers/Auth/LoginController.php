@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -41,7 +42,7 @@ class LoginController extends Controller
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request request check login
+     * @param \Illuminate\Http\Request $request request check login
      *
      * @return array
      */
@@ -54,13 +55,14 @@ class LoginController extends Controller
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request requet login
-     * @param  mixed                     $user  user to set active
+     * @param \Illuminate\Http\Request $request requet login
+     * @param mixed                    $user    user to set active
      *
      * @return mixed
      */
     protected function authenticated(Request $request, $user)
     {
+        $request = $request;
         $user->is_active = 1;
         $user->save();
     }
@@ -68,7 +70,7 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request request logout
+     * @param \Illuminate\Http\Request $request request logout
      *
      * @return \Illuminate\Http\Response
      */
