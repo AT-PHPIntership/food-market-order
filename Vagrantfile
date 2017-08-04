@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
      sudo apt install -y apache2
      sudo apt install -y libapache2-mod-php7.0
      echo "ENABLE APACHE2 REWITE MOD"
-     sudo a2enmod rerwite
+     sudo a2enmod rewrite
      sudo service apache2 restart
      echo "INSTALL COMPOSER"
      php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
