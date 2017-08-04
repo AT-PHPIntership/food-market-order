@@ -10,7 +10,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <div id="list_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div id="list_category_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
                         <table id="list_category" class="table table-bordered table-striped dataTable table-hover" role="grid"
