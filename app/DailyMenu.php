@@ -24,9 +24,9 @@ class DailyMenu extends Model
      */
     public static function getAll()
     {
-        return DailyMenu::select('date')
-                        ->orderBy('date', 'desc')
-                        ->distinct()
-                        ->get();
+        return self::select('date')
+                    ->orderBy('date', 'desc')
+                    ->distinct()
+                    ->get();
     }
 }
