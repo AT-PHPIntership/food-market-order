@@ -4,7 +4,7 @@
         <!-- left column -->
         <div class="col-md-12">
             <div class="col-md-3">
-            </div>emplate
+            </div>
             <div class="col-md-6">
                 <!-- general form elements -->
                 <div class="box box-primary">
@@ -29,7 +29,6 @@
                             </div>
                         </div>
                         <!-- /.box-body -->
-
                         <div class="box-footer text-center">
                             <input type="submit" class="btn btn-primary" value="Update">
                         </div>

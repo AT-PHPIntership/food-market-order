@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
      composer global require "laravel/installer"
      echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
      source ~/.bashrc
-   
+
      echo "INSTALL MYSQL-SERVER"
      sudo apt-get install -y debconf-utils > /dev/null
      sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password 1234"
