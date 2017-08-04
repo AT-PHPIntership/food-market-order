@@ -19,7 +19,17 @@ Route::get('/', function () {
 =======
 Route::resource('users', 'UserController');
 
-Route::resource('categories', 'CategoryController');;
+Route::resource('categories', 'CategoryController');
+
+Route::resource('suppliers', 'SupplierController');
+
+Route::resource('daily-menus', 'DailyMenuController');
+
+Route::resource('foods', 'FoodController');
+
+Route::resource('materials', 'MaterialController');
+
+Route::resource('orders', 'OrderController');
 
 >>>>>>> 2104b2fd8790e6a0e07ef4d3fe9d30f19a34bca8
 Auth::routes();
