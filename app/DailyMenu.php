@@ -10,7 +10,13 @@ class DailyMenu extends Model
      * Enable created_at and updated_at behavior
      */
     public $timestamps = true;
-    
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'daily_menus';
+
     /**
      * Return all menu item in database with paginate by 10 item per page
      *
@@ -18,10 +24,9 @@ class DailyMenu extends Model
      */
     public static function getAll()
     {
-        return DB::table('daily_menus')
-                            ->select('date')
-                            ->orderBy('date', 'desc')
-                            ->distinct()
-                            ->get();
+        return DailyMenu::select('date')
+                        ->orderBy('date', 'desc')
+                        ->distinct()
+                        ->get();
     }
 }
