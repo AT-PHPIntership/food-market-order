@@ -10,11 +10,11 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <div id="list_category_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div id="list-category-wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="list_category" class="table table-bordered table-striped dataTable table-hover" role="grid"
-                               aria-describedby="list_category_info">
+                        <table id="list-category" class="table table-bordered table-striped dataTable table-hover" role="grid"
+                               aria-describedby="list-category-info">
                             <thead>
                             <tr role="row">
                                 <th style="width: 1em">ID</th>
@@ -31,15 +31,16 @@
                                     <td>{{ $category->name  }}</td>
                                     <td>{{ $category->description }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-success" href="/categories/{{$category->id}}">
+                                        <a class="btn btn-xs btn-info" href="{{ route('categories.edit', ['id' => $category->id])}}">
                                             <span class="glyphicon glyphicon-zoom-in"></span>
                                         </a> -
-                                        <a class="btn btn-xs btn-warning" href="categories/{{$category->id}}/edit">
+                                        <a class="btn btn-xs btn-success" href="{{ route('categories.edit', ['id' => $category->id])}}">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
                                     </td>
                                     <td>
-                                        <form role="form" action="{{ route('categories.destroy', ['id' => $category->id])}}" method="post">
+                                        <form role="form" action="{{ route('categories.destroy', ['id' => $category->id])}}"
+                                              method="post" onsubmit="return confirmDelete()">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                             <button class="btn-xs btn-danger btn">
@@ -56,4 +57,15 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmDelete()
+        {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
+        }
+
+    </script>
 @endsection
