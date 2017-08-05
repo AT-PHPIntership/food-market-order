@@ -22,7 +22,7 @@ class DailyMenu extends Model
      *
      * @return array Menu object
      */
-    public static function getAll()
+    public function getAll()
     {
         return self::select('date')
                     ->orderBy('date', 'desc')

@@ -4,12 +4,12 @@
         <div class="box-header">
             <div class="col-sm-12">
                 <div class="col-sm-6">
-                    <h3 class="box-title"><strong>Daily Menu List</strong></h3>
+                    <h3 class="box-title"><strong>@lang('dailymenu.listTitle')</strong></h3>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <a href="{{ route('daily-menus.create') }}" class="btn btn-xl btn-primary" style="float: right">
-                            Create New Daily Menu
+                        <a href="{{ route('daily-menus.create') }}" class="btn btn-xl btn-primary pull-right">
+                            @lang('dailymenu.create')
                         </a>
                     </div>
                 </div>
@@ -20,24 +20,26 @@
             <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="example1" class="table table-bordered table-striped dataTable table-hover text-center" role="grid"
-                               >
+                        <table  id="example1"
+                                class="table table-bordered table-striped dataTable table-hover text-center"
+                                role="grid">
                             <thead>
-                            <tr role="row">
-                                <th style="width: 8em">Date</th>
-                                <th style="width: 1em">Detail</th>
-                                <th style="width: 1em">Edit</th>
-                            </tr>
+                                <tr role="row">
+                                    <th style="width: 8em">Date</th>
+                                    <th style="width: 1em">Action</th>
+                                </tr>
                             </thead>
                             <tbody>
                             @foreach ($listDailyMenu as $dailyMenu)
                                 <tr>
                                     <td><h4>{{ $dailyMenu->date }}</h4></td>
                                     <td>
-                                        <a href="{{ route('daily-menus.show', ['date' => $dailyMenu->date]) }}"><span class="btn-xl btn-success btn">Detail</span></a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('daily-menus.edit', ['date' => $dailyMenu->date]) }}"><span class="btn-xl btn-warning btn">Edit</span></a>
+                                        <a href="{{ route('daily-menus.show', $dailyMenu->date) }}">
+                                            <span class="btn-xl btn-success btn">Detail</span>
+                                        </a>
+                                        <a href="{{ route('daily-menus.edit', $dailyMenu->date) }}">
+                                            <span class="btn-xl btn-warning btn">Edit</span>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
