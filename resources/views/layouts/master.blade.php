@@ -48,6 +48,7 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 @include('layouts.partials.script')
-
+@yield('ajax-js-script')
+@yield('page-js-script')
 </body>
 </html>
