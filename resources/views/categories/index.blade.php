@@ -3,8 +3,8 @@
 @section('main-content')
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Data Table With Full Features</h3>
-            <button class="btn btn-primary" style="float: right" title="Add Category">
+            <h3 class="box-title">List Categories</h3>
+            <button id="btn-add-category" class="btn btn-primary" style="float: right" title="Add Category">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
         </div>
@@ -20,7 +20,7 @@
                                 <th style="width: 1em">ID</th>
                                 <th style="width: 7em">Name</th>
                                 <th>Description</th>
-                                <th style="width: 8em">Detail - Edit</th>
+                                <th style="width: 8em">Edit</th>
                                 <th style="width: 1em">Delele</th>
                             </tr>
                             </thead>
@@ -31,10 +31,7 @@
                                     <td>{{ $category->name  }}</td>
                                     <td>{{ $category->description }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-info" href="{{ route('categories.edit', ['id' => $category->id])}}">
-                                            <span class="glyphicon glyphicon-zoom-in"></span>
-                                        </a> -
-                                        <a class="btn btn-xs btn-success" href="{{ route('categories.edit', ['id' => $category->id])}}">
+                                        <a id="btn-edit-category" class="btn btn-xs btn-success" href="{{ route('categories.edit', ['id' => $category->id])}}">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
                                     </td>
@@ -43,7 +40,7 @@
                                               method="post" onsubmit="return confirmDelete()">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                            <button class="btn-xs btn-danger btn">
+                                            <button class="btn-xs btn-danger btn" id="btn-delete-category">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </button>
                                         </form>
