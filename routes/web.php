@@ -10,17 +10,23 @@
 |
 */
 Route::get('/', function () {
-    return view('admin.dashboard');
+    return view('welcome');
 });
-Route::get('/users', function () {
-    return view('admin.users.list_users');
-});
-Route::get('/users/detail', function () {
-    return view('admin.users.detail_user');
-})->name('detail-user');
-Route::get('/users/create', function () {
-    return view('admin.users.create_user');
-})->name('create-user');
-Route::get('/users/update', function () {
-    return view('admin.users.update_user');
-})->name('update-user');
+
+Route::resource('users', 'UserController');
+
+Route::resource('categories', 'CategoryController');
+
+Route::resource('suppliers', 'SupplierController');
+
+Route::resource('daily-menus', 'DailyMenuController');
+
+Route::resource('foods', 'FoodController');
+
+Route::resource('materials', 'MaterialController');
+
+Route::resource('orders', 'OrderController');
+
+Auth::routes();
+
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
