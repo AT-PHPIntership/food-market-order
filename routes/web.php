@@ -32,4 +32,3 @@ Route::resource('orders', 'OrderController');
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::resource('categories', 'CategoryController');
