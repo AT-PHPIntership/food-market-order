@@ -217,11 +217,13 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{/images/users/{{ Auth::user()->image }}" class="img-circle" alt="User Image">
+
+                            <img src="/images/users/{{ Auth::user()->image }}" class="img-circle" alt="User Image">
+
 
                             <p>
                                 {{ Auth::user()->full_name }}
-                                <small>Member since Nov. 2012</small>
+                                <small>Member since {{ Auth::user()->created_at }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
