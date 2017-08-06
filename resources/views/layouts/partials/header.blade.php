@@ -221,11 +221,7 @@
 
                             <p>
                                 {{ Auth::user()->full_name }}
-<<<<<<< HEAD
-                                <small>Member since Nov. 2012</small>
-=======
                                 <small>Member since {{ Auth::user()->created_at }}</small>
->>>>>>> master
                             </p>
                         </li>
                         <!-- Menu Body -->
