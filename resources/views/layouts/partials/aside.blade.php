@@ -4,11 +4,15 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ asset("/admin-lte/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
+                <img src="/images/users/{{ Auth::user()->image }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ Auth::user()->full_name }}</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                @if(Auth::guest())
+                    {{ route('login') }}
+                @else
+                    <p>{{ Auth::user()->full_name }}</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                @endif
             </div>
         </div>
         <!-- search form -->
@@ -41,12 +45,12 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Users Management</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Categories Management</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Orders Management</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Daily Menu Management</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Food Management</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Material Management</a></li>
+                    <li><a href="{{ route('users.index') }}"><i class="fa fa-circle-o"></i> Users Management</a></li>
+                    <li><a href="{{ route('categories.index') }}"><i class="fa fa-circle-o"></i> Categories Management</a></li>
+                    <li><a href="{{ route('orders.index') }}"><i class="fa fa-circle-o"></i> Orders Management</a></li>
+                    <li><a href="{{ route('daily-menus.index') }}"><i class="fa fa-circle-o"></i> Daily Menu Management</a></li>
+                    <li><a href="{{ route('foods.index') }}"><i class="fa fa-circle-o"></i> Food Management</a></li>
+                    <li><a href="{{ route('materials.index') }}"><i class="fa fa-circle-o"></i> Material Management</a></li>
                 </ul>
             </li>
             <li class="">

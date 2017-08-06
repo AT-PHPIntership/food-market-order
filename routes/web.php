@@ -15,6 +15,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+<<<<<<< HEAD
+=======
+Route::resource('users', 'UserController');
+
+Route::resource('categories', 'CategoryController');
+
+Route::resource('suppliers', 'SupplierController');
+
+Route::resource('daily-menus', 'DailyMenuController');
+
+Route::resource('foods', 'FoodController');
+
+Route::resource('materials', 'MaterialController');
+
+Route::resource('orders', 'OrderController');
+
+>>>>>>> master
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
