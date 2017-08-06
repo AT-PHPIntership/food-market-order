@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-<<<<<<< HEAD
-=======
 Route::resource('users', 'UserController');
 
 Route::resource('categories', 'CategoryController');
