@@ -4,7 +4,7 @@
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">List Categories</h3>
-            <button id="btn-add-category" class="btn btn-primary" style="float: right" title="Add Category">
+            <button id="btn-add-category" class="btn btn-primary" href="{{ route('categories.create') }}" style="float: right" title="Add Category">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
         </div>
