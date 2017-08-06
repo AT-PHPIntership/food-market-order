@@ -19,7 +19,7 @@ class CreateFoodsTable extends Migration
             $table->integer('category_id')->unsigned()->nullable();
             $table->decimal('price',10,2);
             $table->text('description');
-            $table->string('image')->nullable(); //fix plz
+            $table->string('image')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
             $table->softDeletes();
