@@ -22,9 +22,9 @@ class CreateUsersTable extends Migration
             $table->boolean('gender')->nullable();
             $table->text('address')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('image')->nullable();
-            $table->boolean('is_admin')->default(0);
-            $table->boolean('is_active')->nullable();
+            $table->string('image')->dedault('default.jpg');
+            $table->boolean('is_admin')->default(0)->comment = 'ADMIN = 1; USER = 0';
+            $table->boolean('is_active')->default(0)->comment = 'ACTIVE = 1; INACTIVE = 0';
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
