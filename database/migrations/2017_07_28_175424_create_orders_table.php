@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->text('custom_address');
             $table->timestamps();
             $table->decimal('payment', 10, 2)->default(0);
-            $table->boolean('status');
+            $table->tinyInteger('status')->comment = 'PENDING = 0; APPROVED = 1; CANCEL = 2';
             $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
         });
