@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
      sudo apt update
      sudo apt upgrade
      echo "INSTALL PHP7.0 AND PHP7.0 MODULE"
-     sudo apt install -y php7.0 php7.0-cgi php7.0-curl php7.0-mysql php7.0-xml php7.0-json php7.0-mbstring php7.0-zip
+     sudo apt install -y php7.0 php7.0-cgi php7.0-curl php7.0-mysql php7.0-xml php7.0-json php7.0-mbstring php7.0-zip php7.0-gd
      echo "INSTALL APACHE2"
      sudo apt install -y apache2
      sudo apt install -y libapache2-mod-php7.0
@@ -80,11 +80,7 @@ Vagrant.configure("2") do |config|
      sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
      php -r "unlink('composer-setup.php');"
      sudo chmod -R 777 .composer
-     echo "INSTALL LARAVEL"
-     composer global require "laravel/installer"
-     echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
-     source ~/.bashrc
-   
+
      echo "INSTALL MYSQL-SERVER"
      sudo apt-get install -y debconf-utils > /dev/null
      sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password 1234"
@@ -107,6 +103,11 @@ Vagrant.configure("2") do |config|
      chmod +x phpunit.phar
      sudo mv phpunit.phar /usr/bin/phpunit
      sudo chown root:root /usr/bin/phpunit
+
+     echo "INSTALL LARAVEL"
+     composer global require "laravel/installer"
+     echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
+     source ~/.bashrc
 
   SHELL
 end
