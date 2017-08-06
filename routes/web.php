@@ -29,7 +29,6 @@ Route::resource('materials', 'MaterialController');
 
 Route::resource('orders', 'OrderController');
 
->>>>>>> master
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
