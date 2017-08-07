@@ -18,12 +18,12 @@
                                role="grid"
                                aria-describedby="list-category-info">
                             <thead>
-                            <tr role="row">
-                                <th style="width: 1em">{{trans('category.columns_id')}}</th>
-                                <th style="width: 7em">{{trans('category.columns_name')}}</th>
-                                <th>{{trans('category.columns_description')}}</th>
-                                <th style="width: 5em">{{trans('category.columns_action')}}</th>
-                            </tr>
+                                <tr role="row">
+                                    <th style="width: 1em">{{trans('category.columns_id')}}</th>
+                                    <th style="width: 7em">{{trans('category.columns_name')}}</th>
+                                    <th>{{trans('category.columns_description')}}</th>
+                                    <th style="width: 5em">{{trans('category.columns_action')}}</th>
+                                </tr>
                             </thead>
                             <tbody>
                             @foreach ($categories as $category)
