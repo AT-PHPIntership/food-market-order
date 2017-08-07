@@ -4,12 +4,10 @@
         <h1>User not found</h1>
     @else
         <div class="row">
-            <div class="alert alert-info alert-dismissable">
-                <a class="panel-close close" data-dismiss="alert">×</a>
-                <i class="fa fa-coffee"></i>
-                This is an <strong>.alert</strong>. Use this to show important messages to the user.
-            </div>
-            <form class="form-horizontal" role="form" action="{{ route('users.update', $user->id) }}" method="POST">
+
+            @include('flash::message')
+
+            <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('users.update', $user->id) }}" method="POST">
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="_token" value=" {{  csrf_token() }}">
                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -22,7 +20,7 @@
                                  alt=" avatar">
                         @endif
                         <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">Upload a different photo...</h6>
-                        <input type="file" enctype="multipart/form-data" class="text-center center-block well well-sm">
+                        <input type="file" name="image" class="text-center center-block well well-sm">
 
                         @if ($errors->has('image'))
                             <span class="help-block">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use Image;
 
 class UserController extends Controller
 {
@@ -22,6 +24,7 @@ class UserController extends Controller
     }
 
     /**
+     * <<<<<<< HEAD
      * Show the form for editing the specified resource.
      *
      * @param int $id id user update
@@ -50,7 +53,6 @@ class UserController extends Controller
             'password' => 'required|min:6',
             'birthday' => 'date',
             'phone_number' => 'numeric|required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'full_name.required' => 'This name not null',
             'email.required' => 'This email not null',
@@ -58,9 +60,7 @@ class UserController extends Controller
             'password.min' => 'min of password is 6 character',
             'birthday.date' => 'This birthday must be a type of date',
             'phone_number.numeric' => 'This field must be number',
-            'phone_number.require' => 'please put your phone number here',
-            'image.image' => 'Must be an image',
-            'image.mimes' => 'The file under validation an image(.jpeg,.png,.gif,.svg)',
+            'phone_number.required' => 'please put your phone number here',
         ]);
 
         $user = User::find($id);
@@ -76,10 +76,16 @@ class UserController extends Controller
             $file = $request->file('image');
             $name = $file->getClientOriginalName();
             $nameFile = time() . "-" . $name;
-            Image::make($file)->save(public_path('images/users/'. $nameFile));
+            Image::make($file)->save(public_path('images/users/' . $nameFile));
             $user->image = $nameFile;
         }
-        $user->save();
+
+        if ($user->save()) {
+            flash('update successfully')->success();
+        } else {
+            flash('update error')->error();
+        }
+
         return redirect()->route('users.edit', $id);
     }
 }
