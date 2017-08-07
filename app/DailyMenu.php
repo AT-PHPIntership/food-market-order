@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DailyMenu extends Model
 {
+    use softDeletes;
+
     /**
      * Enable created_at and updated_at behavior
      */
@@ -18,15 +21,12 @@ class DailyMenu extends Model
     protected $table = 'daily_menus';
 
     /**
-     * Return all menu item in database with paginate by 10 item per page
+     * DailyMenu has many Food
      *
-     * @return array Menu object
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getAll()
+    public function foods()
     {
-        return self::select('date')
-                    ->orderBy('date', 'desc')
-                    ->distinct()
-                    ->get();
+        return $this->hasMany(Food::class);
     }
 }

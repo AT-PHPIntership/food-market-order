@@ -14,6 +14,7 @@ return [
     */
     'listTitle' => 'Daily Menu List',
     'detailTitle' => 'Daily Menu For',
-    'create' => 'Create New Daily Menu'
-
+    'create' => 'Create New Daily Menu',
+    'detailBtn' => 'Detail',
+    'editBtn' => 'Edit'
 ];

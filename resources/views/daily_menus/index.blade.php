@@ -17,16 +17,14 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table  id="example1"
-                                class="table table-bordered table-striped dataTable table-hover text-center"
-                                role="grid">
+                        <table class="table table-bordered table-striped dataTable table-hover text-center" role="grid">
                             <thead>
                                 <tr role="row">
                                     <th style="width: 8em">Date</th>
-                                    <th style="width: 1em">Action</th>
+                                    <th style="width: 2em">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,16 +33,19 @@
                                     <td><h4>{{ $dailyMenu->date }}</h4></td>
                                     <td>
                                         <a href="{{ route('daily-menus.show', $dailyMenu->date) }}">
-                                            <span class="btn-xl btn-success btn">Detail</span>
+                                            <span class="btn-xl btn-success btn">@lang('dailymenu.detailBtn')</span>
                                         </a>
                                         <a href="{{ route('daily-menus.edit', $dailyMenu->date) }}">
-                                            <span class="btn-xl btn-warning btn">Edit</span>
+                                            <span class="btn-xl btn-warning btn">@lang('dailymenu.editBtn')</span>
                                         </a>
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="pull-right">
+                            {{ $listDailyMenu->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
