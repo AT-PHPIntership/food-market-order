@@ -57,5 +57,5 @@
     </div>
 @endsection
 @section('custom-js')
-    <script src="{{ asset("/js/confirm.js") }}"></script>
+    <script src="{{ asset("/js/common.js") }}"></script>
 @endsection
