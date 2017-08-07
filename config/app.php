@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'foodmarket.com'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
