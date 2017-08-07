@@ -22,7 +22,7 @@
                                  alt=" avatar">
                         @endif
                         <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">Upload a different photo...</h6>
-                        <input type="file" class="text-center center-block well well-sm">
+                        <input type="file" enctype="multipart/form-data" class="text-center center-block well well-sm">
 
                         @if ($errors->has('image'))
                             <span class="help-block">
