@@ -2,12 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use Lang;
 use Illuminate\Http\Request;
 use App\DailyMenu;
-use App\Food;
+use App\Http\Requests\DailyMenu\UpdateMenuItemRequest;
 
 class DailyMenuController extends Controller
 {
+    /**
+     * The Daily Menu implementation.
+     *
+     * @var DailyMenu
+     */
+    protected $dailyMenu;
+    /**
+     * Create a new controller instance.
+     *
+     * @param DailyMenu $dailyMenu instance of DailyMenu
+     *
+     * @return void
+     */
+    public function __construct(DailyMenu $dailyMenu)
+    {
+        $this->dailyMenu = $dailyMenu;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +34,7 @@ class DailyMenuController extends Controller
      */
     public function index()
     {
-        $listDailyMenu = DailyMenu::getAll();
+        $listDailyMenu = $this->dailyMenu->select('date')->orderBy('date', 'desc')->distinct()->paginate(10);
 
         return view('daily_menus.index', ['listDailyMenu' => $listDailyMenu]);
     }
@@ -29,7 +48,7 @@ class DailyMenuController extends Controller
      */
     public function show($date)
     {
-        $menuOnDate = DailyMenu::getMenu($date);
+        $menuOnDate = $this->dailyMenu->with('food.category')->where('date', $date)->paginate(10);
 
         return view('daily_menus.show', ['menuOnDate' => $menuOnDate, 'date' => $date]);
     }
@@ -37,23 +56,23 @@ class DailyMenuController extends Controller
     /**
      * Update item in Menu List on Date
      *
-     * @param Request $request The request message from Ajax request
+     * @param UpdateMenuItemRequest $request The request message from Ajax request
      *
      * @return Response
      */
-    public function updateMenuItem(Request $request)
+    public function updateMenuItem(UpdateMenuItemRequest $request)
     {
-        $menuItem = $request->data[0];
-        $quantity = $menuItem['newQuantity'];
-        $menuId = $menuItem['menuId'];
-        $dailyMenu = DailyMenu::find($menuId);
-        $dailyMenu->quantity = $quantity;
+        $quantity = $request['quantity'];
+        $menuId = $request['menuId'];
+        $dailyMenu = $this->dailyMenu->find($menuId);
+        $error = Lang::get('dailymenu.errorEdit');
+        $success = Lang::get('dailymenu.successEdit');
 
-        if ($dailyMenu->save()) {
-            $result = array("status" => 1, "updated_at" => $dailyMenu->updated_at);
-            return $result;
+        if($dailyMenu->update(['quantity' => $quantity])) {
+            $result = [$dailyMenu->updated_at, 'message' => $success];
+            return response()->json($result, 200);
         } else {
-            return "Has error during update new quantity";
+            return response()->json(['error' => $error], 404);
         }
     }
 
@@ -66,12 +85,14 @@ class DailyMenuController extends Controller
      */
     public function deleteMenuItem(Request $request)
     {
-        $menuId = $request->data;
+        $menuId = $request['menuId'];
+        $error = Lang::get('dailymenu.errorDel');
+        $success = Lang::get('dailymenu.successDel');
 
-        if (DailyMenu::deleteMenuItem($menuId)) {
-            return 1;
+        if($this->dailyMenu->where('id', $id)->delete()) {
+            return response()->json(['message' => $success], 200);
         } else {
-            return "Has error during delete this menu item";
+            return response()->json(['error' => $error], 404);
         }
     }
 }

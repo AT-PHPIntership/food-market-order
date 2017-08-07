@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DailyMenu extends Model
@@ -18,50 +17,20 @@ class DailyMenu extends Model
      * @var string
      */
     protected $table = 'daily_menus';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['quantity', 'created_at', 'updated_at'];
 
     /**
-     * Return all menu item in database with paginate by 10 item per page
+     * Get the food for the menu item.
      *
-     * @return array Menu object
+     * @return object
      */
-    public static function getAll()
+    public function food()
     {
-        return self::select('date')
-                    ->orderBy('date', 'desc')
-                    ->distinct()
-                    ->get();
-    }
-
-    /**
-     * Get a daily menu in storage according to $date
-     *
-     * @param string $date The date to get menu
-     *
-     * @return array  Menu object
-     */
-    public static function getMenu(string $date)
-    {
-        return self::join('foods', 'food_id', '=', 'foods.id')
-                    ->join('categories', 'foods.category_id', '=', 'categories.id')
-                    ->select(
-                        'foods.id as food_id',
-                        'foods.name as food_name',
-                        'categories.name as category_name',
-                        'foods.price as food_price',
-                        'daily_menus.*'
-                    )->where('date', $date)
-                    ->get();
-    }
-
-    /**
-     * Delete a menu item in database
-     *
-     * @param int $id The id to find and delete
-     *
-     * @return bool
-     */
-    public static function deleteMenuItem($id)
-    {
-        return self::where('id', $id)->delete();
+        return $this->belongsTo('App\Food', 'food_id', 'id');
     }
 }
