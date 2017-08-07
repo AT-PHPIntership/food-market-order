@@ -5,12 +5,12 @@
     @include('flash::message')
 
     @if(!isset($listUsers))
-        <h1>Nothing to show</h1>
+        <h1>{{ trans('user.no_data') }}</h1>
     @else
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Data Table With Full Features</h3>
-                <a href="{{ route('users.create') }}" class="btn btn-primary btn-xl pull-right glyphicon glyphicon-plus"> Add new user</a>
+                <h3 class="box-title">{{ trans('user.data-table') }}</h3>
+                <a href="{{ route('users.create') }}" class="btn btn-primary pull-right fa fa-plus"> Add new user</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -22,15 +22,14 @@
                                    aria-describedby="example1_info">
                                 <thead>
                                 <tr role="row">
-                                    <th style="width: 1em">ID</th>
-                                    <th style="width: 10em">Full Name</th>
-                                    <th style="width: 10em">E-Mail</th>
-                                    <th style="width: 5em">Birthday</th>
-                                    <th style="width: 2em">Gender</th>
+                                    <th style="width: 1em">{{ trans('user.id') }}</th>
+                                    <th style="width: 10em">{{ trans('user.name') }}</th>
+                                    <th style="width: 10em">{{ trans('user.email') }}</th>
+                                    <th style="width: 5em">{{ trans('user.birthday') }}</th>
+                                    <th style="width: 2em">{{ trans('user.gender') }}</th>
                                     <th>Address</th>
                                     <th style="width: 1em">Status</th>
-                                    <th style="width: 6em">Detail-Edit</th>
-                                    <th style="width: 1em">Delele</th>
+                                    <th style="width: 4em">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -46,15 +45,14 @@
                                                   style="color: {{ ($user->is_active == 1) ? '#00ff00':'gray' }}"></span>
                                         </td>
                                         <td><a href="{{ route('users.show', $user->id) }}"><span
-                                                        class="glyphicon glyphicon-zoom-in">detail</span></a> - <a
+                                                        class="glyphicon glyphicon-zoom-in btn btn-xs btn-default pull-left"></span></a>  <a
                                                     href="{{ route('users.edit', $user->id) }}"><span
-                                                        class="glyphicon glyphicon-pencil">edit</span></a></td>
-                                        <td>
+                                                        class="fa fa-edit btn btn-xs btn-default pull-left"></span></a>
                                             <form method="POST" action="{{ route('users.destroy', $user->id) }}" class="inline">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                                <button class="btn btn-danger btn-xs" onclick="return confirm('Are you really want to delete this user?');" type="submit">Delete</button>
+                                                <button class="btn btn-danger btn-xs pull-right fa fa-trash" onclick="return confirm('Are you really want to delete this user?');" type="submit"></button>
                                             </form>
                                         </td>
                                     </tr>
