@@ -10,7 +10,7 @@ class DailyMenu extends Model
     use softDeletes;
 
     /**
-     * Get all of foods on menu by day
+     * DailyMenu has many Food
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
