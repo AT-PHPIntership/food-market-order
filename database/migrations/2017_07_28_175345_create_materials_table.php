@@ -25,7 +25,7 @@ class CreateMaterialsTable extends Migration
             $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->timestamps();
             $table->softDeletes();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(0)->comment = 'IN_STOCK = 1; OUT_OF_STOCK = 0';
         });
     }
 
