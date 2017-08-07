@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Laracasts\Flash\Flash;
 
 class UserController extends Controller
 {
@@ -26,7 +25,7 @@ class UserController extends Controller
     /**
      * Destroy user
      *
-     * @param $id id of user to destroy
+     * @param Integer $id id of user to destroy
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,16 +33,12 @@ class UserController extends Controller
     {
 
         if (Auth::user()->id == $id) {
-
-            \flash('can not delete yourself!')->error();
-        }
-        else {
+            flash('can not delete yourself!')->error();
+        } else {
             if (User::findOrFail($id)->delete()) {
-
-                \flash('delete successfully!')->success();
+                flash('delete successfully!')->success();
             } else {
-
-                \flash('can not delete yourself!')->error();
+                flash('can not delete yourself!')->error();
             }
         }
 
