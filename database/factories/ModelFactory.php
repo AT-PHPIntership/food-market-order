@@ -82,15 +82,15 @@ $factory->define(App\OrderItem::class, function (Faker\Generator $faker) {
     $rand = random_int(0, 1);
     if ($rand == 1) {
         return [
-            'table_id' => $faker->randomElement(App\Food::pluck('id')->toArray()),
-            'table_type' => 'food',
+            'itemtable_id' => $faker->randomElement(App\Food::pluck('id')->toArray()),
+            'itemtable_type' => 'food',
             'quantity' => random_int(1, 5)
         ];
     }
     else {
         return [
-            'table_id' => $faker->randomElement(App\Material::pluck('id')->toArray()),
-            'table_type' => 'material',
+            'itemtable_id' => $faker->randomElement(App\Material::pluck('id')->toArray()),
+            'itemtable_type' => 'material',
             'quantity' => random_int(1, 5)
         ];
     }
