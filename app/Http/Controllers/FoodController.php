@@ -9,16 +9,16 @@ use App\Category;
 
 class FoodController extends Controller
 {
-    protected $foods;
+    protected $food;
     
     /**
      * FoodController constructor.
      *
      * @param Food $foods dependence injection
      */
-    public function __construct(Food $foods)
+    public function __construct(Food $food)
     {
-        $this->foods = $foods;
+        $this->food = $food;
     }
 
     /**
@@ -28,7 +28,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = $this->foods->paginate(10);
+        $foods = $this->food->paginate(10);
         return view('foods.index', ['foods'=>$foods]);
     }
 }
