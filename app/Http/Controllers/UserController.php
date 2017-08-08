@@ -12,6 +12,8 @@ class UserController extends Controller
 
     /**
      * UserController constructor.
+     *
+     * @param User $user dependence injection
      */
     public function __construct(User $user)
     {
@@ -26,7 +28,7 @@ class UserController extends Controller
     public function index()
     {
         if (!isset($listUsers)) {
-            $listUsers = $this->user->all();
+            $listUsers = $this->user->paginate(10);
         }
 
         return view('users.index')->with('listUsers', $listUsers);
@@ -43,12 +45,12 @@ class UserController extends Controller
     {
 
         if (Auth::user()->id == $id) {
-            flash(trans('user/message.delete-error'))->error();
+            flash(trans('user.delete-error'))->error();
         } else {
             if ($this->user->findOrFail($id)->delete()) {
-                flash(trans('user/message.delete-success'))->success();
+                flash(trans('user.delete-success'))->success();
             } else {
-                flash(trans('user/message.delete-error'))->error();
+                flash(trans('user.delete-error'))->error();
             }
         }
 

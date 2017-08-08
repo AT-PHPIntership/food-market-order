@@ -5,31 +5,31 @@
     @include('flash::message')
 
     @if(!isset($listUsers))
-        <h1>{{ trans('user/list.no_data') }}</h1>
+        <h1>{{ trans('user.no_data') }}</h1>
     @else
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">{{ trans('user/list.data-table') }}</h3>
+                <h3 class="box-title">{{ trans('user.data-table') }}</h3>
                 <a href="{{ route('users.create') }}" class="btn btn-primary pull-right fa fa-plus"> Add new user</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <div id="table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table id="example1" class="table table-bordered table-striped dataTable table-hover"
+                            <table id="table" class="table table-bordered table-striped dataTable table-hover"
                                    role="grid"
-                                   aria-describedby="example1_info">
+                                   aria-describedby="table_info">
                                 <thead>
                                 <tr role="row">
-                                    <th style="width: 1em">{{ trans('user/list.id') }}</th>
-                                    <th style="width: 10em">{{ trans('user/list.name') }}</th>
-                                    <th style="width: 10em">{{ trans('user/list.email') }}</th>
-                                    <th style="width: 5em">{{ trans('user/list.birthday') }}</th>
-                                    <th style="width: 2em">{{ trans('user/list.gender') }}</th>
-                                    <th>Address</th>
-                                    <th style="width: 1em">Status</th>
-                                    <th style="width: 4em">Action</th>
+                                    <th style="width: 1em">{{ trans('user.id') }}</th>
+                                    <th style="width: 10em">{{ trans('user.name') }}</th>
+                                    <th style="width: 10em">{{ trans('user.email') }}</th>
+                                    <th style="width: 5em">{{ trans('user.birthday') }}</th>
+                                    <th style="width: 2em">{{ trans('user.gender') }}</th>
+                                    <th>{{ trans('user.address') }}</th>
+                                    <th style="width: 1em">{{ trans('user.status') }}</th>
+                                    <th style="width: 4em">{{ trans('user.action') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -59,6 +59,8 @@
                                 @endforeach
                                 </tbody>
                             </table>
+
+                            {{ $listUsers->links() }}
                         </div>
                     </div>
                 </div>
