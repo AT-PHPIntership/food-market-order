@@ -18,4 +18,14 @@ class Food extends Model
     {
         return $this->morphMany(OrderItem::class, 'itemtable');
     }
+    
+    /**
+     * Food has one Category
+     *
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function categories()
+    {
+        return $this->belongsTo('App\Category', 'category_id', 'id');
+    }
 }
