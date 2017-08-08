@@ -7,10 +7,17 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    /**
+     * Variable common object Category
+     *
+     * @var Category $category
+     */
     private $category;
 
     /**
      * CategoryController constructor.
+     *
+     * @param Category $cate It is param input constructors
      */
     public function __construct(Category $cate)
     {
@@ -40,10 +47,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required|unique:categories|max:255',
             'description' => 'required',
-        ],[
+        ], [
             'name.required' => ' The category name field is required.',
             'name.max' => ' The category name may not be greater than 255 characters.',
             'name.unique' => ' The category name is existed.',
