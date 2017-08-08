@@ -24,7 +24,6 @@ class UserController extends Controller
     }
 
     /**
-     * <<<<<<< HEAD
      * Show the form for editing the specified resource.
      *
      * @param int $id id user update
