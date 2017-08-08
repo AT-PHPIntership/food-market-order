@@ -10,10 +10,11 @@ use App\Category;
 class FoodController extends Controller
 {
     protected $foods;
+    
     /**
-     * [__construct ]
+     * FoodController constructor.
      *
-     * @param Food $foods [call Model Food]
+     * @param Food $foods dependence injection
      */
     public function __construct(Food $foods)
     {
