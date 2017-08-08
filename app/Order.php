@@ -10,7 +10,7 @@ class Order extends Model
     use SoftDeletes;
 
     /**
-     * Get all of the order items.
+     * Order has many order item.
      *
      * @return array
      */
