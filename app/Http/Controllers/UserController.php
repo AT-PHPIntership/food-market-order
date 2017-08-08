@@ -9,18 +9,28 @@ use Image;
 
 class UserController extends Controller
 {
+    protected $user;
+
     /**
-     * Display a listing of the resource.
+     * UserController constructor.
      *
-     * @return \Illuminate\Http\Response
+     * @param User $user dependence injection
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get index page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        if (!isset($listUsers)) {
-            $listUsers = User::all();
-        }
+        $users = $this->user->paginate(10);
 
-        return view('users.index')->with('listUsers', $listUsers);
+        return view('users.index', ['users', $users]);
     }
 
     /**
@@ -42,23 +52,22 @@ class UserController extends Controller
      */
     public function store(UserPostRequest $request)
     {
-        $user = new User;
-        $user->full_name = $request->get('full_name');
-        $user->email = $request->get('email');
-        $user->password = bcrypt($request->get('password'));
-        $user->gender = $request->get('gender');
-        $user->birthday = $request->get('birthday');
-        $user->address = $request->get('address');
+        $arr = $request->all();
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $name = $file->getClientOriginalName();
-            $nameFile = time() . "-" . $name;
-            Image::make($file)->save(public_path('images/users/'. $nameFile));
-            $user->image = $nameFile;
+            $fileName = time() . "-" . $file->getClientOriginalName();
+            Image::make($file)->save(public_path('images/users/'. $fileName));
+            $arr['image'] = $fileName;
         } else {
-            $user->image = 'default.jpg';
+            $arr['image'] = 'default.jpg';
         }
-        $user->save();
+
+        if ($this->user->create($arr)) {
+            flash(__('User Created!'))->success()->important();
+        } else {
+            flash(__('Create User Error'))->error()->important();
+        }
+
         return redirect()->route('users.index');
     }
 }
