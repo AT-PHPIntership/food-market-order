@@ -10,7 +10,7 @@ class Material extends Model
     use softDeletes;
 
     /**
-     * Data of order item morph to material
+     * Food has many order item
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
