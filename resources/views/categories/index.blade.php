@@ -11,10 +11,10 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <div id="list-category-wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="list-category" class="table table-bordered table-striped dataTable table-hover"
+                        <table class="table table-bordered table-striped dataTable table-hover"
                                role="grid"
                                aria-describedby="list-category-info">
                             <thead>
@@ -42,7 +42,7 @@
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         </form>
-                                        <button class="btn-xs btn-danger btn btn-delete-item">
+                                        <button class="btn-xs btn-danger btn btn-delete-item" data-content="Are you want delete it?">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </td>
@@ -57,5 +57,5 @@
     </div>
 @endsection
 @section('custom-js')
-    <script src="{{ asset("/js/common.js") }}"></script>
+
 @endsection
