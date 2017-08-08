@@ -8,21 +8,19 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="example1" class="table table-bordered table-striped dataTable table-hover"
-                               role="grid"
-                               aria-describedby="example1_info">
+                        <table class="table table-bordered table-striped dataTable table-hover"
+                               role="grid">
                             <thead>
                             <tr role="row">
-                                <th style="width: 1em">{{ trans('foods/listfoods.id') }}</th>
-                                <th style="width: 7em">{{ trans('foods/listfoods.name') }}</th>
-                                <th style="width: 7em">{{ trans('foods/listfoods.category') }}</th>
-                                <th style="width: 3em">{{ trans('foods/listfoods.price') }}</th>
-                                <th >{{ trans('foods/listfoods.description') }}</th>
-                                <th style="width: 5em">{{ trans('foods/listfoods.image') }}</th>
-                                <th style="width: 4em">{{ trans('foods/listfoods.action') }}</th>
+                                <th class="col-md-1">{{ trans('foods/listfoods.id') }}</th>
+                                <th class="col-md-2">{{ trans('foods/listfoods.name') }}</th>
+                                <th class="col-md-2">{{ trans('foods/listfoods.category') }}</th>
+                                <th class="col-md-1">{{ trans('foods/listfoods.price') }}</th>
+                                <th class="col-md-4">{{ trans('foods/listfoods.description') }}</th>
+                                <th class="col-md-2">{{ trans('foods/listfoods.action') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -34,7 +32,6 @@
                                     <td>{{ $food->category_name }}</td>
                                     <td>{{ $food->price }}</td>
                                     <td>{{ $food->description }}</td>
-                                    <td><image src="images/foods/{{ $food->image }}"></td>
                                     <td><a href="{{ route('foods.show', $food->id) }}" alt="detail"><span
                                                     class="glyphicon glyphicon-zoom-in btn btn-default btn-xs pull-left" ></span>
                                         </a>

@@ -19,7 +19,7 @@ class FoodController extends Controller
         $foods = DB::table('foods')
                 ->join('categories', 'foods.category_id', '=', 'categories.id')
                 ->select('foods.*', 'categories.name AS category_name')->orderBy('id', 'DESC')
-                ->get();
+                ->paginate(10);
         return view('foods.index', ['foods' => $foods]);
     }
 }
