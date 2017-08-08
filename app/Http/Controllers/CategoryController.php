@@ -48,10 +48,9 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        $category =  $this->category->findOrFail($id);
-        $category->name = $request->name;
-        $category->description = $request->description;
-        $category->save();
+        $array = $request->all();
+        $array['id'] = $id;
+        $category = $this->category->update($array);
         return view('categories.edit', ['category'=> $category]);
     }
 }

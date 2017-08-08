@@ -25,7 +25,6 @@ class CategoryRequest extends FormRequest
     {
          return [
            'name' => 'required|unique:categories|max:255',
-           'description' => 'required',
          ];
     }
 
@@ -40,7 +39,6 @@ class CategoryRequest extends FormRequest
             'name.required' => ' The category name field is required.',
             'name.max' => ' The category name may not be greater than 255 characters.',
             'name.unique' => ' The category name is existed.',
-            'description.required' => ' The description field is required.',
         ];
     }
 }
