@@ -14,8 +14,13 @@ return [
     */
 
     'header_list' => 'List Categories',
-    'columns_id' => 'ID',
-    'columns_name' => 'Name',
-    'columns_description' => 'Description',
-    'columns_action' => 'Action'
+    'column' => [
+        'id' => 'ID',
+        'name' => 'Name',
+        'description' => 'Description',
+        'action' => 'Action'
+    ],
+    'data_confirm' => 'Are you want delete it?'
+
+
 ];

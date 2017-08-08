@@ -19,10 +19,10 @@
                                aria-describedby="list-category-info">
                             <thead>
                                 <tr role="row">
-                                    <th style="width: 1em">{{trans('category.columns_id')}}</th>
-                                    <th style="width: 7em">{{trans('category.columns_name')}}</th>
-                                    <th>{{trans('category.columns_description')}}</th>
-                                    <th style="width: 5em">{{trans('category.columns_action')}}</th>
+                                    <th style="width: 1em">{{trans('category.column.id')}}</th>
+                                    <th style="width: 7em">{{trans('category.column.name')}}</th>
+                                    <th>{{trans('category.column.description')}}</th>
+                                    <th style="width: 5em">{{trans('category.column.action')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,7 +42,8 @@
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         </form>
-                                        <button class="btn-xs btn-danger btn btn-delete-item" data-content="Are you want delete it?">
+                                        <button class="btn-xs btn-danger btn btn-confirm-delete"
+                                                data-confirm="{{trans('category.data_confirm')}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </td>
