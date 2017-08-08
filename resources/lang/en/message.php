@@ -2,11 +2,11 @@
 
 return [
 
-    'delete-success' => 'delete user successfully!',
-    'delete-error' => 'cannot delete this user',
-    'update-success' => 'update user success',
+    'delete-success' => 'delete successfully!',
+    'delete-error' => 'delete fail',
+    'update-success' => 'update successfully',
     'update-success' => 'update fail',
-    'create-success' => 'create user success fully',
+    'create-success' => 'create success fully',
     'create-error' => 'create fail',
 
 ];
