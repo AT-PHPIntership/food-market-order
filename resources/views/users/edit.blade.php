@@ -1,16 +1,17 @@
 @extends('layouts.master')
 @section('main-content')
     @if(!isset($user))
-        <h1>User not found</h1>
+        <h1>{{ __('Nothing to show!') }}</h1>
     @else
         <div class="row">
 
             @include('flash::message')
 
-            <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('users.update', $user->id) }}" method="POST">
-                <input type="hidden" name="_method" value="PUT">
-                <input type="hidden" name="_token" value=" {{  csrf_token() }}">
-                <div class="col-md-4 col-sm-6 col-xs-12">
+            <form autocomplete="off" class="form-horizontal" enctype="multipart/form-data"
+                  action="{{ route('users.update', $user->id) }}" method="POST">
+                {{ method_field('PUT') }}
+                {{ csrf_field() }}
+                <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="text-center">
                         @if(!isset($user->image))
                             <img src="https://bootdey.com/img/Content/user-453533-fdadfd.png"
@@ -19,7 +20,7 @@
                             <img src="/images/users/{{ $user->image }}" class="avatar img-circle img-thumbnail"
                                  alt=" avatar">
                         @endif
-                        <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">Upload a different photo...</h6>
+                        <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">{{ __('Upload Image') }}</h6>
                         <input type="file" name="image" class="text-center center-block well well-sm">
 
                         @if ($errors->has('image'))
@@ -28,11 +29,23 @@
                             </span>
                         @endif
                     </div>
+                    <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">{{ __('Password') }}</label>
+                        <div class="col-md-8">
+                            <input class="form-control" autocomplete="off" value="{{ $user->password }}" type="password" name="password">
+
+                            @if ($errors->has('password'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-                    <h3>Update User Profile</h3>
+                <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
+                    <h3>{{ __('User Information') }}</h3>
                     <div class="form-group {{ $errors->has('full_name') ? ' has-error' : '' }}">
-                        <label class="col-lg-3 control-label">Full name:</label>
+                        <label class="col-lg-3 control-label">{{ __('Full Name') }}</label>
                         <div class="col-lg-8">
                             <input class="form-control" value="{{ $user->full_name }}" type="text" name="full_name">
 
@@ -44,31 +57,33 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Email:</label>
+                        <label class="col-lg-3 control-label">{{ __('Email') }}</label>
                         <div class="col-lg-8">
                             <input class="form-control" disabled value="{{ $user->email }}" type="text"
                                    name="email">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Address:</label>
+                        <label class="col-lg-3 control-label">{{ __('Address') }}</label>
                         <div class="col-lg-8">
                             <input class="form-control" value="{{ $user->address }}" type="text" name="address">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Gender:</label>
+                        <label class="col-lg-3 control-label">{{ __('Gender') }}</label>
                         <div class="col-lg-8">
                             <div class="ui-select">
                                 <select id="user_time_zone" class="form-control" name="gender">
-                                    <option @if($user->gender == 1) selected @endif value="1">Male</option>
-                                    <option @if($user->gender == 0) selected @endif value="0">Female</option>
+                                    <option @if($user->gender == 1) selected
+                                            @endif value="1">{{ __('Male') }}</option>
+                                    <option @if($user->gender == 0) selected
+                                            @endif value="0">{{ __('Female') }}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Birthday:</label>
+                        <label class="col-md-3 control-label">{{ __('Birthday') }}</label>
                         <div class="col-md-8">
                             <div class="input-group date">
                                 <input type="date" class="form-control pull-right" id="datepicker"
@@ -83,9 +98,9 @@
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('phone_number') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Phone Number:</label>
+                        <label class="col-md-3 control-label">{{ __('Phone Number') }}</label>
                         <div class="col-md-8">
-                            <input class="form-control" value="{{ $user->phone_number }}" type="text"
+                            <input class="form-control" autocomplete="off" value="{{ $user->phone_number }}" type="text"
                                    name="phone_number">
 
                             @if ($errors->has('phone_number'))
@@ -95,24 +110,12 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">New Password:</label>
-                        <div class="col-md-8">
-                            <input class="form-control" value="default" type="password" name="password">
-
-                            @if ($errors->has('passsword'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
-                            <input class="btn btn-primary" value="Save Changes" type="submit">
+                            <input class="btn btn-primary" value="{{ __('Save Changes') }}" type="submit">
                             <span></span>
-                            <input class="btn btn-default" value="Cancel" type="reset">
+                            <input class="btn btn-default" value="{{ __('Cancel') }}" type="reset">
                         </div>
                     </div>
                 </div>

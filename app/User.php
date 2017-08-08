@@ -2,6 +2,7 @@
 
 namespace App;
 
+use function foo\func;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,13 +31,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all of the user's orders.
+     * User has many orders
      *
      * @return array
      */
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 
     /**
@@ -47,7 +48,7 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-
+        
         static::deleting(function ($user) {
             $user->orders()->delete();
         });
