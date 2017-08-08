@@ -23,10 +23,10 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-       return [
-            'name' => 'required|unique:categories|max:255',
-            'description' => 'required',
-       ];
+         return [
+           'name' => 'required|unique:categories|max:255',
+           'description' => 'required',
+         ];
     }
 
     /**

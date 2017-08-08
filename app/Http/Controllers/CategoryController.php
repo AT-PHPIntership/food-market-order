@@ -18,7 +18,7 @@ class CategoryController extends Controller
     /**
      * CategoryController constructor.
      *
-     * @param Category $cate It is param input constructors
+     * @param Category $category It is param input constructors
      */
     public function __construct(Category $category)
     {
