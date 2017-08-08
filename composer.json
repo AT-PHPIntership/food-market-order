@@ -7,17 +7,15 @@
     "require": {
         "php": ">=5.6.4",
         "intervention/image": "^2.4",
-        "laracasts/flash": "^3.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
-        "laravel/dusk": "^1.1",
         "mockery/mockery": "0.9.*",
-        "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "~5.7",
-        "squizlabs/php_codesniffer": "2.*"
+        "squizlabs/php_codesniffer": "2.*",
+        "phpmd/phpmd" : "@stable"
     },
     "autoload": {
         "classmap": [

@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'foodmarket.com'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,7 +178,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
-        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 

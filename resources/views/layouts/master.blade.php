@@ -8,8 +8,6 @@
 
     @include('layouts.partials.style')
 
-    @yield('custom-css')
-
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -50,8 +48,6 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 @include('layouts.partials.script')
-
-@yield('custom-js')
 
 </body>
 </html>

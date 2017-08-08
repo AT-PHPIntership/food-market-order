@@ -1,5 +1,5 @@
 $(function () {
-    $("#dataTable").DataTable();
+    $("#example1").DataTable();
 });
 $(document).ready(function () {
     var $controlBar = document.getElementById('example1_paginate');
