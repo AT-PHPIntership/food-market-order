@@ -53,9 +53,7 @@
                     </div>
                 </div>
             </div>
+            {{ $categories->links() }}
         </div>
     </div>
-@endsection
-@section('custom-js')
-
 @endsection
