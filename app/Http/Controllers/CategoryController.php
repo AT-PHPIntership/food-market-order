@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private $category;
+
+    /**
+     * CategoryController constructor.
+     */
+    public function __construct(Category $cate)
+    {
+        $this->category = $cate;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -15,7 +26,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
+        $category = $this->category->findOrFail($id);
         return view('categories.edit', ['category' => $category]);
     }
 
@@ -29,10 +40,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        $category->name = $request->categoryName;
-        $category->description = $request->description;
-        $category->save();
-        return view('categories.edit', ['category'=> $category]);
+        $this->validate($request,[
+            'name' => 'required|unique:categories|max:255',
+            'description' => 'required',
+        ],[
+            'name.required' => ' The category name field is required.',
+            'name.max' => ' The category name may not be greater than 255 characters.',
+            'name.unique' => ' The category name is existed.',
+            'description.required' => ' The description field is required.',
+        ]);
+        $cate =  $this->category->findOrFail($id);
+        $cate->name = $request->name;
+        $cate->description = $request->description;
+        $cate->save();
+        return view('categories.edit', ['category'=> $cate]);
     }
 }
