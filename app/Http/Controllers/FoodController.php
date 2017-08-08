@@ -9,6 +9,16 @@ use App\Category;
 
 class FoodController extends Controller
 {
+    protected $food;
+
+    /**
+     * [__construct description]
+     * @param Food $food [description]
+     */
+    public function __construct(Food $food)
+    {
+        $this->food = $food;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +26,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = DB::table('foods')
-                ->join('categories', 'foods.category_id', '=', 'categories.id')
-                ->select('foods.*', 'categories.name AS category_name')->orderBy('id', 'DESC')
-                ->paginate(10);
+        $foods = $this->food->categories()->paginate(10);
         return view('foods.index', ['foods' => $foods]);
     }
 }

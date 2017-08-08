@@ -29,7 +29,7 @@
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $food->name }}</td>
-                                    <td>{{ $food->category_name }}</td>
+                                    <td>{{ $food->categories->name }}</td>
                                     <td>{{ $food->price }}</td>
                                     <td>{{ $food->description }}</td>
                                     <td><a href="{{ route('foods.show', $food->id) }}" alt="detail"><span

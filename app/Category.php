@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use softDeletes;
+    // use softDeletes;
 }
