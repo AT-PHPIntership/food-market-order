@@ -13,14 +13,6 @@
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
-                    {{--@if ($errors->has())--}}
-                    {{--<div class="alert alert-danger">--}}
-                    {{--@foreach ($errors->all() as $error)--}}
-                    {{--{{ $error }}<br>--}}
-                    {{--@endforeach--}}
-                    {{--</div>--}}
-                    {{--@endif--}}
-
                     <form role="form" action="{{ route('categories.update', ['id' => $category->id])}}" method="post">
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
