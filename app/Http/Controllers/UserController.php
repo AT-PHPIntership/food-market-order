@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    protected $user;
+
+    /**
+     * UserController constructor.
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +26,7 @@ class UserController extends Controller
     public function index()
     {
         if (!isset($listUsers)) {
-            $listUsers = User::all();
+            $listUsers = $this->user->all();
         }
 
         return view('users.index')->with('listUsers', $listUsers);
@@ -33,12 +43,12 @@ class UserController extends Controller
     {
 
         if (Auth::user()->id == $id) {
-            flash('can not delete yourself!')->error();
+            flash(trans('user/message.delete-error'))->error();
         } else {
-            if (User::findOrFail($id)->delete()) {
-                flash('delete successfully!')->success();
+            if ($this->user->findOrFail($id)->delete()) {
+                flash(trans('user/message.delete-success'))->success();
             } else {
-                flash('can not delete yourself!')->error();
+                flash(trans('user/message.delete-error'))->error();
             }
         }
 

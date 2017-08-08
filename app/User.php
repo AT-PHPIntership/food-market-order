@@ -30,13 +30,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all of the user's orders.
+     * User has many orders
      *
      * @return array
      */
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 
     /**

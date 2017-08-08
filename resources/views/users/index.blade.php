@@ -5,11 +5,11 @@
     @include('flash::message')
 
     @if(!isset($listUsers))
-        <h1>{{ trans('user.no_data') }}</h1>
+        <h1>{{ trans('user/list.no_data') }}</h1>
     @else
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">{{ trans('user.data-table') }}</h3>
+                <h3 class="box-title">{{ trans('user/list.data-table') }}</h3>
                 <a href="{{ route('users.create') }}" class="btn btn-primary pull-right fa fa-plus"> Add new user</a>
             </div>
             <!-- /.box-header -->
@@ -22,11 +22,11 @@
                                    aria-describedby="example1_info">
                                 <thead>
                                 <tr role="row">
-                                    <th style="width: 1em">{{ trans('user.id') }}</th>
-                                    <th style="width: 10em">{{ trans('user.name') }}</th>
-                                    <th style="width: 10em">{{ trans('user.email') }}</th>
-                                    <th style="width: 5em">{{ trans('user.birthday') }}</th>
-                                    <th style="width: 2em">{{ trans('user.gender') }}</th>
+                                    <th style="width: 1em">{{ trans('user/list.id') }}</th>
+                                    <th style="width: 10em">{{ trans('user/list.name') }}</th>
+                                    <th style="width: 10em">{{ trans('user/list.email') }}</th>
+                                    <th style="width: 5em">{{ trans('user/list.birthday') }}</th>
+                                    <th style="width: 2em">{{ trans('user/list.gender') }}</th>
                                     <th>Address</th>
                                     <th style="width: 1em">Status</th>
                                     <th style="width: 4em">Action</th>
