@@ -19,10 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->date('birthday')->nullable();
-            $table->boolean('gender')->nullable();
+            $table->boolean('gender')->default(0)->comment = 'FEMALE = 0; MALE = 1';
             $table->text('address')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('image')->dedault('default.jpg');
+            $table->string('image')->default('default.jpg');
             $table->boolean('is_admin')->default(0)->comment = 'ADMIN = 1; USER = 0';
             $table->boolean('is_active')->default(0)->comment = 'ACTIVE = 1; INACTIVE = 0';
             $table->rememberToken();
