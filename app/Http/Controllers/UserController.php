@@ -27,10 +27,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (!isset($listUsers)) {
-            $listUsers = $this->user->paginate(10);
-        }
-
+        $listUsers = $this->user->paginate(10);
+        
         return view('users.index')->with('listUsers', $listUsers);
     }
 
