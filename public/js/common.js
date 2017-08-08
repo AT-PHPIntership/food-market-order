@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $(".btn-delete-item").bind('click',function(){
-        var result = confirm($(".btn-delete-item").attr("data-content"));
+    $(".btn-confirm-delete").bind('click',function(){
+        var result = confirm($(".btn-confirm-delete").attr("data-confirm"));
         if(result){
             $('form.delete-item').submit();
         }
