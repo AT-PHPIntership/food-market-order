@@ -14,4 +14,5 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'action' => 'Action',
+    'data_confirm' => 'Are you sure delete food?',
 ];

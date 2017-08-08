@@ -9,16 +9,17 @@ use App\Category;
 
 class FoodController extends Controller
 {
-    protected $food;
-
+    protected $foods;
     /**
-     * [__construct description]
-     * @param Food $food [description]
+     * [__construct ]
+     *
+     * @param Food $foods [call Model Food]
      */
-    public function __construct(Food $food)
+    public function __construct(Food $foods)
     {
-        $this->food = $food;
+        $this->foods = $foods;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +27,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = $this->food->categories()->paginate(10);
-        return view('foods.index', ['foods' => $foods]);
+        $foods = $this->foods->paginate(10);
+        return view('foods.index', ['foods'=>$foods]);
     }
 }

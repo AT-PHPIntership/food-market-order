@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Food extends Model
 {
     use softDeletes;
+    
+    protected $table = "foods";
 
     /**
      * Food has many order item
@@ -22,10 +24,10 @@ class Food extends Model
     /**
      * Food has one Category
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function categories()
     {
-        return $this->hasOne('App\Category', 'id', 'category_id');
+        return $this->belongsTo('App\Category', 'category_id', 'id');
     }
 }

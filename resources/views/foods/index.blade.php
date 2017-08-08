@@ -41,8 +41,11 @@
                                         <form method="POST" action="{{ route('foods.destroy', $food->id) }}" class="inline">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="hidden" name="user_id" value="{{ $food->id }}">
-                                            <button class="btn-xs btn-danger btn btn-delete-item fa fa-trash                                             pull-right" type="submit"></button>
+                                            <input type="hidden" name="food_id" value="{{ $food->id }}">
+                                            <button class="btn-xs btn-danger btn btn-confirm-delete"
+                                                data-confirm="{{ trans('foods/list.data_confirm') }}">
+                                                <span class="glyphicon glyphicon-remove"></span>       
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
@@ -52,6 +55,7 @@
                     </div>
                 </div>
             </div>
+            {{ $foods->links() }}
         </div>
     </div>
 @endsection
