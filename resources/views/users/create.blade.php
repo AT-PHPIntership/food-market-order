@@ -15,7 +15,7 @@
                     <form role="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="box-body">
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="inputEmail1">Email address</label>
                                 <input type="email" name="email" class="form-control" id="inputEmail1"
                                        placeholder="Enter email">

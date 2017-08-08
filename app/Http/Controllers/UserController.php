@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserPostRequest;
 use Illuminate\Http\Request;
 use App\User;
 use Image;
@@ -39,27 +40,27 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserPostRequest $request)
     {
-        $this->validate($request, [
-            'full_name' => 'required',
-            'email' => 'required|unique:users|email',
-            'password' => 'required|min:6',
-            'birthday' => 'date',
-            'phone_number' => 'numeric',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            'full_name.required' => 'This name not null',
-            'email.email' => 'must be a type of email',
-            'email.unique' => 'email has been existed',
-            'email.required' => 'This email not null',
-            'password.required' => 'This password not null',
-            'password.min' => 'min of password is 6 character',
-            'birthday.date' => 'This birthday must be a type of date',
-            'phone_number.numeric' => 'This field must be number',
-            'image.image' => 'Must be an image',
-            'image.mimes' => 'The file under validation an image(.jpeg,.png,.gif,.svg)',
-        ]);
+//        $this->validate($request, [
+//            'full_name' => 'required',
+//            'email' => 'required|unique:users|email',
+//            'password' => 'required|min:6',
+//            'birthday' => 'date',
+//            'phone_number' => 'numeric',
+//            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+//        ], [
+//            'full_name.required' => 'This name not null',
+//            'email.email' => 'must be a type of email',
+//            'email.unique' => 'email has been existed',
+//            'email.required' => 'This email not null',
+//            'password.required' => 'This password not null',
+//            'password.min' => 'min of password is 6 character',
+//            'birthday.date' => 'This birthday must be a type of date',
+//            'phone_number.numeric' => 'This field must be number',
+//            'image.image' => 'Must be an image',
+//            'image.mimes' => 'The file under validation an image(.jpeg,.png,.gif,.svg)',
+//        ]);
 
         $user = new User;
         $user->full_name = $request->get('full_name');
