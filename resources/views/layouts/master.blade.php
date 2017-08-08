@@ -49,8 +49,5 @@
 
 @include('layouts.partials.script')
 
-@yield('custom-css')
-@yield('custom-js')
-
 </body>
 </html>
