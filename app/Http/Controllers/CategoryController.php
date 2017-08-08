@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -19,9 +20,9 @@ class CategoryController extends Controller
      *
      * @param Category $cate It is param input constructors
      */
-    public function __construct(Category $cate)
+    public function __construct(Category $category)
     {
-        $this->category = $cate;
+        $this->category = $category;
     }
 
     /**
@@ -45,21 +46,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:categories|max:255',
-            'description' => 'required',
-        ], [
-            'name.required' => ' The category name field is required.',
-            'name.max' => ' The category name may not be greater than 255 characters.',
-            'name.unique' => ' The category name is existed.',
-            'description.required' => ' The description field is required.',
-        ]);
-        $cate =  $this->category->findOrFail($id);
-        $cate->name = $request->name;
-        $cate->description = $request->description;
-        $cate->save();
-        return view('categories.edit', ['category'=> $cate]);
+        $category =  $this->category->findOrFail($id);
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->save();
+        return view('categories.edit', ['category'=> $category]);
     }
 }
