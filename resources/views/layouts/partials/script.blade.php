@@ -15,4 +15,4 @@
 
 <script src="{{  asset("/js/dataTable.js") }}"></script>
 
-<script src="{{ asset("/js/common.js") }}"></script>
+<script src="{{ asset("/js/main.js }}"></script>
