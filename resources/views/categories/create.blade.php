@@ -31,7 +31,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer text-center">
-                            <input type="submit" class="btn btn-primary" value="Create">
+                            <input type="submit" class="btn btn-primary" value="{{__('Create')}}">
                         </div>
                     </form>
                 </div>
