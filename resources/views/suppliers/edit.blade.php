@@ -33,7 +33,7 @@
                         <!-- /.box-body -->
 
                         <div class="box-footer text-center">
-                            <input type="submit" class="btn btn-primary" value="Update">
+                            <input type="submit" class="btn btn-primary" value="{{__('Update')}}">
                         </div>
                     </form>
                 </div>
