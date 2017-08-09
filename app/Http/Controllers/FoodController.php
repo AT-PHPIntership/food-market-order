@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Food;
 use App\Category;
-use App\Http\Requests\FoodRequest;
+use App\Http\Requests\FoodPostRequest;
 use Image;
 use Session;
 
@@ -52,7 +52,7 @@ class FoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(FoodRequest $request)
+    public function store(FoodPostRequest $request)
     {
         $arrFoods = $request->all();
         $arrFoods = $request->except(['_token']);
