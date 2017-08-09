@@ -30,15 +30,14 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $category = new Category();
-        return view('categories.create', ['category' => $category]);
+        return view('categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request Request from client
-     * @param int                      $id      It is id of category need update
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CategoryRequest $request)
