@@ -13,7 +13,17 @@ class SupplierController extends Controller
      * @var Supplier $supplier
      */
     private $supplier;
-
+    
+    /**
+     * CategoryController constructor.
+     *
+     * @param Supplier $supplier It is param input constructors
+     */
+    public function __construct(Supplier $supplier)
+    {
+        $this->$supplier = $supplier;
+    }
+    
     /**
      * Display a listing of the resource.
      *
