@@ -3,9 +3,9 @@
 @section('main-content')
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">{{trans('category.header-list')}}</h3>
+            <h3 class="box-title">{{__('List Categories')}}</h3>
             <a id="btn-add-category" class="btn btn-primary pull-right" href="{{ route('categories.create') }}"
-               title="{{trans('category.title.add')}}">
+               title="{{__('Add Category')}}">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
@@ -19,10 +19,10 @@
                                aria-describedby="list-category-info">
                             <thead>
                                 <tr role="row">
-                                    <th style="width: 1em">{{trans('category.column.id')}}</th>
-                                    <th style="width: 7em">{{trans('category.column.name')}}</th>
-                                    <th>{{trans('category.column.description')}}</th>
-                                    <th style="width: 5em">{{trans('category.column.action')}}</th>
+                                    <th style="width: 1em">{{__('ID')}}</th>
+                                    <th style="width: 7em">{{__('Name')}}</th>
+                                    <th>{{__('Description')}}</th>
+                                    <th style="width: 5em">{{__('Action')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,7 +34,7 @@
                                     <td>
                                         <a class="btn btn-xs btn-success btn-edit-item"
                                            href="{{ route('categories.edit', $category->id)}}"
-                                           title="{{trans('category.title.edit')}}">
+                                           title="{{__('Edit Category')}}">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a> -
                                         <form role="form" class="delete-item pull-left"
@@ -44,8 +44,8 @@
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         </form>
                                         <button class="btn-xs btn-danger btn btn-confirm-delete"
-                                                data-confirm="{{trans('category.data_confirm')}}"
-                                                title="{{trans('category.title.delete')}}">
+                                                data-confirm="{{__('Are you want delete it?')}}"
+                                                title="{{__('Delete Category')}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </td>
