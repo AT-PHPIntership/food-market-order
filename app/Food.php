@@ -24,8 +24,18 @@ class Food extends Model
      *
      * @return Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function categories()
+    public function category()
     {
         return $this->belongsTo('App\Category', 'category_id', 'id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($food) {
+            echo '<pre>';
+            print_r($food);
+            echo '</pre>';
+        });
     }
 }

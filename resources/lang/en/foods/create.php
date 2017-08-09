@@ -10,6 +10,6 @@ return [
     'image' => 'Choose Image',
     'create' => 'Create',
     'reset' => 'Reset',
-    'create_food_susscess' => "Create Food Susscess",
-    'create_food_error' => "Create Food Error"
+    'create_susscess' => "Create Food Susscess",
+    'create_error' => "Create Food Error"
 ];
