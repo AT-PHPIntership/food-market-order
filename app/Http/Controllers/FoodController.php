@@ -54,17 +54,17 @@ class FoodController extends Controller
      */
     public function store(FoodRequest $request)
     {
-        $arr =  $request->all();
-        $arr = $request->except(['_token']);
+        $arrFoods = $request->all();
+        $arrFoods = $request->except(['_token']);
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . "-" . $file->getClientOriginalName();
-            Image::make($file)->save(public_path('images/foods/'. $fileName));
-            $arr['image'] = $fileName;
+            Image::make($file)->save(public_path(config('constant.path_upload_foods'). $fileName));
+            $arrFoods['image'] = $fileName;
         } else {
-            $arr['image'] = 'default.jpg';
+            $arrFoods['image'] = 'default.jpg';
         }
-        if ($this->food->create($arr)) {
+        if ($this->food->create($arrFoods)) {
             Session::flash('success', __('Create Food Success'));
             return redirect()->route('foods.index');
         } else {

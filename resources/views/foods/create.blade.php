@@ -13,7 +13,7 @@
     <div class="col-md-6">
       <div class="box box-primary">
         <div class="box-header with-border text-center">
-          <h3 class="box-title">{{ trans('foods/create.title') }}</h3>
+          <h3 class="box-title">{{ __('Create Food') }}</h3>
         </div>
         <form action="{{ route('foods.store')}}" enctype="multipart/form-data" method="POST">
           {{csrf_field()}}
