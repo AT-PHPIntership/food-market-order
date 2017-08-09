@@ -6,3 +6,4 @@ $(document).ready(function() {
         }
     });
 });
+$('#flash-overlay-modal').modal();

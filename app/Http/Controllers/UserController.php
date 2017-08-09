@@ -41,12 +41,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         if (Auth::user()->id == $id) {
-            flash(trans('Cannot delete current user!'))->error();
+            flash(__('Cannot delete current user!'))->error()->important();
         } else {
             if ($this->user->findOrFail($id)->delete()) {
-                flash(__('Delete Successfully!'))->success();
+                flash(__('Delete Successfully!'))->success()->important();
             } else {
-                flash(trans('Delete Error!'))->error();
+                flash(__('Delete Error!'))->error()->important();
             }
         }
         return redirect()->route('users.index');
