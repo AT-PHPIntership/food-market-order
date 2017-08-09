@@ -14,7 +14,7 @@ class FoodController extends Controller
     /**
      * FoodController constructor.
      *
-     * @param Food $foods dependence injection
+     * @param Food $food dependence injection
      */
     public function __construct(Food $food)
     {

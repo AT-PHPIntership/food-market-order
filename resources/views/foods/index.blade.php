@@ -32,10 +32,10 @@
                                     <td>{{ $food->category->name }}</td>
                                     <td>{{ $food->price }}</td>
                                     <td>{{ $food->description }}</td>
-                                    <td><a href="{{ route('foods.show', $food->id) }}" alt="detail"><span
+                                    <td><a href="{{ route('foods.show', $food->id) }}" alt="{{ trans('foods/listfoods.detail') }}"><span
                                                     class="glyphicon glyphicon-zoom-in btn btn-default btn-xs pull-left" ></span>
                                         </a>
-                                        <a href="{{ route('foods.edit', $food->id) }}" alt="edit"><span
+                                        <a href="{{ route('foods.edit', $food->id) }}" alt="{{ trans('foods/listfoods.edit') }}"><span
                                                     class="glyphicon glyphicon-pencil btn btn-default btn-xs pull-left"></span>
                                         </a>
                                         <form method="POST" action="{{ route('foods.destroy', $food->id) }}" class="inline">
