@@ -42,7 +42,12 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $this->category->create($request->all());
-        return redirect()->route('categories.index');
+        if ($this->category->create($request->all())) {
+            flash(__('Create Category Success'))->success();
+            return redirect()->route('categories.index');
+        } else {
+            flash(__('Create Category Error'))->error();
+            return redirect()->route('categories.create');
+        }
     }
 }
