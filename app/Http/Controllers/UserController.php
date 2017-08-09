@@ -28,7 +28,6 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->user->paginate(10);
-        
         return view('users.index')->with('users', $users);
     }
 
@@ -41,17 +40,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
         if (Auth::user()->id == $id) {
-            flash(trans('user.delete-error'))->error();
+            flash(trans('Cannot delete current user!'))->error();
         } else {
             if ($this->user->findOrFail($id)->delete()) {
-                flash(trans('user.delete-success'))->success();
+                flash(__('Delete Successfully!'))->success();
             } else {
-                flash(trans('user.delete-error'))->error();
+                flash(trans('Delete Error!'))->error();
             }
         }
-
         return redirect()->route('users.index');
     }
 }
