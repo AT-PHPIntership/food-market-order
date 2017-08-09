@@ -20,7 +20,11 @@ return [
         'description' => 'Description',
         'action' => 'Action'
     ],
-    'data_confirm' => 'Are you want delete it?'
-
+    'data_confirm' => 'Are you want delete it?',
+    'title' => [
+        'add' => 'Add Category',
+        'delete' => 'Delete Category',
+        'edit' => 'Edit Category'
+    ]
 
 ];

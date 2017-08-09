@@ -5,7 +5,7 @@
         <div class="box-header">
             <h3 class="box-title">{{trans('category.header-list')}}</h3>
             <a id="btn-add-category" class="btn btn-primary pull-right" href="{{ route('categories.create') }}"
-               title="Add Category">
+               title="{{trans('category.title.add')}}">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
@@ -33,7 +33,8 @@
                                     <td>{{ $category->description }}</td>
                                     <td>
                                         <a class="btn btn-xs btn-success btn-edit-item"
-                                           href="{{ route('categories.edit', $category->id)}}">
+                                           href="{{ route('categories.edit', $category->id)}}"
+                                           title="{{trans('category.title.edit')}}">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a> -
                                         <form role="form" class="delete-item pull-left"
@@ -43,7 +44,8 @@
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         </form>
                                         <button class="btn-xs btn-danger btn btn-confirm-delete"
-                                                data-confirm="{{trans('category.data_confirm')}}">
+                                                data-confirm="{{trans('category.data_confirm')}}"
+                                                title="{{trans('category.title.delete')}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </td>
