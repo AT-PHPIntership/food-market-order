@@ -9,7 +9,7 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header with-border text-center">
-                        <h3 class="box-title">{{trans('editcategory.title_header')}}</h3>
+                        <h3 class="box-title">{{__('Edit Category')}}</h3>
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
@@ -17,14 +17,14 @@
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div class="box-body">
-                            <div class="form-group {{ $errors->has('categoryName') ? 'has-error' : '' }}">
-                                <label for="categoryName">{{trans('editcategory.cate_name')}}</label>
+                            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <label for="name">{{__('Category Name')}}</label>
                                 <input type="text" class="form-control" name="name" placeholder=""
                                        value="{{ $category->name }}">
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             </div>
                             <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                                <label for="description">{{trans('editcategory.cate_description')}}</label>
+                                <label for="description">{{__('Description')}}</label>
                                 <textarea class="form-control"
                                           name="description">{{ $category->description }}</textarea>
                                 <span class="text-danger">{{ $errors->first('description') }}</span>
