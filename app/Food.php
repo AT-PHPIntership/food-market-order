@@ -9,6 +9,8 @@ class Food extends Model
 {
     use softDeletes;
 
+    protected $table = 'foods';
+    protected $fillable = ['id', 'name', 'category_id', 'price', 'description','image'];
     /**
      * Food has many order item
      *
@@ -27,15 +29,5 @@ class Food extends Model
     public function category()
     {
         return $this->belongsTo('App\Category', 'category_id', 'id');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($food) {
-            echo '<pre>';
-            print_r($food);
-            echo '</pre>';
-        });
     }
 }
