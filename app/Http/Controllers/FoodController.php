@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Food;
+use App\Category;
 use App\Http\Requests\FoodRequest;
 use Image;
 use Session;
@@ -15,7 +16,7 @@ class FoodController extends Controller
     /**
      * FoodController constructor.
      *
-     * @param Food $foods dependence injection
+     * @param Food $food dependence injection
      */
     public function __construct(Food $food)
     {

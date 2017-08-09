@@ -5,6 +5,11 @@
   <div class="col-md-12">
     <div class="col-md-3">
     </div>
+    @if(Session::has('error'))
+    <div class="alert alert-danger">
+      {{ Session::get('error') }}
+    </div>
+    @endif
     <div class="col-md-6">
       <div class="box box-primary">
         <div class="box-header with-border text-center">
