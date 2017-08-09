@@ -15,7 +15,7 @@ class SupplierController extends Controller
     private $supplier;
     
     /**
-     * CategoryController constructor.
+     * SupplierController constructor.
      *
      * @param Supplier $supplier It is param input constructors
      */
