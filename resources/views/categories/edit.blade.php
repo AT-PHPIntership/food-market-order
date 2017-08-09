@@ -7,6 +7,7 @@
             </div>
             <div class="col-md-6">
                 <!-- general form elements -->
+                @include('flash::message')
                 <div class="box box-primary">
                     <div class="box-header with-border text-center">
                         <h3 class="box-title">{{__('Edit Category')}}</h3>

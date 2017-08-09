@@ -50,6 +50,11 @@ class CategoryController extends Controller
     {
         $category = $this->category->findOrFail($id);
         $category->update($request->all());
-        return view('categories.edit', ['category'=> $category]);
+        if ($category) {
+            flash(__('Update Category Success'))->success()->important();
+        } else {
+            flash(__('Update Category Error'))->error()->important();
+        }
+        return back();
     }
 }
