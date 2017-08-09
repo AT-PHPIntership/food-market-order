@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SupplierRequest;
-use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
@@ -13,15 +12,17 @@ class SupplierController extends Controller
      * @var Supplier $Supplier
      */
     private $supplier;
+
     /**
      * SupplierController constructor.
      *
-     * @param Supplier $Supplier It is param input constructors
+     * @param Supplier $supplier It is param input constructors
      */
     public function __construct(Supplier $supplier)
     {
         $this->supplier = $supplier;
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -29,18 +30,19 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('suppliers.create');
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request Request from client
+     * @param \App\Http\Requests\SupplierRequest $request Request from client
      *
      * @return \Illuminate\Http\Response
      */
     public function store(SupplierRequest $request)
     {
         $this->supplier->create($request->all());
-        return redirect()->route('categories.index');
+        return redirect()->route('suppliers.index');
     }
 }
