@@ -105,7 +105,7 @@
                     <div class="form-group {{ $errors->has('phone_number') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">{{ __('Phone Number') }}</label>
                         <div class="col-md-8">
-                            <input class="form-control" autocomplete="off" value="{{ old('phone_number'), $user->phone_number }}" type="text"
+                            <input class="form-control" autocomplete="off" value="{{ old('phone_number', $user->phone_number) }}" type="text"
                                    name="phone_number">
 
                             @if ($errors->has('phone_number'))
