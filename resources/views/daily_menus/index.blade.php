@@ -4,12 +4,12 @@
         <div class="box-header">
             <div class="col-sm-12">
                 <div class="col-sm-6">
-                    <h3 class="box-title"><strong>@lang('dailymenu.listTitle')</strong></h3>
+                    <h3 class="box-title"><strong>{{ _('Daily Menu List') }}</strong></h3>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <a href="{{ route('daily-menus.create') }}" class="btn btn-xl btn-primary pull-right">
-                            @lang('dailymenu.create')
+                            {{ _('Create New Menu') }}
                         </a>
                     </div>
                 </div>
@@ -23,8 +23,8 @@
                         <table class="table table-bordered table-striped dataTable table-hover text-center" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th style="width: 8em">Date</th>
-                                    <th style="width: 2em">Action</th>
+                                    <th style="width: 8em">{{ _('Date') }}</th>
+                                    <th style="width: 2em">{{ _('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,10 +33,10 @@
                                     <td><h4>{{ $dailyMenu->date }}</h4></td>
                                     <td>
                                         <a href="{{ route('daily-menus.show', $dailyMenu->date) }}">
-                                            <span class="btn-xl btn-success btn">@lang('dailymenu.detailBtn')</span>
+                                            <span class="btn-xl btn-success btn">{{ _('Detail') }}</span>
                                         </a>
                                         <a href="{{ route('daily-menus.edit', $dailyMenu->date) }}">
-                                            <span class="btn-xl btn-warning btn">@lang('dailymenu.editBtn')</span>
+                                            <span class="btn-xl btn-warning btn">{{ _('Edit') }}</span>
                                         </a>
                                     </td>
                                 </tr>
