@@ -4,9 +4,7 @@
 
     @include('flash::message')
 
-    @if(!isset($users))
-        <h1>{{ __('Nothing to show!') }}</h1>
-    @else
+    @if(isset($users))
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">{{ __("User's Table Data") }}</h3>
@@ -66,5 +64,7 @@
                 </div>
             </div>
         </div>
+    @else
+        <h1>{{ __('Nothing to show!') }}</h1>
     @endif
 @endsection
