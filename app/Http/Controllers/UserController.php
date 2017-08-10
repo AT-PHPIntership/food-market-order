@@ -51,23 +51,51 @@ class UserController extends Controller
      */
     public function store(UserPostRequest $request)
     {
-        $arr = $request->all();
+        $requestInput = $request->all();
+
+        $this->getImageFileName($request);
+        $requestInput['image'] = $this->getImageFileName($request);
+
+        if ($this->user->create($requestInput)) {
+            $this->storageImage($request->file('image'), $requestInput['image']);
+            flash(__('User Created!'))->success()->important();
+            return redirect()->route('users.index');
+        } else {
+            flash(__('Create User Error'))->error()->important();
+            return redirect()->route('users.create')->withInput();
+        }
+    }
+
+    /**
+     * Get filename from request
+     *
+     * @param Request $request the request need to get file name
+     *
+     * @return string
+     */
+    public function getImageFileName(Request $request)
+    {
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . "-" . $file->getClientOriginalName();
-            $arr['image'] = $fileName;
         } else {
-            $arr['image'] = 'default.jpg';
+            $fileName = 'default.jpg';
         }
+        return $fileName;
+    }
 
-        if ($this->user->create($arr)) {
-            if (isset($file)) {
-                Image::make($file)->save(public_path('images/users/'. $fileName));
-            }
-            flash(__('User Created!'))->success()->important();
-        } else {
-            flash(__('Create User Error'))->error()->important();
+    /**
+     * Save image file to public/image/users
+     *
+     * @param File   $file     image file
+     * @param string $fileName the name to storage
+     *
+     * @return void
+     */
+    public function storageImage(File $file, $fileName)
+    {
+        if (isset($file)) {
+            Image::make($file)->save(public_path('images/users/' . $fileName));
         }
-        return redirect()->route('users.index');
     }
 }
