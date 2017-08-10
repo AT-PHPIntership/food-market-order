@@ -13,6 +13,4 @@
 
 <script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/jquery.dataTables.min.js") }}"></script>
 
-<script src="{{  asset("/js/dataTable.js") }}"></script>
-
 <script src="{{ asset("/js/main.js }}"></script>
