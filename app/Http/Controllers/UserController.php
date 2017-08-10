@@ -29,7 +29,6 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->user->paginate(10);
-
         return view('users.index', ['users', $users]);
     }
 
@@ -56,13 +55,15 @@ class UserController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . "-" . $file->getClientOriginalName();
-            Image::make($file)->save(public_path('images/users/'. $fileName));
             $arr['image'] = $fileName;
         } else {
             $arr['image'] = 'default.jpg';
         }
 
         if ($this->user->create($arr)) {
+            if (isset ($file)) {
+                Image::make($file)->save(public_path('images/users/'. $fileName));
+            }
             flash(__('User Created!'))->success()->important();
         } else {
             flash(__('Create User Error'))->error()->important();
