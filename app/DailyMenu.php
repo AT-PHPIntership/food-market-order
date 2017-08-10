@@ -19,14 +19,4 @@ class DailyMenu extends Model
      * @var string
      */
     protected $table = 'daily_menus';
-
-    /**
-     * DailyMenu has many Food
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function foods()
-    {
-        return $this->hasMany(Food::class);
-    }
 }
