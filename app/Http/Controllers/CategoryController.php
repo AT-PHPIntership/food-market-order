@@ -62,4 +62,37 @@ class CategoryController extends Controller
             return redirect()->route('categories.create');
         }
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id It is id of category need update
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $category = $this->category->findOrFail($id);
+        return view('categories.edit', ['category' => $category]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request Request from client
+     * @param int                      $id      It is id of category need update
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(CategoryRequest $request, $id)
+    {
+        $category = $this->category->findOrFail($id);
+        $category->update($request->all());
+        if ($category) {
+            flash(__('Update Category Success'))->success()->important();
+        } else {
+            flash(__('Update Category Errors'))->error()->important();
+        }
+        return back();
+    }
 }
