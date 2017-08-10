@@ -27,21 +27,37 @@ class FoodController extends Controller
     public function index()
     {
         $foods = $this->food->orderBy('id', 'DESC')->with('category')->paginate(10);
-        return view('foods.index', ['foods'=>$foods]);
+        return view('foods.index', ['foods' => $foods]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id of food
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        // $food = Food::find($id);
-        // $category = Category::find($food->category_id);
-        // return view('admin.foods.show', ['food' => $food, 'category'=> $category]);
         $food = $this->food->findOrFail($id);
         return view('foods.show', ['food' => $food]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It id food want to delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $food = $this->food->findOrFail($id);
+        if ($food->delete()) {
+            flash(__('Delete Food Success'))->success()->important();
+        } else {
+            flash(__('Delete Food Errors'))->error()->important();
+        }
+        return redirect()->route('foods.index');
     }
 }

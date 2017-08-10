@@ -5,10 +5,10 @@
 <div class="panel-body inf-content">
     <div class="row">
         <div class="col-md-4">
-            <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip" src="/images/foods/" data-original-title="Usuario"> 
+            <img class="img-thumbnail" src="/images/foods/{{ $food->image }}" data-original-title="Usuario"> 
         </div>
         <div class="col-md-6 h4">
-            <strong>Food Information</strong><br>
+            <strong>{{ __('Food Information') }}</strong><br>
             <div class="table-responsive">
             <table class="table table-condensed table-responsive table-user-information">
                 <colgroup>
@@ -20,22 +20,22 @@
                         <td>
                             <strong>
                                 <span class="glyphicon glyphicon-asterisk text-primary"></span>
-                                Identificacion                                                
+                                {{ __('Identificacion') }}
                             </strong>
                         </td>
                         <td class="text-primary">
-                            {{$food->id}}     
+                            {{ $food->id }}     
                         </td>
                     </tr>
                     <tr>    
                         <td>
                             <strong>
                                 <span class="glyphicon glyphicon-cutlery  text-primary"></span>    
-                                Name                                         
+                                {{ __('Name') }}
                             </strong>
                         </td>
                         <td class="text-primary">
-                            {{$food->name}}
+                            {{ $food->name }}
                         </td>
                     </tr>
 
@@ -43,29 +43,28 @@
                         <td>
                             <strong>
                                 <span class="glyphicon glyphicon-bookmark text-primary"></span> 
-                                Category
+                                {{ __('Category') }}
                             </strong>
                         </td>
                         <td class="text-primary">
-                            {{$category->name}}
+                            {{ $food->category->name }}
                         </td>
                     </tr>
                     <tr>        
                         <td>
                             <strong>
                                 <span class="glyphicon glyphicon-usd text-primary"></span> 
-                                Price                                          
-                            </strong>
+                                {{ __('Price') }}
                         </td>
                         <td class="text-primary">
-                            {{ $food->price }}$
+                            {{ $food->price }}
                         </td>
                     </tr>
                     <tr>        
                         <td>
                             <strong>
                                 <span class="glyphicon glyphicon-tasks text-primary"></span> 
-                                Description                                          
+                                {{ __('Description') }}                                          
                             </strong>
                         </td>
                         <td class="text-primary">
@@ -76,12 +75,12 @@
                         <td>
                             <strong>
                                 <span class = "text-primary"></span>
-                                Action
+                                {{ __('Action') }}
                             </strong>
                         </td>
                         <td>
-                            <a href="/food/{{$food->id}}/edit"><span class="btn btn-success">Edit</span></a>
-                             <a href="/food/{{$food->id}}"><span class="btn btn-danger">Delete</span></a>
+                            <a href="{{ route('foods.edit', $food->id) }}"><span class="btn btn-primary">{{ __('Edit') }}</span></a>
+                             <a href="{{ route('foods.index') }}"><span class="btn btn-danger">{{ __('Cancel') }}</span></a>
                         </td>
                     </tr>
                 </tbody>
@@ -90,5 +89,5 @@
         </div>
     </div>
 </div>
-</div>      
+</div>
 @endsection
