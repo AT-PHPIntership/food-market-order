@@ -9,6 +9,7 @@
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
+        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
