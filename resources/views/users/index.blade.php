@@ -50,7 +50,7 @@
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                                <button class="btn btn-danger btn-xs pull-right fa fa-trash btn-confirm-delete" data-confirm="{{ __('Are you sure to delete this user?') }}" type="submit"></button>
+                                                <button class="btn btn-danger btn-xs pull-right fa fa-trash btn-confirm-delete" id="btn-delete-{{$user->id}}" data-confirm="{{ __('Are you sure to delete this user?') }}" type="submit"></button>
                                             </form>
                                         </td>
                                     </tr>
