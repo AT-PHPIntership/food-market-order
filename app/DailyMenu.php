@@ -10,12 +10,13 @@ class DailyMenu extends Model
     use softDeletes;
 
     /**
-     * DailyMenu has many Food
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Enable created_at and updated_at behavior
      */
-    public function foods()
-    {
-        return $this->hasMany(Food::class);
-    }
+    public $timestamps = true;
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'daily_menus';
 }
