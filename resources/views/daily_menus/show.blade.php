@@ -24,23 +24,34 @@
                             </tr>
                             </thead>
                             <tbody id="bodyTable">
-                            @foreach ($menuOnDate as $menuItem)
+                            @if (empty($menuOnDate))
                                 <tr>
-                                    <td>{{ $menuItem->id }}</td>
-                                    <td>{{ $menuItem->foods->name }}</td>
-                                    <td>{{ $menuItem->foods->categories->name }}</td>
-                                    <td>{{ $menuItem->foods->price }}</td>
-                                    <td>{{ $menuItem->created_at }}</td>
-                                    <td>{{ $menuItem->updated_at }}</td>
-                                    <td><input type="text" value="{{ $menuItem->quantity }}" id={{ $menuItem->id }} disabled></td>
-                                    <td>
-                                        <button class="btn-xs btn-warning btn glyphicon glyphicon-edit" name="btnEdit" data-alert=@lang('dailymenu.alert') value={{ $menuItem->id }}>
-                                        </button>
-                                        <button class="btn-xs btn-danger btn glyphicon glyphicon-remove" name="btnDel" data-confirm="{{ __('Do you sure want to delete this item?') }}" value={{ $menuItem->id }}>
-                                        </button>
-                                    </td>
+                                    <strong>{{ __('Nothing to show') }}</strong>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($menuOnDate as $menuItem)
+                                    <tr>
+                                        <td>{{ $menuItem->id }}</td>
+                                        <td>{{ $menuItem->food->name }}</td>
+                                        <td>{{ $menuItem->food->category->name }}</td>
+                                        <td>{{ $menuItem->food->price }}</td>
+                                        <td>{{ $menuItem->created_at }}</td>
+                                        <td>{{ $menuItem->updated_at }}</td>
+                                        <td class="form-group">
+                                            <div>
+                                                <input type="number" class="form-control" value={{ $menuItem->quantity }} id={{ $menuItem->id }} disabled>
+                                                <span type="hidden" class="help-block" id="helpblock"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn-xs btn-primary btn glyphicon glyphicon-edit" name="btnEdit" value={{ $menuItem->id }}>
+                                            </button>
+                                            <button class="btn-xs btn-danger btn glyphicon glyphicon-remove" data-confirm="{{ __('Are you sure you want to delete this item?') }}" name="btnDel" value={{ $menuItem->id }}>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                         {{ $menuOnDate->links() }}

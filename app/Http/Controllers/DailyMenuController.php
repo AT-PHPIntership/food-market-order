@@ -60,15 +60,15 @@ class DailyMenuController extends Controller
      *
      * @return Response
      */
-    public function updateMenuItem(UpdateMenuItemRequest $request)
+    public function update(UpdateMenuItemRequest $request)
     {
         $quantity = $request['quantity'];
         $menuId = $request['menuId'];
         $dailyMenu = $this->dailyMenu->find($menuId);
-        $error = Lang::get('dailymenu.errorEdit');
-        $success = Lang::get('dailymenu.successEdit');
+        $error = __('Has error during update menu item');
+        $success = __('Update menu item success');
 
-        if($dailyMenu->update(['quantity' => $quantity])) {
+        if ($dailyMenu->update(['quantity' => $quantity])) {
             $result = [$dailyMenu->updated_at, 'message' => $success];
             return response()->json($result, 200);
         } else {
@@ -83,13 +83,13 @@ class DailyMenuController extends Controller
      *
      * @return Response
      */
-    public function deleteMenuItem(Request $request)
+    public function destroy(Request $request)
     {
         $menuId = $request['menuId'];
-        $error = Lang::get('dailymenu.errorDel');
-        $success = Lang::get('dailymenu.successDel');
+        $error = __('Has error during delete menu item');
+        $success = __('Delete menu item success');
 
-        if($this->dailyMenu->where('id', $id)->delete()) {
+        if ($this->dailyMenu->where('id', $menuId)->delete()) {
             return response()->json(['message' => $success], 200);
         } else {
             return response()->json(['error' => $error], 404);

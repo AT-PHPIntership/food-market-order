@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Food-market-order</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('layouts.partials.style')
 
 </head>
@@ -48,7 +48,6 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 @include('layouts.partials.script')
-@yield('ajax-js-script')
 @yield('page-js-script')
 </body>
 </html>

@@ -27,7 +27,7 @@ class DailyMenu extends Model
     /**
      * Get the food for the menu item.
      *
-     * @return object
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function food()
     {

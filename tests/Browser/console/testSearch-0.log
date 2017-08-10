@@ -1,0 +1,8 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/mysite.hub\/bower_components\/AdminLTE\/plugins\/datatables\/dataTables.bootstrap.min.js 4:48 Uncaught TypeError: Cannot read property 'defaults' of undefined",
+        "source": "javascript",
+        "timestamp": 1502443349730
+    }
+]
