@@ -18,4 +18,8 @@ class Category extends Model
     {
         return $this->hasMany('App\Food', 'category_id', 'id');
     }
+    protected $fillable = [
+        'name',
+        'description'
+    ];
 }
