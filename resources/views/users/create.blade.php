@@ -71,10 +71,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
                                 <label for="address">{{ __('Address') }}</label>
                                 <input type="text" name="address" class="form-control" id="address"
                                        placeholder="Enter User's Address" value="{{ old('address') }}">
+                                @if ($errors->has('address'))
+                                    <span class="help-block">
+                                              <strong>{{ $errors->first('address') }}</strong>
+                                            </span>
+                                @endif
                             </div>
                             <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
                                 <label for="phoneNumber">{{ __('Phone Number') }}</label>
