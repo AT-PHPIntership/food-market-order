@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +8,8 @@ class Food extends Model
 {
     use softDeletes;
 
+    protected $table = 'foods';
+    protected $fillable = ['id', 'name', 'category_id', 'price', 'description','image'];
     /**
      * Food has many order item
      *
@@ -17,5 +18,15 @@ class Food extends Model
     public function orderItems()
     {
         return $this->morphMany(OrderItem::class, 'itemtable');
+    }
+    
+    /**
+     * Food has one Category
+     *
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Category', 'category_id', 'id');
     }
 }

@@ -36,6 +36,34 @@ class CategoryController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('categories.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request Request from client
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CategoryRequest $request)
+    {
+        if ($this->category->create($request->all())) {
+            flash(__('Create Category Success'))->success()->important();
+            return redirect()->route('categories.index');
+        } else {
+            flash(__('Create Category Error'))->error()->important();
+            return redirect()->route('categories.create');
+        }
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id It is id of category need update
