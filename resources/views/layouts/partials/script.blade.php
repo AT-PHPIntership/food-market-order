@@ -7,12 +7,12 @@
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset("/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js") }}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset("/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
+{{--<script src="{{ asset("/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>--}}
 
-<script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js") }}"></script>
+{{--<script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js") }}"></script>--}}
 
-<script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/jquery.dataTables.min.js") }}"></script>
+{{--<script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/jquery.dataTables.min.js") }}"></script>--}}
 
-<script src="{{  asset("/js/dataTable.js") }}"></script>
+{{--<script src="{{  asset("/js/dataTable.js") }}"></script>--}}
 
-<script src="{{ asset("/js/main.js }}"></script>
+<script src="{{ asset("/js/main.js") }}"></script>

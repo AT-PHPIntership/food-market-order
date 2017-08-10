@@ -36,18 +36,17 @@ class OrderController extends Controller
         // Filter date and key input
         if ($request->has('date')) {
             $orders = $this->order->with('user')
-                ->whereDate('updated_at','=',$request->date)
-                ->orWhereDate('created_at','=',$request->date)
-                ->orWhereDate('trans_at','=',$request->date)
+                ->whereDate('updated_at', '=', $request->date)
+                ->orWhereDate('created_at', '=', $request->date)
+                ->orWhereDate('trans_at', '=', $request->date)
                 ->paginate(10);
-
         } elseif ($request->has('key')) {
             $orders = $this->order
-                ->whereHas('user',function($query) use ($request){
-                    $query->where('full_name','like', '%'.$request->key.'%');
+                ->whereHas('user', function ($query) use ($request) {
+                    $query->where('full_name', 'like', '%'.$request->key.'%');
                 })
-                ->orWhere('custom_address','like','%'.$request->key.'%')
-                ->orWhere('payment','like','%'.$request->key.'%')
+                ->orWhere('custom_address', 'like', '%'.$request->key.'%')
+                ->orWhere('payment', 'like', '%'.$request->key.'%')
                 ->paginate(10);
         } else {
             $orders = $this->order
