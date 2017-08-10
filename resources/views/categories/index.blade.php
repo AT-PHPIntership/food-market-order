@@ -9,6 +9,7 @@
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
+        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -42,12 +43,12 @@
                                               method="post">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                            <button class="btn-xs btn-danger btn btn-confirm-delete"
+                                                    data-confirm="{{__('Are you want delete it?')}}"
+                                                    title="{{__('Delete Category')}}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
                                         </form>
-                                        <button class="btn-xs btn-danger btn btn-confirm-delete"
-                                                data-confirm="{{__('Are you want delete it?')}}"
-                                                title="{{__('Delete Category')}}">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
