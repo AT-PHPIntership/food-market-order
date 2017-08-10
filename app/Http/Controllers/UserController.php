@@ -61,15 +61,22 @@ class UserController extends Controller
      */
     public function update(UserPutRequest $request, $id)
     {
-        $arr = $request->except('_method', '_token');
-        $arr['password'] = ($arr['password'] === $this->user->findOrFail($id)) ? $arr['password'] : bcrypt($arr['password']);
+        $requestInput = $request->except('_method', '_token');
+        $requestInput['password'] = ($requestInput['password'] === $this->user->findOrFail($id)) ? $requestInput['password'] : bcrypt($requestInput['password']);
+        
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . "-" . $file->getClientOriginalName();
-            Image::make($file)->save(public_path('images/users/' . $fileName));
-            $arr['image'] = $fileName;
+            $requestInput['image'] = $fileName;
         }
-        $this->user->where('id', $id)->update($arr) >= 1 ? flash(__('Update Successfully'))->success()->important() : flash(trans('Update Error'))->error()->important();
+        if ($this->user->where('id', $id)->update($requestInput) >= 1) {
+            if (isset($file)) {
+                Image::make($file)->save(public_path('images/users/' . $fileName));
+            }
+            flash(__('Update Successfully'))->success()->important();
+        } else {
+            flash(__('Update Error'))->error()->important();
+        }
         return redirect()->route('users.edit', $id);
     }
 }
