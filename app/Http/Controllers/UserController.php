@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserPutRequest;
-use Faker\Provider\File;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -24,9 +23,9 @@ class UserController extends Controller
     }
 
     /**
-     * Get index page, display the list of resource
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -51,7 +50,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserPostRequest $request)
+    public function store(UserRequest $request)
     {
         $requestInput = $request->all();
 
@@ -59,7 +58,9 @@ class UserController extends Controller
         $requestInput['image'] = $this->getImageFileName($request);
 
         if ($this->user->create($requestInput)) {
-            $this->storageImage($request->file('image'), $requestInput['image']);
+            if ($request->hasFile('image')) {
+                $this->storageImage($request->file('image'), $requestInput['image']);
+            }
             flash(__('User Created!'))->success()->important();
             return redirect()->route('users.index');
         } else {
@@ -93,13 +94,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UserPutRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $requestInput = $request->except('_method', '_token');
         $requestInput['password'] = ($requestInput['password'] === $this->user->findOrFail($id)) ? $requestInput['password'] : bcrypt($requestInput['password']);
         $requestInput['image'] = $this->getImageFileName($request);
         if ($this->user->where('id', $id)->update($requestInput) >= 1) {
-            $this->storageImage($request->file('image'), $requestInput['image']);
+            if ($request->hasFile('image')) {
+                $this->storageImage($request->file('image'), $requestInput['image']);
+            }
             flash(__('Update Successfully'))->success()->important();
             return redirect()->route('users.edit', $id);
         } else {
@@ -136,8 +139,6 @@ class UserController extends Controller
      */
     public function storageImage($file, $fileName)
     {
-        if (isset($file)) {
-            Image::make($file)->save(public_path('images/users/' . $fileName));
-        }
+        Image::make($file)->save(public_path('images/users/' . $fileName));
     }
 }
