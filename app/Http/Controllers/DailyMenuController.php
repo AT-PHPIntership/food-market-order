@@ -28,13 +28,21 @@ class DailyMenuController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @param \Illuminate\Http\Request $request request from view
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $listDailyMenu = $this->dailyMenu->select('date')->distinct()->orderBy('date', 'desc')->paginate(10);
-        
-        return view('daily_menus.index', ['listDailyMenu' => $listDailyMenu]);
+        if ($request->has('date')) {
+            $listDailyMenu = $this->dailyMenu->select('date')
+                                             ->distinct()
+                                             ->where('date', $request['date'])
+                                             ->orderBy('date', 'desc')
+                                             ->paginate(10);
+        } else {
+            $listDailyMenu = $this->dailyMenu->select('date')->distinct()->orderBy('date', 'desc')->paginate(10);
+        }
+        return view('daily_menus.index', ['listDailyMenu' => $listDailyMenu, 'date' => $request['date']]);
     }
 }
