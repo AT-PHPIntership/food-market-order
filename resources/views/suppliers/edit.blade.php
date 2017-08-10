@@ -6,6 +6,7 @@
             <div class="col-md-3">
             </div>
             <div class="col-md-6">
+                @include('flash::message')
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header with-border text-center">

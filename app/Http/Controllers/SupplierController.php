@@ -60,6 +60,11 @@ class SupplierController extends Controller
     {
         $supplier = $this->supplier->findOrFail($id);
         $supplier->update($request->all());
-        return view('suppliers.edit', ['supplier'=> $supplier]);
+        if ($supplier) {
+            flash(__('Update Supplier Success'))->success()->important();
+        } else {
+            flash(__('Update Supplier Errors'))->error()->important();
+        }
+        return back();
     }
 }
