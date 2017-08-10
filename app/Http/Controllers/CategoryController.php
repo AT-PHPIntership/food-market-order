@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Category;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -21,6 +22,17 @@ class CategoryController extends Controller
     public function __construct(Category $category)
     {
         $this->category = $category;
+    }
+
+    /*
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $categories = Category::orderBy('id', 'DESC')->paginate(10);
+        return view('categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -43,10 +55,10 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         if ($this->category->create($request->all())) {
-            flash(__('Create Category Success'))->success();
+            flash(__('Create Category Success'))->success()->important();
             return redirect()->route('categories.index');
         } else {
-            flash(__('Create Category Error'))->error();
+            flash(__('Create Category Error'))->error()->important();
             return redirect()->route('categories.create');
         }
     }
