@@ -25,17 +25,6 @@ class SupplierController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $suppliers = $this->supplier->orderBy('id', 'DESC')->paginate(10);
-        return view('suppliers.index', ['suppliers' => $suppliers]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id It is id of supplier need update
