@@ -27,6 +27,6 @@ class FoodController extends Controller
     public function index()
     {
         $foods = $this->food->orderBy('id', 'DESC')->with('category')->paginate(10);
-        return view('foods.index', ['foods'=>$foods]);
+        return view('foods.index', ['foods' => $foods]);
     }
 }
