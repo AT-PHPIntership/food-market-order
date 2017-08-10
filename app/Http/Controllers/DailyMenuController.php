@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\DailyMenu;
-use App\Http\Requests\DailyMenu\CreateRequest;
 use App\Category;
+use App\Food;
+use App\Http\Requests\DailyMenu\CreateRequest;
 
 class DailyMenuController extends Controller
 {
@@ -15,29 +16,33 @@ class DailyMenuController extends Controller
      * @var DailyMenu
      */
     protected $dailyMenu;
+    /**
+     * The Food implementation.
+     *
+     * @var Food
+     */
+    protected $food;
+    /**
+     * The Category implementation.
+     *
+     * @var Category
+     */
+    protected $category;
 
     /**
      * Create a new controller instance.
      *
      * @param DailyMenu $dailyMenu instance of DailyMenu
+     * @param Food $food instance of Food
+     * @param Category $category instance of Category
      *
      * @return void
      */
-    public function __construct(DailyMenu $dailyMenu)
+    public function __construct(DailyMenu $dailyMenu, Food $food, Category $category)
     {
         $this->dailyMenu = $dailyMenu;
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $listDailyMenu = $this->dailyMenu->select('date')->distinct()->orderBy('date', 'desc')->paginate(10);
-        
-        return view('daily_menus.index', ['listDailyMenu' => $listDailyMenu]);
+        $this->food = $food;
+        $this->category = $category;
     }
 
     /**
@@ -47,10 +52,10 @@ class DailyMenuController extends Controller
      */
     public function create(Request $request)
     {
-        $listCategory = Category::getAll();
+        $listCategory = $this->category->get();
         if ($request->ajax()){
             $category = $request->category;
-            $listFood = Food::where('category_id', $category)->get();
+            $listFood = $this->food->where('category_id', $category)->get();
             return response()->json($listFood);
         }
         if ($request->has('date')) {
@@ -62,7 +67,7 @@ class DailyMenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\DailyMenu\CreateRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRequest $request)
@@ -71,11 +76,15 @@ class DailyMenuController extends Controller
         $food_id = $request['food_id'];
         $quantity = $request['quantity'];
 
+        /**
+         * Check if food has existed in DB, if true then add new quantity with old quantity,
+         * If false then add this food into menu
+         */
         if (sizeof($this->dailyMenu->where('date', $date)->where('food_id', $food_id))>1) {
             $old_quantity = $this->dailyMenu
-                                    ->where('date', $date)
-                                    ->where('food_id', $food_id)
-                                    ->get()[0]['quantity'];
+                                 ->where('date', $date)
+                                 ->where('food_id', $food_id)
+                                 ->get()[0]['quantity'];
             $quantity += $old_quantity;
             $status = $this->dailyMenu->where('food_id', $food_id)->update(['quantity' => $quantity]);
         } else {
@@ -85,6 +94,7 @@ class DailyMenuController extends Controller
             $menu_item->quantity = $quantity;
             $status = $menu_item->save();
         }
+
         if ($status) {
             $request->session()->flash('message.level', 'success');
             $request->session()->flash('message.content', __('Menu was successfully added!'));
@@ -92,7 +102,6 @@ class DailyMenuController extends Controller
             $request->session()->flash('message.level', 'danger');
             $request->session()->flash('message.content', __('Error'));
         }
-        $listCategory = Category::getAll();
         return redirect()->route('daily-menus.create', ['date' => $date]);
     }
 }

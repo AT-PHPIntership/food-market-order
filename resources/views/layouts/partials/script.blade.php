@@ -10,4 +10,7 @@
 <script src="{{ asset("/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
 
 <script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js") }}"></script>
+
 <script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/jquery.dataTables.min.js") }}"></script>
+
+<script src="{{  asset("/js/dataTable.js") }}"></script>
