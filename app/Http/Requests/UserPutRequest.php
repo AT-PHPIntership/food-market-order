@@ -28,6 +28,7 @@ class UserPutRequest extends FormRequest
             'password' => 'required|min:6',
             'birthday' => 'date',
             'phone_number' => 'numeric|required',
+            'address' => 'required',
         ];
     }
 }

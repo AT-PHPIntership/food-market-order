@@ -47,9 +47,9 @@
                     <div class="form-group {{ $errors->has('full_name') ? ' has-error' : '' }}">
                         <label class="col-lg-3 control-label">{{ __('Full Name') }}</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="{{ $user->full_name }}" type="text" name="full_name">
+                            <input class="form-control" value="{{ old('full_name', $user->full_name) }}" type="text" name="full_name">
 
-                            @if ($errors->has('full_mane'))
+                            @if ($errors->has('full_name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('full_name') }}</strong>
                                 </span>
@@ -63,10 +63,15 @@
                                    name="email">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('address') ? ' has-error' : '' }}">
                         <label class="col-lg-3 control-label">{{ __('Address') }}</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="{{ $user->address }}" type="text" name="address">
+                            <input class="form-control" value="{{ old('address', $user->address) }}" type="text" name="address">
+                            @if ($errors->has('address'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('address') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group">
@@ -74,9 +79,9 @@
                         <div class="col-lg-8">
                             <div class="ui-select">
                                 <select id="user_time_zone" class="form-control" name="gender">
-                                    <option @if($user->gender == 1) selected
+                                    <option @if(old('gender', $user->gender) == 1) selected
                                             @endif value="1">{{ __('Male') }}</option>
-                                    <option @if($user->gender == 0) selected
+                                    <option @if(old('gender', $user->gender) == 0) selected
                                             @endif value="0">{{ __('Female') }}</option>
                                 </select>
                             </div>
@@ -87,7 +92,7 @@
                         <div class="col-md-8">
                             <div class="input-group date">
                                 <input type="date" class="form-control pull-right" id="datepicker"
-                                       value="{{ $user->birthday }}" name="birthday">
+                                       value="{{ old('birthday', $user->birthday) }}" name="birthday">
 
                                 @if ($errors->has('birthday'))
                                     <span class="help-block">
@@ -100,7 +105,7 @@
                     <div class="form-group {{ $errors->has('phone_number') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">{{ __('Phone Number') }}</label>
                         <div class="col-md-8">
-                            <input class="form-control" autocomplete="off" value="{{ $user->phone_number }}" type="text"
+                            <input class="form-control" autocomplete="off" value="{{ old('phone_number'), $user->phone_number }}" type="text"
                                    name="phone_number">
 
                             @if ($errors->has('phone_number'))

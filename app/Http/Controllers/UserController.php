@@ -46,7 +46,7 @@ class UserController extends Controller
         if ($user = $this->user->findOrFail($id)) {
             return view('users.edit', ['user' => $user]);
         } else {
-            flash(trans('user.no-data'))->error()->important();
+            flash(__('Error! nothing to show!'))->error()->important();
             return redirect()->route('users.index');
         }
     }
@@ -63,20 +63,47 @@ class UserController extends Controller
     {
         $requestInput = $request->except('_method', '_token');
         $requestInput['password'] = ($requestInput['password'] === $this->user->findOrFail($id)) ? $requestInput['password'] : bcrypt($requestInput['password']);
-        
+        $requestInput = $this->getImageFileName($request);
+        if ($this->user->where('id', $id)->update($requestInput) >= 1) {
+            $this->storageImage($request->file('image'), $requestInput['image']);
+            flash(__('Update Successfully'))->success()->important();
+            return redirect()->route('users.edit', $id);
+        } else {
+            flash(__('Update Error'))->error()->important();
+            return redirect()->route('users.edit', $id)->withInput();
+        }
+    }
+
+    /**
+     * Get filename from request
+     *
+     * @param Request $request the request need to get file name
+     *
+     * @return string
+     */
+    public function getImageFileName(Request $request)
+    {
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . "-" . $file->getClientOriginalName();
-            $requestInput['image'] = $fileName;
-        }
-        if ($this->user->where('id', $id)->update($requestInput) >= 1) {
-            if (isset($file)) {
-                Image::make($file)->save(public_path('images/users/' . $fileName));
-            }
-            flash(__('Update Successfully'))->success()->important();
         } else {
-            flash(__('Update Error'))->error()->important();
+            $fileName = 'default.jpg';
         }
-        return redirect()->route('users.edit', $id);
+        return $fileName;
+    }
+
+    /**
+     * Save image file to public/image/users
+     *
+     * @param File   $file     image file
+     * @param string $fileName the name to storage
+     *
+     * @return void
+     */
+    public function storageImage(File $file, $fileName)
+    {
+        if (isset($file)) {
+            Image::make($file)->save(public_path('images/users/' . $fileName));
+        }
     }
 }
