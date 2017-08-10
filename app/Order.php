@@ -20,6 +20,16 @@ class Order extends Model
     }
 
     /**
+     * Order belongsTo User
+     *
+     * @return array
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id', 'id');
+    }
+
+    /**
      * This is a recommended way to declare event handlers
      *
      * @return void

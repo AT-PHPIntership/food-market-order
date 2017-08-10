@@ -5,4 +5,10 @@ $(document).ready(function() {
             $('form.delete-item').submit();
         }
     });
+    $("#date-sort").change(function(){
+        window.location = '/'+$("#date-sort").attr("data-table")+'/?date='+$("date-sort").val();
+    });
+    $("#text-sort").change(function(){
+        window.location = '/'+$("#text-sort").attr("data-table")+'?key='+$("#text-sort").val();
+    });
 });
