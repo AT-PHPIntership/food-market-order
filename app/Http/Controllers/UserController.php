@@ -68,7 +68,6 @@ class UserController extends Controller
         } else {
             flash(__('Create User Error'))->error()->important();
         }
-
         return redirect()->route('users.index');
     }
 }
