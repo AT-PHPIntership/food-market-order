@@ -24,7 +24,7 @@ class CategoryController extends Controller
         $this->category = $category;
     }
 
-    /*
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
