@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SupplierRequest;
+use App\Supplier;
 
 class SupplierController extends Controller
 {
@@ -42,7 +43,12 @@ class SupplierController extends Controller
      */
     public function store(SupplierRequest $request)
     {
-        $this->supplier->create($request->all());
-        return redirect()->route('suppliers.index');
+        if ($this->supplier->create($request->all())) {
+            flash(__('Create Supplier Success'))->success()->important();
+            return redirect()->route('suppliers.index');
+        } else {
+            flash(__('Create Supplier Error'))->error()->important();
+            return redirect()->route('suppliers.create');
+        }
     }
 }
