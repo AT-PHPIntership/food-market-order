@@ -21,7 +21,7 @@
                             <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="inputEmail1">{{ __('Email') }}</label>
                                 <input type="email" name="email" class="form-control" id="inputEmail1"
-                                       placeholder="Enter email">
+                                       placeholder="Enter email" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -31,7 +31,7 @@
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="inputPassword">{{ __('Password') }}</label>
                                 <input type="password" name="password" class="form-control" id="inputPassword"
-                                       placeholder="Password">
+                                       placeholder="Password" value="{{ old('password') }}">
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -41,7 +41,7 @@
                             <div class="form-group{{ $errors->has('full_name') ? ' has-error' : '' }}">
                                 <label for="fullName">{{ __('Full name') }}</label>
                                 <input type="text" name="full_name" class="form-control" id="fullName"
-                                       placeholder="Enter User's Name">
+                                       placeholder="Enter Full Name" value="{{ old('full_name') }}">
                                 @if ($errors->has('full_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('full_name') }}</strong>
@@ -62,7 +62,7 @@
                                     <label>{{ __('Birthday') }}</label>
                                     <div class="input-group date">
                                         <input name="birthday" type="date" class="form-control pull-right"
-                                               id="datepicker">
+                                               id="datepicker" value="{{ old('birthday') }}">
                                         @if ($errors->has('birthday'))
                                             <span class="help-block">
                                               <strong>{{ $errors->first('birthday') }}</strong>
@@ -74,12 +74,12 @@
                             <div class="form-group">
                                 <label for="address">{{ __('Address') }}</label>
                                 <input type="text" name="address" class="form-control" id="address"
-                                       placeholder="Enter User's Address">
+                                       placeholder="Enter User's Address" value="{{ old('address') }}">
                             </div>
                             <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
                                 <label for="phoneNumber">{{ __('Phone Number') }}</label>
                                 <input type="text" name="phone_number" class="form-control" id="phoneNumber"
-                                       placeholder="Enter User's Phone Number">
+                                       placeholder="Enter User's Phone Number" value="{{ old('phone_number') }}">
                                 @if ($errors->has('phone_number'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phone_number') }}</strong>
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="box-footer text-center">
-                            <input type="submit" class="btn btn-primary" value="Create">
+                            <input type="submit" class="btn btn-primary" value="{{ __('Create') }}">
                         </div>
                     </form>
                 </div>

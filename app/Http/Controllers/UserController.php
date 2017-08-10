@@ -61,7 +61,7 @@ class UserController extends Controller
         }
 
         if ($this->user->create($arr)) {
-            if (isset ($file)) {
+            if (isset($file)) {
                 Image::make($file)->save(public_path('images/users/'. $fileName));
             }
             flash(__('User Created!'))->success()->important();
