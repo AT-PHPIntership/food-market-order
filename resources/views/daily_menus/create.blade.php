@@ -7,7 +7,7 @@
             @if((!empty($date))||(session()->has('date')))
             	{{ _('Add Item For') }} {{ $date }}{!! session('date') !!}
             @else
-            	@lang('dailymenu.createTitle')
+            	{{ _('Create New Menu Item')}}
             @endif
             </h3>
         </div>
@@ -58,7 +58,7 @@
 					<tr>
 						<td id="categoryselect" style="width: 5em">
 							<select class="form-control" id="cateselect">
-								<option value="">Choose Category</option>
+								<option value="">{{ _('Choose category') }}</option>
 								@foreach ($listCategory as $category)
 								<option value="{{ $category->id }}">{{ $category->name }}</option>
 								@endforeach
@@ -76,7 +76,7 @@
 			</table>
 		</div>
 	</div>
-	<input type="submit" id="add_row" class="btn btn-primary pull-right" value="Add To Menu">
+	<input type="submit" id="add_row" class="btn btn-primary pull-right" value={{ _('Add To Menu') }}>
 	</form>
 </div>
 @endsection

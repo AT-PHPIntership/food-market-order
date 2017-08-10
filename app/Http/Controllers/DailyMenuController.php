@@ -33,8 +33,8 @@ class DailyMenuController extends Controller
      * Create a new controller instance.
      *
      * @param DailyMenu $dailyMenu instance of DailyMenu
-     * @param Food $food instance of Food
-     * @param Category $category instance of Category
+     * @param Food      $food      instance of Food
+     * @param Category  $category  instance of Category
      *
      * @return void
      */
@@ -48,17 +48,18 @@ class DailyMenuController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param \Illuminate\Http\Request $request request value
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
         $listCategory = $this->category->get();
-        if ($request->ajax()){
-            $category = $request->category;
-            $listFood = $this->food->where('category_id', $category)->get();
+        if ($request->ajax()) {
+            $categoryId = $request->category_id;
+            $listFood = $this->food->where('category_id', $categoryId)->get();
             return response()->json($listFood);
-        }
-        if ($request->has('date')) {
+        } else if ($request->has('date')) {
             return view('daily_menus.create', ['listCategory' => $listCategory, 'date' => $request['date']]);
         }
         return view('daily_menus.create', ['listCategory' => $listCategory]);
@@ -67,33 +68,21 @@ class DailyMenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\DailyMenu\CreateRequest  $request
+     * @param App\Http\Requests\DailyMenu\CreateRequest $request request value
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRequest $request)
     {
         $date = $request['date'];
-        $food_id = $request['food_id'];
+        $foodId = $request['food_id'];
         $quantity = $request['quantity'];
-
         /**
-         * Check if food has existed in DB, if true then add new quantity with old quantity,
+         * Check if food has existed in DB, if true then update new quantity,
          * If false then add this food into menu
          */
-        if (sizeof($this->dailyMenu->where('date', $date)->where('food_id', $food_id))>1) {
-            $old_quantity = $this->dailyMenu
-                                 ->where('date', $date)
-                                 ->where('food_id', $food_id)
-                                 ->get()[0]['quantity'];
-            $quantity += $old_quantity;
-            $status = $this->dailyMenu->where('food_id', $food_id)->update(['quantity' => $quantity]);
-        } else {
-            $menu_item = new DailyMenu;
-            $menu_item->date = $date;
-            $menu_item->food_id = $food_id;
-            $menu_item->quantity = $quantity;
-            $status = $menu_item->save();
-        }
+        $matchDailyMenu = array('date' => $date, 'food_id' => $foodId);
+        $status = $this->dailyMenu->updateOrCreate($matchDailyMenu, ['quantity' => $quantity]);
 
         if ($status) {
             $request->session()->flash('message.level', 'success');

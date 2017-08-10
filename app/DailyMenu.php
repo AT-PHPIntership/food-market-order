@@ -13,6 +13,11 @@ class DailyMenu extends Model
      * Enable created_at and updated_at behavior
      */
     public $timestamps = true;
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
     /**
      * The table associated with the model.
@@ -20,11 +25,17 @@ class DailyMenu extends Model
      * @var string
      */
     protected $table = 'daily_menus';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['quantity', 'created_at', 'updated_at'];
 
     /**
      * Get the foods for the menu item.
-     * @return relationship
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function food()
     {

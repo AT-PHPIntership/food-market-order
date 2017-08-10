@@ -32,9 +32,3 @@ Route::resource('orders', 'OrderController');
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
-Route::post('/daily-menus/getFoodList', 'DailyMenuController@storeNewMenu'); //route for ajax request
-
-Route::post('/daily-menus/editMenuItem', 'DailyMenuController@updateMenuItem'); //route for ajax request
-
-Route::post('/daily-menus/deleteMenuItem', 'DailyMenuController@deleteMenuItem'); //route for ajax request

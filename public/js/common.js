@@ -39,7 +39,7 @@ window.onload = function() {
             type: "GET",
             url: $url,
             data: {
-                category: e.target.options[e.target.selectedIndex].value
+                category_id: e.target.options[e.target.selectedIndex].value
             },
             success: function(data) {
                 data.forEach(function(foodElement) {
