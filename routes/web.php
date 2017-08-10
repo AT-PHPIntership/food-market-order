@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::resource('users', 'UserController');
 
 Route::resource('categories', 'CategoryController');
