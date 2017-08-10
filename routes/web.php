@@ -29,6 +29,4 @@ Route::resource('materials', 'MaterialController');
 
 Route::resource('orders', 'OrderController');
 
-Route::post('/daily-menus/editMenuItem', 'DailyMenuController@updateMenuItem'); //route for ajax request
-
-Route::post('/daily-menus/deleteMenuItem', 'DailyMenuController@deleteMenuItem'); //route for ajax request
+Auth::routes();

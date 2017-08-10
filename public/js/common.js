@@ -114,7 +114,7 @@ window.onload = function() {
                         'menuId': $menuId,
                         'quantity': $newQuantity
                     });
-                callAjax($menuItem[0], event.target, './editMenuItem', 'POST');
+                callAjax($menuItem[0], event.target, './daily-menus', 'PUT');
             }
         });
     }
@@ -134,7 +134,7 @@ window.onload = function() {
             let $menu = [];
             $menu.push({'menuId': $menuId});
             if (confirm(event.target.getAttribute('data-confirm'))) {
-                callAjax($menu[0], event.target, './deleteMenuItem', 'POST');
+                callAjax($menu[0], event.target, './daily-menus', 'DELETE');
             }
         });
     }
