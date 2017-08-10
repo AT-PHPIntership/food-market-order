@@ -9,6 +9,7 @@
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
+        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -19,10 +20,10 @@
                                aria-describedby="list-suppliers-info">
                             <thead>
                             <tr role="row">
-                                <th style="width: 1em">{{__('ID')}}</th>
-                                <th style="width: 7em">{{__('Name')}}</th>
-                                <th>{{__('Description')}}</th>
-                                <th style="width: 5em">{{__('Action')}}</th>
+                                <th class = "col-md-1">{{__('ID')}}</th>
+                                <th class = "col-md-3">{{__('Name')}}</th>
+                                <th class = "col-md-6">{{__('Description')}}</th>
+                                <th class = "col-md-2">{{__('Action')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -32,22 +33,22 @@
                                     <td>{{ $supplier->name  }}</td>
                                     <td>{{ $supplier->description }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-success btn-edit-item"
+                                        <a class="btn btn-sm btn-success btn-edit-item pull-left"
                                            href="{{ route('suppliers.edit', $supplier->id)}}"
-                                           title="{{__('Edit supplier')}}">
+                                           title="{{__('Edit Supplier')}}">
                                             <span class="glyphicon glyphicon-pencil"></span>
-                                        </a> -
+                                        </a> <span class="pull-left">-</span>
                                         <form role="form" class="delete-item pull-left"
                                               action="{{ route('suppliers.destroy', $supplier->id)}}"
                                               method="post">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                            <button class="btn-sm btn-danger btn btn-confirm-delete"
+                                                    data-confirm="{{__('Are you want delete it?')}}"
+                                                    title="{{__('Delete Supplier')}}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
                                         </form>
-                                        <button class="btn-xs btn-danger btn btn-confirm-delete"
-                                                data-confirm="{{__('Are you want delete it?')}}"
-                                                title="{{__('Delete supplier')}}">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
