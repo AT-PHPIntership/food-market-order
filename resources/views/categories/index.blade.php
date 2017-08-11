@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('main-content')
-    <div class="box">
+    <div class="box" xmlns="http://www.w3.org/1999/html">
         <div class="box-header">
             <h3 class="box-title">{{__('List Categories')}}</h3>
             <a id="btn-add-category" class="btn btn-primary pull-right" href="{{ route('categories.create') }}"
@@ -33,11 +33,12 @@
                                     <td>{{ $category->name  }}</td>
                                     <td>{{ $category->description }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-success btn-edit-item"
+                                        <a class="btn btn-xs btn-success btn-edit-item pull-left"
                                            href="{{ route('categories.edit', $category->id)}}"
                                            title="{{__('Edit Category')}}">
                                             <span class="glyphicon glyphicon-pencil"></span>
-                                        </a> -
+                                        </a>
+                                        <span class="pull-left">-</span>
                                         <form role="form" class="delete-item pull-left"
                                               action="{{ route('categories.destroy', $category->id)}}"
                                               method="post">
