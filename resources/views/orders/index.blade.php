@@ -36,58 +36,63 @@
                             </thead>
                             <tbody>
                             @foreach ($orders as $order)
-                                <tr>
-                                    <td></td>
-                                    <td>{{ $order->id }}</td>
-                                    <td>{{ $order->user->full_name }}</td>
-                                    <td>{{ $order->created_at }}</td>
-                                    <td>{{ $order->updated_at }}</td>
-                                    <td>{{ $order->trans_at }}</td>
-                                    <td>{{ $order->custom_address }}</td>
-                                    <td>{{ $order->payment }}</td>
-                                    <td>
-                                        @if ($order->status == 0)
-                                            {{__('Cancel')}}
-                                        @endif
-                                        @if ($order->status == 1)
-                                            {{__('Pending')}}
-                                        @endif
-                                        @if ($order->status == 2)
-                                            {{__('Sending')}}
-                                        @endif
-                                        @if ($order->status == 3)
-                                            {{__('Finish')}}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-info"
-                                           href="{{ route('orders.show',$order->id) }}"
-                                           title="{{__('Detail')}}">
-                                            <span class="glyphicon glyphicon-zoom-in">
-                                            </span>
-                                        </a>
-                                        @if ($order->status != 2)
-                                            <button class="btn-success btn" title="{{__('Confirm')}}">
-                                                <span class="glyphicon glyphicon-ok"></span>
+                                <form role="form" class="confirm-data pull-left"
+                                      action="{{ route('orders.update', $order->id)}}"
+                                      method="post">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $order->id }}</td>
+                                        <td>{{ $order->user->full_name }}</td>
+                                        <td>{{ $order->created_at }}</td>
+                                        <td>{{ $order->updated_at }}</td>
+                                        <td>{{ $order->trans_at }}</td>
+                                        <td>{{ $order->custom_address }}</td>
+                                        <td>{{ $order->payment }}</td>
+                                        <td>
+                                                <select class="form-control" name="status">
+                                                    <option {{ $order->status == 0 ? 'selected' : ''}}
+                                                            value="{{0}}">{{__('Cancel')}}</option>
+                                                    <option {{ $order->status == 1 ? 'selected' : ''}}
+                                                            value="{{1}}">{{__('Pending')}}</option>
+                                                    <option {{ $order->status == 2 ? 'selected' : ''}}
+                                                            value="{{2}}">{{__('Sending')}}</option>
+                                                    <option {{ $order->status == 3 ? 'selected' : ''}}
+                                                            value="{{3}}">{{__('Finish')}}</option>
+                                                </select>
+
+
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-info btn-sm"
+                                               href="{{ route('orders.show',$order->id) }}"
+                                               title="{{__('Detail')}}">
+                                                <span class="glyphicon glyphicon-zoom-in">
+                                                </span>
+                                            </a>
+                                            <button class="btn-change-status btn-success btn btn-sm"
+                                                    type="submit"
+                                                    title="{{__('Confirm')}}"
+                                                    data-confirm = "{{__('Are you sure change status this?')}}"
+                                                    >
+                                                <span class="glyphicon glyphicon-ok-circle"></span>
                                             </button>
-                                        @endif
-                                        @if ($order->status == 2)
-                                            <button class="btn-success btn" title="{{__('Confirm')}}" disabled>
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            </button>
-                                        @endif
-                                        @if ($order->status == 2)
-                                            <button class="btn-danger btn" title="{{__('Cancel')}}" disabled>
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        @endif
-                                        @if ($order->status != 2)
-                                            <button class="btn-danger btn" title="{{__('Cancel')}}">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        @endif
-                                    </td>
-                                </tr>
+                                            <form role="form" class="delete-item pull-left"
+                                                  action="{{ route('orders.destroy', $order->id)}}"
+                                                  method="post">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                <button class="btn-danger btn btn-sm btn-confirm-delete"
+                                                        data-confirm="{{__('Are you want delete it?')}}"
+                                                        title="{{__('Delete Order')}}"
+                                                        type="submit">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </form>
                             @endforeach
                             </tbody>
                         </table>
