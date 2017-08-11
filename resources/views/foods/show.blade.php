@@ -68,7 +68,7 @@
                             </strong>
                         </td>
                         <td class="text-primary">
-                            {{$food->description}}
+                            {{ $food->description }}
                         </td>
                     </tr>
                     <tr>

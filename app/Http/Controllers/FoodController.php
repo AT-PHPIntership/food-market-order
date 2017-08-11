@@ -33,7 +33,7 @@ class FoodController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id of food
+     * @param int $id of food
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,5 +41,22 @@ class FoodController extends Controller
     {
         $food = $this->food->findOrFail($id);
         return view('foods.show', ['food' => $food]);
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It is id of food want to delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if ($this->food->findOrFail($id)->delete()) {
+            flash(__('Delete Food Success'))->success()->important();
+        } else {
+            flash(__('Delete Food Error'))->error()->important();
+        }
+        return redirect()->route('foods.index');
     }
 }
