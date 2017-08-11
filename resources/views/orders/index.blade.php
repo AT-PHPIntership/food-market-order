@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <input id="text-sort" class="form-control pull-left margin-bottom" type="text"
-                               value="{{ app('request')->has('key') ? app('request')->input('key') : '' }}"
+                               value="{{ app('request')->has('keyword') ? app('request')->input('keyword') : '' }}"
                                placeholder="{{__('Key search')}}"
                                data-table="{{__('orders')}}">
                         <input id="date-sort" class="form-control pull-right margin-bottom" type="date"

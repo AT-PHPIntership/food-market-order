@@ -11,7 +11,7 @@ $(document).ready(function() {
         window.location = '/'+$("#date-sort").attr("data-table")+'/?date='+$("#date-sort").val();
     });
     $("#text-sort").change(function(){
-        window.location = '/'+$("#text-sort").attr("data-table")+'?key='+$("#text-sort").val();
+        window.location = '/'+$("#text-sort").attr("data-table")+'?keyword='+$("#text-sort").val();
     });
     $(".btn-change-status").bind('click',function(e){
         var result = confirm($(".btn-change-status").attr("data-confirm"));

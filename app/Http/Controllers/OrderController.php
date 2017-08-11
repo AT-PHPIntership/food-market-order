@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -34,26 +33,24 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        $orders = $this->order;
         // Filter date and key input
         if ($request->has('date')) {
-            $orders = $this->order->with('user')
+            $orders = $orders->with('user')
                 ->whereDate('updated_at', '=', $request->date)
                 ->orWhereDate('created_at', '=', $request->date)
-                ->orWhereDate('trans_at', '=', $request->date)
-                ->paginate(10);
-        } elseif ($request->has('key')) {
+                ->orWhereDate('trans_at', '=', $request->date);
+        } elseif ($request->has('keyword')) {
             $orders = $this->order
                 ->whereHas('user', function ($query) use ($request) {
-                    $query->where('full_name', 'like', '%'.$request->key.'%');
+                    $query->where('full_name', 'like', '%'.$request->keyword.'%');
                 })
-                ->orWhere('custom_address', 'like', '%'.$request->key.'%')
-                ->orWhere('payment', 'like', '%'.$request->key.'%')
-                ->paginate(10);
+                ->orWhere('custom_address', 'like', '%'.$request->keyword.'%')
+                ->orWhere('payment', 'like', '%'.$request->keyword.'%');
         } else {
-            $orders = $this->order
-                ->with('user')
-                ->paginate(10);
+            $orders = $orders->with('user');
         }
+        $orders = $orders->paginate(Order::ITEM_PER_PAGE);
         return view('orders.index', ['orders' => $orders]);
     }
 }
