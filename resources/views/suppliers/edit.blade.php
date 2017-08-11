@@ -21,13 +21,13 @@
                             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                 <label for="name">{{__('Supplier Name')}}</label>
                                 <input type="text" class="form-control" name="name" placeholder=""
-                                       value="{{ $errors->has('name') ? old('name') : $supplier->name }}">
+                                       value="{{ old('name',$supplier->name) }}">
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             </div>
                             <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                                 <label for="description">{{__('Description')}}</label>
                                 <textarea class="form-control"
-                                          name="description">{{ $errors->has('description') ? old('description') : $supplier->description }}</textarea>
+                                          name="description">{{ old('description',$supplier->description) }}</textarea>
                                 <span class="text-danger">{{ $errors->first('description') }}</span>
                             </div>
                         </div>
