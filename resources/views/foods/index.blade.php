@@ -60,5 +60,6 @@
         </div>
         @else
         <h1>{{ __('NO DATA') }}</h1>
+        @
     </div>
 @endsection
