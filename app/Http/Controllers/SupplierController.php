@@ -23,6 +23,17 @@ class SupplierController extends Controller
     {
         $this->supplier = $supplier;
     }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $suppliers = $this->supplier->orderBy('id', 'ASC')->paginate(10);
+        return view('suppliers.index', ['suppliers' => $suppliers]);
+    }
 
     /**
      * Show the form for editing the specified resource.
