@@ -12,7 +12,7 @@ class Category extends Model
     /**
      * Category has many foods
      *
-     * @return array
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function foods()
     {

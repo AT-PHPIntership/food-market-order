@@ -41,10 +41,9 @@ class OrderController extends Controller
                 ->orWhereDate('created_at', '=', $request->date)
                 ->orWhereDate('trans_at', '=', $request->date);
         } elseif ($request->has('keyword')) {
-            $orders = $this->order
-                ->whereHas('user', function ($query) use ($request) {
+            $orders = $orders->whereHas('user', function ($query) use ($request) {
                     $query->where('full_name', 'like', '%'.$request->keyword.'%');
-                })
+            })
                 ->orWhere('custom_address', 'like', '%'.$request->keyword.'%')
                 ->orWhere('payment', 'like', '%'.$request->keyword.'%');
         } else {
