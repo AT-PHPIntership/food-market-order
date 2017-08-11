@@ -15,19 +15,19 @@
                     <!-- /.box-header -->
                     <!-- form start -->
                     <form role="form" action="{{ route('suppliers.update', ['id' => $supplier->id])}}" method="post">
-                        <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        {{ method_field('PUT') }}
+                        {{ csrf_field() }}
                         <div class="box-body">
                             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                 <label for="name">{{__('Supplier Name')}}</label>
                                 <input type="text" class="form-control" name="name" placeholder=""
-                                       value="{{ $supplier->name }}">
+                                       value="{{ $errors->has('name') ? old('name') : $supplier->name }}">
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             </div>
                             <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                                 <label for="description">{{__('Description')}}</label>
                                 <textarea class="form-control"
-                                          name="description">{{ $supplier->description }}</textarea>
+                                          name="description">{{ $errors->has('description') ? old('description') : $supplier->description }}</textarea>
                                 <span class="text-danger">{{ $errors->first('description') }}</span>
                             </div>
                         </div>

@@ -25,6 +25,7 @@ class SupplierRequest extends FormRequest
     {
          return [
            'name' => 'required|unique:suppliers|max:255',
+            'description' => 'required',
          ];
     }
 }

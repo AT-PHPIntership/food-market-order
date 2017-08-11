@@ -54,6 +54,6 @@ class SupplierController extends Controller
         } else {
             flash(__('Update Supplier Errors'))->error()->important();
         }
-        return back();
+        return redirect()->route('suppliers.edit', $id);
     }
 }
