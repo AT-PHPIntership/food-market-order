@@ -48,6 +48,10 @@ class User extends Authenticatable
     {
         parent::boot();
 
+        static::creating(function ($user) {
+            $user->password = bcrypt($user->password);
+        });
+
         static::deleting(function ($user) {
             $user->orders()->delete();
         });

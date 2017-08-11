@@ -95,4 +95,22 @@ class CategoryController extends Controller
         }
         return back();
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It is category id want delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $category = $this->category->find($id);
+        if ($category->delete()) {
+            flash(__('Delete Category Success'))->success()->important();
+        } else {
+            flash(__('Delete Category Errors'))->error()->important();
+        }
+        return redirect()->route('categories.index');
+    }
 }
