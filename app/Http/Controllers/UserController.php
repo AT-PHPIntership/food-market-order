@@ -70,6 +70,27 @@ class UserController extends Controller
     }
 
     /**
+     * Destroy user
+     *
+     * @param Integer $id id of user to destroy
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        if (Auth::user()->id == $id) {
+            flash(__('Cannot delete current user!'))->error()->important();
+        } else {
+            if ($this->user->findOrFail($id)->delete()) {
+                flash(__('Delete Successfully!'))->success()->important();
+            } else {
+                flash(__('Delete Error!'))->error()->important();
+            }
+        }
+        return redirect()->route('users.index');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id id user update
