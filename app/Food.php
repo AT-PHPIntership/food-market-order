@@ -10,7 +10,8 @@ class Food extends Model
     use softDeletes;
     
     protected $table = "foods";
-
+    protected $fillable = ['id', 'name', 'category_id', 'price', 'description','image'];
+    
     /**
      * Food has many order item
      *

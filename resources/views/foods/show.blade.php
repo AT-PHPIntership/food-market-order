@@ -5,7 +5,7 @@
 <div class="panel-body inf-content">
     <div class="row">
         <div class="col-md-4">
-            <img class="img-thumbnail" src="/images/foods/{{ $food->image }}" data-original-title="Usuario"> 
+            <img class="img-thumbnail" src="{{ asset(config('constant.path_upload_foods'))}}/{{$food->image }}" data-original-title="Usuario"> 
         </div>
         <div class="col-md-6 h4">
             <strong>{{ __('Food Information') }}</strong><br>
