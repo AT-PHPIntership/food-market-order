@@ -55,7 +55,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request request user update
-     * @param int $id id user update
+     * @param int                      $id      id user update
      *
      * @return \Illuminate\Http\Response
      */
@@ -97,7 +97,7 @@ class UserController extends Controller
     /**
      * Save image file to public/image/users
      *
-     * @param File $file image file
+     * @param File   $file     image file
      * @param string $fileName the name to storage
      *
      * @return void
