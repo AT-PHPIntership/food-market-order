@@ -29,4 +29,21 @@ class FoodController extends Controller
         $foods = $this->food->orderBy('id', 'DESC')->with('category')->paginate(10);
         return view('foods.index', ['foods' => $foods]);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It 's id of food want to delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if ($this->food->findOrFail($id)->delete()) {
+            flash(__('Delete Food Success'))->success()->important();
+        } else {
+            flash(__('Delete Food Errors'))->error()->important();
+        }
+        return redirect()->route('foods.index');
+    }
 }

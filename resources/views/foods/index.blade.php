@@ -7,6 +7,7 @@
             <a href="{{ route('foods.create') }}" class="btn btn-primary btn-xl pull-right fa fa-plus"> {{ __('Add Food') }}</a>
         </div>
         <!-- /.box-header -->
+        @include('flash::message')
         @if(isset($foods))
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
