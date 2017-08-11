@@ -45,13 +45,13 @@
 				@endif
 				<div class="form-group">
                   <label for="dateChooser">{{ _('Choose Date') }}: </label>
-                  @if(!empty($date))
+                  @if(empty($date))
+                  	<input type="date" class="form-control" id = "dateChooser" name="date" style="width: 20em">
+                  @else
                   	<input type="date" class="form-control" id = "dateChooser" name="date" value="{{ $date }}" style="width: 20em">
                   	<a href="{{ route('daily-menus.show', $date) }}">
                                             <span class="btn-xl btn-primary btn pull-right">{{ _('Show Menu') }}</span>
                     </a>
-                  @else
-                  	<input type="date" class="form-control" id = "dateChooser" name="date" style="width: 20em">
 				  @endif
                 </div>
 				<tbody id='myBody'>

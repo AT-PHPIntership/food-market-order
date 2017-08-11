@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'full_name', 'email', 'password', 'image',
+        'full_name', 'email', 'password', 'image', 'address', 'birthday', 'gender', 'phone_number'
     ];
 
     /**
@@ -47,6 +47,10 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
+
+        static::creating(function ($user) {
+            $user->password = bcrypt($user->password);
+        });
 
         static::deleting(function ($user) {
             $user->orders()->delete();

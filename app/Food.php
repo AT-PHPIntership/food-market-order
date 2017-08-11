@@ -6,15 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Food extends Model
 {
-    /**
-     * Get the category for the food.
-     *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function category()
-    {
-        return $this->belongsTo('App\Category', 'category_id', 'id');
-    }
+    use softDeletes;
+    
+    protected $table = "foods";
 
     /**
      * Food has many order item
@@ -24,5 +18,15 @@ class Food extends Model
     public function orderItems()
     {
         return $this->morphMany(OrderItem::class, 'itemtable');
+    }
+
+    /**
+     * Food has one Category
+     *
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Category', 'category_id', 'id');
     }
 }

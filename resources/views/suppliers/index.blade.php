@@ -1,0 +1,63 @@
+@extends('layouts.master')
+
+@section('main-content')
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">{{__('List Suppliers')}}</h3>
+            <a id="btn-add-supplier" class="btn btn-primary pull-right" href="{{ route('suppliers.create') }}"
+               title="{{__('Add Suppliers')}}">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
+        @include('flash::message')
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered table-striped dataTable table-hover"
+                               role="grid"
+                               aria-describedby="list-suppliers-info">
+                            <thead>
+                            <tr role="row">
+                                <th class = "col-md-1">{{__('ID')}}</th>
+                                <th class = "col-md-3">{{__('Name')}}</th>
+                                <th class = "col-md-6">{{__('Description')}}</th>
+                                <th class = "col-md-2">{{__('Action')}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($suppliers as $supplier)
+                                <tr>
+                                    <td>{{ $supplier->id }}</td>
+                                    <td>{{ $supplier->name  }}</td>
+                                    <td>{{ $supplier->description }}</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-success btn-edit-item pull-left"
+                                           href="{{ route('suppliers.edit', $supplier->id)}}"
+                                           title="{{__('Edit Supplier')}}">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a> <span class="pull-left">-</span>
+                                        <form role="form" class="delete-item pull-left"
+                                              action="{{ route('suppliers.destroy', $supplier->id)}}"
+                                              method="post">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                            <button class="btn-sm btn-danger btn btn-confirm-delete"
+                                                    data-confirm="{{__('Are you want delete it?')}}"
+                                                    title="{{__('Delete Supplier')}}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {{ $suppliers->links() }}
+        </div>
+    </div>
+@endsection
