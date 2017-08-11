@@ -22,4 +22,5 @@ class Category extends Model
         'name',
         'description'
     ];
+    protected $dates = ['deleted_at'];
 }
