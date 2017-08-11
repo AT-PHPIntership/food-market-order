@@ -23,6 +23,17 @@ class FoodController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $foods = $this->food->orderBy('id', 'DESC')->with('category')->paginate(10);
+        return view('foods.index', ['foods' => $foods]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -49,17 +60,17 @@ class FoodController extends Controller
             $fileName = time() . "-" . $file->getClientOriginalName();
             $arrFoods['image'] = $fileName;
         } else {
-            $arrFoods['image'] = 'default.jpg';
+            $arrFoods['image'] = config('constant.default_image');
         }
         if ($this->food->create($arrFoods)) {
             if ($request->hasFile('image')) {
                 Image::make($file)->save(public_path(config('constant.path_upload_foods'). $fileName));
             }
             flash(__('Food Created'))->success()->important();
-            return redirect()->route('foods.create');
+            return redirect()->route('foods.index');
         } else {
             flash(__('Create Food Error'))->error()->important();
-            return redirect()->route('foods.create');
+            return redirect()->back();
         }
     }
 }

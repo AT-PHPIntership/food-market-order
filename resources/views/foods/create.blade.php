@@ -24,9 +24,10 @@
             <div class="form-group  {{ $errors->has('category_id') ? ' has-error' : '' }}">
               <label>{{ __('Category') }}</label>
              <select class="form-group" name="category_id">
-                <option value="" selected>{{ __('Choose Category') }}</option>
-                @foreach($categories as $catName)
-                <option value="{{ $catName->id }}">{{ $catName->name }}</option>
+                <option value="">{{ __('Choose Category') }}</option>
+                @foreach($categories as $category)
+                  <option {{ (old('category_id') == $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}
+                  </option>
                 @endforeach
               </select>
               @if($errors->first('category_id'))

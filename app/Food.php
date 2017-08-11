@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Food extends Model
 {
     use softDeletes;
-
-    protected $table = 'foods';
+    
+    protected $table = "foods";
     protected $fillable = ['id', 'name', 'category_id', 'price', 'description','image'];
+    
     /**
      * Food has many order item
      *
@@ -20,7 +21,7 @@ class Food extends Model
     {
         return $this->morphMany(OrderItem::class, 'itemtable');
     }
-    
+
     /**
      * Food has one Category
      *
