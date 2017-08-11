@@ -30,8 +30,28 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->user->paginate(10);
+        return view('users.index')->with('users', $users);
+    }
 
-        return view('users.index')->with('listUsers', $users);
+    /**
+     * Destroy user
+     *
+     * @param Integer $id id of user to destroy
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        if (Auth::user()->id == $id) {
+            flash(__('Cannot delete current user!'))->error()->important();
+        } else {
+            if ($this->user->findOrFail($id)->delete()) {
+                flash(__('Delete Successfully!'))->success()->important();
+            } else {
+                flash(__('Delete Error!'))->error()->important();
+            }
+        }
+        return redirect()->route('users.index');
     }
 
     /**
