@@ -57,72 +57,24 @@ class FoodController extends Controller
      */
     public function update(FoodPutRequest $request, $id)
     {
-        // $food = $this->food->findOrFail($id);
-        // $arrFoods = $request->all();
-        // $arrFoods = $request->except('_method', '_token');
-        // $arrFoods['image'] = $this->getImageFileName($request);
-        // if ($food->update($arrFoods)) {
-        //     // Image::make($file)->save(public_path('images/foods/' . $arrFoods['image']));
-        //     // $this->storageImage($request->file('image'), $arrFoods['image']);
-        //     // $request->file('picture_path')->move(config('constant.path_upload_news'), $news ->picture_path);
-        //     $arrFoods['image']->file('image')->move('images/foods/', $arrFoods['image']);
-        //     return redirect()->route('foods.edit', $id);
-        // } else {
-        //     flash(__('Update Error'))->error->important();
-        //     return redirect()->route('foods.edit', $id);
-        // }
-        // $news = News::findOrFail($id);
-        // $picturePathOld = $news['picture_path'];
-        // $news ->user_id = $news->user->id;
-        // $news->fill($request->all());
-        // if ($request->hasFile('picture_path')) {
-        //     $news ->picture_path= $request->picture_path->hashName();
-        //     $request->file('picture_path')->move(config('constant.path_upload_news'), $news ->picture_path);
-        //     unlink(config('constant.path_upload_news').$picturePathOld);
-        // }
-        // $result= $news->update();
+        
         $food = $this->food->findOrFail($id);
         $arrFoods = $request->all;
         $arrFoods = $request->except('_method', '_token');
         if ($request->hasFile('image')) {
-            $arrFoods['images'] = $request->image;
-            $request->file('image')->move('images/foods/', $arrFoods['images']);
-        }
-        if ($food->update()) {
-            dd($arrFoods);
-        }
-    }
-
-     /**
-     * Get filename from request
-     *
-     * @param Request $request the request need to get file name
-     *
-     * @return string
-     */
-    public function getImageFileName(Request $request)
-    {
-        if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . "-" . $file->getClientOriginalName();
-        } else {
-            $fileName = 'default.jpg';
+            $arrFoods['image'] = $fileName;
         }
-        return $fileName;
-    }
-
-    /**
-     * Save image file to public/image/foods
-     *
-     * @param File   $file     image file
-     * @param string $fileName the name to storage
-     *
-     * @return void
-     */
-    public function storageImage(File $file, $fileName)
-    {
-        if (isset($file)) {
-            Image::make($file)->save(public_path('images/foods/' . $fileName));
+        if ($food->update($arrFoods)) {
+            if ($request->hasFile('image')) {
+                Image::make($file)->save(public_path(config('constant.path_upload_foods'). $fileName));
+            }
+            flash(__('Food Created'))->success()->important();
+               return redirect()->route('foods.index');
+        } else {
+            flash(__('Create Food Error'))->error()->important();
+            return redirect()->back();
         }
     }
 }
