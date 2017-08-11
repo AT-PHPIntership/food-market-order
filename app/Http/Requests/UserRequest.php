@@ -29,6 +29,7 @@ class UserRequest extends FormRequest
             'birthday' => 'date',
             'phone_number' => 'numeric|required',
             'address' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }
