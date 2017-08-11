@@ -30,8 +30,64 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->user->paginate(10);
+        return view('users.index')->with('users', $users);
+    }
 
-        return view('users.index')->with('listUsers', $users);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('users.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request request store data user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UserRequest $request)
+    {
+        $requestInput = $request->all();
+
+        $this->getImageFileName($request);
+        $requestInput['image'] = $this->getImageFileName($request);
+
+        if ($this->user->create($requestInput)) {
+            if ($request->hasFile('image')) {
+                $this->storageImage($request->file('image'), $requestInput['image']);
+            }
+            flash(__('User Created!'))->success()->important();
+            return redirect()->route('users.index');
+        } else {
+            flash(__('Create User Error'))->error()->important();
+            return redirect()->route('users.create')->withInput();
+        }
+    }
+
+    /**
+     * Destroy user
+     *
+     * @param Integer $id id of user to destroy
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        if (Auth::user()->id == $id) {
+            flash(__('Cannot delete current user!'))->error()->important();
+        } else {
+            if ($this->user->findOrFail($id)->delete()) {
+                flash(__('Delete Successfully!'))->success()->important();
+            } else {
+                flash(__('Delete Error!'))->error()->important();
+            }
+        }
+        return redirect()->route('users.index');
     }
 
     /**
