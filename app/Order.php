@@ -22,7 +22,7 @@ class Order extends Model
     /**
      * Order belongsTo User
      *
-     * @return object user
+     * @return object
      */
     public function user()
     {

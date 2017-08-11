@@ -46,8 +46,7 @@
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                             <button class="btn-xs btn-danger btn btn-confirm-delete"
                                                     data-confirm="{{__('Are you want delete it?')}}"
-                                                    title="{{__('Delete Category')}}"
-                                                    type="submit">
+                                                    title="{{__('Delete Category')}}">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </button>
                                         </form>
