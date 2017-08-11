@@ -53,13 +53,13 @@
                                         <td>
                                             <select class="form-control" name="status">
                                                 <option {{ $order->status == 0 ? 'selected' : '' }}
-                                                        value="{{ 0 }}">{{ __('Cancel') }}</option>
+                                                        value="0">{{ __('Cancel') }}</option>
                                                 <option {{ $order->status == 1 ? 'selected' : '' }}
-                                                        value="{{ 1 }}">{{ __('Pending') }}</option>
+                                                        value="1">{{ __('Pending') }}</option>
                                                 <option {{ $order->status == 2 ? 'selected' : '' }}
-                                                        value="{{ 2 }}">{{ __('Sending') }}</option>
+                                                        value="2">{{ __('Sending') }}</option>
                                                 <option {{ $order->status == 3 ? 'selected' : '' }}
-                                                        value="{{ 3 }}">{{ __('Finish') }}</option>
+                                                        value="3">{{ __('Finish') }}</option>
                                             </select>
 
 
