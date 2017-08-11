@@ -36,6 +36,34 @@ class CategoryController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('categories.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request Request from client
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CategoryRequest $request)
+    {
+        if ($this->category->create($request->all())) {
+            flash(__('Create Category Success'))->success()->important();
+            return redirect()->route('categories.index');
+        } else {
+            flash(__('Create Category Error'))->error()->important();
+            return redirect()->route('categories.create');
+        }
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id It is id of category need update
@@ -66,5 +94,23 @@ class CategoryController extends Controller
             flash(__('Update Category Errors'))->error()->important();
         }
         return back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It is category id want delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $category = $this->category->find($id);
+        if ($category->delete()) {
+            flash(__('Delete Category Success'))->success()->important();
+        } else {
+            flash(__('Delete Category Errors'))->error()->important();
+        }
+        return redirect()->route('categories.index');
     }
 }

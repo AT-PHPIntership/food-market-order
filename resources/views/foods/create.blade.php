@@ -5,11 +5,7 @@
   <div class="col-md-12">
     <div class="col-md-3">
     </div>
-    @if(Session::has('error'))
-    <div class="alert alert-danger">
-      {{ Session::get('error') }}
-    </div>
-    @endif
+    @include('flash::message')
     <div class="col-md-6">
       <div class="box box-primary">
         <div class="box-header with-border text-center">
@@ -29,7 +25,7 @@
               <label>{{ __('Category') }}</label>
              <select class="form-group" name="category_id">
                 <option value="" selected>{{ __('Choose Category') }}</option>
-                @foreach($categoryName as $catName)
+                @foreach($categories as $catName)
                 <option value="{{ $catName->id }}">{{ $catName->name }}</option>
                 @endforeach
               </select>

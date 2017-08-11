@@ -7,7 +7,6 @@ use App\Food;
 use App\Category;
 use App\Http\Requests\FoodPostRequest;
 use Image;
-use Session;
 
 class FoodController extends Controller
 {
@@ -24,25 +23,14 @@ class FoodController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $foods = $this->food->with('category')->paginate(10);
-        return view('foods.index', ['foods'=>$foods]);
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $categoryName = Category::orderBy('id', 'ASC')->get();
-        return view('foods.create', ['categoryName' => $categoryName]);
+        $categories = Category::orderBy('id', 'DESC')->get();
+        return view('foods.create', ['categories' => $categories]);
     }
 
     /**
@@ -59,16 +47,18 @@ class FoodController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . "-" . $file->getClientOriginalName();
-            Image::make($file)->save(public_path(config('constant.path_upload_foods'). $fileName));
             $arrFoods['image'] = $fileName;
         } else {
             $arrFoods['image'] = 'default.jpg';
         }
         if ($this->food->create($arrFoods)) {
-            Session::flash('success', __('Create Food Success'));
-            return redirect()->route('foods.index');
+            if ($request->hasFile('image')) {
+                Image::make($file)->save(public_path(config('constant.path_upload_foods'). $fileName));
+            }
+            flash(__('Food Created'))->success()->important();
+            return redirect()->route('foods.create');
         } else {
-            Session::flash('error', __('Create Food Error'));
+            flash(__('Create Food Error'))->error()->important();
             return redirect()->route('foods.create');
         }
     }
