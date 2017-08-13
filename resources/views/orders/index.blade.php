@@ -72,22 +72,25 @@
                                                 </span>
                                             </a>
                                             <button class="btn-change-status btn-success btn btn-sm pull-left"
+                                            <button class="btn-change-status btn-success btn btn-sm"
                                                     title="{{__('Confirm')}}"
                                                     data-confirm="{{__('Are you sure change status this?')}}">
                                                 <span class="glyphicon glyphicon-ok-circle"></span>
                                             </button>
                                 </form>
-                                <form role="form" class="delete-item pull-left"
-                                      action="{{route('orders.destroy', $order->id)}}"
-                                      method="post">
-                                    {{method_field('DELETE')}}
-                                    {{csrf_field()}}
-                                    <button class="btn-danger btn btn-sm btn-confirm-delete"
-                                            data-confirm="{{__('Are you want delete it?')}}"
-                                            title="{{__('Delete Order')}}">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-                                </form>
+                                            <form role="form" class="delete-item pull-left"
+                                                  action="{{route('orders.destroy', $order->id)}}"
+                                                  method="post">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                <button class="btn-danger btn btn-sm btn-confirm-delete"
+                                                        data-confirm="{{__('Are you want delete it?')}}"
+                                                        title="{{__('Delete Order')}}">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 </td>
                                 </tr>
                             @endforeach
