@@ -57,8 +57,9 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request Request from client
+     * @param int                      $id      It is id order need update change status
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
