@@ -1,81 +1,96 @@
 @extends('layouts.master')
 
 @section('main-content')
-<div class="row center">
-  <div class="col-md-12">
-    <div class="col-md-3">
-    </div>
-    @include('flash::message')
-    <div class="col-md-6">
-      <div class="box box-primary">
-        <div class="box-header with-border text-center">
-          <h3 class="box-title">{{ __('Edit Food') }}</h3>
+    @if(!isset($food))
+        <h1>{{ __('Nothing to show!') }}</h1>
+    @else
+        <div class="row">
+            @include('flash::message')
+            <form autocomplete="off" class="form-horizontal" enctype="multipart/form-data"
+                  action="{{ route('foods.update', $food->id) }}" method="POST">
+                {{ method_field('PUT') }}
+                {{ csrf_field() }}
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="text-center">
+                        @if(!isset($food->image))
+                            <img src="https://bootdey.com/img/Content/user-453533-fdadfd.png"
+                                 class="avatar img-circle img-thumbnail" alt=" image">
+                        @else
+                            <img src="{{asset(config('constant.path_upload_foods'))}}/{{$food->image}}" class="avatar img-circle img-thumbnail"
+                                 alt=" avatar">
+                        @endif
+                        <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">{{ __('Upload Image') }}</h6>
+                        <input type="file" name="image" class="text-center center-block well well-sm">
+                        @if ($errors->has('image'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('image') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-xs-12 personal-info">
+                    <h2 class="text-center">{{ __('Food Information') }}</h2>
+                    <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
+                        <label class="col-lg-3 control-label">{{ __('Name') }}</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" value="{{ old('name', $food->name) }}" type="text" name="name">
+                            @if ($errors->has('name'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('category_id') ? ' has-error' : '' }}">
+                        <label class="col-lg-3 control-label">{{ __('Category') }}</label>
+                        <div class="col-lg-8">
+                          <select class="form-control" name="category_id">
+                            @foreach($categories as $cat)
+                            <option
+                            {{ old('category_id', $food->category_id) == $cat->id ?
+                            'selected' : '' }}
+                            value="{{ $cat->id }}">{{ $cat->name }}
+                            </option>
+                            @endforeach
+                          </select>
+                          @if($errors->first('category_id'))
+                          <span class="help-block">{{ $errors->first('category_id') }}</span>
+                          @endif
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('price') ? ' has-error' : '' }}">
+                        <label class="col-lg-3 control-label">{{ __('Price') }}</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" value="{{ old('price', $food->price) }}" type="text" name="price">
+                            @if ($errors->has('price'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('price') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
+                        <label class="col-lg-3 control-label">{{ __('Description') }}</label>
+                        <div class="col-lg-8">
+                            <textarea name="description" rows="4" cols="72">{{ old('description', $food->description) }}</textarea>
+                            @if ($errors->has('price'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('description') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <input class="btn btn-primary" value="{{ __('Save Changes') }}" type="submit">
+                            <a href="{{ route('foods.index') }}">
+                                <button type="button" class="btn btn-danger">{{ __('Cancel') }}</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-        <form action="{{ route('foods.update', $food->id)}}" enctype="multipart/form-data" method="POST">
-          {{csrf_field()}}
-          {{ method_field('PUT') }}
-          <div class="box-body">
-            <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
-              <label>{{ __('Name') }}</label>
-              <input type="text" class="form-control" name="name" value="{{ $food->name }}">
-              @if($errors->first('name'))
-              <span class="help-block">{{ $errors->first('name') }}</span>
-              @endif
-            </div>
-            <div class="form-group {{ $errors->has('category_id') ? ' has-error' : '' }}">
-              <label for="categoryName">Category Name</label>
-              <select class="form-control" name="category_id">
-                @foreach($categories as $cat)
-                <option
-                @if($food->category_id == $cat->id)
-                selected
-                @endif
-                value="{{ $cat->id }}">{{ $cat->name }}
-                </option>
-                @endforeach
-              </select>
-              @if($errors->first('category_id'))
-              <span class="help-block">{{ $errors->first('category_id') }}</span>
-              @endif
-            </div>
-            <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
-              <label>{{ __('Description') }}</label>
-              <textarea class="textarea" name="description" rows="5" cols="70">{{ $food->description }}
-              </textarea>
-            </div>
-              @if($errors->first('description'))
-              <span class="help-block">{{ $errors->first('description') }}</span>
-              @endif
-            </div>
-            <div class="form-group {{ $errors->has('price') ? ' has-error' : '' }}">
-              <label>{{__('Price')}}</label>
-              <input type="text" class="form-control" name="price" value="{{ $food->price }}">
-              @if($errors->first('price'))
-              <span class="help-block">{{ $errors->first('price') }}</span>
-              @endif
-            </div>
-            <div class="form-group {{ $errors->has('image') ? ' has-error' : '' }}">
-              <label>{{ __('Image') }}</label>
-              <input type="file" name="image" >
-              @if($errors->first('image'))
-              <span class="help-block">{{ $errors->first('image') }}</span>
-              @endif
-            </div>
-            <div class="form-group">
-              <img src="/images/foods/{{ $food->image }}">
-            </div>
-          </div>
-          <div class="box-footer">
-            <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
-            <a href="{{route('foods.index')}}">
-              <button type="button" class="btn  btn-danger">{{ __('Cancel') }}</button>
-            </a>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="col-md-3">
-    </div>
-  </div>
-</div>
+    @endif
 @endsection

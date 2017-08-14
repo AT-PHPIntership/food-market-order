@@ -6,6 +6,7 @@
             <h3 class="box-title">{{ __('List Food') }}</h3>
             <a href="{{ route('foods.create') }}" class="btn btn-primary btn-xl pull-right fa fa-plus"> {{ __('Add Food') }}</a>
         </div>
+        @include('flash::message')
         <!-- /.box-header -->
         @if(isset($foods))
         <div class="box-body">
