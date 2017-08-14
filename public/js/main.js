@@ -12,7 +12,7 @@ $(document).ready(function() {
             $('#modal-confirm').modal('hide');
         })
     });
-    $("#date-sort").change(function(){
+    $("#date-sort").blur(function(){
         window.location = '/'+$("#date-sort").attr("data-table")+'/?date='+$("#date-sort").val();
     });
     $("#text-sort").change(function(){

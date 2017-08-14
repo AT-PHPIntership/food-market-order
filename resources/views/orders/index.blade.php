@@ -4,9 +4,6 @@
     <div class="box" xmlns="">
         <div class="box-header">
             <h3 class="box-title">{{ __('List Order') }}</h3>
-            <button class="btn btn-primary pull-right">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
         </div>
         @include('flash::message')
         <!-- /.box-header -->
@@ -23,7 +20,7 @@
                                data-table="{{ __('orders') }}">
                         <table class="table table-bordered table-striped dataTable table-hover" role="grid">
                             <thead>
-                            <tr role="row" class="row">
+                            <tr>
                                 <th class="col-md-1">{{ __('ID') }}</th>
                                 <th class="col-md-2">{{ __('User Name') }}</th>
                                 <th class="col-md-1">{{ __('Create Date') }}</th>
@@ -43,7 +40,6 @@
                                           method="post">
                                         {{ method_field('PUT') }}
                                         {{ csrf_field() }}
-                                        <td></td>
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->user->full_name }}</td>
                                         <td>{{ $order->created_at }}</td>
