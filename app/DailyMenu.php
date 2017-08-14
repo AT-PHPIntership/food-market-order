@@ -12,11 +12,16 @@ class DailyMenu extends Model
     protected $timestamp = true;
     protected $dates = ['deleted_at'];
     /**
+     * Enable created_at and updated_at behavior
+     */
+    public $timestamps = true;
+    /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'daily_menus';
+
     /**
      * The attributes that are mass assignable.
      *

@@ -15,6 +15,7 @@ class DailyMenuController extends Controller
      * @var DailyMenu
      */
     protected $dailyMenu;
+
     /**
      * Create a new controller instance.
      *
@@ -30,13 +31,18 @@ class DailyMenuController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request request from view
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $listDailyMenu = $this->dailyMenu->select('date')->orderBy('date', 'desc')->distinct()->paginate(10);
-
-        return view('daily_menus.index', ['listDailyMenu' => $listDailyMenu]);
+        $dailyMenus = $this->dailyMenu->select('date');
+        if ($request->has('date')) {
+            $dailyMenus = $dailyMenus->where('date', 'like', '%'.$request['date'].'%');
+        }
+        $dailyMenus = $dailyMenus->distinct()->orderBy('date', 'desc')->paginate(10);
+        return view('daily_menus.index', ['dailyMenus' => $dailyMenus, 'date' => $request['date']]);
     }
 
     /**
@@ -85,14 +91,22 @@ class DailyMenuController extends Controller
      */
     public function destroy(Request $request)
     {
-        $menuId = $request['menuId'];
         $error = __('Has error during delete menu item');
         $success = __('Delete menu item success');
 
-        if ($this->dailyMenu->where('id', $menuId)->delete()) {
-            return response()->json(['message' => $success], 200);
+        if ($request->ajax()) {
+            $menuId = $request['menuId'];
+            if ($this->dailyMenu->where('id', $menuId)->delete()) {
+                return response()->json(['message' => $success], 200);
+            } else {
+                return response()->json(['error' => $error], 404);
+            }
         } else {
-            return response()->json(['error' => $error], 404);
+            if ($this->dailyMenu->where('date', $request['date'])->delete()) {
+                return redirect('daily-menus')->with('message', $success);
+            } else {
+                return redirect('daily-menus')->with('error', $error);
+            }
         }
     }
 }
