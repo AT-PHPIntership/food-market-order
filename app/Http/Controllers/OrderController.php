@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -51,5 +52,44 @@ class OrderController extends Controller
         }
         $orders = $orders->paginate(Order::ITEM_PER_PAGE);
         return view('orders.index', ['orders' => $orders]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request Request from client
+     * @param int                      $id      It is id order need update change status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $order = $this->order->findOrFail($id);
+        $order->status = $request->input('status');
+        if ($order->save()) {
+            flash(__('Change Status Success'))->success()->important();
+        } else {
+            flash(__('Change Errors'))->error()->important();
+        }
+        return back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It is id order need delete change status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $order = $this->order;
+        orderItem::where('order_id', '=', $id)->delete();
+        if ($order->findOrFail($id)->delete()) {
+            flash(__('Change Status Success'))->success()->important();
+        } else {
+            flash(__('Change Errors'))->error()->important();
+        }
+        return back();
     }
 }
