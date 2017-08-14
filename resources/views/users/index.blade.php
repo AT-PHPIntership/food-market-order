@@ -56,7 +56,10 @@
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                                <button class="btn btn-danger btn-sm btn-confirm-delete" data-confirm="{{ __('Are you sure to delete this user?') }}" type="submit">
+                                                <button class="btn btn-danger btn-sm btn-confirm"
+                                                        data-confirm="{{ __('Are you sure to delete this user?') }}"
+                                                        data-title="{{ __('Delete User') }}"
+                                                        type="submit">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </form>
@@ -65,7 +68,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-
                             {{ $users->links() }}
                         </div>
                     </div>
@@ -75,4 +77,5 @@
     @else
         <h1>{{ __('Nothing to show!') }}</h1>
     @endif
+    @include('layouts.partials.modal')
 @endsection

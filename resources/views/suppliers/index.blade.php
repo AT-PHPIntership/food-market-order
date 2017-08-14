@@ -3,10 +3,10 @@
 @section('main-content')
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">{{__('List Suppliers')}}</h3>
+            <h3 class="box-title">{{ __('List Suppliers') }}</h3>
             <a id="btn-add-supplier" class="btn btn-primary pull-right" href="{{ route('suppliers.create') }}"
-               title="{{__('Add Supplier')}}">
-                {{__('Add Supplier')}}
+               title="{{ __('Add Supplier') }}">
+                {{ __('Add Supplier') }}
             </a>
         </div>
         @include('flash::message')
@@ -20,10 +20,10 @@
                                aria-describedby="list-suppliers-info">
                             <thead>
                             <tr role="row">
-                                <th class = "col-md-1">{{__('ID')}}</th>
-                                <th class = "col-md-3">{{__('Name')}}</th>
-                                <th class = "col-md-6">{{__('Description')}}</th>
-                                <th class = "col-md-2">{{__('Action')}}</th>
+                                <th class = "col-md-1">{{ __('ID') }}</th>
+                                <th class = "col-md-3">{{ __('Name') }}</th>
+                                <th class = "col-md-6">{{ __('Description') }}</th>
+                                <th class = "col-md-2">{{ __('Action') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -34,18 +34,19 @@
                                     <td>{{ $supplier->description }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-success btn-edit-item"
-                                           href="{{ route('suppliers.edit', $supplier->id)}}"
-                                           title="{{__('Edit Supplier')}}">
+                                           href="{{ route('suppliers.edit', $supplier->id) }}"
+                                           title="{{ __('Edit Supplier') }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         <form role="form" class="delete-item inline"
-                                              action="{{ route('suppliers.destroy', $supplier->id)}}"
+                                              action="{{  route('suppliers.destroy', $supplier->id) }}"
                                               method="post">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
-                                            <button class="btn-sm btn-danger btn btn-confirm-delete"
-                                                    data-confirm="{{__('Are you want delete it?')}}"
-                                                    title="{{__('Delete Supplier')}}">
+                                            <button class="btn-sm btn-danger btn btn-confirm"
+                                                    data-confirm="{{ __('Are you want delete it?') }}"
+                                                    data-title="{{ __('Delete Supplier') }}"
+                                                    title="{{ __('Delete Supplier') }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </form>
@@ -60,4 +61,5 @@
             {{ $suppliers->links() }}
         </div>
     </div>
+    @include('layouts.partials.modal')
 @endsection

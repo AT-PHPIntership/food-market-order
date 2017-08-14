@@ -68,9 +68,10 @@
                                                 <span class="glyphicon glyphicon-zoom-in">
                                                 </span>
                                             </a>
-                                            <button class="btn-change-status btn-success btn btn-sm"
+                                            <button class="btn-confirm btn-success btn btn-sm"
                                                     title="{{ __('Confirm') }}"
-                                                    data-confirm="{{ __('Are you sure change status this?') }}">
+                                                    data-confirm="{{ __('Are you sure change status this?') }}"
+                                                    data-title="{{ __('Change Status') }}" >
                                                 <i class="fa fa-edit"></i>
                                             </button>
                                 </form>
@@ -79,8 +80,9 @@
                                       method="post">
                                     {{ method_field('DELETE') }}
                                     {{ csrf_field() }}
-                                    <button class="btn-danger btn btn-sm btn-confirm-delete"
+                                    <button class="btn-danger btn btn-sm btn-confirm"
                                             data-confirm="{{ __('Are you want delete it?') }}"
+                                            data-title="{{ __('Delete Order') }}"
                                             title="{{ __('Delete Order') }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
@@ -96,4 +98,5 @@
             </div>
         </div>
     </div>
+    @include('layouts.partials.modal')
 @endsection

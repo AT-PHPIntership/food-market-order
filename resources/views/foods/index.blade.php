@@ -44,8 +44,9 @@
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="food_id" value="{{ $food->id }}">
-                                            <button class="btn-sm btn-danger btn btn-confirm-delete"
-                                                data-confirm="{{ __('Are you sure delete food?') }}">
+                                            <button class="btn-sm btn-danger btn btn-confirm"
+                                                    data-confirm="{{ __('Are you sure delete food?') }}"
+                                                    data-title="Delete Food">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </form>
@@ -63,4 +64,5 @@
         <h1>{{ __('NO DATA') }}</h1>
         @endif
     </div>
+    @include('layouts.partials.modal')
 @endsection
