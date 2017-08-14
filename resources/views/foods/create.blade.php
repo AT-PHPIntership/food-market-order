@@ -36,14 +36,13 @@
             </div>
             <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
               <label>{{ __('Description') }}</label>
-              <textarea class="textarea" name="description" rows="5" cols="70" >
+              <textarea class="col-md-12" name="description" rows="5" >
               {{ old('description') }}
               </textarea>
             </div>
               @if($errors->first('description'))
               <span class="help-block">{{ $errors->first('description') }}</span>
               @endif
-            </div>
             <div class="form-group {{ $errors->has('price') ? ' has-error' : '' }}">
               <label>{{ __('Price') }}</label>
               <input type="text" class="form-control" name="price" value="{{ old('price') }}">
@@ -59,10 +58,10 @@
               @endif
             </div>
           </div>
-          <div class="box-footer">
+          <div class="box-footer text-center">
             <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
             <a href="{{ route('foods.index') }}">
-              <button type="button" class="btn  btn-danger">{{ __('Cancel') }}</button>
+              <button type="button" class="btn btn-danger">{{ __('Cancel') }}</button>
             </a>
           </div>
         </form>

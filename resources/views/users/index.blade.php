@@ -8,7 +8,9 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">{{ __("User's Table Data") }}</h3>
-                <a href="{{ route('users.create') }}" class="btn btn-primary pull-right fa fa-plus">{{ __('Add new user') }}</a>
+                <a href="{{ route('users.create') }}" class="btn btn-primary pull-right">
+                    {{ __('Add new user') }}
+                </a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -19,15 +21,15 @@
                                    role="grid"
                                    aria-describedby="table_info">
                                 <thead>
-                                <tr role="row">
-                                    <th style="width: 1em">{{ __('id') }}</th>
-                                    <th style="width: 10em">{{ __('Full Name') }}</th>
-                                    <th style="width: 10em">{{ __('Email') }}</th>
-                                    <th style="width: 5em">{{ __('Birthday') }}</th>
-                                    <th style="width: 2em">{{ __('Gender') }}</th>
-                                    <th>{{ __('Address') }}</th>
-                                    <th style="width: 1em">{{ __('Status') }}</th>
-                                    <th style="width: 4em">{{ __('Action') }}</th>
+                                <tr>
+                                    <th class="col-md-1">{{ __('id') }}</th>
+                                    <th class="col-md-2">{{ __('Full Name') }}</th>
+                                    <th class="col-md-2">{{ __('Email') }}</th>
+                                    <th class="col-md-2">{{ __('Birthday') }}</th>
+                                    <th class="col-md-1">{{ __('Gender') }}</th>
+                                    <th class="col-md-2">{{ __('Address') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="col-md-2">{{ __('Action') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -42,15 +44,21 @@
                                         <td><span class="glyphicon glyphicon-ok"
                                                   style="color: {{ ($user->is_active == 1) ? '#00ff00':'gray' }}"></span>
                                         </td>
-                                        <td><a href="{{ route('users.show', $user->id) }}"><span
-                                                        class="glyphicon glyphicon-zoom-in btn btn-xs btn-default pull-left"></span></a>
-                                            <a href="{{ route('users.edit', $user->id) }}"><span
-                                                        class="fa fa-edit btn btn-xs btn-default pull-left"></span></a>
+                                        <td><a href="{{ route('users.show', $user->id) }}"
+                                               class="btn btn-sm btn-info">
+                                                <span class="glyphicon glyphicon-zoom-in"></span>
+                                            </a>
+                                            <a href="{{ route('users.edit', $user->id) }}"
+                                               class="btn btn-sm btn-success">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
                                             <form method="POST" action="{{ route('users.destroy', $user->id) }}" class="inline delete-item">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                                <button class="btn btn-danger btn-xs pull-right fa fa-trash btn-confirm-delete" data-confirm="{{ __('Are you sure to delete this user?') }}" type="submit"></button>
+                                                <button class="btn btn-danger btn-sm btn-confirm-delete" data-confirm="{{ __('Are you sure to delete this user?') }}" type="submit">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>

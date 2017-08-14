@@ -5,8 +5,8 @@
         <div class="box-header">
             <h3 class="box-title">{{__('List Suppliers')}}</h3>
             <a id="btn-add-supplier" class="btn btn-primary pull-right" href="{{ route('suppliers.create') }}"
-               title="{{__('Add Suppliers')}}">
-                <span class="glyphicon glyphicon-plus"></span>
+               title="{{__('Add Supplier')}}">
+                {{__('Add Supplier')}}
             </a>
         </div>
         @include('flash::message')
@@ -33,20 +33,20 @@
                                     <td>{{ $supplier->name  }}</td>
                                     <td>{{ $supplier->description }}</td>
                                     <td>
-                                        <a class="btn btn-sm btn-success btn-edit-item pull-left"
+                                        <a class="btn btn-sm btn-success btn-edit-item"
                                            href="{{ route('suppliers.edit', $supplier->id)}}"
                                            title="{{__('Edit Supplier')}}">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </a> <span class="pull-left">-</span>
-                                        <form role="form" class="delete-item pull-left"
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <form role="form" class="delete-item inline"
                                               action="{{ route('suppliers.destroy', $supplier->id)}}"
                                               method="post">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                            {{ method_field('DELETE') }}
+                                            {{ csrf_field() }}
                                             <button class="btn-sm btn-danger btn btn-confirm-delete"
                                                     data-confirm="{{__('Are you want delete it?')}}"
                                                     title="{{__('Delete Supplier')}}">
-                                                <span class="glyphicon glyphicon-remove"></span>
+                                                <i class="fa fa-trash"></i>
                                             </button>
                                         </form>
                                     </td>
