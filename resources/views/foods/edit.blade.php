@@ -16,7 +16,7 @@
                             <img src="https://bootdey.com/img/Content/user-453533-fdadfd.png"
                                  class="avatar img-circle img-thumbnail" alt=" image">
                         @else
-                            <img src="{{asset(config('constant.path_upload_foods'))}}/{{$food->image}}" class="avatar img-circle img-thumbnail"
+                            <img src="{{ asset(config('constant.path_upload_foods')) }}/{{ $food->image }}" class="avatar img-circle img-thumbnail"
                                  alt=" avatar">
                         @endif
                         <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">{{ __('Upload Image') }}</h6>
