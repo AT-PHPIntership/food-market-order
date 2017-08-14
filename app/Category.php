@@ -7,8 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use softDeletes;
+    // use softDeletes;
 
+    protected $fillable = [
+        'name',
+        'description'
+    ];
+    protected $dates = ['deleted_at'];
+    
     /**
      * Category has many foods
      *
@@ -18,9 +24,4 @@ class Category extends Model
     {
         return $this->hasMany('App\Food', 'category_id', 'id');
     }
-    protected $fillable = [
-        'name',
-        'description'
-    ];
-    protected $dates = ['deleted_at'];
 }

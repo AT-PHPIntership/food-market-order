@@ -1,3 +1,12 @@
+function alertMessage($eventTarget, message) {
+    var title = $eventTarget.attr('data-title');
+    var body = '<p>'+message+'</p>'
+    $('#modal-confirm-title').html(title);
+    $('#modal-confirm-body').html(body);
+    $('#modal-confirm').modal("show");
+    $("#btn-modal-submit").hide();
+}
+
 // Call Ajax request with @param:
 // $data: data which being send to server
 // $eventTarget: get target button was clicked to handle after request
@@ -30,39 +39,31 @@ function callAjax($data, $eventTarget, $url, $method) {
 // $eventTarget: get target button was clicked to handle
 // @Return: setting something to display
 function handleAjaxResponse(data, status, $eventTarget) {
-    if ($eventTarget.name == "btnConfirm") {
-        $tdHasError = $eventTarget.parentNode.previousSibling.previousSibling;
-        $helpElement = $tdHasError.childNodes[1];
-        if (status == "success") {
-            alert(data['message']);
-            //remove helpblock if exists
-            $tdHasError.className -= " has-error";
-            $helpElement.childNodes[1].disabled = true;
-            $helpElement.childNodes[3].innerHTML = '';
-            $eventTarget.innerHTML = "";
-            $eventTarget.name = "btnEdit";
+    if ($eventTarget.attr('name') == 'btn-edit') {
+        $tdHasError = $eventTarget.parents().eq(2);
+        $helpElement = $tdHasError.find('span');
+        if (status === "success") {
+            alertMessage($eventTarget, data['message']);
+            $tdHasError.removeClass('has-error');
+            $helpElement.html('');
             //set date for updated_at
-            $eventTarget.parentNode.previousSibling.
-                                    previousSibling.
-                                    previousSibling.
-                                    previousSibling.
-                                    innerHTML = data[0]['date'].toString().substring(0, 19);
-            $("[name=btnCancel]").remove();
-        } else if (status == "error") {
-            $helpElement.childNodes[3].innerHTML = JSON.parse(data.responseText).quantity[0];
-            $tdHasError.className += " has-error"
+            $eventTarget.closest('tr td').prev().html(data[0]['date'].toString().substring(0, 19));
+            $('[name=btn-cancel]').hide();
+            $('[name=btn-edit]').hide();
+        } else if (status === "error") {
+            $helpElement.html(JSON.parse(data.responseText).quantity[0]);
+            $tdHasError.addClass(' has-error');
         }
-        $eventTarget.nextSibling.nextSibling.style.display = 'inline';
-    } else if ($eventTarget.name == "btnDel") {
+    } else if ($eventTarget.attr('name') == 'btn-del') {
         if (status == "success") {
             //delete record in table
-            $eventTarget.parentNode.parentNode.remove();
-            if ($('#bodyTable tr').length == 0) {
+            $eventTarget.parents().eq(1).remove();
+            alertMessage($eventTarget, data['message']);
+            if ($('#daily-menu-table tr').length == 1) {
                 window.location.replace('../daily-menus');
             }
-            alert(data['message']);
         } else {
-            alert(data['error']);
+            alertMessage($eventTarget, data['error']);
         }
     }
 }
@@ -73,8 +74,8 @@ $(document).ready(function() {
      *
      * Get Menu Date and Current Date To Check Edit/Delete permission
      */
-    if ($('#menuDate')) {
-        var $dateValue = $('#menuDate').html();
+    if ($('#menu-date').length > 0) {
+        var $dateValue = $('#menu-date').html();
         var year = $dateValue.substring(1, 5);
         var month = $dateValue.substring(6, 8);
         var day = $dateValue.substring(9, 11);
@@ -82,76 +83,82 @@ $(document).ready(function() {
         var $today = new Date();
         $today.setHours(0, 0, 0, 0);
     }
-    
-    /**
-     *
-     * Get and set event for Edit button
-     */
-    $arrBtnEdit = $("[name = btnEdit]");
+    //get and set event for input quantity and edit - cancel button
+    $('[name=btn-cancel]').hide();
+    $('[name=btn-edit]').hide();
+    var listOldQuantity = []; //save old value
+    $quantityElements = $('input[type=number]');
     if ($date < $today) {
-        $arrBtnEdit.attr("disabled", true) //Disable edit button if menu date > currentDate
+        $quantityElements.attr("disabled", true);
     } else {
-        $arrBtnEdit.click(function(event) {
-            event.preventDefault();
-            let $menuItem = [];
-            let menuId = event.target.value;
-            let $newQuantity;
-            let $quantityElement = $('#'+menuId);
-            /**
-             * Check state and trans state Edit - Confirm
-             */
-            if (event.target.name == "btnEdit") {
-                oldQuantity = $quantityElement.val();
-                $quantityElement.attr('disabled', false);
-                $quantityElement.focus();
-                event.target.innerHTML = "Confirm";
-                event.target.name = "btnConfirm";
-                event.target.nextSibling.nextSibling.style.display = 'none';
-                //add button Cancel
-                $('<button name="btnCancel" class="btn-xs btn-warning btn glyphicon glyphicon-edit">Cancel</button>')
-                    .appendTo(event.target.parentNode);
-                $("[name=btnCancel]").click(function(e) {
-                    event.target.name = "btnEdit";
-                    event.target.innerHTML = "";
-                    e.target.remove();
-                    $quantityElement.attr('disabled', true);
-                    event.target.nextSibling.nextSibling.style.display = 'inline';
-                    $quantityElement.val(oldQuantity);
-                    $tdHasError = event.target.parentNode.previousSibling.previousSibling;
-                    $helpElement = $tdHasError.childNodes[1];
-                    $helpElement.childNodes[3].innerHTML = '';
-                    $tdHasError.className -= "has-error";
-                })
-            } else if (event.target.name == "btnConfirm") {
-                $newQuantity = $quantityElement.val();
-                $menuItem.push({
+        $quantityElements.focus(function(ev) {
+        listOldQuantity[$(ev.target).prop('id')] = $(ev.target).val();
+        }).change(function(e) {
+            $btnCancel = $(e.target).parents().eq(1).find('[name=btn-cancel]');
+            $btnEdit = $(e.target).parents().eq(1).find('[name=btn-edit]');
+            $btnCancel.show();
+            $btnEdit.show();
+            oldQuantity = listOldQuantity[$(e.target).attr('id')];
+            $btnEdit.click(function(edit) {
+                let menuItem = [];
+                menuId = $(e.target).attr('id');
+                newQuantity = $(e.target).val();
+                menuItem.push({
                         'menuId': menuId,
-                        'quantity': $newQuantity
-                    });
-                callAjax($menuItem[0], event.target, './daily-menus', 'PUT');
-            }
+                        'quantity': newQuantity
+                });
+                callAjax(menuItem[0], $(edit.target), './daily-menus', 'PUT');
+            })
+            $btnCancel.click(function(cancel) {
+                $btnEdit.hide();
+                $(this).hide();
+                $quantityElement = $(this).parents().eq(1).find('input[type=number]');
+                $quantityElement.val(oldQuantity);
+                $tdHasError = $(event.target).parents().eq(2);
+                $tdHasError.removeClass('has-error');
+                $tdHasError.find('span').html('');
+            })
         });
     }
     /** 
      *
      * Get and set event for Delete button
      */
-    var $arrBtnDel = $("[name = btnDel]");
+    var $arrBtnDel = $('[name = btn-del]');
     if ($date < $today) {
         $arrBtnDel.attr('disabled', true); //Disable Delete button if menu date > currentDate
     } else {
         $arrBtnDel.click(function(event) {
-            event.preventDefault();
-            let $menuId = event.target.value;
-            let $menu = [];
-            $menu.push({'menuId': $menuId});
-            if (confirm(event.target.getAttribute('data-confirm'))) {
-                callAjax($menu[0], event.target, './daily-menus', 'DELETE');
-            }
+            let menuId = $(this).val();
+            let menu = [];
+            menu.push({'menuId': menuId});
+            var title = $(this).attr('data-title');
+            var body = '<p>'+$(this).attr('data-confirm')+'</p>'
+            $('#modal-confirm-title').html(title);
+            $('#modal-confirm-body').html(body);
+            $('#btn-modal-submit').show();
+            $('#modal-confirm').modal("show");
+            $('#btn-modal-submit').one("click", function(){
+                callAjax(menu[0], $(event.target), './daily-menus', 'DELETE');
+                $('#modal-confirm').modal('hide');
+            })
         });
     }
+    $('.btn-confirm').bind("click",function(e){
+        e.preventDefault();
+        var form = $(this.form);
+        var title = $(this).attr('data-title');
+        var body = '<p>'+$(this).attr('data-confirm')+'</p>'
+        $('#modal-confirm-title').html(title);
+        $('#modal-confirm-body').html(body);
+        $('#modal-confirm').modal("show");
+        $('#btn-modal-submit').one("click", function(){
+            form.submit();
+            $('#modal-confirm').modal('hide');
+        })
+    });
     //End for dailyMenu
-    $(".btn-confirm-delete").bind('click',function(e){
+    $(".btn-confirm-delete").bind("click",function(e){
         var result = confirm($(".btn-confirm-delete").attr("data-confirm"));
         if (result) {
             $('form.delete-item').submit();
@@ -159,19 +166,11 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
-    $("#date-sort").change(function(){
-        window.location = '/'+$("#date-sort").attr("data-table")+'/?date='+$("#date-sort").val();
+    $("#date-sort").blur(function(){
+        window.location = '/'+$(this).attr("data-table")+'/?date='+$(this).val();
     });
     $("#text-sort").change(function(){
-        window.location = '/'+$("#text-sort").attr("data-table")+'?keyword='+$("#text-sort").val();
-    });
-    $(".btn-change-status").bind('click',function(e){
-        var result = confirm($(".btn-change-status").attr("data-confirm"));
-        if(result){
-            $('form.confirm-data').submit();
-        } else {
-            e.preventDefault();
-        }
+        window.location = '/'+$(this).attr("data-table")+'?keyword='+$(this).val();
     });
 });
 $('#flash-overlay-modal').modal();

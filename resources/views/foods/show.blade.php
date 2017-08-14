@@ -5,10 +5,10 @@
 <div class="panel-body inf-content">
     <div class="row">
         <div class="col-md-4">
-            <img class="img-thumbnail" src="{{ asset(config('constant.path_upload_foods'))}}/{{$food->image }}" data-original-title="Usuario"> 
+            <img class="img-circle img-thumbnail" src="{{ $food->image }}" data-original-title="Usuario"> 
         </div>
         <div class="col-md-6 h4">
-            <strong>{{ __('Food Information') }}</strong><br>
+            <h2>{{ __('Food Information') }}</h2>
             <div class="table-responsive">
             <table class="table table-condensed table-responsive table-user-information">
                 <colgroup>

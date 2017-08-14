@@ -22,17 +22,17 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <form method="GET" action="{{ route('daily-menus.index') }}">
-                                <label for="dateSearch">{{ __('Choose Date') }}: </label>
+                                <label for="dateSearch">{{ __('Date') }}: </label>
                                 <input type="text" class="form-control" id = "dateSearch" name="date"
                                 value="{{ (!empty($date)) ? $date : '' }}" style="width: 20em">
-                                <input type="submit" class="btn-primary btn" value="Search">
+                                <input type="submit" class="btn-default btn" value="Search">
                             </form>
                         </div>
                         <table class="table table-bordered table-striped dataTable table-hover text-center" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th style="width: 8em">{{ __('Date') }}</th>
-                                    <th style="width: 2em">{{ __('Action') }}</th>
+                                    <th class="col-md-8">{{ __('Date') }}</th>
+                                    <th class="col-md-4">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,20 +40,20 @@
                                 <tr>
                                     <td><h4>{{ $dailyMenu->date }}</h4></td>
                                     <td>
-                                        <a href="{{ route('daily-menus.show', $dailyMenu->date) }}">
-                                            <span class="btn-xl btn-success btn">{{ __('Detail') }}</span>
+                                        <a href="{{ route('daily-menus.show', $dailyMenu->date) }}"
+                                           class="btn-xl btn-info btn ">
+                                            <span class="glyphicon glyphicon-zoom-in"></span>
                                         </a>
-                                        <a href="{{ route('daily-menus.edit', $dailyMenu->date) }}">
-                                            <span class="btn-xl btn-warning btn">{{ __('Edit') }}</span>
+                                        <a href="{{ route('daily-menus.edit', $dailyMenu->date) }}"
+                                           class="btn-xl btn-danger btn">
+                                            <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="pull-right">
-                            {{ $dailyMenus->links() }}
-                        </div>
+                        {{ $dailyMenus->links() }}
                     </div>
                 </div>
             </div>
