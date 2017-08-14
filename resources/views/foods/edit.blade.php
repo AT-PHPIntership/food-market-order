@@ -12,13 +12,7 @@
                 {{ csrf_field() }}
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="text-center">
-                        @if(!isset($food->image))
-                            <img src="https://bootdey.com/img/Content/user-453533-fdadfd.png"
-                                 class="avatar img-circle img-thumbnail" alt=" image">
-                        @else
-                            <img src="{{ asset(config('constant.path_upload_foods')) }}/{{ $food->image }}" class="avatar img-circle img-thumbnail"
-                                 alt=" avatar">
-                        @endif
+                        <img src="{{ $food->image }}" class="avatar img-circle img-thumbnail" alt=" avatar">`
                         <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">{{ __('Upload Image') }}</h6>
                         <input type="file" name="image" class="text-center center-block well well-sm">
                         @if ($errors->has('image'))
@@ -45,11 +39,11 @@
                         <label class="col-lg-3 control-label">{{ __('Category') }}</label>
                         <div class="col-lg-8">
                           <select class="form-control" name="category_id">
-                            @foreach($categories as $cat)
+                            @foreach($categories as $category)
                             <option
-                            {{ old('category_id', $food->category_id) == $cat->id ?
+                            {{ old('category_id', $food->category_id) == $category->id ?
                             'selected' : '' }}
-                            value="{{ $cat->id }}">{{ $cat->name }}
+                            value="{{ $category->id }}">{{ $category->name }}
                             </option>
                             @endforeach
                           </select>
@@ -73,7 +67,7 @@
                         <label class="col-lg-3 control-label">{{ __('Description') }}</label>
                         <div class="col-lg-8">
                             <textarea name="description" rows="4" cols="72">{{ old('description', $food->description) }}</textarea>
-                            @if ($errors->has('price'))
+                            @if ($errors->has('description'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('description') }}</strong>
                                 </span>

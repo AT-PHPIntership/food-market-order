@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\FoodPutRequest;
+use App\Http\Requests\FoodUpdateRequest;
 use App\Food;
 use App\Category;
 use Image;
 use Storage;
-use App\Http\Requests\FoodPostRequest;
+use App\Http\Requests\FoodCreateRequest;
+use File;
 
 class FoodController extends Controller
 {
@@ -32,9 +33,39 @@ class FoodController extends Controller
     public function index()
     {
         $foods = $this->food->orderBy('id', 'DESC')->with('category')->paginate(10);
-        return view('foods.index', ['foods'=>$foods]);
+        return view('foods.index', ['foods' => $foods]);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id of food
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $food = $this->food->findOrFail($id);
+        return view('foods.show', ['food' => $food]);
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It is id of food want to delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if ($this->food->findOrFail($id)->delete()) {
+            flash(__('Delete Food Success'))->success()->important();
+        } else {
+            flash(__('Delete Food Error'))->error()->important();
+        }
+        return redirect()->route('foods.index');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -53,7 +84,7 @@ class FoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(FoodPostRequest $request)
+    public function store(FoodCreateRequest $request)
     {
         $arrFoods = $request->all();
         $arrFoods = $request->except(['_token']);
@@ -98,22 +129,21 @@ class FoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(FoodPutRequest $request, $id)
+    public function update(FoodUpdateRequest $request, $id)
     {
         
         $food = $this->food->findOrFail($id);
-        $arrFoods = $request->all;
-        $arrFoods = $request->except('_method', '_token');
+        $dataFood = $request->except('_method', '_token');
         $oldPathImage = $food->image;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . "-" . $file->getClientOriginalName();
-            $arrFoods['image'] = $fileName;
+            $dataFood['image'] = $fileName;
         }
-        if ($food->update($arrFoods)) {
+        if ($food->update($dataFood)) {
             if ($request->hasFile('image')) {
                 Image::make($file)->save(public_path(config('constant.path_upload_foods'). $fileName));
-                unlink(config('constant.path_upload_foods'). $oldPathImage);
+                File::delete($oldPathImage);
             }
             flash(__('Update Food Success'))->success()->important();
                return redirect()->route('foods.index');
