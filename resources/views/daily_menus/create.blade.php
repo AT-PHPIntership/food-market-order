@@ -47,13 +47,14 @@
                   <label for="dateChooser">{{ _('Choose Date') }}: </label>
                   @if(empty($date))
                   	<input type="date" class="form-control" id = "dateChooser" name="date">
+                  	</div>
                   @else
                   	<input type="date" class="form-control" id = "dateChooser" name="date" value="{{ $date }}">
-                  	<a href="{{ route('daily-menus.show', $date) }}">
-                                            <span class="btn-xl btn-primary btn pull-right">{{ _('Show Menu') }}</span>
+                  	</div>
+                  	<a href="{{ route('daily-menus.show', $date) }}" class="pull-right">
+                        <span class="btn-xl btn-primary btn">{{ _('Show Menu') }}</span>
                     </a>
 				  @endif
-                </div>
 				<tbody id='myBody'>
 					<tr>
 						<td id="categoryselect">
