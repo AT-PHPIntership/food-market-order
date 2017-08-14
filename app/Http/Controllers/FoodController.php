@@ -79,7 +79,8 @@ class FoodController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id of food
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -92,8 +93,8 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request of foods
-     * @param  int  $id of foods
+     * @param \Illuminate\Http\Request $request of foods
+     * @param int                      $id      of food
      *
      * @return \Illuminate\Http\Response
      */
