@@ -16,13 +16,13 @@
 			<table class="table table-bordered table-hover" id="tab_logic">
 				<thead>
 					<tr >
-						<th class="text-center" style="width: 5em">
+						<th class="text-center col-xs-4">
 							{{ _('Category') }}
 						</th>
-						<th class="text-center" style="width: 5em">
+						<th class="text-center col-xs-4">
 							{{ _('Food') }}
 						</th>
-    					<th class="text-center" style="width: 5em">
+    					<th class="text-center col-xs-4">
 							{{ _('Quantity') }}
 						</th>
 					</tr>
@@ -43,12 +43,12 @@
 				    {!! session('message.content') !!}
 				    </div>
 				@endif
-				<div class="form-group">
+				<div class="form-group col-xs-4">
                   <label for="dateChooser">{{ _('Choose Date') }}: </label>
                   @if(empty($date))
-                  	<input type="date" class="form-control" id = "dateChooser" name="date" style="width: 20em">
+                  	<input type="date" class="form-control" id = "dateChooser" name="date">
                   @else
-                  	<input type="date" class="form-control" id = "dateChooser" name="date" value="{{ $date }}" style="width: 20em">
+                  	<input type="date" class="form-control" id = "dateChooser" name="date" value="{{ $date }}">
                   	<a href="{{ route('daily-menus.show', $date) }}">
                                             <span class="btn-xl btn-primary btn pull-right">{{ _('Show Menu') }}</span>
                     </a>
@@ -56,19 +56,20 @@
                 </div>
 				<tbody id='myBody'>
 					<tr>
-						<td id="categoryselect" style="width: 5em">
+						<td id="categoryselect">
 							<select class="form-control" id="cateselect">
-								<option value="">{{ _('Choose category') }}</option>
+								<option>{{ __('Choose category') }}</option>
 								@foreach ($listCategory as $category)
 								<option value="{{ $category->id }}">{{ $category->name }}</option>
 								@endforeach
 							</select>
 						</td>
-						<td id="foodsel" style="width: 5em">
-							<select class="form-control" id="foodselect" name="food_id" form="createMenu">
+						<td id="foodsel">
+							<p class="form-control" id="choosefood" data-text="{{ _('Click here to choose food') }}">{{ _('Click here to choose food') }}</p>
+							<select class="form-control" id="foodselect" name="food_id" form="createMenu" size="5">
 							</select>
 						</td>
-						<td id="quantityselect" style="width: 5em">
+						<td id="quantityselect">
 							<input type="number" class="form-control" name="quantity"/>
 						</td>
 					</tr>
@@ -76,11 +77,10 @@
 			</table>
 		</div>
 	</div>
-	<input type="submit" id="add_row" class="btn btn-primary pull-right" value={{ _('Add To Menu') }}>
+	<div class="pull-right">
+	<input type="submit" id="add_row" class="btn btn-primary" value="{{ __('Add To Menu') }}">
 	</form>
+	<a href="{{ route('daily-menus.index') }}"><span class="btn-xl btn-danger btn">{{ __('Cancel') }}</span></a>
+	</div>
 </div>
 @endsection
-@section('page-js-script')
-<script src="{{  asset("/js/common.js") }}"></script>
-@stop
-

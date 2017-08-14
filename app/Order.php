@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use SoftDeletes;
-
+    const ITEM_PER_PAGE = 10;
     /**
      * Order has many order item.
      *
@@ -16,7 +16,17 @@ class Order extends Model
      */
     public function orderItems()
     {
-        return $this->hasMany('App\OrderItems');
+        return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Order belongsTo User
+     *
+     * @return object
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**

@@ -74,7 +74,7 @@ class DailyMenuController extends Controller
         $listCategory = $this->category->get();
         if ($request->ajax()) {
             $categoryId = $request->category_id;
-            $listFood = $this->food->where('category_id', $categoryId)->get();
+            $listFood = $this->food->where('category_id', $categoryId)->paginate(10);
             return response()->json($listFood);
         } else if ($request->has('date')) {
             return view('daily_menus.create', ['listCategory' => $listCategory, 'date' => $request['date']]);

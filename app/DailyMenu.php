@@ -30,7 +30,7 @@ class DailyMenu extends Model
      *
      * @var array
      */
-    protected $fillable = ['quantity', 'created_at', 'updated_at'];
+    protected $fillable = ['date', 'food_id', 'quantity', 'created_at', 'updated_at'];
 
     /**
      * Get the foods for the menu item.
