@@ -4,10 +4,11 @@
     <div class="box" xmlns="">
         <div class="box-header">
             <h3 class="box-title">{{ __('List Order') }}</h3>
-            <button class="btn btn-warning pull-right">
+            <button class="btn btn-primary pull-right">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
         </div>
+        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -79,8 +80,8 @@
                                     <form role="form" class="delete-item pull-left"
                                           action="{{ route('orders.destroy', $order->id) }}"
                                           method="post">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        {{ method_field('DELETE') }}
+                                        {{ csrf_field() }}
                                         <button class="btn-danger btn btn-sm btn-confirm"
                                                 data-title="{{ __('Delete Order') }}"
                                                 data-confirm="{{ __('Are you want delete it?') }}"
