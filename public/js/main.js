@@ -12,11 +12,11 @@ $(document).ready(function() {
             $('#modal-confirm').modal('hide');
         })
     });
-    $("#date-sort").change(function(){
-        window.location = '/'+$("#date-sort").blur("data-table")+'/?date='+$("#date-sort").val();
+    $("#date-sort").blur(function(){
+        window.location = '/'+$(this).attr("data-table")+'/?date='+$(this).val();
     });
     $("#text-sort").change(function(){
-        window.location = '/'+$("#text-sort").attr("data-table")+'?keyword='+$("#text-sort").val();
+        window.location = '/'+$(this).attr("data-table")+'?keyword='+$(this).val();
     });
 });
 $('#flash-overlay-modal').modal();

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('main-content')
-    <div class="box" xmlns="http://www.w3.org/1999/html">
+    <div class="box">
         <div class="box-header">
             <h3 class="box-title">{{ __('List Categories') }}</h3>
             <a id="btn-add-category" class="btn btn-primary pull-right" href="{{ route('categories.create') }}"
