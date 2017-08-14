@@ -3,7 +3,7 @@
 @section('main-content')
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">{{ __('Daily Menu For') }}<span class="label label-info" id="$menuDate">{{ $date }}</span></h3>
+            <h3 class="box-title">{{ __('Daily Menu For') }}<span class="label label-info" id="menuDate"> {{ $date }}</span></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -13,14 +13,14 @@
                         <table class="table table-bordered table-striped dataTable table-hover" role="grid">
                             <thead>
                             <tr role="row">
-                                <th style="width: 1em">{{ __('ID') }}</th>
-                                <th style="width: 6em">{{ __('Food Name') }}</th>
-                                <th style="width: 6em">{{ __('Category Name') }}</th>
-                                <th style="width: 2em">{{ __('Price') }}</th>
-                                <th style="width: 4em">{{ __('Created At') }}</th>
-                                <th style="width: 4em">{{ __('Updated At') }}</th>
-                                <th style="width: 1em">{{ __('Quantity') }}</th>
-                                <th style="width: 2em">{{ __('Actions') }}</th>
+                                <th class="col-xs-1">{{ __('ID') }}</th>
+                                <th class="col-xs-3">{{ __('Food Name') }}</th>
+                                <th class="col-xs-3">{{ __('Category Name') }}</th>
+                                <th class="col-xs-1">{{ __('Price') }}</th>
+                                <th class="col-xs-3">{{ __('Created At') }}</th>
+                                <th class="col-xs-3">{{ __('Updated At') }}</th>
+                                <th class="col-xs-1">{{ __('Quantity') }}</th>
+                                <th class="col-xs-3">{{ __('Actions') }}</th>
                             </tr>
                             </thead>
                             <tbody id="bodyTable">
@@ -61,7 +61,3 @@
         </div>
     </div>
 @endsection
-
-@section('page-js-script')
-<script src="{{ asset("/js/common.js") }}"></script>
-@stop
