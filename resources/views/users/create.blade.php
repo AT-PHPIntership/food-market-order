@@ -16,7 +16,7 @@
                     </div>
                     <!-- form start -->
                     <form role="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        {{ csrf_field() }}
                         <div class="box-body">
                             <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="inputEmail1">{{ __('Email') }}</label>
@@ -48,7 +48,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 no-padding">
                                 <div class="form-group">
                                     <label>{{ __('Gender') }}</label>
                                     <select name="gender" class="form-control">
@@ -103,6 +103,7 @@
                         </div>
                         <div class="box-footer text-center">
                             <input type="submit" class="btn btn-primary" value="{{ __('Create') }}">
+                            <input type="reset" class="btn btn-danger" value="{{ __('Cancel') }}">
                         </div>
                     </form>
                 </div>

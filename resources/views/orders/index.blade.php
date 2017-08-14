@@ -4,9 +4,6 @@
     <div class="box" xmlns="">
         <div class="box-header">
             <h3 class="box-title">{{ __('List Order') }}</h3>
-            <button class="btn btn-warning pull-right">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -65,27 +62,29 @@
 
                                         </td>
                                         <td>
-                                            <a class="btn btn-info btn-sm pull-left"
+                                            <a class="btn btn-info btn-sm"
                                                href="{{ route('orders.show',$order->id)  }}"
                                                title="{{ __('Detail') }}">
                                                 <span class="glyphicon glyphicon-zoom-in">
                                                 </span>
                                             </a>
-                                            <button class="btn-change-status btn-success btn btn-sm pull-left"
+                                            <button class="btn-confirm btn-success btn btn-sm"
                                                     title="{{ __('Confirm') }}"
-                                                    data-confirm="{{ __('Are you sure change status this?') }}">
-                                                <span class="glyphicon glyphicon-ok-circle"></span>
+                                                    data-confirm="{{ __('Are you sure change status this?') }}"
+                                                    data-title="{{ __('Change Status') }}" >
+                                                <i class="fa fa-edit"></i>
                                             </button>
                                 </form>
-                                <form role="form" class="delete-item pull-left"
+                                <form role="form" class="delete-item inline"
                                       action="{{ route('orders.destroy', $order->id) }}"
                                       method="post">
                                     {{ method_field('DELETE') }}
                                     {{ csrf_field() }}
-                                    <button class="btn-danger btn btn-sm btn-confirm-delete"
+                                    <button class="btn-danger btn btn-sm btn-confirm"
                                             data-confirm="{{ __('Are you want delete it?') }}"
+                                            data-title="{{ __('Delete Order') }}"
                                             title="{{ __('Delete Order') }}">
-                                        <span class="glyphicon glyphicon-remove"></span>
+                                        <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
                                 </td>
@@ -99,4 +98,5 @@
             </div>
         </div>
     </div>
+    @include('layouts.partials.modal')
 @endsection

@@ -35,6 +35,7 @@
 
                         <div class="box-footer text-center">
                             <input type="submit" class="btn btn-primary" value="{{__('Update')}}">
+                            <input type="reset" class="btn btn-danger" value="{{__('Cancel')}}">
                         </div>
                     </form>
                 </div>
