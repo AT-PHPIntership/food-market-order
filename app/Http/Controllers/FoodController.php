@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\FoodUpdateRequest;
 use App\Food;
 use App\Category;
-use App\Http\Requests\FoodPostRequest;
 use Image;
+use Storage;
+use App\Http\Requests\FoodCreateRequest;
+use File;
 
 class FoodController extends Controller
 {
@@ -81,7 +84,7 @@ class FoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(FoodPostRequest $request)
+    public function store(FoodCreateRequest $request)
     {
         $arrFoods = $request->all();
         $arrFoods = $request->except(['_token']);
@@ -100,6 +103,52 @@ class FoodController extends Controller
             return redirect()->route('foods.index');
         } else {
             flash(__('Create Food Error'))->error()->important();
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id of food
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $food = $this->food->findOrFail($id);
+        $categories = Category::orderBy('id', 'DESC')->get();
+        return view('foods.edit', ['food' => $food, 'categories' => $categories]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request of foods
+     * @param int                      $id      of food
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(FoodUpdateRequest $request, $id)
+    {
+        
+        $food = $this->food->findOrFail($id);
+        $dataFood = $request->except('_method', '_token');
+        $oldPathImage = $food->image;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . "-" . $file->getClientOriginalName();
+            $dataFood['image'] = $fileName;
+        }
+        if ($food->update($dataFood)) {
+            if ($request->hasFile('image')) {
+                Image::make($file)->save(public_path(config('constant.path_upload_foods'). $fileName));
+                File::delete($oldPathImage);
+            }
+            flash(__('Update Food Success'))->success()->important();
+               return redirect()->route('foods.index');
+        } else {
+            flash(__('Update Food Error'))->error()->important();
             return redirect()->back();
         }
     }
