@@ -40,8 +40,11 @@ class DeleteUserTest extends DuskTestCase
             $browser->loginAs(1)
                 ->resize(1920, 1080)
                 ->visit('/users')
-                ->click('#btn-delete-2')
-                ->acceptDialog()
+                ->click('#table tbody tr:nth-child(2) td:nth-child(8) button')
+                ->waitFor(null, '1')
+                ->assertSee('Delete User')
+                ->assertSee('Are you sure to delete this user?')
+                ->click('#btn-modal-submit')
                 ->assertSee('Delete Successfully!')
                 ->screenshot('testDeleteSuccess');
         });
@@ -59,8 +62,11 @@ class DeleteUserTest extends DuskTestCase
             $browser->loginAs(1)
                 ->resize(1920, 1080)
                 ->visit('/users')
-                ->click('#btn-delete-1')
-                ->acceptDialog()
+                ->click('#table tbody tr:nth-child(1) td:nth-child(8) button')
+                ->waitFor(null, '1')
+                ->assertSee('Delete User')
+                ->assertSee('Are you sure to delete this user?')
+                ->click('#btn-modal-submit')
                 ->assertSee('Cannot delete current user!')
                 ->screenshot('testDeleteCurrentUser');
         });
@@ -84,8 +90,11 @@ class DeleteUserTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/users');
             DB::table('users')->delete(2);
-            $browser->click('#btn-delete-2')
-                ->acceptDialog()
+            $browser->click('#table tbody tr:nth-child(2) td:nth-child(8) button')
+                ->waitFor(null, '1')
+                ->assertSee('Delete User')
+                ->assertSee('Are you sure to delete this user?')
+                ->click('#btn-modal-submit')
                 ->assertSee('Delete Error!')
                 ->screenshot('testDeleteError');
         });
