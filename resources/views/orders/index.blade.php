@@ -46,9 +46,12 @@
                                         <td>{{ $order->updated_at }}</td>
                                         <td>{{ $order->trans_at }}</td>
                                         <td>{{ $order->custom_address }}</td>
-                                        <td>{{ $order->payment }}</td>
+                                        <td>{{ str_replace(',','.',number_format($order->payment,0)) }} {{ __('VND') }}</td>
                                         <td>
-                                            <select class="form-control" name="status">
+                                            <select class="form-control status-order"
+                                                    name="status"
+                                                    data-title="{{ __('Change Status') }}"
+                                                    data-confirm="{{ __('Are you sure change status this?') }}">
                                                 <option {{ $order->status == 0 ? 'selected' : '' }}
                                                         value="0">{{ __('Cancel') }}</option>
                                                 <option {{ $order->status == 1 ? 'selected' : '' }}
@@ -66,12 +69,6 @@
                                                 <span class="glyphicon glyphicon-zoom-in">
                                                 </span>
                                             </a>
-                                            <button class="btn-confirm btn-success btn btn-sm"
-                                                    title="{{ __('Confirm') }}"
-                                                    data-confirm="{{ __('Are you sure change status this?') }}"
-                                                    data-title="{{ __('Change Status') }}" >
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                 </form>
                                 <form role="form" class="delete-item inline"
                                       action="{{ route('orders.destroy', $order->id) }}"
