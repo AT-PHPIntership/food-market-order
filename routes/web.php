@@ -32,3 +32,7 @@ Route::resource('orders', 'OrderController');
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+Route::delete('orders/item/{id}','OrderController@deleteItem')->name('orders.deleteItem');
+
+Route::put('orders/item/{id}','OrderController@updateItem')->name('orders.updateItem');
