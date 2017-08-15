@@ -5,8 +5,8 @@
     </h1>
 @endsection
 @section('main-content')
-    <div class="box" xmlns="">
-        <div class="box-header">
+    <div class="box box-primary">
+        <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Order') }}</h3>
             <a class="btn btn-primary pull-right" href="{{ route('orders.create')}}">
                 <i class="fa fa-plus"></i>
@@ -24,7 +24,7 @@
                         <input id="date-sort" class="form-control pull-right margin-bottom" type="date"
                                value="{{ app('request')->has('date') ? app('request')->input('date') : date('Y-m-d') }}"
                                data-table="{{ __('orders') }}">
-                        <table class="table table-striped table-hover" role="grid">
+                        <table class="table table-bordered table-hover" role="grid">
                             <thead>
                             <tr role="row">
                                 <th class="col-md-1">{{ __('ID') }}</th>
@@ -64,12 +64,12 @@
 
                                         </td>
                                         <td>
-                                            <a class="btn btn-info btn-xs" href="{{ route('orders.show',$order->id)  }}"
+                                            <a class="btn btn-info btn-sm" href="{{ route('orders.show',$order->id)  }}"
                                                title="{{ __('Detail') }}">
                                                 <i class="fa fa-search-plus">
                                                 </i>
                                             </a>
-                                            <button class="btn-change-status btn-success btn btn-xs"
+                                            <button class="btn-change-status btn-success btn btn-sm"
                                                     data-title="{{ __('Confirm') }}"
                                                     data-confirm="{{ __('Are you sure change status this?') }}">
                                                 <i class="fa fa-edit"></i>
@@ -80,7 +80,7 @@
                                       method="post">
                                     {{ method_field('DELETE') }}
                                     {{ csrf_field() }}
-                                    <button class="btn-danger btn btn-xs btn-confirm"
+                                    <button class="btn-danger btn btn-sm btn-confirm"
                                             data-confirm="{{ __('Are you want delete it?') }}"
                                             data-title="{{ __('Delete Order') }}"
                                             title="{{ __('Delete Order') }}">
@@ -92,10 +92,12 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $orders->links() }}
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="box-footer">
+            {{ $orders->links() }}
         </div>
     </div>
     @include('layouts.partials.modal')

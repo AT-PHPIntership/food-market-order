@@ -21,6 +21,7 @@
                 <!-- form start -->
                 <form role="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
+                    <input type="hidden" name="is_active" value="1">
                     <div class="col-md-2"></div>
                     <div class="box-body col-md-8">
                         <div class="form-group col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
@@ -69,8 +70,8 @@
                             </div>
                         </div>
                         <div class="col-md-6 form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
-                            <div class="col-md-4"><label>{{ __('Birthday') }}</label></div>
-                            <div class="date col-md-8">
+                            <div class="col-md-3"><label>{{ __('Birthday') }}</label></div>
+                            <div class="date col-md-9">
                                 <input name="birthday" type="date" class="form-control"
                                        id="datepicker" value="{{ old('birthday') }}">
                                 @if ($errors->has('birthday'))
@@ -105,9 +106,18 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group col-md-12 {{ $errors->has('image') ? ' has-error' : '' }}">
-                            <div class="col-md-2"><label for="exampleInputFile">{{ __('Image') }}</label></div>
-                            <div class="col-md-10"><input name="image" class="form-control" type="file" id="exampleInputFile">
+                        <div class="col-md-6 form-group">
+                            <div class="col-md-4"><label>{{ __('Role') }}</label></div>
+                            <div class="col-md-8">
+                                <select name="is_admin" class="form-control">
+                                    <option selected value="0">{{ __('User') }}</option>
+                                    <option value="1">{{ __('Admin') }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 {{ $errors->has('image') ? ' has-error' : '' }}">
+                            <div class="col-md-3"><label for="exampleInputFile">{{ __('Image') }}</label></div>
+                            <div class="col-md-9"><input name="image" class="form-control" type="file" id="exampleInputFile">
                                 @if ($errors->has('image'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('image') }}</strong>

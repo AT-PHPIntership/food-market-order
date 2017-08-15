@@ -15,17 +15,17 @@ class Food extends Model
     /**
      * Food has many order item
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return mixed
      */
     public function orderItems()
     {
         return $this->morphMany(OrderItem::class, 'itemtable');
     }
-
+    
     /**
      * Food has one Category
      *
-     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     * @return mixed
      */
     public function category()
     {

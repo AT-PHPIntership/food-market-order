@@ -8,10 +8,9 @@
 @section('main-content')
 
     @include('flash::message')
-
     @if(isset($users))
-        <div class="box">
-            <div class="box-header">
+        <div class="box box-primary">
+            <div class="box-header text-center">
                 <h3 class="box-title">{{ __("User's Table Data") }}</h3>
                 <a href="{{ route('users.create') }}" class="btn btn-primary pull-right">
                     <i class=" fa fa-plus"></i>
@@ -22,7 +21,7 @@
                 <div id="table_wrapper" class="table-responsive form-inline dt-bootstrap">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table id="table" class=" table table-striped dataTable table-hover"
+                            <table id="table" class=" table table-bordered dataTable table-hover"
                                    role="grid"
                                    aria-describedby="table_info">
                                 <thead>
@@ -43,20 +42,24 @@
                                         <td>{{ $user->full_name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ ($user->gender == 1) ? __('Male') : __('Female')}}</td>
-                                        <td><i class="fa fa-certificate {{ ($user->is_admin == 1) ? 'admin':'normal' }}"></i>
+                                        <td>
+                                            <i class="fa fa-certificate {{ ($user->is_admin == 1) ? 'admin':'normal' }}"></i>
                                         </td>
-                                        <td><i class="fa fa-check {{ ($user->is_active == 1) ? 'active-user':'gray' }}"></i>
+                                        <td>
+                                            <i class="fa fa-check {{ ($user->is_active == 1) ? 'active-user':'normal' }}"></i>
                                         </td>
-                                        <td><a href="{{ route('users.show', $user->id) }}" class="btn btn-xs btn-info"><i
+                                        <td><a href="{{ route('users.show', $user->id) }}"
+                                               class="btn btn-sm btn-info"><i
                                                         class="fa fa-search-plus"></i></a>
-                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-xs btn-success"><i
+                                            <a href="{{ route('users.edit', $user->id) }}"
+                                               class="btn btn-sm btn-success"><i
                                                         class="fa fa-edit"></i></a>
                                             <form method="POST" action="{{ route('users.destroy', $user->id) }}"
                                                   class="inline delete-item">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                                <button class="btn btn-danger btn-xs btn-confirm"
+                                                <button class="btn btn-danger btn-sm btn-confirm"
                                                         data-confirm="{{ __('Are you sure to delete this user?') }}"
                                                         data-title="{{ __('Delete User') }}" type="submit">
                                                     <i class="fa fa-trash"></i>
@@ -67,10 +70,12 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $users->links() }}
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="box-footer">
+                {{ $users->links() }}
             </div>
         </div>
     @else

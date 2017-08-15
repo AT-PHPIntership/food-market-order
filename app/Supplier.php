@@ -13,4 +13,14 @@ class Supplier extends Model
         'name',
         'description'
     ];
+
+    /**
+     * Supplier has many materials
+     *
+     * @return mixed
+     */
+    public function materials()
+    {
+        return $this->hasMany('App\Material', 'category_id', 'id');
+    }
 }

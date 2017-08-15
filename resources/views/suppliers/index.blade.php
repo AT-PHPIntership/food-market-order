@@ -5,21 +5,22 @@
     </h1>
 @endsection
 @section('main-content')
-    <div class="box">
-        <div class="box-header">
+
+    @include('flash::message')
+    <div class="box box-primary">
+        <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Suppliers') }}</h3>
             <a id="btn-add-supplier" class="btn btn-primary pull-right" href="{{ route('suppliers.create') }}"
                title="{{ __('Add Supplier') }}">
                 <i class="fa fa-plus"></i>
             </a>
         </div>
-        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
-            <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-responsive table-striped dataTable table-hover"
+                        <table class="table table-bordered dataTable table-hover"
                                role="grid"
                                aria-describedby="list-suppliers-info">
                             <thead>
@@ -37,7 +38,7 @@
                                     <td>{{ $supplier->name  }}</td>
                                     <td>{{ $supplier->description }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-success btn-edit-item"
+                                        <a class="btn btn-sm btn-success btn-edit-item"
                                            href="{{ route('suppliers.edit', $supplier->id) }}"
                                            title="{{ __('Edit Supplier') }}">
                                             <i class=" fa fa-edit"></i>
@@ -47,7 +48,7 @@
                                               method="post">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
-                                            <button class="btn-xs btn-danger btn btn-confirm"
+                                            <button class="btn-sm btn-danger btn btn-confirm"
                                                     data-confirm="{{ __('Are you want delete it?') }}"
                                                     data-title="{{ __('Delete Supplier') }}"
                                                     title="{{ __('Delete Supplier') }}">
@@ -62,6 +63,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="box-footer">
             {{ $suppliers->links() }}
         </div>
     </div>

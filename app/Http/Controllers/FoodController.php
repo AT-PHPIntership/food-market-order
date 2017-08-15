@@ -80,9 +80,9 @@ class FoodController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request of food
+     * @param FoodCreateRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(FoodCreateRequest $request)
     {
@@ -124,10 +124,10 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request of foods
-     * @param int                      $id      of food
+     * @param FoodUpdateRequest $request  update food
+     * @param $id id of food
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(FoodUpdateRequest $request, $id)
     {

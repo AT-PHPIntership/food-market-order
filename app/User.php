@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'full_name', 'email', 'password', 'image', 'address', 'birthday', 'gender', 'phone_number'
+        'full_name', 'email', 'password', 'image', 'address', 'birthday', 'gender', 'phone_number', 'is_active', 'is_admin',
     ];
 
     /**
@@ -38,7 +38,7 @@ class User extends Authenticatable
     /**
      * User has many orders
      *
-     * @return array
+     * @return mixed
      */
     public function orders()
     {
