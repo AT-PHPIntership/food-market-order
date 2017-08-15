@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SupplierRequest extends FormRequest
+class FoodUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,12 @@ class SupplierRequest extends FormRequest
      */
     public function rules()
     {
-         return [
-           'name' => 'required|unique:suppliers|max:255',
-            'description' => 'required',
-         ];
+        return [
+            'name' => 'required|min:6|max:100',
+            'category_id' => 'required',
+            'description' => 'required|min:10|max:300',
+            'price' => 'required|numeric',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
     }
 }
