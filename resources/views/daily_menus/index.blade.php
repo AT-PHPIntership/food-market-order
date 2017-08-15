@@ -18,15 +18,6 @@
         <!-- /.box-header -->
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
-            <!-- @if (session('message'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
-                </div>
-            @elseif (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif -->
             @if (session('message')||(session('error')))
             <div class="alert {{ (session('message')) ? 'alert-success' : 'alert-danger' }}">
                 {{ session('message') }} {{ session('error') }}
@@ -39,39 +30,41 @@
                                 <label for="dateSearch">{{ __('Date') }}: </label>
                                 <input type="text" class="form-control" id = "dateSearch" name="date"
                                 value="{{ (!empty($date)) ? $date : '' }}" style="width: 20em">
-                                <input type="submit" class="btn-primary btn" value="Search">
+                                <input type="submit" class="btn-default btn" value="Search">
                             </form>
                         </div>
                         <table class="table table-bordered table-striped dataTable table-hover text-center" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th style="width: 8em">{{ __('Date') }}</th>
-                                    <th style="width: 2em">{{ __('Action') }}</th>
+                                    <th class="col-md-8">{{ __('Date') }}</th>
+                                    <th class="col-md-4">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach ($dailyMenus as $dailyMenu)
                                 <tr>
                                     <td><h4>{{ $dailyMenu->date }}</h4></td>
-                                    <form method="POST" action="{{ route('daily-menus.destroy', $dailyMenu->date) }}">
+                                    <form method="POST" action="{{ route('daily-menus.destroy', $dailyMenu->date) }}" id="deleteMenu">
                                             <input name="_method" type="hidden" value="DELETE">
                                             <input name="date" type="hidden" value="{{ $dailyMenu->date }}">
                                             {{ csrf_field() }}
                                     <td>
-                                        <a class="btn-xl btn-info btn glyphicon glyphicon-list-alt" href="{{ route('daily-menus.show', $dailyMenu->date) }}"></a>
-                                        <button type="submit" class="btn-xl btn-danger btn glyphicon glyphicon-trash" data-confirm="{{ __('Are you sure you want to delete this item?') }}" id="$btnDelete"></button>
+                                        <a href="{{ route('daily-menus.show', $dailyMenu->date) }}"
+                                           class="btn-xl btn-info btn ">
+                                            <span class="glyphicon glyphicon-zoom-in"></span>
+                                        </a>
+                                        <button type="submit" class="btn-xl btn-danger btn btn-confirm" data-confirm="{{ __('Are you sure you want to delete this item?') }}" data-title="{{ __('Delete Meu') }}"><i class="fa fa-trash"></i></button>
                                     </td>
                                     </form>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="pull-right">
-                            {{ $dailyMenus->links() }}
-                        </div>
+                        {{ $dailyMenus->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+@include('layouts.partials.modal')

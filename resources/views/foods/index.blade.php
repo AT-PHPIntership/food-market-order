@@ -4,10 +4,9 @@
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">{{ __('List Food') }}</h3>
-            <a href="{{ route('foods.create') }}" class="btn btn-primary btn-xl pull-right fa fa-plus"> {{ __('Add Food') }}</a>
+            <a href="{{ route('foods.create') }}" class="btn btn-primary btn-xl pull-right"> {{ __('Add Food') }}</a>
         </div>
         @include('flash::message')
-        <!-- /.box-header -->
         @if(isset($foods))
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -26,27 +25,29 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @php ($i = 1)
                             @foreach($foods as $food)
                                 <tr>
-                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $food->id }}</td>
                                     <td>{{ $food->name }}</td>
                                     <td>{{ $food->category->name }}</td>
                                     <td>{{ $food->price }}</td>
                                     <td>{{ $food->description }}</td>
-                                    <td><a href="{{ route('foods.show', $food->id) }}" alt="{{ __('Detail') }}"><span
-                                                    class="glyphicon glyphicon-zoom-in btn btn-default btn-xs pull-left" ></span>
+                                    <td><a class="btn btn-info btn-sm"
+                                           href="{{ route('foods.show', $food->id) }}" alt="{{ __('Detail') }}">
+                                            <span class="glyphicon glyphicon-zoom-in" ></span>
                                         </a>
-                                        <a href="{{ route('foods.edit', $food->id) }}" alt="{{ __('Edit') }}"><span
-                                                    class="glyphicon glyphicon-pencil btn btn-default btn-xs pull-left"></span>
+                                        <a class="btn btn-success btn-sm"
+                                           href="{{ route('foods.edit', $food->id) }}" alt="{{ __('Edit') }}">
+                                            <i class="fa fa-edit"></i>
                                         </a>
                                         <form method="POST" action="{{ route('foods.destroy', $food->id) }}" class="inline">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="food_id" value="{{ $food->id }}">
-                                            <button class="btn-xs btn-danger btn btn-confirm-delete"
-                                                data-confirm="{{ __('Are you sure delete food?') }}">
-                                                <span class="glyphicon glyphicon-remove"></span>
+                                            <button class="btn-sm btn-danger btn btn-confirm"
+                                                    data-confirm="{{ __('Are you sure delete food?') }}"
+                                                    data-title="Delete Food">
+                                                <i class="fa fa-trash"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -63,4 +64,5 @@
         <h1>{{ __('NO DATA') }}</h1>
         @endif
     </div>
+    @include('layouts.partials.modal')
 @endsection
