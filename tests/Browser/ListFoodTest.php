@@ -7,10 +7,11 @@ use App\User;
 use Tests\TestCase;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ListFoodTest extends DuskTestCase
 {
+    use DatabaseMigrations;
     /**
      * A Dusk test URL food list.
      *
@@ -22,28 +23,25 @@ class ListFoodTest extends DuskTestCase
             $browser->loginAs(User::find(1))
             ->visit('/foods')
             ->assertPathIs('/foods')
-            ->assertPathIsNot('/home')
-            ->screenshot('h');
+            ->assertPathIsNot('/FOOD')
+            ->assertSee('List Food');
         });
     }
 
     /**
-     * A Dusk test show record with table empty.
+     * A Dusk test show record with empty data.
      *
      * @return void
      */
     public function testListEmpty()
     {
         $this->browse(function (Browser $browser) {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            DB::table('foods')->truncate();
             $browser->loginAs(User::find(1))
                 ->visit('/foods')
-                ->assertSee('List Food')
-                ->screenshot('hh');
-            $elements = $browser->elements('#list-foods-table tbody tr');
+                ->assertSee('List Food');
+            $elements = $browser->elements('.table tbody tr');
             $this->assertCount(0, $elements);
-            $this->assertNull($browser->element('.paginate'));
+            $this->assertNull($browser->element('.pagination'));
         });
     }
 
@@ -54,20 +52,20 @@ class ListFoodTest extends DuskTestCase
      */
     public function testListHasRecord()
     {
-        factory(Food::class, 9)->create();
+        factory(Food::class, 10)->create();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                 ->visit('/foods')
                 ->resize(1920, 2000)
                 ->assertSee('List Food');
-            $elements = $browser->elements('#list-foods-table tbody tr');
-            $this->assertCount(9, $elements);
+            $elements = $browser->elements('.table tbody tr');
+            $this->assertCount(10, $elements);
             $this->assertNull($browser->element('.pagination'));
         });
     }
 
     /**
-    * A Dusk test show record with table has data and ensure pagnate.
+    * A Dusk test show record and paginate.
     *
     * @return void
     */
@@ -78,16 +76,18 @@ class ListFoodTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                 ->visit('/foods')
                 ->resize(1920, 2000)
-                ->assertSee('List Food')
-                ->screenshot('hhhh');
-            $elements = $browser->elements('#list-foods-table tbody tr');
+                ->assertSee('List Food');
+            $elements = $browser->elements('.table tbody tr');
             $this->assertCount(10, $elements);
             $this->assertNotNull($browser->element('.pagination'));
+            $paginateElement = $browser->elements('.pagination li');
+            $numberPage = count($paginateElement)- 2;
+            $this->assertTrue($numberPage == 3);
         });
     }
 
     /**
-     * Test click page 2 in pagination link list food
+     * Test click link paginate
      *
      * @return void
      */
@@ -95,11 +95,9 @@ class ListFoodTest extends DuskTestCase
     {
         factory(Food::class, 12)->create();
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit('/foods?page=2')
-                    ->resize(1920, 2000);
-            $elements = $browser->elements('#list-foods-table tbody tr');
-            $browser->assertPathIs('/foods');
+            $browser->visit('/foods?page=2');
+            $elements = $browser->elements('.table tbody tr');
+            $this->assertCount(2, $elements);
             $browser->assertQueryStringHas('page', 2);
         });
     }

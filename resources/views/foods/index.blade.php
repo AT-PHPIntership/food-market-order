@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <table class="table table-bordered table-striped dataTable table-hover"
-                               role="grid" id="list-foods-table">
+                               role="grid">
                             <thead>
                             <tr role="row">
                                 <th class="col-md-1">{{ __('ID') }}</th>
