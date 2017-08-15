@@ -13,10 +13,10 @@ $(document).ready(function() {
         })
     });
     $("#date-sort").blur(function(){
-        window.location = '/'+$("#date-sort").attr("data-table")+'/?date='+$("#date-sort").val();
+        window.location = '/'+$(this).attr("data-table")+'/?date='+$(this).val();
     });
     $("#text-sort").change(function(){
-        window.location = '/'+$("#text-sort").attr("data-table")+'?keyword='+$("#text-sort").val();
+        window.location = '/'+$(this).attr("data-table")+'?keyword='+$(this).val();
     });
 });
 $('#flash-overlay-modal').modal();
