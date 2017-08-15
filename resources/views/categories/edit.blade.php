@@ -1,4 +1,11 @@
 @extends('layouts.master')
+@section('main-header')
+    <h1>{{ __('UPDATE CATEGORY PAGE') }}
+        <small></small>
+        <a href="{{ route('categories.index') }}" class="pull-right"><span
+                    class="fa fa-arrow-left btn btn-primary"></span></a>
+    </h1>
+@endsection
 @section('main-content')
     <div class="row center">
         <!-- left column -->

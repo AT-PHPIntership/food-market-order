@@ -32,7 +32,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = $this->food->orderBy('id', 'DESC')->with('category')->paginate(10);
+        $foods = $this->food->with('category')->paginate(Food::ITEMS_PER_PAGE);
         return view('foods.index', ['foods' => $foods]);
     }
 

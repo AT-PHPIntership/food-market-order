@@ -39,7 +39,7 @@ class DailyMenuController extends Controller
         if ($request->has('date')) {
             $dailyMenus = $dailyMenus->where('date', 'like', '%'.$request['date'].'%');
         }
-        $dailyMenus = $dailyMenus->distinct()->orderBy('date', 'desc')->paginate(10);
+        $dailyMenus = $dailyMenus->distinct()->orderBy('date', 'desc')->paginate(DailyMenu::ITEMS_PER_PAGE);
         return view('daily_menus.index', ['dailyMenus' => $dailyMenus, 'date' => $request['date']]);
     }
 }

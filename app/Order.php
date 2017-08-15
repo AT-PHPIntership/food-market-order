@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use SoftDeletes;
-    const ITEM_PER_PAGE = 10;
+    const ITEMS_PER_PAGE = 10;
     /**
      * Order has many order item.
      *

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use softDeletes;
+    const ITEMS_PER_PAGE = 10;
 
     /**
      * Category has many foods

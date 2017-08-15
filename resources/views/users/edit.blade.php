@@ -1,4 +1,13 @@
 @extends('layouts.master')
+@section('main-header')
+    <h1>
+        {{ __('UPDATE USER PAGE') }}
+        <small></small>
+        <a href="{{ route('users.index') }}" class="pull-right">
+            <span class="fa fa-arrow-left btn btn-primary"></span>
+        </a>
+    </h1>
+@endsection
 @section('main-content')
     @if(!isset($user))
         <h1>{{ __('Nothing to show!') }}</h1>
@@ -32,7 +41,8 @@
                     <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">{{ __('Password') }}</label>
                         <div class="col-md-8">
-                            <input class="form-control" autocomplete="off" value="{{ $user->password }}" type="password" name="password">
+                            <input class="form-control" autocomplete="off" value="{{ $user->password }}" type="password"
+                                   name="password">
 
                             @if ($errors->has('password'))
                                 <span class="help-block">
@@ -47,7 +57,8 @@
                     <div class="form-group {{ $errors->has('full_name') ? ' has-error' : '' }}">
                         <label class="col-lg-3 control-label">{{ __('Full Name') }}</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="{{ old('full_name', $user->full_name) }}" type="text" name="full_name">
+                            <input class="form-control" value="{{ old('full_name', $user->full_name) }}" type="text"
+                                   name="full_name">
 
                             @if ($errors->has('full_name'))
                                 <span class="help-block">
@@ -66,7 +77,8 @@
                     <div class="form-group {{ $errors->has('address') ? ' has-error' : '' }}">
                         <label class="col-lg-3 control-label">{{ __('Address') }}</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="{{ old('address', $user->address) }}" type="text" name="address">
+                            <input class="form-control" value="{{ old('address', $user->address) }}" type="text"
+                                   name="address">
                             @if ($errors->has('address'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('address') }}</strong>
@@ -105,7 +117,8 @@
                     <div class="form-group {{ $errors->has('phone_number') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">{{ __('Phone Number') }}</label>
                         <div class="col-md-8">
-                            <input class="form-control" autocomplete="off" value="{{ old('phone_number', $user->phone_number) }}" type="text"
+                            <input class="form-control" autocomplete="off"
+                                   value="{{ old('phone_number', $user->phone_number) }}" type="text"
                                    name="phone_number">
 
                             @if ($errors->has('phone_number'))
@@ -120,7 +133,7 @@
                         <div class="col-md-8">
                             <input class="btn btn-primary" value="{{ __('Save Changes') }}" type="submit">
                             <span></span>
-                            <input class="btn btn-danger" value="{{ __('Cancel') }}" type="reset">
+                            <input class="btn btn-danger" value="{{ __('Reset') }}" type="reset">
                         </div>
                     </div>
                 </div>

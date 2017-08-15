@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $this->user = $user;
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->paginate(10);
+        $users = $this->user->paginate(User::ITEMS_PER_PAGE);
         return view('users.index')->with('users', $users);
     }
 
@@ -131,7 +131,7 @@ class UserController extends Controller
             return redirect()->route('users.edit', $id)->withInput();
         }
     }
-
+        
     /**
      * Get filename from request
      *

@@ -1,4 +1,10 @@
 @extends('layouts.master')
+@section('main-header')
+    <h1>{{ __('UPDATE SUPPLIERS') }}
+        <small>user's profile and orders history</small>
+        <a href="{{ route('users.index') }}" class="pull-right"><span class="fa fa-arrow-left btn btn-primary"></span></a>
+    </h1>
+@endsection
 @section('main-content')
     <div class="row center">
         <!-- left column -->

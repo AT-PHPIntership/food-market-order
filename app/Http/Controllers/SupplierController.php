@@ -31,7 +31,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = $this->supplier->paginate(Supplier::ITEM_PER_PAGE);
+        $suppliers = $this->supplier->paginate(Supplier::ITEMS_PER_PAGE);
         return view('suppliers.index', ['suppliers' => $suppliers]);
     }
 

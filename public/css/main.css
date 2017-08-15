@@ -1,0 +1,11 @@
+.admin {
+    color: red;
+}
+
+.active-user {
+    color: greenyellow;
+}
+
+.normal {
+    color: grey;
+}

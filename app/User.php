@@ -11,6 +11,12 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
+    const MALE = 1;
+    const FEMALE = 0;
+    const ADMIN = 1;
+    const NORMAL_USER = 0;
+    const ITEMS_PER_PAGE = 10;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,7 +42,7 @@ class User extends Authenticatable
      */
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'user_id', 'id');
     }
 
     /**

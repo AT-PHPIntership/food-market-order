@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('id', 'DESC')->paginate(10);
+        $categories = $this->category->paginate(Category::ITEMS_PER_PAGE);
         return view('categories.index', ['categories' => $categories]);
     }
 

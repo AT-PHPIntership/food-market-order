@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Material extends Model
 {
     use softDeletes;
+    const ITEMS_PER_PAGE = 10;
 
     /**
      * Food has many order item

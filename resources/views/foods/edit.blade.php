@@ -1,5 +1,10 @@
 @extends('layouts.master')
-
+@section('main-header')
+    <h1>{{ __('UPDATE FOOD') }}
+        <small></small>
+        <a href="{{ route('foods.index') }}" class="pull-right"><span class="fa fa-arrow-left btn btn-primary"></span></a>
+    </h1>
+@endsection
 @section('main-content')
     @if(!isset($food))
         <h1>{{ __('Nothing to show!') }}</h1>
