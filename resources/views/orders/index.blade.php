@@ -46,7 +46,7 @@
                                         <td>{{ $order->updated_at }}</td>
                                         <td>{{ $order->trans_at }}</td>
                                         <td>{{ $order->custom_address }}</td>
-                                        <td>{{ str_replace(',','.',number_format($order->payment,0)) }} {{ __('VND') }}</td>
+                                        <td>{{ number_format($order->payment,0,",",".") }} {{ __('VND') }}</td>
                                         <td>
                                             <select class="form-control status-order"
                                                     name="status"
