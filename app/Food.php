@@ -20,7 +20,7 @@ class Food extends Model
     {
         return $this->morphMany(OrderItem::class, 'itemtable');
     }
-
+    
     /**
      * Food has one Category
      *
