@@ -31,7 +31,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = $this->supplier->paginate(Supplier::ITEM_PER_PAGE);
+        $suppliers = $this->supplier->paginate(Supplier::ITEMS_PER_PAGE);
         return view('suppliers.index', ['suppliers' => $suppliers]);
     }
 
@@ -51,8 +51,8 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\SupplierRequest $request Request from client
-     * @param int                                $id      It is id of supplier need update
+     * @param SupplierRequest $request Request from client
+     * @param int             $id      It is id of supplier need update
      *
      * @return \Illuminate\Http\Response
      */
