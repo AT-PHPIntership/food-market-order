@@ -9,6 +9,7 @@ class OrderItem extends Model
 {
     use softDeletes;
     protected $dates = ['deleted_at'];
+
     /**
      * Material has many order items
      *
@@ -17,5 +18,15 @@ class OrderItem extends Model
     public function itemtable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * OrderItem has one Order
+     *
+     * @return mixed
+     */
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 }

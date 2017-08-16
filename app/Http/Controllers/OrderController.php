@@ -63,9 +63,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $orderitems = $this->order->with('orderItems.itemtable')->find($id);
-        $orderitems = $orderitems->orderItems()->paginate(10);
-        return view('orders.show', ['orderitems' => $orderitems]);
+        $order = $this->order->with('orderItems.itemtable')->with('user')->find($id);
+        return view('orders.show', ['order' => $order]);
     }
 
     /**
@@ -77,11 +76,22 @@ class OrderController extends Controller
      */
     public function deleteItem($id)
     {
-        $orderItem = OrderItem::findOrFail($id);
-        if ($orderItem->delete()) {
-            flash(__('Delete Item Success'))->success()->important();
-        } else {
-            flash(__('Delete Item Errors'))->error()->important();
+        try {
+            $orderItem = OrderItem::with('itemtable')->with('order')->find($id);
+            $item = $orderItem->itemtable;
+            $order = $orderItem->order;
+            $order->payment = $order->payment + $item->price * $orderItem->quantity;
+            if ($order->save()) {
+                if ($orderItem->delete()) {
+                    flash(__('Delete Item Success'))->success()->important();
+                } else {
+                    flash(__('Delete Item Errors'))->error()->important();
+                }
+            } else {
+                flash(__('Delete Item Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Model Not Found'))->error()->important();
         }
         return back();
     }
@@ -96,12 +106,25 @@ class OrderController extends Controller
      */
     public function updateItem(Request $request, $id)
     {
-        $orderItem = OrderItem::findOrFail($id);
-        $orderItem->quantity = $request->input('quantity');
-        if ($orderItem->save()) {
-            flash(__('Update Item '.$id.' Success'))->success()->important();
-        } else {
-            flash(__('Update Item Errors'))->error()->important();
+        try {
+            $orderItem = OrderItem::with('itemtable')->with('order')->find($id);
+            $item = $orderItem->itemtable;
+            $order = $orderItem->order;
+            $quantityChange = $orderItem->quantity;
+            $orderItem->quantity = $request->input('quantity');
+            $quantityChange = $orderItem->quantity - $quantityChange;
+            $order->payment = $order->payment + $item->price * $quantityChange;
+            if ($order->save()) {
+                if ($orderItem->save()) {
+                    flash(__('Update Item '.$id.' Success'))->success()->important();
+                } else {
+                    flash(__('Update Item Errors'))->error()->important();
+                }
+            } else {
+                flash(__('Update Item Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Model Not Found'))->error()->important();
         }
         return back();
     }

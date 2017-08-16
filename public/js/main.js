@@ -12,6 +12,7 @@ $(document).ready(function() {
             $('#modal-confirm').modal('hide');
         });
         $('#modal-confirm').on('hidden.bs.modal', function () {
+            $("#btn-modal-submit").off('click');
             form.get(0).reset();
         });
     };

@@ -3,7 +3,7 @@
 @section('main-content')
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">{{ __('List Item Of Order') }} {{ $orderitems[0]->order_id }} - {{ __('Date') }} : {{ $orderitems[0]->updated_at }}</h3>
+            <h1 class="box-title">{{ __('Order') }} {{ $order->id }} - {{ __('Date') }} : {{ $order->created_at }}</h1>
         </div>
         @include('flash::message')
         <!-- /.box-header -->
@@ -11,6 +11,28 @@
             <div class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
+                        <table class="table">
+                            <tr>
+                                <th class="col-md-2">{{ __('User') }}:</th>
+                                <td><a href="{{ route('users.show', $order->user->id) }}">
+                                        {{ $order->user->full_name }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-2">{{ __('Email') }}:</th>
+                                <td>{{ $order->user->email }}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-2">{{ __('Address ') }}:</th>
+                                <td>{{ $order->custom_address }}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-2">{{ __('Date transport') }}:</th>
+                                <td>{{ $order->trans_at }}</td>
+                            </tr>
+                        </table>
+                        <h4>{{ __('List Item') }}</h4>
                         <table class="table table-bordered table-striped dataTable table-hover" role="grid">
                             <thead>
                             <tr role="row">
@@ -25,7 +47,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($orderitems as $item)
+                            @foreach ($order->orderItems as $item)
                                 <tr>
                                     <form role="form" class="confirm-data inline"
                                           action="{{ route('orders.updateItem', $item->id) }}"
@@ -41,7 +63,6 @@
                                     <td>{{ number_format($item->itemtable->price,0,",",".") }} {{ __('VND') }}</td>
                                     <td><input type="number"
                                                name="quantity"
-                                               max="{{ $item->quantity }}"
                                                min="0"
                                                data-confirm="{{ __('Are you sure update it?') }}"
                                                data-title="{{ __('Update Item') }}"
@@ -64,11 +85,39 @@
                                 </tr>
                             @endforeach
                             </tbody>
+                            <thead>
+                            <tr role="row">
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="col-md-1">{{ $order->payment }}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
                         </table>
+                        <div class="pull-right">
+                            <a class="btn-success btn btn-sm"
+                                    href="{{ route('orders.index') }}"
+                                    title="{{ __('Go to list') }}">
+                                <span>{{ __('Go To List') }}</span>
+                            </a>
+                            <form class="inline" role="form" action="{{ route('orders.destroy', $order->id) }}" method="post">
+                                {{ method_field('DELETE') }}
+                                {{ csrf_field() }}
+                                <button class="btn-danger btn btn-confirm btn-sm"
+                                        data-confirm="{{ __('Are you want delete this order?') }}"
+                                        data-title="{{ __('Delete Order') }}"
+                                        title="{{ __('Cancel') }}">
+                                    <span>{{ __('Cancel Order') }}</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            {{ $orderitems->links() }}
         </div>
     </div>
     @include('layouts.partials.modal')
