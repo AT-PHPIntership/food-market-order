@@ -1,13 +1,21 @@
 @extends('layouts.master')
-
+@section('main-header')
+    <h1>{{ __('LIST ORDERS') }}
+        <small></small>
+    </h1>
+@endsection
 @section('main-content')
-    <div class="box" xmlns="">
-        <div class="box-header">
+    <div class="box box-primary">
+        <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Order') }}</h3>
+            <a class="btn btn-primary pull-right" href="{{ route('orders.create')}}">
+                <i class="fa fa-plus"></i>
+            </a>
         </div>
+        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
-            <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
                         <input id="text-sort" class="form-control pull-left margin-bottom" type="text"
@@ -17,15 +25,13 @@
                         <input id="date-sort" class="form-control pull-right margin-bottom" type="date"
                                value="{{ app('request')->has('date') ? app('request')->input('date') : date('Y-m-d') }}"
                                data-table="{{ __('orders') }}">
-                        <table class="table table-bordered table-striped dataTable table-hover" role="grid">
+                        <table class="table table-bordered table-hover" role="grid">
                             <thead>
-                            <tr role="row" class="row">
+                            <tr>
                                 <th class="col-md-1">{{ __('ID') }}</th>
                                 <th class="col-md-2">{{ __('User Name') }}</th>
-                                <th class="col-md-1">{{ __('Create Date') }}</th>
-                                <th class="col-md-1">{{ __('Update Date') }}</th>
-                                <th class="col-md-1">{{ __('Transfer Date') }}</th>
-                                <th class="col-md-2">{{ __('Address') }}</th>
+                                <th class="col-md-2">{{ __('Transfer Date') }}</th>
+                                <th class="col-md-3">{{ __('Address') }}</th>
                                 <th class="col-md-1">{{ __('Payment') }}</th>
                                 <th class="col-md-1">{{ __('Status') }}</th>
                                 <th class="col-md-2">{{ __('Action') }}</th>
@@ -33,22 +39,22 @@
                             </thead>
                             <tbody>
                             @foreach ($orders as $order)
-                                <form role="form" class="confirm-data pull-left"
-                                      action="{{ route('orders.update', $order->id) }}"
-                                      method="post">
-                                    {{ method_field('PUT') }}
-                                    {{ csrf_field() }}
-                                    <tr>
-                                        <td></td>
+                                <tr>
+                                    <form role="form" class="confirm-data pull-left"
+                                          action="{{ route('orders.update', $order->id) }}"
+                                          method="post">
+                                        {{ method_field('PUT') }}
+                                        {{ csrf_field() }}
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->user->full_name }}</td>
-                                        <td>{{ $order->created_at }}</td>
-                                        <td>{{ $order->updated_at }}</td>
                                         <td>{{ $order->trans_at }}</td>
                                         <td>{{ $order->custom_address }}</td>
-                                        <td>{{ $order->payment }}</td>
+                                        <td>{{ number_format($order->payment,0,",",".") }} {{ __('VND') }}</td>
                                         <td>
-                                            <select class="form-control" name="status">
+                                            <select class="form-control status-order"
+                                                    name="status"
+                                                    data-title="{{ __('Change Status') }}"
+                                                    data-confirm="{{ __('Are you sure change status this?') }}">
                                                 <option {{ $order->status == 0 ? 'selected' : '' }}
                                                         value="0">{{ __('Cancel') }}</option>
                                                 <option {{ $order->status == 1 ? 'selected' : '' }}
@@ -58,20 +64,16 @@
                                                 <option {{ $order->status == 3 ? 'selected' : '' }}
                                                         value="3">{{ __('Finish') }}</option>
                                             </select>
-
-
                                         </td>
                                         <td>
-                                            <a class="btn btn-info btn-sm"
-                                               href="{{ route('orders.show',$order->id)  }}"
+                                            <a class="btn btn-info btn-sm" href="{{ route('orders.show',$order->id)  }}"
                                                title="{{ __('Detail') }}">
-                                                <span class="glyphicon glyphicon-zoom-in">
-                                                </span>
+                                                <i class="fa fa-search-plus">
+                                                </i>
                                             </a>
-                                            <button class="btn-confirm btn-success btn btn-sm"
-                                                    title="{{ __('Confirm') }}"
-                                                    data-confirm="{{ __('Are you sure change status this?') }}"
-                                                    data-title="{{ __('Change Status') }}" >
+                                            <button class="btn-change-status btn-success btn btn-sm"
+                                                    data-title="{{ __('Confirm') }}"
+                                                    data-confirm="{{ __('Are you sure change status this?') }}">
                                                 <i class="fa fa-edit"></i>
                                             </button>
                                 </form>
@@ -84,7 +86,7 @@
                                             data-confirm="{{ __('Are you want delete it?') }}"
                                             data-title="{{ __('Delete Order') }}"
                                             title="{{ __('Delete Order') }}">
-                                        <i class="fa fa-trash"></i>
+                                        <i class="fa fa-trash "></i>
                                     </button>
                                 </form>
                                 </td>
@@ -92,10 +94,12 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $orders->links() }}
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="box-footer">
+            {{ $orders->links() }}
         </div>
     </div>
     @include('layouts.partials.modal')

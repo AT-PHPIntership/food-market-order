@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DailyMenu extends Model
 {
     use softDeletes;
+    const ITEMS_PER_PAGE = 10;
 
     /**
      * Enable created_at and updated_at behavior
@@ -35,7 +36,7 @@ class DailyMenu extends Model
     /**
      * Get the foods for the menu item.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return mixed
      */
     public function food()
     {

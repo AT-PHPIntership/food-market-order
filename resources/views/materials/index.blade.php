@@ -1,18 +1,23 @@
 @extends('layouts.master')
-
+@section('main-header')
+    <h1>{{ __('LIST MATERIALS') }}
+        <small></small>
+    </h1>
+@endsection
 @section('main-content')
-    <div class="box">
-        <div class="box-header">
+
+    @include('flash::message')
+    @if(isset($materials))
+    <div class="box box-primary">
+        <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Materials') }}</h3>
             <a href="{{ route('materials.create') }}" class="btn btn-primary btn-xl pull-right"> {{ __('Add Material') }}</a>
         </div>
-        @include('flash::message')
-        @if(isset($materials))
         <div class="box-body">
-            <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-bordered table-striped dataTable table-hover"
+                        <table class="table table-bordered dataTable table-hover"
                                role="grid" id="table-list-materials">
                             <thead>
                             <tr role="row">
@@ -60,11 +65,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="box-footer">
             {{ $materials->links() }}
         </div>
-        @else
-        <h1>{{ __('NOTHINH TO SHOW') }}</h1>
-        @endif
     </div>
+    @else
+        <h1>{{ __('NOTHINH TO SHOW') }}</h1>
+    @endif
+
     @include('layouts.partials.modal')
 @endsection
