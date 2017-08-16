@@ -23,11 +23,7 @@ trait CreatesApplication
     }
 
     /**
-<<<<<<< HEAD
-     * This functin is called before testcase
-=======
      * This function is called before testcase
->>>>>>> master
      */
     public function setUp()
     {
@@ -51,8 +47,4 @@ trait CreatesApplication
         Artisan::call('migrate:rollback');
         parent::tearDown();
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 }
