@@ -20,6 +20,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'is_admin' => random_int(0,1),
+        'is_active' => random_int(0,1),
         'remember_token' => str_random(10),
     ];
 });
@@ -83,14 +84,14 @@ $factory->define(App\OrderItem::class, function (Faker\Generator $faker) {
     if ($rand == 1) {
         return [
             'itemtable_id' => $faker->randomElement(App\Food::pluck('id')->toArray()),
-            'itemtable_type' => 'food',
+            'itemtable_type' => 'App\Food',
             'quantity' => random_int(1, 5)
         ];
     }
     else {
         return [
             'itemtable_id' => $faker->randomElement(App\Material::pluck('id')->toArray()),
-            'itemtable_type' => 'material',
+            'itemtable_type' => 'App\Material',
             'quantity' => random_int(1, 5)
         ];
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Supplier extends Model
 {
     use softDeletes;
-    const ITEM_PER_PAGE = 10;
+    const ITEMS_PER_PAGE = 10;
     protected $fillable = [
         'name',
         'description'
@@ -17,7 +17,7 @@ class Supplier extends Model
     /**
      * Supplier has many materials
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return mixed
      */
     public function materials()
     {
