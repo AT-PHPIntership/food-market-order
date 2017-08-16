@@ -82,10 +82,8 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
+                            <input type="reset" class="btn btn-danger" value="{{ __('Reset') }}">
                             <input class="btn btn-primary" value="{{ __('Save Changes') }}" type="submit">
-                            <a href="{{ route('foods.index') }}">
-                                <button type="button" class="btn btn-danger">{{ __('Cancel') }}</button>
-                            </a>
                         </div>
                     </div>
                 </div>

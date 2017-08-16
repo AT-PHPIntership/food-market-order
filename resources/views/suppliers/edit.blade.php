@@ -1,18 +1,18 @@
 @extends('layouts.master')
 @section('main-header')
-    <h1>{{ __('UPDATE SUPPLIERS') }}
-        <small>user's profile and orders history</small>
-        <a href="{{ route('users.index') }}" class="pull-right"><span class="fa fa-arrow-left btn btn-primary"></span></a>
+    <h1>{{ __('UPDATE CATEGORY PAGE') }}
+        <small></small>
+        <a href="{{ route('suppliers.index') }}" class="pull-right"><span
+                    class="fa fa-arrow-left btn btn-primary"></span></a>
     </h1>
 @endsection
 @section('main-content')
-    <div class="row center">
-        <!-- left column -->
-        <div class="col-md-12">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6">
-                @include('flash::message')
+
+    @include('flash::message')
+    @if(isset($supplier))
+        <div class="row center">
+            <!-- left column -->
+            <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header with-border text-center">
@@ -21,34 +21,48 @@
                     <!-- /.box-header -->
                     <!-- form start -->
                     <form role="form" action="{{ route('suppliers.update', ['id' => $supplier->id])}}" method="post">
-                        {{ method_field('PUT') }}
-                        {{ csrf_field() }}
-                        <div class="box-body">
-                            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                                <label for="name">{{__('Supplier Name')}}</label>
-                                <input type="text" class="form-control" name="name" placeholder=""
-                                       value="{{ old('name',$supplier->name) }}">
-                                <span class="text-danger">{{ $errors->first('name') }}</span>
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <div class="col-md-2"></div>
+                        <div class="box-body col-md-8">
+                            <div class="form-group col-md-12 {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <div class="col-md-2"><label for="name">{{__('Name')}}</label></div>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="name" placeholder=""
+                                           value="{{ $supplier->name }}">
+                                    @if ($errors->has('name'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
-                            <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                                <label for="description">{{__('Description')}}</label>
-                                <textarea class="form-control"
-                                          name="description">{{ old('description',$supplier->description) }}</textarea>
-                                <span class="text-danger">{{ $errors->first('description') }}</span>
+                            <div class="form-group col-md-12 {{ $errors->has('description') ? 'has-error' : '' }}">
+                                <div class="col-md-2">
+                                    <label for="description">{{__('Description')}}</label></div>
+                                <div class="col-md-10">
+                            <textarea class="form-control"
+                                      name="description">{{ $supplier->description }}</textarea>
+                                    @if ($errors->has('description'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="submit" class="btn btn-primary pull-right" value="{{__('Update')}}">
+                                <input type="reset" class="btn btn-danger pull-left" value="{{__('Reset')}}">
                             </div>
                         </div>
                         <!-- /.box-body -->
-
                         <div class="box-footer text-center">
-                            <input type="submit" class="btn btn-primary" value="{{__('Update')}}">
-                            <input type="reset" class="btn btn-danger" value="{{__('Cancel')}}">
                         </div>
+                        <div class="col-md-2"></div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-3">
-            </div>
-            <!-- /.box -->
         </div>
-    </div>
+    @else
+        <h1>{{ __('Nothing to show!') }}</h1>
+    @endif
 @endsection

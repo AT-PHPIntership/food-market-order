@@ -131,9 +131,8 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
-                            <input class="btn btn-primary" value="{{ __('Save Changes') }}" type="submit">
-                            <span></span>
                             <input class="btn btn-danger" value="{{ __('Reset') }}" type="reset">
+                            <input class="btn btn-primary" value="{{ __('Save Changes') }}" type="submit">
                         </div>
                     </div>
                 </div>

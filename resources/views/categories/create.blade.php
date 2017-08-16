@@ -8,9 +8,10 @@
     </h1>
 @endsection
 @section('main-content')
+
+    @include('flash::message')
     <div class="row center">
         <!-- left column -->
-        @include('flash::message')
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
@@ -49,8 +50,8 @@
                         </div>
                     </div>
                     <div class="col-md-12 form-group">
-                        <input type="submit" class="btn btn-primary pull-left" value="{{__('Create')}}">
-                        <input type="reset" class="btn btn-danger pull-right" value="{{__('Reset')}}">
+                        <input type="submit" class="btn btn-primary pull-right" value="{{__('Create')}}">
+                        <input type="reset" class="btn btn-danger pull-left" value="{{__('Reset')}}">
                     </div>
             </div>
             <!-- /.box-body -->
