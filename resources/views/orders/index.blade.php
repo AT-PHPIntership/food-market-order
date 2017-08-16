@@ -5,6 +5,7 @@
         <div class="box-header">
             <h3 class="box-title">{{ __('List Order') }}</h3>
         </div>
+        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -19,7 +20,7 @@
                                data-table="{{ __('orders') }}">
                         <table class="table table-bordered table-striped dataTable table-hover" role="grid">
                             <thead>
-                            <tr role="row" class="row">
+                            <tr>
                                 <th class="col-md-1">{{ __('ID') }}</th>
                                 <th class="col-md-2">{{ __('User Name') }}</th>
                                 <th class="col-md-1">{{ __('Create Date') }}</th>
@@ -33,22 +34,24 @@
                             </thead>
                             <tbody>
                             @foreach ($orders as $order)
-                                <form role="form" class="confirm-data pull-left"
-                                      action="{{ route('orders.update', $order->id) }}"
-                                      method="post">
-                                    {{ method_field('PUT') }}
-                                    {{ csrf_field() }}
-                                    <tr>
-                                        <td></td>
+                                <tr>
+                                    <form role="form" class="confirm-data pull-left"
+                                          action="{{ route('orders.update', $order->id) }}"
+                                          method="post">
+                                        {{ method_field('PUT') }}
+                                        {{ csrf_field() }}
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->user->full_name }}</td>
                                         <td>{{ $order->created_at }}</td>
                                         <td>{{ $order->updated_at }}</td>
                                         <td>{{ $order->trans_at }}</td>
                                         <td>{{ $order->custom_address }}</td>
-                                        <td>{{ $order->payment }}</td>
+                                        <td>{{ number_format($order->payment,0,",",".") }} {{ __('VND') }}</td>
                                         <td>
-                                            <select class="form-control" name="status">
+                                            <select class="form-control status-order"
+                                                    name="status"
+                                                    data-title="{{ __('Change Status') }}"
+                                                    data-confirm="{{ __('Are you sure change status this?') }}">
                                                 <option {{ $order->status == 0 ? 'selected' : '' }}
                                                         value="0">{{ __('Cancel') }}</option>
                                                 <option {{ $order->status == 1 ? 'selected' : '' }}
@@ -58,8 +61,6 @@
                                                 <option {{ $order->status == 3 ? 'selected' : '' }}
                                                         value="3">{{ __('Finish') }}</option>
                                             </select>
-
-
                                         </td>
                                         <td>
                                             <a class="btn btn-info btn-sm"
@@ -68,12 +69,6 @@
                                                 <span class="glyphicon glyphicon-zoom-in">
                                                 </span>
                                             </a>
-                                            <button class="btn-confirm btn-success btn btn-sm"
-                                                    title="{{ __('Confirm') }}"
-                                                    data-confirm="{{ __('Are you sure change status this?') }}"
-                                                    data-title="{{ __('Change Status') }}" >
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                 </form>
                                 <form role="form" class="delete-item inline"
                                       action="{{ route('orders.destroy', $order->id) }}"
