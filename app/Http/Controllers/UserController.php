@@ -81,9 +81,11 @@ class UserController extends Controller
         if (Auth::user()->id == $id) {
             flash(__('Cannot delete current user!'))->error()->important();
         } else {
-            if ($this->user->findOrFail($id)->delete()) {
+            try {
+                $userToDel = $this->user->findOrFail($id);
+                $userToDel->delete();
                 flash(__('Delete Successfully!'))->success()->important();
-            } else {
+            } catch (\Exception $ex) {
                 flash(__('Delete Error!'))->error()->important();
             }
         }
