@@ -142,13 +142,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if ($userToShow = $this->user->with('orders')->findOrFail($id)) {
-            $totalOrders = Order::where('user_id', $id)->count();
-            return view('users.show', ['user' => $userToShow, 'totalOrders' => $totalOrders]);
-        } else {
-            flash(__('Error!'))->error();
-            return view('users.show');
-        }
+        $userToShow = $this->user->with('orders')->findOrFail($id);
+        $totalOrders = Order::where('user_id', $id)->count();
+        return view('users.show', ['user' => $userToShow, 'totalOrders' => $totalOrders]);
     }
 
 
