@@ -40,7 +40,7 @@ class DeleteUserTest extends DuskTestCase
             $browser->loginAs(1)
                 ->resize(1920, 1080)
                 ->visit('/users')
-                ->click('#table tbody tr:nth-child(2) td:nth-child(8) button')
+                ->click('#table tbody tr:nth-child(2) td:nth-child(7) button')
                 ->waitFor(null, '1')
                 ->assertSee('Delete User')
                 ->assertSee('Are you sure to delete this user?')
@@ -62,7 +62,7 @@ class DeleteUserTest extends DuskTestCase
             $browser->loginAs(1)
                 ->resize(1920, 1080)
                 ->visit('/users')
-                ->click('#table tbody tr:nth-child(1) td:nth-child(8) button')
+                ->click('#table tbody tr:nth-child(1) td:nth-child(7) button')
                 ->waitFor(null, '1')
                 ->assertSee('Delete User')
                 ->assertSee('Are you sure to delete this user?')
@@ -90,7 +90,7 @@ class DeleteUserTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/users');
             DB::table('users')->delete(2);
-            $browser->click('#table tbody tr:nth-child(2) td:nth-child(8) button')
+            $browser->click('#table tbody tr:nth-child(2) td:nth-child(7) button')
                 ->waitFor(null, '1')
                 ->assertSee('Delete User')
                 ->assertSee('Are you sure to delete this user?')
