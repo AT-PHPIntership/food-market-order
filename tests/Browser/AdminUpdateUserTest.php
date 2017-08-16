@@ -31,12 +31,12 @@ class AdminUpdateUserTest extends DuskTestCase
      *
      * @return void
      */
-    public function testValidationCreatesUser()
+    public function testValidationUpdateUser()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
-                ->visit('/users/create')
-                ->press('Create')
+                ->visit('/users/1/edit')
+                ->press('Save Changes')
                 ->assertPathIs('/users/create')
                 ->assertSee('The password field is required.')
                 ->assertSee('The birthday is not a valid date.')
@@ -52,7 +52,7 @@ class AdminUpdateUserTest extends DuskTestCase
      *
      * @return void
      */
-    public function testCreatesUserSuccess()
+    public function testUpdateUserSuccess()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
