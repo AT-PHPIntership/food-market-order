@@ -13,3 +13,6 @@
 #foodselect {
 	margin-top: -12px;
 }
+input[type=number] {
+	width: 5em;
+}

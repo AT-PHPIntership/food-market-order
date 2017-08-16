@@ -84,7 +84,7 @@
             <a href="{{ route('daily-menus.index') }}"><span class="btn-xl btn-danger btn">{{ __('Cancel') }}</span></a>
         </div>
         <div class="col-md-offset-1 col-md-4">
-            <input type="submit" id="add_row" class="btn btn-primary"
+            <input type="submit" id="add-row" class="btn btn-primary"
                    value="{{ __('Add To Menu') }}">
         </div>
         </form>

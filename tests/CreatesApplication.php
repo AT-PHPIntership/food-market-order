@@ -23,7 +23,11 @@ trait CreatesApplication
     }
 
     /**
+<<<<<<< HEAD
      * This functin is called before testcase
+=======
+     * This function is called before testcase
+>>>>>>> master
      */
     public function setUp()
     {
@@ -32,19 +36,23 @@ trait CreatesApplication
 
         DB::table('users')->insert([
             'full_name' => 'DungVan',
-            'email' => 'admin' . '@gmail.com',
+            'email' => 'admin'.'@gmail.com',
             'password' => bcrypt('123456'),
             'is_admin' => 1,
         ]);
+
     }
 
     /**
-     * This function is called after testcase
+     * This functin is called after testcase
      */
     public function tearDown()
     {
         Artisan::call('migrate:rollback');
         parent::tearDown();
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 }
