@@ -74,7 +74,7 @@ class OrderController extends Controller
                 flash(__('Change Errors'))->error()->important();
             }
         } catch (ModelNotFoundException $ex) {
-            flash(__('Model Not Found'))->error()->important();
+            flash(__('Order Not Found'))->error()->important();
         }
         return back();
     }
@@ -97,7 +97,7 @@ class OrderController extends Controller
                 flash(__('Delete Order Errors'))->error()->important();
             }
         } catch (ModelNotFoundException $ex) {
-            flash(__('Model Not Found'))->error()->important();
+            flash(__('Order Not Found'))->error()->important();
         }
         return back();
     }
