@@ -9,12 +9,16 @@ class DailyMenu extends Model
 {
     use SoftDeletes;
 
-    protected $timestamp = true;
-    protected $dates = ['deleted_at'];
     /**
      * Enable created_at and updated_at behavior
      */
     public $timestamps = true;
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
     /**
      * The table associated with the model.
      *
@@ -26,12 +30,12 @@ class DailyMenu extends Model
      *
      * @var array
      */
-    protected $fillable = ['quantity', 'created_at', 'updated_at'];
+    protected $fillable = ['date', 'food_id', 'quantity', 'created_at', 'updated_at'];
 
     /**
-     * Get the food for the menu item.
+     * Get the foods for the menu item.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return mixed
      */
     public function food()
     {
