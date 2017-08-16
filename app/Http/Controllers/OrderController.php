@@ -50,7 +50,7 @@ class OrderController extends Controller
         } else {
             $orders = $orders->with('user');
         }
-        $orders = $orders->paginate(Order::ITEM_PER_PAGE);
+        $orders = $orders->paginate(Order::ITEMS_PER_PAGE);
         return view('orders.index', ['orders' => $orders]);
     }
 

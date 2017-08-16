@@ -32,7 +32,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = $this->food->orderBy('id', 'DESC')->with('category')->paginate(10);
+        $foods = $this->food->with('category')->paginate(Food::ITEMS_PER_PAGE);
         return view('foods.index', ['foods' => $foods]);
     }
 
@@ -80,9 +80,9 @@ class FoodController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request of food
+     * @param FoodCreateRequest $request request create food
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(FoodCreateRequest $request)
     {
@@ -124,10 +124,10 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request of foods
-     * @param int                      $id      of food
+     * @param FoodUpdateRequest $request update food
+     * @param int               $id      id of food
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(FoodUpdateRequest $request, $id)
     {

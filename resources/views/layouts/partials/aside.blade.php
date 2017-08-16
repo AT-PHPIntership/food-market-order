@@ -36,22 +36,22 @@
                     </span>
                 </a>
             </li>
-            <li class="treeview">
+            <li class="treeview @if(!Request::is('dashboard')) active @endif">
                 <a href="#">
                     <i class="fa fa-files-o"></i>
-                    <span>Management</span>
+                    <span>{{ __('Management') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('users.index') }}"><i class="fa fa-circle-o"></i>{{ __('Users Management') }}</a></li>
-                    <li><a href="{{ route('categories.index') }}"><i class="fa fa-circle-o"></i>{{ __('Categories Management') }}</a></li>
-                    <li><a href="{{ route('suppliers.index') }}"><i class="fa fa-circle-o"></i>{{ __('Suppliers Management') }}</a></li>
-                    <li><a href="{{ route('orders.index') }}"><i class="fa fa-circle-o"></i>{{ __('Orders Management') }}</a></li>
-                    <li><a href="{{ route('daily-menus.index') }}"><i class="fa fa-circle-o"></i>{{ __('Daily Menu Management') }}</a></li>
-                    <li><a href="{{ route('foods.index') }}"><i class="fa fa-circle-o"></i>{{ __('Food Management') }}</a></li>
-                    <li><a href="{{ route('materials.index') }}"><i class="fa fa-circle-o"></i>{{ __('Material Management') }}</a></li>
+                    <li class="@if(Request::is('users', 'users/*')) active @endif"><a href="{{ route('users.index') }}"><i class="fa fa-circle-o"></i>{{ __('Users Management') }}</a></li>
+                    <li class="@if(Request::is('categories', 'categories/*')) active @endif"><a href="{{ route('categories.index') }}"><i class="fa fa-circle-o"></i>{{ __('Categories Management') }}</a></li>
+                    <li class="@if(Request::is('suppliers', 'suppliers/*')) active @endif"><a href="{{ route('suppliers.index') }}"><i class="fa fa-circle-o"></i>{{ __('Suppliers Management') }}</a></li>
+                    <li class="@if(Request::is('orders', 'orders/*')) active @endif"><a href="{{ route('orders.index') }}"><i class="fa fa-circle-o"></i>{{ __('Orders Management') }}</a></li>
+                    <li class="@if(Request::is('daily-menus', 'daily-menus/*')) active @endif"><a href="{{ route('daily-menus.index') }}"><i class="fa fa-circle-o"></i>{{ __('Daily Menu Management') }}</a></li>
+                    <li class="@if(Request::is('foods', 'foods/*')) active @endif"><a href="{{ route('foods.index') }}"><i class="fa fa-circle-o"></i>{{ __('Food Management') }}</a></li>
+                    <li class="@if(Request::is('materials', 'materials/*')) active @endif"><a href="{{ route('materials.index') }}"><i class="fa fa-circle-o"></i>{{ __('Material Management') }}</a></li>
                 </ul>
             </li>
             <li class="">

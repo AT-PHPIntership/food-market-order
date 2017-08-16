@@ -11,13 +11,19 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
+    const MALE = 1;
+    const FEMALE = 0;
+    const ADMIN = 1;
+    const NORMAL_USER = 0;
+    const ITEMS_PER_PAGE = 10;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'full_name', 'email', 'password', 'image', 'address', 'birthday', 'gender', 'phone_number'
+        'full_name', 'email', 'password', 'image', 'address', 'birthday', 'gender', 'phone_number', 'is_active', 'is_admin',
     ];
 
     /**
@@ -32,11 +38,11 @@ class User extends Authenticatable
     /**
      * User has many orders
      *
-     * @return array
+     * @return mixed
      */
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'user_id', 'id');
     }
 
     /**

@@ -1,3 +1,15 @@
+.admin {
+    color: red;
+}
+
+.active-user {
+    color: greenyellow;
+}
+
+.normal {
+    color: grey;
+}
+
 #foodselect {
 	margin-top: -12px;
 }
