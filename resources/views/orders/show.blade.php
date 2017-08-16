@@ -1,9 +1,14 @@
 @extends('layouts.master')
-
+@section('main-header')
+    <h1>{{ __('DETAIL ORDERS') }}
+        <small></small>
+    </h1>
+@endsection
 @section('main-content')
     <div class="box">
-        <div class="box-header">
+        <div class="box-header text-center">
             <h1 class="box-title">{{ __('Order') }} {{ $order->id }} - {{ __('Date') }} : {{ $order->created_at }}</h1>
+            <small></small>
         </div>
         @include('flash::message')
         <!-- /.box-header -->
@@ -93,7 +98,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th class="col-md-1">{{ $order->payment }}</th>
+                                <th>{{ $order->payment }}</th>
                                 <th></th>
                             </tr>
                             </thead>

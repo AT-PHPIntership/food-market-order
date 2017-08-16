@@ -8,9 +8,6 @@
     <div class="box box-primary">
         <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Order') }}</h3>
-            <a class="btn btn-primary pull-right" href="{{ route('orders.create')}}">
-                <i class="fa fa-plus"></i>
-            </a>
         </div>
         @include('flash::message')
         <!-- /.box-header -->
@@ -71,11 +68,6 @@
                                                 <i class="fa fa-search-plus">
                                                 </i>
                                             </a>
-                                            <button class="btn-change-status btn-success btn btn-sm"
-                                                    data-title="{{ __('Confirm') }}"
-                                                    data-confirm="{{ __('Are you sure change status this?') }}">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                 </form>
                                 <form role="form" class="delete-item inline"
                                       action="{{ route('orders.destroy', $order->id) }}"

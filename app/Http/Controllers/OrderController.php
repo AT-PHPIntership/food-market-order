@@ -106,7 +106,7 @@ class OrderController extends Controller
             $orderItem = OrderItem::with('itemtable')->with('order')->find($id);
             $item = $orderItem->itemtable;
             $order = $orderItem->order;
-            $order->payment = $order->payment + $item->price * $orderItem->quantity;
+            $order->payment = $order->payment - $item->price * $orderItem->quantity;
             if ($order->save()) {
                 if ($orderItem->delete()) {
                     flash(__('Delete Item Success'))->success()->important();
@@ -152,5 +152,6 @@ class OrderController extends Controller
         } catch (ModelNotFoundException $ex) {
             flash(__('Order Item Not Found'))->error()->important();
         }
+        return back();
     }
 }
