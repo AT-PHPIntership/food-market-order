@@ -12,6 +12,7 @@
                 <i class="fa fa-plus"></i>
             </a>
         </div>
+        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
@@ -26,7 +27,7 @@
                                data-table="{{ __('orders') }}">
                         <table class="table table-bordered table-hover" role="grid">
                             <thead>
-                            <tr role="row">
+                            <tr>
                                 <th class="col-md-1">{{ __('ID') }}</th>
                                 <th class="col-md-2">{{ __('User Name') }}</th>
                                 <th class="col-md-2">{{ __('Transfer Date') }}</th>
@@ -38,19 +39,22 @@
                             </thead>
                             <tbody>
                             @foreach ($orders as $order)
-                                <form role="form" class="confirm-data pull-left"
-                                      action="{{ route('orders.update', $order->id) }}"
-                                      method="post">
-                                    {{ method_field('PUT') }}
-                                    {{ csrf_field() }}
-                                    <tr>
+                                <tr>
+                                    <form role="form" class="confirm-data pull-left"
+                                          action="{{ route('orders.update', $order->id) }}"
+                                          method="post">
+                                        {{ method_field('PUT') }}
+                                        {{ csrf_field() }}
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->user->full_name }}</td>
                                         <td>{{ $order->trans_at }}</td>
                                         <td>{{ $order->custom_address }}</td>
-                                        <td>{{ $order->payment }}</td>
+                                        <td>{{ number_format($order->payment,0,",",".") }} {{ __('VND') }}</td>
                                         <td>
-                                            <select class="form-control" name="status">
+                                            <select class="form-control status-order"
+                                                    name="status"
+                                                    data-title="{{ __('Change Status') }}"
+                                                    data-confirm="{{ __('Are you sure change status this?') }}">
                                                 <option {{ $order->status == 0 ? 'selected' : '' }}
                                                         value="0">{{ __('Cancel') }}</option>
                                                 <option {{ $order->status == 1 ? 'selected' : '' }}
@@ -60,8 +64,6 @@
                                                 <option {{ $order->status == 3 ? 'selected' : '' }}
                                                         value="3">{{ __('Finish') }}</option>
                                             </select>
-
-
                                         </td>
                                         <td>
                                             <a class="btn btn-info btn-sm" href="{{ route('orders.show',$order->id)  }}"

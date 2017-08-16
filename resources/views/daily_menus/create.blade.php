@@ -13,7 +13,7 @@
         </div>
         <div class="box-body">
             <div class="col-md-12 table-responsive">
-                <table class="table table-bordered table-hover" id="tab_logic">
+                <table class="table table-bordered" id="tab_logic">
                     <thead>
                     <tr>
                         <th class="text-center col-xs-4">
@@ -27,7 +27,7 @@
                         </th>
                     </tr>
                     </thead>
-                    <form id="createMenu" method="POST" action="{{ route('daily-menus.store') }}">
+                    <form id="create-menu" method="POST" action="{{ route('daily-menus.store') }}">
                         {{ csrf_field() }}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -44,12 +44,12 @@
                             </div>
                         @endif
                         <div class="form-group col-xs-4">
-                            <label for="dateChooser">{{ _('Choose Date') }}: </label>
+                            <label for="chooser-date">{{ _('Choose Date') }}: </label>
                             @if(empty($date))
-                                <input type="date" class="form-control" id="dateChooser" name="date">
+                                <input type="date" class="form-control" id="chooser-date" name="date">
                         </div>
                         @else
-                            <input type="date" class="form-control" id="dateChooser" name="date" value="{{ $date }}">
+                            <input type="date" class="form-control" id="chooser-date" name="date" value="{{ $date }}">
             </div>
             <a href="{{ route('daily-menus.show', $date) }}" class="pull-right">
                 <span class="btn-xl btn-primary btn">{{ _('Show Menu') }}</span>
@@ -57,18 +57,18 @@
             @endif
             <tbody id='myBody'>
             <tr>
-                <td id="categoryselect">
-                    <select class="form-control" id="cateselect">
+                <td>
+                    <select class="form-control" id="select-category">
                         <option>{{ __('Choose category') }}</option>
                         @foreach ($listCategory as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </td>
-                <td id="foodsel">
-                    <p class="form-control" id="choosefood"
+                <td>
+                    <p class="form-control" id="choose-food"
                        data-text="{{ _('Click here to choose food') }}">{{ _('Click here to choose food') }}</p>
-                    <select class="form-control" id="foodselect" name="food_id" form="createMenu" size="5">
+                    <select class="form-control" id="select-food" name="food_id" form="create-menu" size="5">
                     </select>
                 </td>
                 <td id="quantityselect">
@@ -78,10 +78,15 @@
             </tbody>
             </table>
         </div>
-        <div class="box-footer">
-            <input type="submit" id="add_row" class="btn btn-sm btn-primary pull-right" value="{{ __('Add To Menu') }}">
-            </form>
-            <a class="btn-sm btn-danger btn pull-left" href="{{ route('daily-menus.index') }}">{{ __('Cancel') }}</a>
+    </div>
+    <div class="box-footer">
+        <div class="col-md-offset-3 col-md-4">
+            <a href="{{ route('daily-menus.index') }}"><span class="btn-xl btn-danger btn">{{ __('Cancel') }}</span></a>
         </div>
+        <div class="col-md-offset-1 col-md-4">
+            <input type="submit" id="add_row" class="btn btn-primary"
+                   value="{{ __('Add To Menu') }}">
+        </div>
+        </form>
     </div>
 @endsection
