@@ -48,6 +48,5 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 @include('layouts.partials.script')
-
 </body>
 </html>

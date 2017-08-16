@@ -13,7 +13,7 @@ class OrderItem extends Model
     /**
      * Material has many order items
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return mixed
      */
     public function itemtable()
     {

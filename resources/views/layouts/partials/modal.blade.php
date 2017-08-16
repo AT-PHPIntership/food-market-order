@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer" id="modal-confirm-footer">
                 <button type="button" id="btn-modal-submit" class="btn btn-primary">{{ __('OK') }}</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close') }}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
             </div>
         </div>
 

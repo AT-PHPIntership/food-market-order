@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\OrderItem;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class OrderController extends Controller
 {
@@ -43,15 +45,39 @@ class OrderController extends Controller
                 ->orWhereDate('trans_at', '=', $request->date);
         } elseif ($request->has('keyword')) {
             $orders = $orders->whereHas('user', function ($query) use ($request) {
-                    $query->where('full_name', 'like', '%'.$request->keyword.'%');
+                $query->where('full_name', 'like', '%' . $request->keyword . '%');
             })
-                ->orWhere('custom_address', 'like', '%'.$request->keyword.'%')
-                ->orWhere('payment', 'like', '%'.$request->keyword.'%');
+                ->orWhere('custom_address', 'like', '%' . $request->keyword . '%')
+                ->orWhere('payment', 'like', '%' . $request->keyword . '%');
         } else {
             $orders = $orders->with('user');
         }
-        $orders = $orders->paginate(Order::ITEM_PER_PAGE);
+        $orders = $orders->paginate(Order::ITEMS_PER_PAGE);
         return view('orders.index', ['orders' => $orders]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request Request from client
+     * @param int                      $id      It is id order need update change status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $order = $this->order->findOrFail($id);
+            $order->status = $request->input('status');
+            if ($order->save()) {
+                flash(__('Change Status Success'))->success()->important();
+            } else {
+                flash(__('Change Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Order Not Found'))->error()->important();
+        }
+        return back();
     }
 
     /**
@@ -70,7 +96,7 @@ class OrderController extends Controller
     /**
      * Remove order item
      *
-     * @param int $id It is id of order item need detele
+     * @param int $id It is id of order item need detele.
      *
      * @return \Illuminate\Http\Response
      */
@@ -91,7 +117,7 @@ class OrderController extends Controller
                 flash(__('Delete Item Errors'))->error()->important();
             }
         } catch (ModelNotFoundException $ex) {
-            flash(__('Model Not Found'))->error()->important();
+            flash(__('Order Item Not Found'))->error()->important();
         }
         return back();
     }
@@ -116,7 +142,7 @@ class OrderController extends Controller
             $order->payment = $order->payment + $item->price * $quantityChange;
             if ($order->save()) {
                 if ($orderItem->save()) {
-                    flash(__('Update Item '.$id.' Success'))->success()->important();
+                    flash(__('Update Item ' . $id . ' Success'))->success()->important();
                 } else {
                     flash(__('Update Item Errors'))->error()->important();
                 }
@@ -124,8 +150,7 @@ class OrderController extends Controller
                 flash(__('Update Item Errors'))->error()->important();
             }
         } catch (ModelNotFoundException $ex) {
-            flash(__('Model Not Found'))->error()->important();
+            flash(__('Order Item Not Found'))->error()->important();
         }
-        return back();
     }
 }
