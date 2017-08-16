@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\User;
+use App\Order;
 use Illuminate\Support\Facades\Auth;
 use Image;
 
@@ -131,7 +132,26 @@ class UserController extends Controller
             return redirect()->route('users.edit', $id)->withInput();
         }
     }
-        
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id id of user's detail
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        if ($userToShow = $this->user->with('orders')->findOrFail($id)) {
+            $totalOrders = Order::where('user_id', $id)->count();
+            return view('users.show', ['user' => $userToShow, 'totalOrders' => $totalOrders]);
+        } else {
+            flash(__('Error!'))->error();
+            return view('users.show');
+        }
+    }
+
+
     /**
      * Get filename from request
      *
