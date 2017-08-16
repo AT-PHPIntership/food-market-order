@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Material extends Model
 {
     use softDeletes;
+    const ITEMS_PER_PAGE = 10;
 
     const ROWS_LIMIT = 10;
     protected $table = "materials";
@@ -16,7 +17,7 @@ class Material extends Model
     /**
      * Material has many order item
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return mixed
      */
     public function orderItems()
     {
@@ -26,7 +27,7 @@ class Material extends Model
     /**
      * Material has one Category
      *
-     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     * @return mixed
      */
     public function category()
     {
@@ -36,7 +37,7 @@ class Material extends Model
     /**
      * Material has one Suplier
      *
-     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     * @return mixed
      */
     public function supplier()
     {

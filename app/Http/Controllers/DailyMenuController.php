@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\DailyMenu;
 use App\Category;
 use App\Food;
-use App\Http\Requests\DailyMenu\CreateRequest;
+use App\Http\Requests\DailyMenuCreateRequest;
 
 class DailyMenuController extends Controller
 {
@@ -58,7 +58,7 @@ class DailyMenuController extends Controller
         if ($request->has('date')) {
             $dailyMenus = $dailyMenus->where('date', 'like', '%'.$request['date'].'%');
         }
-        $dailyMenus = $dailyMenus->distinct()->orderBy('date', 'desc')->paginate(10);
+        $dailyMenus = $dailyMenus->distinct()->orderBy('date', 'desc')->paginate(DailyMenu::ITEMS_PER_PAGE);
         return view('daily_menus.index', ['dailyMenus' => $dailyMenus, 'date' => $request['date']]);
     }
 
@@ -76,7 +76,7 @@ class DailyMenuController extends Controller
             $categoryId = $request->category_id;
             $listFood = $this->food->where('category_id', $categoryId)->paginate(10);
             return response()->json($listFood);
-        } else if ($request->has('date')) {
+        } elseif ($request->has('date')) {
             return view('daily_menus.create', ['listCategory' => $listCategory, 'date' => $request['date']]);
         }
         return view('daily_menus.create', ['listCategory' => $listCategory]);
@@ -85,11 +85,11 @@ class DailyMenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param App\Http\Requests\DailyMenu\CreateRequest $request request value
+     * @param DailyMenuCreateRequest $request request value
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRequest $request)
+    public function store(DailyMenuCreateRequest $request)
     {
         $date = $request['date'];
         $foodId = $request['food_id'];
