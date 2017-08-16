@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Lang;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\DailyMenu;
 use App\Http\Requests\DailyMenu\UpdateMenuItemRequest;
+use App\Category;
+use App\Food;
+use App\Http\Requests\DailyMenuCreateRequest;
 
 class DailyMenuController extends Controller
 {
@@ -15,17 +19,33 @@ class DailyMenuController extends Controller
      * @var DailyMenu
      */
     protected $dailyMenu;
+    /**
+     * The Food implementation.
+     *
+     * @var Food
+     */
+    protected $food;
+    /**
+     * The Category implementation.
+     *
+     * @var Category
+     */
+    protected $category;
 
     /**
      * Create a new controller instance.
      *
      * @param DailyMenu $dailyMenu instance of DailyMenu
+     * @param Food      $food      instance of Food
+     * @param Category  $category  instance of Category
      *
      * @return void
      */
-    public function __construct(DailyMenu $dailyMenu)
+    public function __construct(DailyMenu $dailyMenu, Food $food, Category $category)
     {
         $this->dailyMenu = $dailyMenu;
+        $this->food = $food;
+        $this->category = $category;
     }
 
     /**
@@ -41,8 +61,57 @@ class DailyMenuController extends Controller
         if ($request->has('date')) {
             $dailyMenus = $dailyMenus->where('date', 'like', '%'.$request['date'].'%');
         }
-        $dailyMenus = $dailyMenus->distinct()->orderBy('date', 'desc')->paginate(10);
+        $dailyMenus = $dailyMenus->distinct()->orderBy('date', 'desc')->paginate(DailyMenu::ITEMS_PER_PAGE);
         return view('daily_menus.index', ['dailyMenus' => $dailyMenus, 'date' => $request['date']]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param \Illuminate\Http\Request $request request value
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        $listCategory = $this->category->get();
+        if ($request->ajax()) {
+            $categoryId = $request->category_id;
+            $listFood = $this->food->where('category_id', $categoryId)->paginate($this->dailyMenu->ITEMS_PER_PAGE);
+            return response()->json($listFood);
+        } elseif ($request->has('date')) {
+            return view('daily_menus.create', ['listCategory' => $listCategory, 'date' => $request['date']]);
+        }
+        return view('daily_menus.create', ['listCategory' => $listCategory]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param DailyMenuCreateRequest $request request value
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(DailyMenuCreateRequest $request)
+    {
+        $date = $request['date'];
+        $foodId = $request['food_id'];
+        $quantity = $request['quantity'];
+        /**
+         * Check if food has existed in DB, if true then update new quantity,
+         * If false then add this food into menu
+         */
+        $matchDailyMenu = array('date' => $date, 'food_id' => $foodId);
+        $status = $this->dailyMenu->updateOrCreate($matchDailyMenu, ['quantity' => $quantity]);
+
+        if ($status) {
+            $request->session()->flash('message.level', 'success');
+            $request->session()->flash('message.content', __('Menu was successfully added!'));
+        } else {
+            $request->session()->flash('message.level', 'danger');
+            $request->session()->flash('message.content', __('Error'));
+        }
+        return redirect()->route('daily-menus.create', ['date' => $date]);
     }
 
     /**
@@ -54,7 +123,7 @@ class DailyMenuController extends Controller
      */
     public function show($date)
     {
-        $menuOnDate = $this->dailyMenu->with('food.category')->where('date', $date)->paginate(10);
+        $menuOnDate = $this->dailyMenu->with('food.category')->where('date', $date)->paginate($this->dailyMenu->ITEMS_PER_PAGE);
 
         return view('daily_menus.show', ['menuOnDate' => $menuOnDate, 'date' => $date]);
     }
@@ -76,9 +145,9 @@ class DailyMenuController extends Controller
 
         if ($dailyMenu->update(['quantity' => $quantity])) {
             $result = [$dailyMenu->updated_at, 'message' => $success];
-            return response()->json($result, 200);
+            return response()->json($result, Response::HTTP_OK);
         } else {
-            return response()->json(['error' => $error], 404);
+            return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
         }
     }
 
@@ -91,22 +160,14 @@ class DailyMenuController extends Controller
      */
     public function destroy(Request $request)
     {
+        $menuId = $request['menuId'];
         $error = __('Has error during delete menu item');
         $success = __('Delete menu item success');
 
-        if ($request->ajax()) {
-            $menuId = $request['menuId'];
-            if ($this->dailyMenu->where('id', $menuId)->delete()) {
-                return response()->json(['message' => $success], 200);
-            } else {
-                return response()->json(['error' => $error], 404);
-            }
+        if ($this->dailyMenu->where('id', $menuId)->delete()) {
+            return response()->json(['message' => $success], Response::HTTP_OK);
         } else {
-            if ($this->dailyMenu->where('date', $request['date'])->delete()) {
-                return redirect('daily-menus')->with('message', $success);
-            } else {
-                return redirect('daily-menus')->with('error', $error);
-            }
+            return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
         }
     }
 }
