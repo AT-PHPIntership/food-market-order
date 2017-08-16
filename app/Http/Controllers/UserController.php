@@ -111,7 +111,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param UserRequest $request request user update
-     * @param int                      $id      id user update
+     * @param int         $id      id user update
      *
      * @return \Illuminate\Http\Response
      */

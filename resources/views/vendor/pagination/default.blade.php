@@ -21,8 +21,8 @@
                     @if ($page == 1)
                         <li class="{{$paginator->currentPage() == $page ? 'active' : ''}}">
                             <a href="{{ $url }}">{{ $page }}</a></li>
-                    @elseif ($page == $paginator->currentPage())
-                        <li class="active">
+                    @elseif ($page >= $paginator->currentPage() - 1 && $page <= $paginator->currentPage() + 1)
+                        <li class="{{$paginator->currentPage() == $page ? 'active' : ''}}">
                             <a href="{{ $url }}">{{ $page }}</a>
                         </li>
 

@@ -8,7 +8,6 @@
 
 namespace App\Http\Requests;
 
-
 class DailyMenuCreateRequest
 {
 
