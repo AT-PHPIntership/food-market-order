@@ -10,3 +10,4 @@ Homestead.yaml
 .vagrant
 ubuntu-xenial-16.04-cloudimg-console.log
 public/bower_components
+.env.dusk.local

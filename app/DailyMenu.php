@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DailyMenu extends Model
 {
-    use SoftDeletes;
+    use softDeletes;
+    const ITEMS_PER_PAGE = 10;
 
     /**
      * Enable created_at and updated_at behavior
