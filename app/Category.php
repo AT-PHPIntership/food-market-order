@@ -8,11 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use softDeletes;
+    const ITEMS_PER_PAGE = 10;
 
+    protected $fillable = [
+        'name',
+        'description'
+    ];
+    protected $dates = ['deleted_at'];
+    
     /**
      * Category has many foods
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return mixed
      */
     public function foods()
     {
@@ -22,16 +29,10 @@ class Category extends Model
     /**
      * Category has many materials
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return mixed
      */
     public function materials()
     {
         return $this->hasMany('App\Material', 'category_id', 'id');
     }
-
-    protected $fillable = [
-        'name',
-        'description'
-    ];
-    protected $dates = ['deleted_at'];
 }

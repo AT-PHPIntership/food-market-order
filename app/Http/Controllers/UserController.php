@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $this->user = $user;
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->paginate(10);
+        $users = $this->user->paginate(User::ITEMS_PER_PAGE);
         return view('users.index')->with('users', $users);
     }
 
@@ -46,7 +46,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request store data user
+     * @param UserRequest $request request store data user
      *
      * @return \Illuminate\Http\Response
      */
@@ -81,9 +81,11 @@ class UserController extends Controller
         if (Auth::user()->id == $id) {
             flash(__('Cannot delete current user!'))->error()->important();
         } else {
-            if ($this->user->findOrFail($id)->delete()) {
+            try {
+                $userToDel = $this->user->findOrFail($id);
+                $userToDel->delete();
                 flash(__('Delete Successfully!'))->success()->important();
-            } else {
+            } catch (\Exception $ex) {
                 flash(__('Delete Error!'))->error()->important();
             }
         }
@@ -110,8 +112,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request user update
-     * @param int                      $id      id user update
+     * @param UserRequest $request request user update
+     * @param int         $id      id user update
      *
      * @return \Illuminate\Http\Response
      */
@@ -131,7 +133,7 @@ class UserController extends Controller
             return redirect()->route('users.edit', $id)->withInput();
         }
     }
-
+        
     /**
      * Get filename from request
      *
