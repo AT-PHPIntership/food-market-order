@@ -73,7 +73,7 @@
                             <div class="col-md-3"><label>{{ __('Birthday') }}</label></div>
                             <div class="date col-md-9">
                                 <input name="birthday" type="date" class="form-control"
-                                       id="datepicker" value="{{ old('birthday') }}">
+                                       id="date-picker" value="{{ old('birthday') }}">
                                 @if ($errors->has('birthday'))
                                     <span class="help-block">
                                               <strong>{{ $errors->first('birthday') }}</strong>

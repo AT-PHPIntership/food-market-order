@@ -24,10 +24,11 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
+            'email' => 'required|email',
             'full_name' => 'required',
             'password' => 'required|min:6',
             'birthday' => 'date',
-            'phone_number' => 'numeric|required',
+            'phone_number' => 'required|numeric',
             'address' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
