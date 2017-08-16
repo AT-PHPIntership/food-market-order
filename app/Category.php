@@ -18,7 +18,7 @@ class Category extends Model
     /**
      * Category has many foods
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return mixed
      */
     public function foods()
     {
@@ -28,7 +28,7 @@ class Category extends Model
     /**
      * Category has many materials
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return mixed
      */
     public function materials()
     {
