@@ -7,7 +7,6 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Facebook\WebDriver\Chrome\ChromeOptions;
-use \App\User;
 use \App\DailyMenu;
 use \App\Food;
 use \App\Category;
@@ -47,9 +46,10 @@ class ListTest extends DuskTestCase
         ]);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
-            ->visit('/daily-menus');
-            $objectCount = $browser->elements('#listDailyMenu tbody tr');
-            $this->assertTrue(count($objectCount)==10);
+            ->visit('/daily-menus')
+            ->resize(1920, 2000);
+            $objectCount = $browser->elements('.table tr');
+            $this->assertTrue(count($objectCount)==11);
         });
     }
 
@@ -69,8 +69,8 @@ class ListTest extends DuskTestCase
             $browser->loginAs(1)
             ->visit('/daily-menus')
             ->resize(1920, 2000);
-            $objectCount = $browser->elements('#listDailyMenu tbody tr');
-            $this->assertTrue(count($objectCount)==10);
+            $objectCount = $browser->elements('.table tr');
+            $this->assertTrue(count($objectCount)==11);
         });
     }
 
