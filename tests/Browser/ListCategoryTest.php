@@ -4,16 +4,11 @@ namespace Tests\Browser;
 
 use App\Category;
 use App\User;
-use Illuminate\Database\Seeder;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Support\Facades\DB;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ListCategoryTest extends DuskTestCase
 {
-
     /**
      * A Dusk test example.
      *
@@ -24,7 +19,7 @@ class ListCategoryTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                 ->visit('/categories')
-                ->assertSee('List Categories');
+                ->assertSee('LIST CATEGORIES PAGE');
         });
     }
 
@@ -38,8 +33,7 @@ class ListCategoryTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                 ->visit('/categories')
-                ->assertSee('List Categories')
-            ->screenshot('sdsd');
+                ->assertSee('LIST CATEGORIES PAGE');
             $elements = $browser->elements('.dataTable tbody tr');
             $numRecord = count($elements);
             $this->assertTrue($numRecord == 0);
