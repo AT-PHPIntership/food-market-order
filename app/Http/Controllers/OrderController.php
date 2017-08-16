@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\OrderItem;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class OrderController extends Controller
 {
@@ -64,12 +65,16 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order = $this->order->findOrFail($id);
-        $order->status = $request->input('status');
-        if ($order->save()) {
-            flash(__('Change Status Success'))->success()->important();
-        } else {
-            flash(__('Change Errors'))->error()->important();
+        try {
+            $order = $this->order->findOrFail($id);
+            $order->status = $request->input('status');
+            if ($order->save()) {
+                flash(__('Change Status Success'))->success()->important();
+            } else {
+                flash(__('Change Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Model Not Found'))->error()->important();
         }
         return back();
     }
@@ -77,18 +82,22 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id It is id order need delete change status
+     * @param int $id It is id order need delete
      *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $order = $this->order;
-        orderItem::where('order_id', '=', $id)->delete();
-        if ($order->findOrFail($id)->delete()) {
-            flash(__('Change Status Success'))->success()->important();
-        } else {
-            flash(__('Change Errors'))->error()->important();
+        try {
+            $order = $this->order->findOrFail($id);
+            $order->orderItems()->delete();
+            if ($order->delete()) {
+                flash(__('Delete Order Success'))->success()->important();
+            } else {
+                flash(__('Delete Order Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Model Not Found'))->error()->important();
         }
         return back();
     }

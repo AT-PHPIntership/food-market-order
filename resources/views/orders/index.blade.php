@@ -4,9 +4,6 @@
     <div class="box" xmlns="">
         <div class="box-header">
             <h3 class="box-title">{{ __('List Order') }}</h3>
-            <button class="btn btn-primary pull-right">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
         </div>
         @include('flash::message')
         <!-- /.box-header -->
@@ -23,7 +20,7 @@
                                data-table="{{ __('orders') }}">
                         <table class="table table-bordered table-striped dataTable table-hover" role="grid">
                             <thead>
-                            <tr role="row" class="row">
+                            <tr>
                                 <th class="col-md-1">{{ __('ID') }}</th>
                                 <th class="col-md-2">{{ __('User Name') }}</th>
                                 <th class="col-md-1">{{ __('Create Date') }}</th>
@@ -43,16 +40,18 @@
                                           method="post">
                                         {{ method_field('PUT') }}
                                         {{ csrf_field() }}
-                                        <td></td>
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->user->full_name }}</td>
                                         <td>{{ $order->created_at }}</td>
                                         <td>{{ $order->updated_at }}</td>
                                         <td>{{ $order->trans_at }}</td>
                                         <td>{{ $order->custom_address }}</td>
-                                        <td>{{ $order->payment }}</td>
+                                        <td>{{ number_format($order->payment,0,",",".") }} {{ __('VND') }}</td>
                                         <td>
-                                            <select class="form-control" name="status">
+                                            <select class="form-control status-order"
+                                                    name="status"
+                                                    data-title="{{ __('Change Status') }}"
+                                                    data-confirm="{{ __('Are you sure change status this?') }}">
                                                 <option {{ $order->status == 0 ? 'selected' : '' }}
                                                         value="0">{{ __('Cancel') }}</option>
                                                 <option {{ $order->status == 1 ? 'selected' : '' }}
@@ -64,32 +63,26 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <a class="btn btn-info btn-sm pull-left"
+                                            <a class="btn btn-info btn-sm"
                                                href="{{ route('orders.show',$order->id)  }}"
                                                title="{{ __('Detail') }}">
                                                 <span class="glyphicon glyphicon-zoom-in">
                                                 </span>
                                             </a>
-                                            <button class="btn-confirm btn-success btn btn-sm pull-left"
-                                                    title="{{ __('Confirm') }}"
-                                                    data-title="{{ __('Change status') }}"
-                                                    data-confirm="{{ __('Are you sure change status this?') }}">
-                                                <span class="glyphicon glyphicon-ok-circle"></span>
-                                            </button>
-                                    </form>
-                                    <form role="form" class="delete-item pull-left"
-                                          action="{{ route('orders.destroy', $order->id) }}"
-                                          method="post">
-                                        {{ method_field('DELETE') }}
-                                        {{ csrf_field() }}
-                                        <button class="btn-danger btn btn-sm btn-confirm"
-                                                data-title="{{ __('Delete Order') }}"
-                                                data-confirm="{{ __('Are you want delete it?') }}"
-                                                title="{{ __('Delete Order') }}">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                    </form>
-                                    </td>
+                                </form>
+                                <form role="form" class="delete-item inline"
+                                      action="{{ route('orders.destroy', $order->id) }}"
+                                      method="post">
+                                    {{ method_field('DELETE') }}
+                                    {{ csrf_field() }}
+                                    <button class="btn-danger btn btn-sm btn-confirm"
+                                            data-confirm="{{ __('Are you want delete it?') }}"
+                                            data-title="{{ __('Delete Order') }}"
+                                            title="{{ __('Delete Order') }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                                </td>
                                 </tr>
                             @endforeach
                             </tbody>
