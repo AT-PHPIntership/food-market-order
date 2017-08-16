@@ -82,9 +82,11 @@ class UserController extends Controller
         if (Auth::user()->id == $id) {
             flash(__('Cannot delete current user!'))->error()->important();
         } else {
-            if ($this->user->findOrFail($id)->delete()) {
+            try {
+                $userToDel = $this->user->findOrFail($id);
+                $userToDel->delete();
                 flash(__('Delete Successfully!'))->success()->important();
-            } else {
+            } catch (\Exception $ex) {
                 flash(__('Delete Error!'))->error()->important();
             }
         }
@@ -144,9 +146,9 @@ class UserController extends Controller
     {
         $userToShow = $this->user->with('orders')->findOrFail($id);
         $totalOrders = Order::where('user_id', $id)->count();
-        return view('users.show', ['user' => $userToShow, 'totalOrders' => $totalOrders]);
+        $listOrders = Order::where('user_id', $id)->paginate(Order::ITEMS_PER_PAGE);
+        return view('users.show', ['user' => $userToShow, 'totalOrders' => $totalOrders, 'orders' => $listOrders]);
     }
-
 
     /**
      * Get filename from request

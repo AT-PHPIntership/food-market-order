@@ -12,7 +12,7 @@
                 <div class="col-md-4">
                     @if(!isset($user->image))
                         <img alt="" title="" class="img-circle img-thumbnail isTooltip"
-                             src="https://bootdey.com/img/Content/user-453533-fdadfd.png"
+                             src="/images/users/default.jpg"
                              data-original-title="Usuario">
                     @else
                         <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip"
@@ -152,8 +152,8 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="box">
-                            <div class="box-header">
+                        <div class="box box-primary">
+                            <div class="box-header text-center">
                                 <h3 class="box-title">{{ __('Total Orders') }}</h3>
 
                                 <div class="box-tools">
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                             <!-- /.box-header -->
-                            @if(!isset($user->orders))
+                            @if(!isset($orders))
                                 <h3>{{ __('No orders') }}</h3>
                             @else
                                 <div class="box-body table-responsive no-padding">
@@ -182,7 +182,7 @@
                                             <th>{{ __('Custom Address') }}</th>
                                             <th>{{ __('Payment') }}</th>
                                         </tr>
-                                        @foreach($user->orders as $order)
+                                        @foreach($orders as $order)
                                             <tr>
                                                 <td>{{ $order->id }}</td>
                                                 <td>{{ $order->updated_at }}</td>
@@ -190,8 +190,10 @@
                                                         <span class="label label-danger">Canceled</span>
                                                     @elseif($order->status == 1)
                                                         <span class="label label-warning">Pending</span>
-                                                    @else
+                                                    @elseif($order->status == 2)
                                                         <span class="label label-success">Approved</span>
+                                                    @else
+                                                        <span class="label label-primary">Finish</span>
                                                     @endif
                                                 </td>
                                                 <td>{{ $order->custom_address }}
@@ -202,7 +204,9 @@
                                     </table>
                                 </div>
                                 <!-- /.box-body -->
-
+                                <div class="box-footer">
+                                    {{ $orders->links() }}
+                                </div>
                             @endif
                         </div>
                         <!-- /.box -->
