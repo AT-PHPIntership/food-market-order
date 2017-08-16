@@ -34,10 +34,4 @@ class Category extends Model
     {
         return $this->hasMany('App\Material', 'category_id', 'id');
     }
-
-    protected $fillable = [
-        'name',
-        'description'
-    ];
-    protected $dates = ['deleted_at'];
 }

@@ -27,7 +27,7 @@
 						</th>
 					</tr>
 				</thead>
-				<form id="createMenu" method="POST" action="{{ route('daily-menus.store') }}">
+				<form id="create-menu" method="POST" action="{{ route('daily-menus.store') }}">
 				{{ csrf_field() }}
 				@if ($errors->any())
 				    <div class="alert alert-danger">
@@ -44,12 +44,12 @@
 				    </div>
 				@endif
 				<div class="form-group col-xs-4">
-                  <label for="dateChooser">{{ _('Choose Date') }}: </label>
+                  <label for="chooser-date">{{ _('Choose Date') }}: </label>
                   @if(empty($date))
-                  	<input type="date" class="form-control" id = "dateChooser" name="date">
+                  	<input type="date" class="form-control" id = "chooser-date" name="date">
                   	</div>
                   @else
-                  	<input type="date" class="form-control" id = "dateChooser" name="date" value="{{ $date }}">
+                  	<input type="date" class="form-control" id = "chooser-date" name="date" value="{{ $date }}">
                   	</div>
                   	<a href="{{ route('daily-menus.show', $date) }}" class="pull-right">
                         <span class="btn-xl btn-primary btn">{{ _('Show Menu') }}</span>
@@ -57,17 +57,17 @@
 				  @endif
 				<tbody id='myBody'>
 					<tr>
-						<td id="categoryselect">
-							<select class="form-control" id="cateselect">
+						<td>
+							<select class="form-control" id="select-category">
 								<option>{{ __('Choose category') }}</option>
 								@foreach ($listCategory as $category)
 								<option value="{{ $category->id }}">{{ $category->name }}</option>
 								@endforeach
 							</select>
 						</td>
-						<td id="foodsel">
-							<p class="form-control" id="choosefood" data-text="{{ _('Click here to choose food') }}">{{ _('Click here to choose food') }}</p>
-							<select class="form-control" id="foodselect" name="food_id" form="createMenu" size="5">
+						<td>
+							<p class="form-control" id="choose-food" data-text="{{ _('Click here to choose food') }}">{{ _('Click here to choose food') }}</p>
+							<select class="form-control" id="select-food" name="food_id" form="create-menu" size="5">
 							</select>
 						</td>
 						<td id="quantityselect">

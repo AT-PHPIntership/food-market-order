@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\OrderItem;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -64,12 +64,16 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order = $this->order->findOrFail($id);
-        $order->status = $request->input('status');
-        if ($order->save()) {
-            flash(__('Change Status Success'))->success()->important();
-        } else {
-            flash(__('Change Errors'))->error()->important();
+        try {
+            $order = $this->order->findOrFail($id);
+            $order->status = $request->input('status');
+            if ($order->save()) {
+                flash(__('Change Status Success'))->success()->important();
+            } else {
+                flash(__('Change Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Model Not Found'))->error()->important();
         }
         return back();
     }

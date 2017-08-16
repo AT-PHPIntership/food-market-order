@@ -14,7 +14,7 @@ function callAjaxForCreateMenu($url, $categoryId) {
             data['data'].forEach(function (foodElement) {
                 //create food select
                 let $foodOption = $("<option>", {"text": foodElement['name'], "value": foodElement['id']});
-                $("#foodselect").append($foodOption);
+                $("#select-food").append($foodOption);
             })
         }
     });
@@ -24,16 +24,16 @@ $(document).ready(function () {
     //For Create DailyMenu
     //value to get page in selectbox
     var $i = 1;
-    $("#foodselect").hide();
-    $("#choosefood").click(function () {
-        $("#foodselect").toggle();
+    $("#select-food").hide();
+    $("#choose-food").click(function () {
+        $("#select-food").toggle();
     })
-    $("#foodselect").change(function (e) {
-        $("#foodselect").toggle();
-        $("#choosefood").html($("#foodselect option:selected").text());
+    $("#select-food").change(function (e) {
+        $("#select-food").toggle();
+        $("#choose-food").html($("#select-food option:selected").text());
     });
     //add event for scroll in select box
-    $("#foodselect").scroll(function () {
+    $("#select-food").scroll(function () {
         if ($(this)[0].scrollHeight - $(this).scrollTop() <= $(this).outerHeight()) {
             $i += 1;
             //set url of pagination
@@ -44,7 +44,7 @@ $(document).ready(function () {
                 $url = $currentUrl;
             }
             $url = $url + "?page=" + $i;
-            $categoryId = $('#categoryselect').find(":selected").val();
+            $categoryId = $('#select-category').find(":selected").val();
             callAjaxForCreateMenu($url, $categoryId);
         }
     });
@@ -53,27 +53,27 @@ $(document).ready(function () {
      * Get Menu Date and Current Date To Check Add item permission
      */
     var $today = new Date();
-    $('#dateChooser').change(function (e) {
-        $dateValue = $('#dateChooser').val();
+    $('#chooser-date').change(function (e) {
+        $dateValue = $('#chooser-date').val();
         var year = $dateValue.substring(0, 4);
         var month = $dateValue.substring(5, 7);
         var day = $dateValue.substring(8, 10);
         var $date = new Date(year, month - 1, day);
         if ($date < $today) {
-            $('#add_row').prop("disabled", true);
+            $('#add-row').prop("disabled", true);
         } else {
-            $('#add_row').prop("disabled", false);
+            $('#add-row').prop("disabled", false);
         }
     })
     /**
      * Get Category and send ajax request to server
      */
-    $selectCate = document.getElementById('categoryselect');
-    $('#categoryselect').change(function (e) {
+    $selectCate = document.getElementById('select-category');
+    $('#select-category').change(function (e) {
         //set page of paginate = 1
         $i = 1;
-        $('#foodselect').empty();
-        $('#choosefood').html($('#choosefood').attr('data-text'));
+        $('#select-food').empty();
+        $('#choose-food').html($('#choose-food').attr('data-text'));
         if (window.location.href.indexOf('create') > 0) {
             $url = window.location.href;
         } else {
