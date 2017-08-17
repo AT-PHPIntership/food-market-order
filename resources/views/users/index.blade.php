@@ -12,7 +12,7 @@
         <div class="box box-primary">
             <div class="box-header text-center">
                 <h3 class="box-title">{{ __("User's Table Data") }}</h3>
-                <a href="{{ route('users.create') }}" class="btn btn-primary pull-right">
+                <a href="{{ route('users.create') }}" class="btn btn-primary pull-right" id="btn-add-user">
                     <i class=" fa fa-plus"></i>
                 </a>
                 <div class="col-md-12">
@@ -20,7 +20,7 @@
                         <form action="">
                             <div class="col-md 9 pull-left">
                                 <div class="form-group">
-                                    <input class="form-control" type="search" name="search" value="{{ request('search') }}">
+                                    <input class="form-control" type="search" name="search" value="{{ request('search') }}" placeholder="type here for search">
                                 </div>
                             </div>
                             <div class="col-md-3 pull-left">

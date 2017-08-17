@@ -9,7 +9,9 @@ trait Searchable
     /**
      * Search the result follow the search request and columns searchable
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query query model
+     *
+     * @return void
      */
     public function scopeSearch(Builder $query)
     {
@@ -18,7 +20,8 @@ trait Searchable
 
         $keyword = request('search');
         foreach ($this->getColumns() as $column => $priority) {
-            $query->orWhere($column, "LIKE", "%$keyword%");
+            $priority = $priority;
+            $query->orWhere($column, "LIKE", "%$keyword%")->get();
         }
     }
 
@@ -55,7 +58,9 @@ trait Searchable
     /**
      * Make joins
      *
-     * @param Builder $query
+     * @param Builder $query query model
+     *
+     * @return void
      */
     protected function makeJoins(Builder $query)
     {
