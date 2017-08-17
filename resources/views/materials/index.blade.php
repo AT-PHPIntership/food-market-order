@@ -12,6 +12,24 @@
         <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Materials') }}</h3>
             <a href="{{ route('materials.create') }}" class="btn btn-primary btn-xl pull-right"> {{ __('Add Material') }}</a>
+            <div class="col-md-12">
+                <div class="col-md-5">
+                    <form action="">
+                        <div class="col-md 9 pull-left">
+                            <div class="form-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-3 pull-left">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="box-body">
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">

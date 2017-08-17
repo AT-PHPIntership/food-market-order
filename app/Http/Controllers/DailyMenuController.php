@@ -55,14 +55,10 @@ class DailyMenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $dailyMenus = $this->dailyMenu->select('date');
-        if ($request->has('date')) {
-            $dailyMenus = $dailyMenus->where('date', 'like', '%'.$request['date'].'%');
-        }
-        $dailyMenus = $dailyMenus->distinct()->orderBy('date', 'desc')->paginate(DailyMenu::ITEMS_PER_PAGE);
-        return view('daily_menus.index', ['dailyMenus' => $dailyMenus, 'date' => $request['date']]);
+        $dailyMenus = $this->dailyMenu->search()->distinct()->orderBy('date', 'DESC')->paginate(DailyMenu::ITEMS_PER_PAGE);
+        return view('daily_menus.index', ['dailyMenus' => $dailyMenus]);
     }
 
     /**

@@ -14,6 +14,24 @@
                title="{{ __('Add Supplier') }}">
                 <i class="fa fa-plus"></i>
             </a>
+            <div class="col-md-12">
+                <div class="col-md-5">
+                    <form action="">
+                        <div class="col-md 9 pull-left">
+                            <div class="form-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-3 pull-left">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
