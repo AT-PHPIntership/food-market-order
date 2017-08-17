@@ -11,6 +11,24 @@
             <a class="btn btn-primary pull-right" href="{{ route('orders.create')}}">
                 <i class="fa fa-plus"></i>
             </a>
+            <div class="col-md-12">
+                <div class="col-md-5">
+                    <form action="">
+                        <div class="col-md 9 pull-left">
+                            <div class="form-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-3 pull-left">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         @include('flash::message')
         <!-- /.box-header -->
@@ -18,13 +36,6 @@
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <input id="text-sort" class="form-control pull-left margin-bottom" type="text"
-                               value="{{ app('request')->has('keyword') ? app('request')->input('keyword') : '' }}"
-                               placeholder="{{ __('Key search') }}"
-                               data-table="{{ __('orders') }}">
-                        <input id="date-sort" class="form-control pull-right margin-bottom" type="date"
-                               value="{{ app('request')->has('date') ? app('request')->input('date') : date('Y-m-d') }}"
-                               data-table="{{ __('orders') }}">
                         <table class="table table-bordered table-hover" role="grid">
                             <thead>
                             <tr>

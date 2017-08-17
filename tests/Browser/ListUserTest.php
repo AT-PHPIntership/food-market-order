@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use Illuminate\Support\Facades\DB;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -97,4 +98,72 @@ class ListUserTest extends DuskTestCase
             $browser->assertQueryStringHas('page', 2);
         });
     }
+
+    /**
+     * Test Search user
+     *
+     * @return void
+     */
+    public function testSearchWithResult()
+    {
+        DB::table('users')->insert([
+            'full_name' => 'DungVanDuc',
+            'email' => 'test'.'@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
+
+        DB::table('users')->insert([
+            'full_name' => 'abc123',
+            'email' => 'abc'.'@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
+
+        /**
+         * Test result 2 record
+         */
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/users')
+                ->type('search', 'dungvan')
+                ->click('.box-header form button')
+                ->assertInputValue('search', 'dungvan');
+            $elements = $browser->elements('#table tbody tr');
+            $this->assertCount(2, $elements);
+            $browser->assertPathIs('/users');
+            $browser->assertQueryStringHas('search', 'dungvan');
+        });
+
+        /**
+         * Test result 1 record
+         */
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/users')
+                ->type('search', 'abc')
+                ->click('.box-header form button')
+                ->assertInputValue('search', 'abc');
+            $elements = $browser->elements('#table tbody tr');
+            $this->assertCount(1, $elements);
+            $browser->assertPathIs('/users');
+            $browser->assertQueryStringHas('search', 'abc');
+        });
+    }
+
+    /**
+     * Test Search user
+     *
+     * @return void
+     */
+    public function testSearchNoResult()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/users')
+                ->type('search', 'asd')
+                ->click('.box-header form button')
+                ->assertInputValue('search', 'asd');
+            $elements = $browser->elements('#table tbody tr');
+            $this->assertCount(0, $elements);
+            $browser->assertPathIs('/users');
+            $browser->assertQueryStringHas('search', 'asd');
+        });
+    }
+
 }

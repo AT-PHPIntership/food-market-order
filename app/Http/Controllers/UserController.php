@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->paginate(User::ITEMS_PER_PAGE);
+        $users = $this->user->search()->paginate(User::ITEMS_PER_PAGE);
         return view('users.index')->with('users', $users);
     }
 

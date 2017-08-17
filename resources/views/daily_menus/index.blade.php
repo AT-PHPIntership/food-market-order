@@ -11,20 +11,30 @@
             <a class="btn btn-xl btn-primary pull-right" href="{{ route('daily-menus.create') }}">
                 <i class="fa fa-plus"></i>
             </a>
+            <div class="col-md-12">
+                <div class="col-md-5">
+                    <form action="">
+                        <div class="col-md 9 pull-left">
+                            <div class="form-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-3 pull-left">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="form-group">
-                            <form method="GET" action="{{ route('daily-menus.index') }}">
-                                <label for="dateSearch">{{ __('Date') }}: </label>
-                                <input type="text" class="form-control" id="dateSearch" name="date"
-                                       value="{{ (!empty($date)) ? $date : '' }}">
-                                <input type="submit" class="btn-default btn" value="Search">
-                            </form>
-                        </div>
                         <table class="table table-bordered dataTable table-hover text-center" role="grid">
                             <thead>
                             <tr role="row">

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Libraries\Traits\Searchable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+    use Searchable;
 
     const MALE = 1;
     const FEMALE = 0;
@@ -18,12 +20,42 @@ class User extends Authenticatable
     const ITEMS_PER_PAGE = 10;
 
     /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         */
+
+        'columns' => [
+            'full_name' => 10,
+            'email' => 8,
+            'birthday' => 5,
+            'address' => 2,
+            'phone_number' => 2,
+        ]
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'full_name', 'email', 'password', 'image', 'address', 'birthday', 'gender', 'phone_number', 'is_active', 'is_admin',
+        'full_name',
+        'email',
+        'password',
+        'image',
+        'address',
+        'birthday',
+        'gender',
+        'phone_number',
+        'is_active',
+        'is_admin',
     ];
 
     /**

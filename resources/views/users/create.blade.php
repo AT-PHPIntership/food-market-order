@@ -73,7 +73,7 @@
                             <div class="col-md-3"><label>{{ __('Birthday') }}</label></div>
                             <div class="date col-md-9">
                                 <input name="birthday" type="date" class="form-control"
-                                       id="datepicker" value="{{ old('birthday') }}">
+                                       id="date-picker" value="{{ old('birthday') }}">
                                 @if ($errors->has('birthday'))
                                     <span class="help-block">
                                               <strong>{{ $errors->first('birthday') }}</strong>
@@ -81,7 +81,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group col-md-12 {{ $errors->has('birthday') ? ' has-error' : '' }}">
+                        <div class="form-group col-md-12 {{ $errors->has('address') ? ' has-error' : '' }}">
                             <div class="col-md-2"><label for="address">{{ __('Address') }}</label></div>
                             <div class="col-md-10"><input type="text" name="address" class="form-control" id="address"
                                                           placeholder="Enter User's Address"
@@ -126,8 +126,8 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <input type="submit" class="btn btn-primary pull-left" value="{{ __('Create') }}">
-                            <input type="reset" class="btn btn-danger pull-right" value="{{ __('Reset') }}">
+                            <button type="submit" class="btn btn-primary pull-left">{{ __('Create') }}</button>
+                            <button type="reset" class="btn btn-danger pull-right">{{ __('Reset') }}</button>
                         </div>
                     </div>
                     <div class="box-footer">
