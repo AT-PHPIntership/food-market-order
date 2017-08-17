@@ -17,7 +17,7 @@
                     <form action="">
                         <div class="col-md 9 pull-left">
                             <div class="form-group">
-                                <input class="form-control" type="search" name="search" value="{{ request('search') }}">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}" placeholder="type here for search">
                             </div>
                         </div>
                         <div class="col-md-3 pull-left">
