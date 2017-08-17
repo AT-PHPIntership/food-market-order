@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class OrderController extends Controller
 {
@@ -73,7 +74,30 @@ class OrderController extends Controller
                 flash(__('Change Errors'))->error()->important();
             }
         } catch (ModelNotFoundException $ex) {
-            flash(__('Model Not Found'))->error()->important();
+            flash(__('Order Not Found'))->error()->important();
+        }
+        return back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It is id order need delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $order = $this->order->findOrFail($id);
+            $order->orderItems()->delete();
+            if ($order->delete()) {
+                flash(__('Delete Order Success'))->success()->important();
+            } else {
+                flash(__('Delete Order Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Order Not Found'))->error()->important();
         }
         return back();
     }
