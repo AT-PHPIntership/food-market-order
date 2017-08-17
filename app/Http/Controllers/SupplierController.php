@@ -107,7 +107,7 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         try {
-            $supplier = $this->supplier->find($id);
+            $supplier = $this->supplier->findOrFail($id);
             if ($supplier->delete()) {
                 flash(__('Delete Supplier Success'))->success()->important();
             } else {
