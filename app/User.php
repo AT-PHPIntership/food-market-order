@@ -2,10 +2,10 @@
 
 namespace App;
 
+use App\Libraries\Traits\Searchable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Libraries\Traits\Searchable;
 
 class User extends Authenticatable
 {

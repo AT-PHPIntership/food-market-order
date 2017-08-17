@@ -12,7 +12,7 @@
         <div class="box box-primary">
             <div class="box-header text-center">
                 <h3 class="box-title">{{ __("User's Table Data") }}</h3>
-                <a href="{{ route('users.create') }}" class="btn btn-primary pull-right">
+                <a href="{{ route('users.create') }}" class="btn btn-primary pull-right" id="btn-add-user">
                     <i class=" fa fa-plus"></i>
                 </a>
                 <div class="col-md-12">

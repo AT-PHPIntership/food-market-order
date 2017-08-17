@@ -15,7 +15,7 @@ class Material extends Model
 
     protected $table = "materials";
 
-    protected $fillable = ['id', 'name', 'category_id', 'suppliers', 'price', 'description','image'];
+    protected $fillable = ['id', 'name', 'category_id', 'supplier_id', 'price', 'description','image', 'status'];
 
     /**
      * Searchable rules.

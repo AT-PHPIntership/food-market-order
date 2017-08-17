@@ -49,9 +49,7 @@ class DailyMenuController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param \Illuminate\Http\Request $request request from view
+     * Get list daily menus
      *
      * @return \Illuminate\Http\Response
      */
