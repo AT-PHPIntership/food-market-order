@@ -2,66 +2,74 @@
 
 namespace Tests\Browser;
 
+use App\Category;
 use Illuminate\Support\Facades\DB;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class CreateCategoryTest extends DuskTestCase
+class UpdateCategoryTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
     /**
-     * Test Route View Admin Create Category.
+     * Test Route View Admin Update Category.
      *
      * @return void
      */
     public function testURL()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 5)->create();
+            $category = Category::find(2);
             $browser->loginAs(1)
-                ->visit('/categories/create')
-                ->assertSee('CREATE CATEGORIES PAGE');
+                ->visit('/categories/'.$category->id.'/edit')
+                ->assertSee('UPDATE CATEGORY PAGE')
+                ->assertInputValue('name', $category->name)
+                ->assertInputValue('description', $category->description);
         });
     }
 
     /**
-     * Test Validation Admin Create User.
+     * Test Validation Admin Update Category.
      *
      * @return void
      */
-    public function testValidationCreatesCategory()
+    public function testValidationUpdateCategory()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 5)->create();
             $browser->loginAs(1)
-                ->visit('/categories/create')
-                ->press('Create')
-                ->assertPathIs('/categories/create')
+                ->visit('/categories/2/edit')
+                ->type('name', '')
+                ->press('Update')
+                ->waitFor(null,2)
+                ->assertPathIs('/categories/2/edit')
                 ->assertSee('The name field is required.');
         });
     }
 
     /**
-     * Test Admin create User success.
+     * Test Admin update Category success.
      *
      * @return void
      */
-    public function testCreatesUserSuccess()
+    public function testUpdateCategorySuccess()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 5)->create();
             $browser->loginAs(1)
-                ->visit('/categories/create')
-                ->type('name', 'Hải Sản')
-                ->type('description', 'Nguyên liệu tươi sạch ở các vùng biển');
-            $browser->press('Create')
+                ->visit('/categories/2/edit')
+                ->type('name', 'Hải Sản');
+            $browser->press('Update')
                 ->assertPathIs('/categories')
-                ->assertSee('Create Category Success');
+                ->assertSee('Update Category Success');
         });
         $this->assertDatabaseHas('categories', ['name' => 'Hải Sản']);
     }
 
 
-    public function listCaseTestValidationForCreateCategory()
+    public function listCaseTestValidationForUpdateCategory()
     {
         return [
             ['', 'test user', 'The name field is required.'],
@@ -70,15 +78,16 @@ class CreateCategoryTest extends DuskTestCase
     }
 
     /**
-     * @dataProvider listCaseTestValidationForCreateCategory
+     * @dataProvider listCaseTestValidationForUpdateCategory
      *
      */
-    public function testCreateCategoryFailValidation(
+    public function testUpdateCategoryFailValidation(
         $name,
         $description,
         $message
     )
     {
+        factory(Category::class, 5)->create();
         DB::table('categories')->insert([
             'name' => 'Category Test',
             'description' => ''
@@ -90,11 +99,11 @@ class CreateCategoryTest extends DuskTestCase
         ) {
 
             $browser->loginAs(1)
-                ->visit('/categories/create')
+                ->visit('/categories/2/edit')
                 ->type('name', $name)
                 ->type('description', $description);
-            $browser->press('Create')
-                ->assertPathIs('/categories/create')
+            $browser->press('Update')
+                ->assertPathIs('/categories/2/edit')
                 ->assertSee($message);
         });
     }
@@ -106,14 +115,16 @@ class CreateCategoryTest extends DuskTestCase
     public function testBtnReset()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 5)->create();
+            $category = Category::find(2);
             $browser->loginAs(1)
-                ->visit('/categories/create')
+                ->visit('/categories/2/edit')
                 ->type('name', 'category test')
                 ->type('description', 'description test');
             $browser->click('input[type=reset]')
-                ->assertPathIs('/categories/create')
-                ->assertInputValue('name', null)
-                ->assertInputValue('description', null);
+                ->assertPathIs('/categories/2/edit')
+                ->assertInputValue('name', $category->name)
+                ->assertInputValue('description', $category->description);
         });
     }
 }

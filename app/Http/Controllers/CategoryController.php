@@ -93,7 +93,7 @@ class CategoryController extends Controller
         } else {
             flash(__('Update Category Errors'))->error()->important();
         }
-        return back();
+        return redirect()->route('categories.index');
     }
 
     /**

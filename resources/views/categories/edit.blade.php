@@ -21,6 +21,7 @@
                     <!-- /.box-header -->
                     <!-- form start -->
                     <form role="form" action="{{ route('categories.update', ['id' => $category->id])}}" method="post">
+                        {{ method_field('PUT') }}
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div class="col-md-2"></div>
                         <div class="box-body col-md-8">
