@@ -51,14 +51,10 @@ class MaterialController extends Controller
      */
     public function edit($id)
     {
-        try {
-            $material = $this->material->findOrFail($id);
-            $categories = Category::orderBy('id', 'DESC')->get();
-            $suppliers = Supplier::orderBy('id', 'DESC')->get();
-            return view('materials.edit', ['material' => $material, 'categories' => $categories, 'suppliers' => $suppliers]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
+        $material = $this->material->findOrFail($id);
+        $categories = Category::orderBy('id', 'DESC')->get();
+        $suppliers = Supplier::orderBy('id', 'DESC')->get();
+        return view('materials.edit', ['material' => $material, 'categories' => $categories, 'suppliers' => $suppliers]);
     }
 
     /**
@@ -71,24 +67,24 @@ class MaterialController extends Controller
      */
     public function update(MaterialUpdateRequest $request, $id)
     {
-        try {
-            $material = $this->material->findOrFail($id);
-            $dataMaterial = $request->except('_method', '_token');
-            $oldPathImage = $material->image;
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = time() . "-" . $file->getClientOriginalName();
-                $dataMaterial['image'] = $fileName;
-            }
-            $material->update($dataMaterial);
+        $material = $this->material->findOrFail($id);
+        $dataMaterial = $request->except('_method', '_token');
+        $oldPathImage = $material->image;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . "-" . $file->getClientOriginalName();
+            $dataMaterial['image'] = $fileName;
+        }
+        if ($material->update($dataMaterial)) {
             if ($request->hasFile('image')) {
                 Image::make($file)->save(public_path(config('constant.path_upload_materials'). $fileName));
                 File::delete($oldPathImage);
             }
             flash(__('Update Material Success'))->success()->important();
             return redirect()->route('materials.index');
-        } catch (ModelNotFoundException $ex) {
+        } else {
             flash(__('Material Update Error'))->error()->important();
+            return redirect()->back();
         }
     }
     
