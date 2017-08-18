@@ -6,7 +6,7 @@ use Lang;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\DailyMenu;
-use App\Http\Requests\DailyMenu\UpdateMenuItemRequest;
+use App\Http\Requests\DailyMenuUpdateItemRequest;
 use App\Category;
 use App\Food;
 use App\Http\Requests\DailyMenuCreateRequest;
@@ -131,11 +131,11 @@ class DailyMenuController extends Controller
     /**
      * Update item in Menu List on Date
      *
-     * @param UpdateMenuItemRequest $request The request message from Ajax request
+     * @param DailyMenuUpdateItemRequest $request The request message from Ajax request
      *
      * @return Response
      */
-    public function update(UpdateMenuItemRequest $request)
+    public function update(DailyMenuUpdateItemRequest $request)
     {
         $quantity = $request['quantity'];
         $menuId = $request['menuId'];
