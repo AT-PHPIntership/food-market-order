@@ -15,14 +15,14 @@ class AdminUpdateUserTest extends DuskTestCase
      *
      * @return void
      */
-    public function testCreatesUser()
+    public function testUpdateUser()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
                 ->visit('/users')
                 ->click('table tbody tr:nth-child(1) td:nth-child(7) a:nth-child(2)')
-                ->assertPathIs('/users/1')
-                ->assertSee('Update USER PAGE');
+                ->assertPathIs('/users/1/edit')
+                ->assertSee('UPDATE USER PAGE');
         });
     }
 
@@ -31,19 +31,16 @@ class AdminUpdateUserTest extends DuskTestCase
      *
      * @return void
      */
-    public function testValidationUpdateUser()
+    public function testFormUpdateUser()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
                 ->visit('/users/1/edit')
-                ->press('Save Changes')
-                ->assertPathIs('/users/create')
-                ->assertSee('The password field is required.')
-                ->assertSee('The birthday is not a valid date.')
-                ->assertSee('The full name field is required.')
-                ->assertSee('The email field is required.')
-                ->assertSee('The address field is required.')
-                ->assertSee('The phone number field is required.');
+                ->assertPathIs('/users/1/edit')
+                ->assertInputValue('full_name', 'DungVan')
+                ->assertInputValue('email', 'admin@gmail.com')
+                ->assertSelected('gender', 0)
+                ->screenshot('testFormUpdateUser');
         });
     }
 
@@ -56,47 +53,48 @@ class AdminUpdateUserTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
-                ->visit('/users/create')
+                ->visit('/users/1/edit')
                 ->type('password', '123123')
                 ->type('full_name', 'test user')
-                ->type('email', 'test.user@gmail.com')
                 ->select('gender', 1)
                 ->type('phone_number', '12345678')
                 ->type('address', 'test address')
                 ->script([
                     "document.querySelector('#date-picker').value = '2017-02-23'",
                 ]);
-            $browser->press('Create')
-                ->assertPathIs('/users')
-                ->assertSee('User Created!')
-                ->screenShot('testCreateUserSuccess');
+            $browser->press('Save Changes')
+                ->assertPathIs('/users/1/edit')
+                ->assertSee('Update Successfully')
+                ->assertInputValue('full_name', 'test user')
+                ->assertSelected('gender', 1)
+                ->assertInputValue('phone_number', '12345678')
+                ->assertInputValue('address', 'test address')
+                ->assertInputValue('birthday', '2017-02-23')
+                ->screenShot('testUpdateUserSuccess');
         });
-        $this->assertDatabaseHas('users', ['email' => 'test.user@gmail.com']);
+        $this->assertDatabaseHas('users', ['email' => 'admin@gmail.com', 'full_name' => 'test user']);
     }
 
 
-    public function listCaseTestValidationForCreateUser()
+    public function listCaseTestValidationForUpdateUser()
     {
         return [
-            ['', 'test user', 'test.user@gmail.com', '1', '12345678', 'test address', '2017-02-23', 'The password field is required.'],
-            ['123456', '', 'test.user@gmail.com', '1', '12345678', 'test address', '2017-02-23', 'The full name field is required.'],
-            ['123456', 'test user', '', '1', '12345678', 'test address', '2017-02-23', 'The email field is required.'],
-            ['123456', 'test user', 'test.user@', '1', '12345678', 'test address', '2017-02-23', 'The email must be a valid email address.'],
-            ['123456', 'test user', 'test.user@gmail.com', '1', '', 'test address', '2017-02-23', 'The phone number field is required.'],
-            ['123456', 'test user', 'test.user@gmail.com', '1', 'abcdefgh', 'test address', '2017-02-23', 'The phone number must be a number.'],
-            ['123456', 'test user', 'test.user@gmail.com', '1', '12345678', '', '2017-02-23', 'The address field is required.'],
-            ['123456', 'test user', 'test.user@gmail.com', '1', '12345678', 'test address', '', 'The birthday is not a valid date.'],
+            ['123', 'test user', '1', '12345678', 'test address', '2017-02-23', 'The password must be at least 6 characters.'],
+            ['', '', '1', '12345678', 'test address', '2017-02-23', 'The full name field is required.'],
+            ['', 'test user', '1', '', 'test address', '2017-02-23', 'The phone number field is required.'],
+            ['', 'test user', '1', 'abcdefgh', 'test address', '2017-02-23', 'The phone number must be a number.'],
+            ['', 'test user', '1', '12345678', '', '2017-02-23', 'The address field is required.'],
+            ['', 'test user', '1', '12345678', 'test address', '', 'The birthday is not a valid date.'],
         ];
     }
 
     /**
-     * @dataProvider listCaseTestValidationForCreateUser
+     * @dataProvider listCaseTestValidationForUpdateUser
      *
      */
-    public function testCreateUserFailValidation(
+    public function testUpdateUserFailValidation(
         $password,
         $full_name,
-        $email,
         $gender,
         $phone_number,
         $address,
@@ -108,7 +106,6 @@ class AdminUpdateUserTest extends DuskTestCase
         $this->browse(function (Browser $browser) use (
             $password,
             $full_name,
-            $email,
             $gender,
             $phone_number,
             $address,
@@ -117,18 +114,17 @@ class AdminUpdateUserTest extends DuskTestCase
         ) {
 
             $browser->loginAs(1)
-                ->visit('/users/create')
+                ->visit('/users/1/edit')
                 ->type('password', $password)
                 ->type('full_name', $full_name)
-                ->type('email', $email)
                 ->select('gender', $gender)
                 ->type('phone_number', $phone_number)
                 ->type('address', $address)
                 ->script([
                     "document.querySelector('#date-picker').value = '".$birthday."'",
                 ]);
-            $browser->press('Create')
-                ->assertPathIs('/users/create');
+            $browser->press('Save Changes')
+                ->assertPathIs('/users/1/edit');
         });
     }
 
@@ -140,23 +136,20 @@ class AdminUpdateUserTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
-                ->visit('/users/create')
+                ->visit('/users/1/edit')
                 ->type('password', '123123')
                 ->type('full_name', 'test user')
-                ->type('email', 'test.user@gmail.com')
                 ->type('phone_number', '12345678')
                 ->type('address', 'test address')
                 ->script([
                     "document.querySelector('#date-picker').value = '2017-02-23'",
                 ]);
             $browser->press('Reset')
-                ->assertPathIs('/users/create')
-                ->assertInputValue('password', null)
-                ->assertInputValue('full_name', null)
-                ->assertInputValue('email', null)
-                ->assertInputValue('birthday', null)
-                ->assertInputValue('phone_number', null)
-                ->assertInputValue('address', null)
+                ->assertPathIs('/users/1/edit')
+                ->assertInputValueIsNot('full_name', 'test user')
+                ->assertInputValueIsNot('birthday', '2017-02-23')
+                ->assertInputValueIsNot('phone_number', '12345678')
+                ->assertInputValueIsNot('address', 'test address')
                 ->screenShot('testBtnReset');
         });
     }
