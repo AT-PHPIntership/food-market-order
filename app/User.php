@@ -6,6 +6,7 @@ use App\Libraries\Traits\Searchable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -86,10 +87,37 @@ class User extends Authenticatable
     {
         parent::boot();
 
+        /**
+         * Register a creating model event with the dispatcher.
+         *
+         * @param \Closure|string  $callback
+         *
+         * @return void
+         */
         static::creating(function ($user) {
             $user->password = bcrypt($user->password);
         });
 
+        /**
+         * Register an updating model event with the dispatcher.
+         *
+         * @param \Closure|string  $callback
+         *
+         * @return void
+         */
+        static::updating(function ($user) {
+            if (Hash::needsRehash($user->password)) {
+                $user->password = bcrypt($user->password);
+            }
+        });
+
+        /**
+         * Register a deleting model event with the dispatcher.
+         *
+         * @param \Closure|string  $callback
+         *
+         * @return void
+         */
         static::deleting(function ($user) {
             $user->orders()->delete();
         });

@@ -71,4 +71,20 @@ class Material extends Model
     {
         return $this->belongsTo('App\Supplier', 'supplier_id', 'id');
     }
+
+    /**
+     * Get Image Attribute
+     *
+     * @param string $image get attribute image
+     *
+     * @return string
+     */
+    public function getImageAttribute($image)
+    {
+        if ($image) {
+            return asset(config('constant.path_upload_materials') . $image);
+        } else {
+            return asset(config('constant.default_image'));
+        }
+    }
 }
