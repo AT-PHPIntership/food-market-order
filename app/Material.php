@@ -12,7 +12,7 @@ class Material extends Model
 
     const ROWS_LIMIT = 10;
     protected $table = "materials";
-    protected $fillable = ['id', 'name', 'category_id', 'suppliers', 'price', 'description','image'];
+    protected $fillable = ['id', 'name', 'category_id', 'supplier_id', 'price', 'description','image', 'status'];
 
     /**
      * Material has many order item
