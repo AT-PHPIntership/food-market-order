@@ -129,7 +129,6 @@ class UserController extends Controller
             flash(__('Update Successfully'))->success()->important();
             return redirect()->route('users.edit', $id);
         } else {
-            dd($requestInput);
             flash(__('Update Error'))->error()->important();
             return redirect()->route('users.edit', $id)->withInput();
         }

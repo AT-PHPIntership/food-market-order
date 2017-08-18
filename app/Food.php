@@ -24,7 +24,7 @@ class Food extends Model
     }
     
     /**
-     * Food has one Category
+     * Get the category for the food.
      *
      * @return mixed
      */
