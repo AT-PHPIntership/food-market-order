@@ -90,11 +90,7 @@
                             </tbody>
                             <thead>
                             <tr role="row">
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th colspan="5"></th>
                                 <th>Total</th>
                                 <th><span id="payment-order" class="pull-left">{{ number_format($order->payment,0,",",".") }}</span> {{ __('VND') }}</th>
                                 <th></th>
