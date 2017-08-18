@@ -21,7 +21,7 @@ trait Searchable
         $keyword = request('search');
         foreach ($this->getColumns() as $column => $priority) {
             $priority = $priority;
-            $query->orWhere($column, "LIKE", "%$keyword%")->get();
+            $query->orWhere($column, "LIKE", "%$keyword%");
         }
     }
 
