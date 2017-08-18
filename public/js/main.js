@@ -257,7 +257,122 @@ $(document).ready(function() {
         window.location = "/" + $(this).attr("data-table") + "?keyword=" + $(this).val();
     });
     $('.status-order').change(confirm);
-    $(".quantity-order").blur(confirm);
+
+    // Change quantity order
+    $('.quantity-order-item').change(function () {
+
+        var price = $(this).parent().parent().find('.priceItem').html();
+        var payment = 0;
+        var total = $(this).parent().parent().find('.totalItem');
+        total.html(Number(this.value * price).toLocaleString('vi'));
+        $('tbody tr .totalItem').each(function() {
+            payment += Number($(this).html());
+        });
+        $('#payment-order').html(payment);
+    });
+    $('.alert').hide();
+    $('.close').click(function() {
+        $('.alert').hide();
+    })
+    function showArlert(message, status) {
+        if (status == "success"){
+            $('.alert').removeClass('alert-danger');
+            $('.alert').addClass('alert-success');
+        } else {
+            $('.alert').removeClass('alert-success');
+            $('.alert').addClass('alert-danger');
+        }
+        $('.alert .content-alert').html(message);
+        $('.alert').show();
+    }
+
+    $('.quantity-order-item').blur(function (e) {
+        e.preventDefault();
+        var quantityBackUp = $(this).parent().parent().find('.quantity-back-up');
+        var quantity = this;
+        var title = $(this).attr("data-title");
+        var body = '<p>' + $(this).attr("data-confirm") + '</p>';
+        var id = $(this).attr("data-id");
+        $('#modal-confirm-title').html(title);
+        $('#modal-confirm-body').html(body);
+        $('#modal-confirm').modal("show");
+        $('#btn-modal-submit').one("click", function () {
+            var data = {"quantity":quantity.value};
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "PUT",
+                url: "/orders/item/"+id,
+                data: data,
+                success: function(data, status) {
+                    if (status == "success") {
+                        $(quantityBackUp).val($(quantity).val());
+                        showArlert(data["message"],status)
+                        $('#modal-confirm').modal("hide");
+                    } else {
+                        showArlert(data["message"],status)
+                        $('#modal-confirm').modal("hide");
+                    }
+                },
+                error: function(data, status) {
+                    showArlert(data.responseJSON["message"],status)
+                    $('#modal-confirm').modal("hide");
+                }
+            });
+
+        });
+        $('#modal-confirm').on("hidden.bs.modal", function () {
+            $('#btn-modal-submit').off("click");
+            $(quantity).val($(quantityBackUp).val());
+            $(quantity).change();
+        });
+    });
+
+    // Delete Order Item
+    $('.delete-order-item').click(function () {
+        var parent = $(this).parent().parent();
+        var title = $(this).attr("data-title");
+        var body = '<p>' + $(this).attr("data-confirm") + '</p>';
+        var id = $(this).attr("data-id");
+        $('#modal-confirm-title').html(title);
+        $('#modal-confirm-body').html(body);
+        $('#modal-confirm').modal("show");
+        $('#btn-modal-submit').one("click", function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "DELETE",
+                url: "/orders/item/"+id,
+                success: function(data, status) {
+                    if (status == "success") {
+                        parent.remove();
+                        $('.quantity-order-item').change();
+                        showArlert(data["message"],status);
+                        $('#modal-confirm').modal("hide");
+                    } else {
+                        showArlert(data["message"],status);
+                        $('#modal-confirm').modal("hide");
+                    }
+                },
+                error: function(data, status) {
+                    showArlert(data.responseJSON["message"],status)
+                    $('#modal-confirm').modal("hide");
+                }
+            });
+
+        });
+        $('#modal-confirm').on("hidden.bs.modal", function () {
+            $('#btn-modal-submit').off("click");
+            $(quantity).val($(quantityBackUp).val());
+            $(quantity).change();
+        });
+    })
 });
 $('#flash-overlay-modal').modal();
     

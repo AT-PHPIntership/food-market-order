@@ -10,7 +10,10 @@
             <h1 class="box-title">{{ __('Order') }} {{ $order->id }} - {{ __('Date') }} : {{ $order->created_at }}</h1>
             <small></small>
         </div>
-        @include('flash::message')
+        <div class="alert alert-dismissable">
+            <a href="#" class="close" aria-label="close">×</a>
+            <span class="content-alert"><strong>Success!</strong> This alert box could indicate a successful or positive action.</span>
+        </div>
         <!-- /.box-header -->
         <div class="box-body">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -47,45 +50,40 @@
                                 <th class="col-md-1">{{ __('Type') }}</th>
                                 <th class="col-md-1">{{ __('Price') }}</th>
                                 <th class="col-md-1">{{ __('Quantity') }}</th>
-                                <th class="col-md-1">{{ __('Total') }}</th>
-                                <th class="col-md-2">{{ __('Action') }}</th>
+                                <th class="col-md-2">{{ __('Total') }}</th>
+                                <th class="col-md-1">{{ __('Action') }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($order->orderItems as $item)
                                 <tr>
-                                    <form role="form" class="confirm-data inline"
-                                          action="{{ route('orders.updateItem', $item->id) }}"
-                                          method="post">
-                                        {{ method_field('PUT') }}
-                                        {{ csrf_field() }}
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->itemtable->name }}</td>
                                     <td>
                                         <img src="{{ $item->itemtable->image }}" height="30px" width="30px"/>
                                     </td>
                                     <td>{{ substr($item->itemtable_type,4) }}</td>
-                                    <td>{{ number_format($item->itemtable->price,0,",",".") }} {{ __('VND') }}</td>
+                                    <td><span class="priceItem">{{ number_format($item->itemtable->price,0,",",".") }}</span> {{ __('VND') }}</td>
                                     <td><input type="number"
                                                name="quantity"
                                                min="0"
+                                               data-id="{{ $item->id }}"
                                                data-confirm="{{ __('Are you sure update it?') }}"
                                                data-title="{{ __('Update Item') }}"
-                                               class="quantity-order"
-                                               value="{{ $item->quantity }}"></td>
-                                    <td>{{ number_format($item->itemtable->price * $item->quantity,0,",",".") }} {{ __('VND') }}</td>
+                                               class="quantity-order-item"
+                                               value="{{ $item->quantity }}">
+                                        <input type="hidden" class="quantity-back-up" value="{{ $item->quantity }}"/>
+                                    </td>
+                                    <td><span class="totalItem">{{ number_format($item->itemtable->price * $item->quantity,0,",",".") }}</span> {{ __('VND') }}
+                                    </td>
                                     <td>
-                                        </form>
-                                        <form class="inline" role="form" action="{{ route('orders.deleteItem', $item->id) }}" method="post">
-                                            {{ method_field('DELETE') }}
-                                            {{ csrf_field() }}
-                                            <button class="btn-danger btn btn-confirm btn-sm"
-                                                    data-confirm="{{ __('Are you want delete it?') }}"
-                                                    data-title="{{ __('Delete Item Order') }}"
-                                                    title="{{ __('Cancel') }}">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        </form>
+                                        <button class="btn-danger btn delete-order-item btn-sm"
+                                                data-id="{{ $item->id }}"
+                                                data-confirm="{{ __('Are you want delete it?') }}"
+                                                data-title="{{ __('Delete Item Order') }}"
+                                                title="{{ __('Cancel') }}">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -97,8 +95,8 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th></th>
-                                <th>{{ $order->payment }}</th>
+                                <th>Total</th>
+                                <th><span id="payment-order" class="pull-left">{{ number_format($order->payment,0,",",".") }}</span> {{ __('VND') }}</th>
                                 <th></th>
                             </tr>
                             </thead>

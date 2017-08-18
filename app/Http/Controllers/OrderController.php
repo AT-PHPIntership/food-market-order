@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\OrderItem;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -132,17 +134,21 @@ class OrderController extends Controller
             $order->payment = $order->payment - $item->price * $orderItem->quantity;
             if ($order->save()) {
                 if ($orderItem->delete()) {
-                    flash(__('Delete Item Success'))->success()->important();
+                    $message = __('Delete Item ' . $id . ' Success');
+                    $status = Response::HTTP_OK;
                 } else {
-                    flash(__('Delete Item Errors'))->error()->important();
+                    $message = __('Delete Item ' . $id . ' Errors');
+                    $status = Response::HTTP_NOT_FOUND;
                 }
             } else {
-                flash(__('Delete Item Errors'))->error()->important();
+                $message = __('Delete Item Errors');
+                $status = Response::HTTP_NOT_FOUND;
             }
         } catch (ModelNotFoundException $ex) {
-            flash(__('Order Item Not Found'))->error()->important();
+            $message = __('Order Item Not Found');
+            $status = Response::HTTP_NOT_FOUND;
         }
-        return back();
+        return response()->json(['message' => $message], $status);
     }
 
     /**
@@ -165,16 +171,23 @@ class OrderController extends Controller
             $order->payment = $order->payment + $item->price * $quantityChange;
             if ($order->save()) {
                 if ($orderItem->save()) {
-                    flash(__('Update Item ' . $id . ' Success'))->success()->important();
+                    $message = __('Update Item ' . $id . ' Success');
+                    $status = Response::HTTP_OK;
                 } else {
-                    flash(__('Update Item Errors'))->error()->important();
+                    $message = __('Update Item Errors');
+                    $status = Response::HTTP_OT_FOUND;
                 }
             } else {
-                flash(__('Update Item Errors'))->error()->important();
+                $message = __('Update Item Errors');
+                $status = Response::HTTP_NOT_FOUND;
             }
         } catch (ModelNotFoundException $ex) {
-            flash(__('Order Item Not Found'))->error()->important();
+            $message = __('Order Item Not Found');
+            $status = Response::HTTP_NOT_FOUND;
+        } catch (QueryException $ex) {
+            $message = __('Update Item Errors');
+            $status = Response::HTTP_NOT_FOUND;
         }
-        return back();
+        return response()->json(['message' => $message], $status);
     }
 }
