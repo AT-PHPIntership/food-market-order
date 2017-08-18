@@ -155,19 +155,29 @@ class DailyMenuController extends Controller
      * Delete item in Menu List on Date
      *
      * @param Request $request The request message from Ajax request
+     * @param string  $date    The date value to delete
      *
      * @return Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $date)
     {
-        $menuId = $request['menuId'];
-        $error = __('Has error during delete menu item');
-        $success = __('Delete menu item success');
+        $error = __('Has error during delete this');
+        $success = __('Delete this menu success');
 
-        if ($this->dailyMenu->where('id', $menuId)->delete()) {
-            return response()->json(['message' => $success], Response::HTTP_OK);
+        if ($request->ajax()) {
+            $menuId = $request['menuId'];
+            if ($this->dailyMenu->where('id', $menuId)->delete()) {
+                return response()->json(['message' => $success], Response::HTTP_OK);
+            } else {
+                return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
+            }
         } else {
-            return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
+            if ($this->dailyMenu->where('date', $date)->delete()) {
+                flash($success)->success()->important();
+            } else {
+                flash($error)->error()->important();
+            }
         }
+        return redirect()->route('daily-menus.index');
     }
 }

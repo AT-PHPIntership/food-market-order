@@ -5,6 +5,8 @@
     </h1>
 @endsection
 @section('main-content')
+    
+    @include('flash::message')
     <div class="box box-primary">
         <div class="box-header text-center">
             <h3 class="box-title">{{ __('Daily Menu List') }}</h3>
@@ -41,10 +43,16 @@
                                            href="{{ route('daily-menus.show', $dailyMenu->date) }}">
                                             <i class="fa fa-search-plus"></i>
                                         </a>
-                                        <a class=" btn-sm btn-success btn"
-                                           href="{{ route('daily-menus.edit', $dailyMenu->date) }}">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
+                                        <form role="form" class="delete-item inline" action="{{ route('daily-menus.destroy', $dailyMenu->date)}}"
+                                              method="post">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                            <button class="btn-sm btn-danger btn btn-confirm"
+                                                    data-confirm="{{__('Are you want delete it?')}}"
+                                                    data-title="{{__('Delete Daily Menu')}}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -59,3 +67,4 @@
         </div>
     </div>
 @endsection
+@include('layouts.partials.modal')
