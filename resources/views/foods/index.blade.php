@@ -14,26 +14,27 @@
             <a href="{{ route('foods.create') }}" class="btn btn-primary btn-xl pull-right">
                 <i class=" fa fa-plus"></i>
             </a>
-            <div class="col-md-12">
-                <div class="col-md-5">
-                    <form action="">
-                        <div class="col-md 9 pull-left">
-                            <div class="form-group">
-                                <input class="form-control" type="search" name="search" value="{{ request('search') }}" placeholder="type here for search">
-                            </div>
-                        </div>
-                        <div class="col-md-3 pull-left">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box-tools">
+                        <form action="" class="pull-left">
+                            <div class="input-group input-group-sm search-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}"
+                                       placeholder="type here for search">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        {{ $foods->links() }}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
@@ -81,7 +82,6 @@
                     </div>
                 </div>
             </div>
-            {{ $foods->links() }}
         </div>
         @else
         <h1>{{ __('NO DATA') }}</h1>

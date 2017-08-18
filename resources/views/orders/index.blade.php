@@ -5,38 +5,40 @@
     </h1>
 @endsection
 @section('main-content')
+
+    @include('flash::message')
     <div class="box box-primary">
         <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Order') }}</h3>
             <a class="btn btn-primary pull-right" href="{{ route('orders.create')}}">
                 <i class="fa fa-plus"></i>
             </a>
-            <div class="col-md-12">
-                <div class="col-md-5">
-                    <form action="">
-                        <div class="col-md 9 pull-left">
-                            <div class="form-group">
-                                <input class="form-control" type="search" name="search" value="{{ request('search') }}" placeholder="type here for search">
-                            </div>
-                        </div>
-                        <div class="col-md-3 pull-left">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
-        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box-tools">
+                        <form action="" class="pull-left">
+                            <div class="input-group input-group-sm search-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}"
+                                       placeholder="type here for search">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        {{ $orders->links() }}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-bordered table-hover" role="grid">
+                        <table class="table table-bordered dataTable table-hover" role="grid">
                             <thead>
                             <tr>
                                 <th class="col-md-1">{{ __('ID') }}</th>
@@ -108,9 +110,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="box-footer">
-            {{ $orders->links() }}
         </div>
     </div>
     @include('layouts.partials.modal')
