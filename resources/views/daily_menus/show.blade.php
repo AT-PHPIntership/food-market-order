@@ -38,7 +38,7 @@
                                         <td>{{ $menuItem->id }}</td>
                                         <td>{{ $menuItem->food->name }}</td>
                                         <td>{{ $menuItem->food->category->name }}</td>
-                                        <td>{{ number_format($menuItem->food->price, 0, ',', '.') }} VND</td>
+                                        <td>{{ number_format($menuItem->food->price, 0, ',', '.') }} {{ __('VND') }}</td>
                                         <td>{{ $menuItem->created_at }}</td>
                                         <td>{{ $menuItem->updated_at }}</td>
                                         <td class="form-control-sm">
