@@ -59,7 +59,7 @@
             <tr>
                 <td>
                     <select class="form-control" id="select-category">
-                        <option>{{ __('Choose category') }}</option>
+                        <option value="null">{{ __('Choose category') }}</option>
                         @foreach ($listCategory as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -81,7 +81,7 @@
     </div>
     <div class="box-footer">
         <div class="col-md-offset-3 col-md-4">
-            <a href="{{ route('daily-menus.index') }}"><span class="btn-xl btn-danger btn">{{ __('Cancel') }}</span></a>
+            <span class="btn-xl btn-danger btn" id="clear-input"> {{ __('Cancel') }}</span>
         </div>
         <div class="col-md-offset-1 col-md-4">
             <input type="submit" id="add-row" class="btn btn-primary"
