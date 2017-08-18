@@ -69,7 +69,7 @@ class CreateFoodTest extends DuskTestCase
         $this->assertDatabaseHas('foods', ['name' => 'mi quang']);
     }
 
-    public function listTestcreateFood()
+    public function initDataForTest()
     {
         return [
             ['', '1', 'mon an ngon nhat', '10', 'The name field is required.' ],
@@ -84,7 +84,7 @@ class CreateFoodTest extends DuskTestCase
     }
 
     /**
-     * @dataProvider listTestcreateFood
+     * @dataProvider initDataForTest
      *
      */
     public function testCreateFoodFailValidation(
