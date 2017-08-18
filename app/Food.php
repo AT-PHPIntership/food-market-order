@@ -10,6 +10,7 @@ class Food extends Model
     const ITEMS_PER_PAGE = 10;
     
     protected $table = "foods";
+
     protected $fillable = ['id', 'name', 'category_id', 'price', 'description','image'];
 
     /**
