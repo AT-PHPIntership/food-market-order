@@ -6,6 +6,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Http\Request;
 use App\User;
+use App\Order;
 use Illuminate\Support\Facades\Auth;
 use Image;
 
@@ -133,7 +134,22 @@ class UserController extends Controller
             return redirect()->route('users.edit', $id)->withInput();
         }
     }
-        
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id id of user's detail
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $userToShow = $this->user->findOrFail($id);
+        $totalOrders = Order::where('user_id', $id)->count();
+        $listOrders = Order::where('user_id', $id)->paginate(Order::ITEMS_PER_PAGE);
+        return view('users.show', ['user' => $userToShow, 'totalOrders' => $totalOrders, 'orders' => $listOrders]);
+    }
+
     /**
      * Get filename from request
      *
