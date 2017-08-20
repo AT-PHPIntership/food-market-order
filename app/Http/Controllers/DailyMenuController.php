@@ -78,7 +78,7 @@ class DailyMenuController extends Controller
         if ($request->ajax()) {
             $categoryId = $request->category_id;
             $page = $request->page;
-            $resultCount = 10; //get 10 item per request
+            $resultCount = DailyMenu::ITEMS_PER_PAGE; //get 10 item per request
             $offset = ($page - 1)*$resultCount; //skip item has start = $offset
 
             $listFood = $this->food
