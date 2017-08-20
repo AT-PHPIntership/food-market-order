@@ -16,13 +16,13 @@
                 <table class="table table-bordered" id="tab_logic">
                     <thead>
                     <tr>
-                        <th class="text-center col-xs-4">
+                        <th class="text-center col-xs-5">
                             {{ _('Category') }}
                         </th>
-                        <th class="text-center col-xs-4">
+                        <th class="text-center col-xs-5">
                             {{ _('Food') }}
                         </th>
-                        <th class="text-center col-xs-4">
+                        <th class="text-center col-xs-1">
                             {{ _('Quantity') }}
                         </th>
                     </tr>
@@ -67,11 +67,11 @@
                 </td>
                 <td>
                     <select class="form-control" name="food_id" id="select-food">
-					  <option value="null" selected="selected">Choose Food</option>
+					  <option value="null" selected="selected">{{ __('Choose Food') }}</option>
 					</select>
                 </td>
-                <td id="quantityselect">
-                    <input type="number" class="form-control" name="quantity"/>
+                <td class="text-center" id="quantityselect">
+                    <input type="number" class="form-control text-center" name="quantity"/>
                 </td>
             </tr>
             </tbody>

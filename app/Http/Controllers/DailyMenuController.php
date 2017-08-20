@@ -74,37 +74,11 @@ class DailyMenuController extends Controller
      */
     public function create(Request $request)
     {
-        $listCategory = $this->category->get();
-        if ($request->ajax()) {
-            $categoryId = $request->category_id;
-            $page = $request->page;
-            $resultCount = DailyMenu::ITEMS_PER_PAGE; //get 10 item per request
-            $offset = ($page - 1)*$resultCount; //skip item has start = $offset
-
-            $listFood = $this->food
-                            ->where('category_id', $categoryId)
-                            ->where('name', 'like', '%'.$request->name.'%')
-                            ->orderBy('name')
-                            ->skip($offset)->take($resultCount)
-                            ->get();
-            $count = Count($this->food
-                            ->where('category_id', $categoryId)
-                            ->where('name', 'like', '%'.$request->name.'%')
-                            ->orderBy('name')
-                            ->get()); //get total item
-            $endCount = $offset + $resultCount; //get last item per request
-            $morePages = $count > $endCount;    //and compare with total item
-            $results = array(
-              "results" => $listFood,
-              "pagination" => array(
-                  "more" => $morePages
-              )
-            );
-            return response()->json($results);
-        } elseif ($request->has('date')) {
-            return view('daily_menus.create', ['listCategory' => $listCategory, 'date' => $request['date']]);
+        $categories = $this->category->get();
+        if ($request->has('date')) {
+            return view('daily_menus.create', ['listCategory' => $categories, 'date' => $request['date']]);
         }
-        return view('daily_menus.create', ['listCategory' => $listCategory]);
+        return view('daily_menus.create', ['listCategory' => $categories]);
     }
 
     /**

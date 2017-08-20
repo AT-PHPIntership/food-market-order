@@ -1,4 +1,10 @@
-
+<script type="text/javascript">
+	//url for ajax request
+    foodURLs = {
+            base: "{{ url('/') }}",
+            list_food_by_category: "{{ route('foods.get-by-category') }}"
+    }
+</script>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <script src="{{ asset("/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js") }}"></script>

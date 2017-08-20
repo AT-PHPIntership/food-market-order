@@ -68,29 +68,19 @@ function handleAjaxResponse(data, status, $eventTarget) {
 }
 
 //for select2
-function formatRepo (repo) {
-    if (repo.loading) return repo.text;
+function formatSelectList (option) {
+    if (option.loading) return option.text;
 
     var markup = '<div class="clearfix">' +
-    '<div class="col-sm-1">' +
-    '<img src="' + repo.image + '" style="max-width: 100%" />' +
-    '</div>' +
-    '<div clas="col-sm-10">' +
-    '<div class="clearfix">' +
-    '<div class="col-sm-6">' + repo.name + '</div>' +
-    '<div class="col-sm-3"><i class="fa fa-usd"></i> ' + repo.price + '</div>';
+    '<div class="col-sm-10">' + option.name + '</div>';
 
-    if (repo.description) {
-      markup += '<div>' + repo.description + '</div>';
-    }
-
-    markup += '</div></div>';
+    markup += '</div>';
 
     return markup;
 }
 
-function formatRepoSelection (repo) {
-    return repo.name || repo.text;
+function formatSelection (option) {
+    return option.name || option.text;
 }
 $(document).ready(function() {
     //For dailyMenu
@@ -193,14 +183,14 @@ $(document).ready(function() {
      */
     $('#select-category').change(function (e) {
         $('#select-food').empty();
-        $url = window.location.href;
+        $url = foodURLs.list_food_by_category;
         $categoryId = e.target.options[e.target.selectedIndex].value;
         $("#select-food").select2({
           placeholder: 'Choose Food',
           theme: "bootstrap",
-          minimumResultsForSearch: 5,
           ajax: {
             url: $url,
+            type: 'GET',
             dataType: 'json',
             delay: 250,
             data: function (params) {
@@ -210,20 +200,19 @@ $(document).ready(function() {
                 category_id: $categoryId
               };
             },
-            processResults: function (data, params) {
-              params.page = params.page || 1;
+            processResults: function (data) {
               return {
-                results: data.results,
+                results: data.data,
                 pagination: {
-                  more: data.pagination
+                  more: (data.current_page<data.last_page)?(true):(false)
                 }
               };
             },
             cache: true
           },
-          escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-          templateResult: formatRepo, // omitted for brevity, see the source of this page
-          templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+          escapeMarkup: function (markup) { return markup; },
+          templateResult: formatSelectList,
+          templateSelection: formatSelection
         });
     });
     /**
