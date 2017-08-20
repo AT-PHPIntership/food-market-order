@@ -55,7 +55,7 @@
                 <span class="btn-xl btn-primary btn">{{ _('Show Menu') }}</span>
             </a>
             @endif
-            <tbody id='myBody'>
+            <tbody>
             <tr>
                 <td>
                     <select class="form-control" id="select-category">
@@ -66,11 +66,7 @@
                     </select>
                 </td>
                 <td>
-                    <!-- <p class="form-control" id="choose-food"
-                       data-text="{{ _('Click here to choose food') }}">{{ _('Click here to choose food') }}</p>
-                    <select class="form-control" id="select-food" name="food_id" form="create-menu" size="5">
-                    </select> -->
-                    <select class="form-control" name="food_id" id="select-food1">
+                    <select class="form-control" name="food_id" id="select-food">
 					  <option value="null" selected="selected">Choose Food</option>
 					</select>
                 </td>

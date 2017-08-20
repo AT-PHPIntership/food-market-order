@@ -32,29 +32,6 @@ function callAjax($data, $eventTarget, $url, $method) {
         }
     });
 }
-function callAjaxForCreateMenu($url, $categoryId) {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-        }
-    });
-    $.ajax({
-        type: "GET",
-        url: $url,
-        data: {
-            category_id: $categoryId
-        },
-        success: function (data) {
-            console.log('hihi');
-            data["data"].forEach(function (foodElement) {
-                //create food select
-                $('#select-food').attr('size', data['data'].length);
-                let $foodOption = $("<option>", {"text": foodElement["name"], "value": foodElement["id"]});
-                $('#select-food').append($foodOption);
-            })
-        }
-    });
-}
 // Handle Ajax response with @param:
 // data: response message from server
 // status: response status from server
@@ -90,8 +67,32 @@ function handleAjaxResponse(data, status, $eventTarget) {
     }
 }
 
+//for select2
+function formatRepo (repo) {
+    if (repo.loading) return repo.text;
+
+    var markup = '<div class="clearfix">' +
+    '<div class="col-sm-1">' +
+    '<img src="' + repo.image + '" style="max-width: 100%" />' +
+    '</div>' +
+    '<div clas="col-sm-10">' +
+    '<div class="clearfix">' +
+    '<div class="col-sm-6">' + repo.name + '</div>' +
+    '<div class="col-sm-3"><i class="fa fa-usd"></i> ' + repo.price + '</div>';
+
+    if (repo.description) {
+      markup += '<div>' + repo.description + '</div>';
+    }
+
+    markup += '</div></div>';
+
+    return markup;
+}
+
+function formatRepoSelection (repo) {
+    return repo.name || repo.text;
+}
 $(document).ready(function() {
-    alert('xz');
     //For dailyMenu
     /**
      *
@@ -171,33 +172,6 @@ $(document).ready(function() {
         });
     }
     //For Create DailyMenu
-    //value to get page in selectbox
-    var $i = 1;
-    $('#select-food').hide();
-    $('#choose-food').click(function () {
-        $('#select-food').toggle();
-    })
-    $('#select-food').change(function (e) {
-        $('#select-food').toggle();
-        $('#choose-food').html($('#select-food option:selected').text());
-    });
-    //add event for scroll in select box
-    $('#select-food').scroll(function () {
-        if ($(this)[0].scrollHeight - $(this).scrollTop() <= $(this).outerHeight()) {
-            $i += 1;
-            //set url of pagination
-            $currentUrl = window.location.href;
-            if ($currentUrl.indexOf("date") > 0) {
-                $url = $currentUrl.substr(0, $currentUrl.length - 16);
-            } else {
-                $url = $currentUrl;
-            }
-            $url = $url + "?page=" + $i;
-            $categoryId = $('#select-category').find(":selected").val();
-            callAjaxForCreateMenu($url, $categoryId);
-        }
-    });
-
     /**
      * Get Menu Date and Current Date To Check Add item permission
      */
@@ -217,26 +191,46 @@ $(document).ready(function() {
     /**
      * Get Category and send ajax request to server
      */
-    $selectCate = document.getElementById("select-category");
     $('#select-category').change(function (e) {
-        //set page of paginate = 1
-        $i = 1;
         $('#select-food').empty();
-        $('#choose-food').html($('#choose-food').attr("data-text"));
-        if (window.location.href.indexOf("create") > 0) {
-            $url = window.location.href;
-        } else {
-            $url = window.location.href + "/create";
-        }
+        $url = window.location.href;
         $categoryId = e.target.options[e.target.selectedIndex].value;
-        callAjaxForCreateMenu($url, $categoryId);
+        $("#select-food").select2({
+          placeholder: 'Choose Food',
+          theme: "bootstrap",
+          minimumResultsForSearch: 5,
+          ajax: {
+            url: $url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                name: params.term, // search term
+                page: params.page,
+                category_id: $categoryId
+              };
+            },
+            processResults: function (data, params) {
+              params.page = params.page || 1;
+              return {
+                results: data.results,
+                pagination: {
+                  more: data.pagination
+                }
+              };
+            },
+            cache: true
+          },
+          escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+          templateResult: formatRepo, // omitted for brevity, see the source of this page
+          templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+        });
     });
     /**
      * Btn Cancel clear data input
      */
      $('#clear-input').click(function (e) {
         $('#select-food').empty();
-        $('#choose-food').html($('#choose-food').attr("data-text"));
         $('#create-menu')[0].reset();
      })
     //End for create dailyMenu
