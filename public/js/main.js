@@ -45,8 +45,10 @@ function callAjaxForCreateMenu($url, $categoryId) {
             category_id: $categoryId
         },
         success: function (data) {
+            console.log('hihi');
             data["data"].forEach(function (foodElement) {
                 //create food select
+                $('#select-food').attr('size', data['data'].length);
                 let $foodOption = $("<option>", {"text": foodElement["name"], "value": foodElement["id"]});
                 $('#select-food').append($foodOption);
             })
@@ -89,6 +91,7 @@ function handleAjaxResponse(data, status, $eventTarget) {
 }
 
 $(document).ready(function() {
+    alert('xz');
     //For dailyMenu
     /**
      *

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Food extends Model
 {
-    use softDeletes;
+    // use softDeletes;
     const ITEMS_PER_PAGE = 10;
     
     protected $table = "foods";
