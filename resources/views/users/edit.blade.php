@@ -41,7 +41,7 @@
                     <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">{{ __('Password') }}</label>
                         <div class="col-md-8">
-                            <input class="form-control" autocomplete="off" value="{{ $user->password }}" type="password"
+                            <input class="form-control" autocomplete="off" type="password"
                                    name="password">
 
                             @if ($errors->has('password'))
@@ -103,7 +103,7 @@
                         <label class="col-md-3 control-label">{{ __('Birthday') }}</label>
                         <div class="col-md-8">
                             <div class="input-group date">
-                                <input type="date" class="form-control pull-right" id="datepicker"
+                                <input type="date" class="form-control pull-right" id="date-picker"
                                        value="{{ old('birthday', $user->birthday) }}" name="birthday">
 
                                 @if ($errors->has('birthday'))
@@ -131,8 +131,10 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
-                            <input class="btn btn-danger" value="{{ __('Reset') }}" type="reset">
-                            <input class="btn btn-primary" value="{{ __('Save Changes') }}" type="submit">
+                            <button class="btn btn-danger" type="reset">{{ __('Reset') }}</button>
+                            <button class="btn btn-primary" type="submit">
+                                {{ __('Save Changes') }}
+                            </button>
                         </div>
                     </div>
                 </div>
