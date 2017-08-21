@@ -8,7 +8,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Support\Facades\DB;
 
-class DeleteUserTest extends DuskTestCase
+class AdminDeleteUserTest extends DuskTestCase
 {
     use DatabaseTransactions;
 
