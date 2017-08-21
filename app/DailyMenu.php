@@ -2,12 +2,15 @@
 
 namespace App;
 
+use App\Libraries\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DailyMenu extends Model
 {
+    use Searchable;
     use softDeletes;
+
     const ITEMS_PER_PAGE = 10;
 
     /**
@@ -32,6 +35,18 @@ class DailyMenu extends Model
      * @var array
      */
     protected $fillable = ['date', 'food_id', 'quantity', 'created_at', 'updated_at'];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+
+        'columns' => [
+            'date',
+        ]
+    ];
 
     /**
      * Get the foods for the menu item.

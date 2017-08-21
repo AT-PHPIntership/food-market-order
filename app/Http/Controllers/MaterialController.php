@@ -33,11 +33,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        $materials = $this->material->with(['category' => function ($query) {
-            $query->select('id', 'name');
-        }])->with(['supplier' => function ($query) {
-            $query->select('id', 'name');
-        }])->paginate(Material::ROWS_LIMIT);
+        $materials = $this->material->search()->paginate(Material::ITEMS_PER_PAGE);
         
         return view('materials.index', ['materials' => $materials]);
     }

@@ -19,12 +19,14 @@
                             <div class="col-md-4">
                                 @if(!isset($user->image))
                                     <img alt="" title="" class="img-circle img-thumbnail isTooltip"
-                                         src="/images/users/default.jpg"
+                                         src="{{ asset('/images/users/default.jpg') }}"
                                          data-original-title="Usuario">
-                                @else
-                                    <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip"
-                                         src="/images/users/{{ $user->image }}" data-original-title="Usuario">
-                                @endif
+                                    @else
+                                        <img alt="" title=""
+                                             class="img-circle img-thumbnail isTooltip"
+                                             src="{{ asset('/images/users/'.$user->image) }}"
+                                             data-original-title="Usuario">
+                                    @endif
                             </div>
                             <div class="col-md-8">
                                 <div class="table-responsive">
@@ -149,7 +151,7 @@
                                                 </strong>
                                             </td>
                                             <td class="text-primary">
-                                                {{ $totalOrders }}
+                                                {{ $orders->total() }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -165,19 +167,6 @@
                     <div class="box box-primary">
                         <div class="box-header text-center">
                             <h3 class="box-title">{{ __('Total Orders') }}</h3>
-
-                            <div class="box-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control pull-right"
-                                           placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i
-                                                    class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <!-- /.box-header -->
                         @if(!isset($orders))
@@ -199,14 +188,14 @@
                                         <tr>
                                             <td>{{ $order->id }}</td>
                                             <td>{{ $order->updated_at }}</td>
-                                            <td>@if($order->status == 0)
+                                            <td>@if($order->status == \App\Order::STATUS_CANCELED)
                                                     <span class="label label-danger">Canceled</span>
-                                                @elseif($order->status == 1)
+                                                @elseif($order->status == \App\Order::STATUS_PENDING)
                                                     <span class="label label-warning">Pending</span>
-                                                @elseif($order->status == 2)
+                                                @elseif($order->status == \App\Order::STATUS_APPROVED)
                                                     <span class="label label-success">Approved</span>
                                                 @else
-                                                    <span class="label label-primary">Finish</span>
+                                                    <span class="label label-primary">Finished</span>
                                                 @endif
                                             </td>
                                             <td>{{ $order->custom_address }}
