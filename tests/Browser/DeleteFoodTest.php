@@ -47,6 +47,7 @@ class DeleteFoodTest extends DuskTestCase
                 ->assertSee('Are you sure delete food?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Delete Food Success');
+            $this->assertSoftDeleted('foods', ['id' => '2']);
         });
     }
 
