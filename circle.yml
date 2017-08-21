@@ -12,4 +12,4 @@ test:
     # phpmd
     - ./vendor/bin/phpmd app text phpmd.xml
     # phpunit
-    - ./vendor/bin/phpunit
+    # - ./vendor/bin/phpunit
