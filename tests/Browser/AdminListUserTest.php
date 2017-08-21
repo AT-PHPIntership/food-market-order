@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\User;
 
-class ListUserTest extends DuskTestCase
+class AdminListUserTest extends DuskTestCase
 {
     use DatabaseTransactions;
     use WithoutMiddleware;
@@ -39,7 +39,8 @@ class ListUserTest extends DuskTestCase
     public function testContent()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/users')
+            $browser->loginAs(1)
+                ->visit('/users')
                 ->assertSee("User's Table Data");
         });
     }
@@ -53,7 +54,8 @@ class ListUserTest extends DuskTestCase
     {
         factory(User::class, 8)->create();
         $this->browse(function (Browser $browser) {
-            $browser->visit('/users')
+            $browser->loginAs(1)
+                ->visit('/users')
                 ->resize(1920, 2000)
                 ->assertSee("User's Table Data")->screenshot('testShowRecord');
             $elements = $browser->elements('#table tbody tr');
@@ -72,7 +74,8 @@ class ListUserTest extends DuskTestCase
     {
         factory(User::class, 11)->create();
         $this->browse(function (Browser $browser) {
-            $browser->visit('/users')
+            $browser->loginAs(1)
+                ->visit('/users')
                 ->resize(1920, 2000)
                 ->assertSee("User's Table Data")->screenshot('testShowRecordPagnate');
             $elements = $browser->elements('#table tbody tr');
@@ -91,7 +94,8 @@ class ListUserTest extends DuskTestCase
     {
         factory(User::class, 11)->create();
         $this->browse(function (Browser $browser) {
-            $browser->visit('/users?page=2');
+            $browser->loginAs(1)
+                ->visit('/users?page=2');
             $elements = $browser->elements('#table tbody tr');
             $this->assertCount(2, $elements);
             $browser->assertPathIs('/users');
@@ -122,9 +126,10 @@ class ListUserTest extends DuskTestCase
          * Test result 2 record
          */
         $this->browse(function (Browser $browser) {
-            $browser->visit('/users')
+            $browser->loginAs(1)
+                ->visit('/users')
                 ->type('search', 'dungvan')
-                ->click('.box-header form button')
+                ->click('.box-body .box-tools form button')
                 ->assertInputValue('search', 'dungvan');
             $elements = $browser->elements('#table tbody tr');
             $this->assertCount(2, $elements);
@@ -136,9 +141,10 @@ class ListUserTest extends DuskTestCase
          * Test result 1 record
          */
         $this->browse(function (Browser $browser) {
-            $browser->visit('/users')
+            $browser->loginAs(1)
+                ->visit('/users')
                 ->type('search', 'abc')
-                ->click('.box-header form button')
+                ->click('.box-body .box-tools form button')
                 ->assertInputValue('search', 'abc');
             $elements = $browser->elements('#table tbody tr');
             $this->assertCount(1, $elements);
@@ -155,9 +161,10 @@ class ListUserTest extends DuskTestCase
     public function testSearchNoResult()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/users')
+            $browser->loginAs(1)
+                ->visit('/users')
                 ->type('search', 'asd')
-                ->click('.box-header form button')
+                ->click('.box-body .box-tools form button')
                 ->assertInputValue('search', 'asd');
             $elements = $browser->elements('#table tbody tr');
             $this->assertCount(0, $elements);
