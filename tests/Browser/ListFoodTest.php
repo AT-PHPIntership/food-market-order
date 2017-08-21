@@ -65,7 +65,7 @@ class ListFoodTest extends DuskTestCase
     }
 
     /**
-    * A Dusk test show record and paginate.
+    * A Dusk test show records and paginate.
     *
     * @return void
     */
