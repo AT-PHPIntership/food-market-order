@@ -49,7 +49,7 @@ class CreateFoodTest extends DuskTestCase
     }
 
     /**
-     * Test Admin create Food success.
+     * Test Admin Create Food success.
      *
      * @return void
      */
