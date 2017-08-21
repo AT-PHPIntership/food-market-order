@@ -11,7 +11,7 @@
         <div class="panel-body inf-content">
             <div class="row">
                 <div class="col-md-4">
-                    <img class="img-circle img-thumbnail" src="{{ $material->image }}" data-original-title="Usuario">
+                    <img class="img-circle img-thumbnail" src="{{ $material->image }}">
                 </div>
                 <div class="col-md-6 h4">
                     <h2>{{ __('Material Information') }}</h2>
