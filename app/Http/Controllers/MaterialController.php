@@ -129,4 +129,39 @@ class MaterialController extends Controller
             return redirect()->back();
         }
     }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param int $id of material
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $material = $this->material->findOrFail($id);
+        return view('materials.show', ['material' => $material]);
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It is id of material want to delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $material = $this->material->findOrFail($id);
+            if ($material->delete()) {
+                flash(__('Delete Material Success'))->success()->important();
+            } else {
+                flash(__('Delete Material Error'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Material Not Found!'))->error()->important();
+        }
+        return redirect()->route('materials.index');
+    }
 }
