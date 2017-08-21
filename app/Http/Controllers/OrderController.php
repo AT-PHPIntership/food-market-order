@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\OrderItem;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mockery\Exception;
