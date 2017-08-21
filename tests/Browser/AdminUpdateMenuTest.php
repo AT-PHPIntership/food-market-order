@@ -87,9 +87,11 @@ class AdminUpdateMenuTest extends DuskTestCase
             $elementMenuItem = '.table tr:nth-child(2)';
             $browser->type($elementMenuItem. ' .quantity', 0)
                     ->click($elementMenuItem. ' .glyphicon-ok')
+                    ->waitFor(null)
                     ->assertSee('The quantity must be at least 1.')
                     ->clear($elementMenuItem. ' .quantity')
                     ->click($elementMenuItem. ' .glyphicon-ok')
+                    ->waitFor(null)
                     ->assertSee('The quantity field is required.');
         });
     }
