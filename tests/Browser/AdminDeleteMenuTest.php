@@ -49,10 +49,11 @@ class AdminDeleteMenuTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/daily-menus')
                 ->click($element. ' .fa-trash')
-                ->waitFor(null, '5')
+                ->waitFor(null, '1')
                 ->assertSee('Delete Daily Menu')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
+                ->waitFor(null, '1')
                 ->assertSee('Delete this menu success');
         });
     }
@@ -75,11 +76,13 @@ class AdminDeleteMenuTest extends DuskTestCase
                 ->visit('/daily-menus');
             DB::table('daily_menus')->delete(1);
             $element = '.dataTable tbody tr:nth-child(1)';
-            $browser->click($element. ' .fa-trash')
-                ->waitFor(null, '5')
+            $browser->screenshot('list')
+                ->click($element. ' .fa-trash')
+                ->waitFor(null, '1')
                 ->assertSee('Delete Daily Menu')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
+                ->waitFor(null)
                 ->assertSee('Has error during delete this');
         });
     }
