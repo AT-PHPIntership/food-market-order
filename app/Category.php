@@ -24,15 +24,10 @@ class Category extends Model
      * @var array
      */
     protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         */
 
         'columns' => [
-            'name' => 10,
-            'description' => 5,
+            'name',
+            'description',
         ]
     ];
 
