@@ -10,6 +10,7 @@ class Food extends Model
     const ITEMS_PER_PAGE = 10;
     
     protected $table = "foods";
+
     protected $fillable = ['id', 'name', 'category_id', 'price', 'description','image'];
 
     /**
@@ -23,7 +24,7 @@ class Food extends Model
     }
     
     /**
-     * Food has one Category
+     * Get the category for the food.
      *
      * @return mixed
      */
