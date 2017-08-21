@@ -5,6 +5,8 @@
     </h1>
 @endsection
 @section('main-content')
+    
+    @include('flash::message')
     <div class="box box-primary">
         <div class="box-header text-center">
             <h3 class="box-title">{{ __('Daily Menu List') }}</h3>
@@ -14,17 +16,28 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box-tools">
+                        <form action="" class="pull-left">
+                            <div class="input-group input-group-sm search-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}"
+                                       placeholder="type here for search">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        {{ $dailyMenus->links() }}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="form-group">
-                            <form method="GET" action="{{ route('daily-menus.index') }}">
-                                <label for="dateSearch">{{ __('Date') }}: </label>
-                                <input type="text" class="form-control" id="dateSearch" name="date"
-                                       value="{{ (!empty($date)) ? $date : '' }}">
-                                <input type="submit" class="btn-default btn" value="Search">
-                            </form>
-                        </div>
                         <table class="table table-bordered dataTable table-hover text-center" role="grid">
                             <thead>
                             <tr role="row">
@@ -41,10 +54,16 @@
                                            href="{{ route('daily-menus.show', $dailyMenu->date) }}">
                                             <i class="fa fa-search-plus"></i>
                                         </a>
-                                        <a class=" btn-sm btn-success btn"
-                                           href="{{ route('daily-menus.edit', $dailyMenu->date) }}">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
+                                        <form role="form" class="delete-item inline" action="{{ route('daily-menus.destroy', $dailyMenu->date)}}"
+                                              method="post">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                            <button class="btn-sm btn-danger btn btn-confirm"
+                                                    data-confirm="{{__('Are you want delete it?')}}"
+                                                    data-title="{{__('Delete Daily Menu')}}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -54,8 +73,6 @@
                 </div>
             </div>
         </div>
-        <div class="box-footer">
-            {{ $dailyMenus->links() }}
-        </div>
     </div>
 @endsection
+@include('layouts.partials.modal')

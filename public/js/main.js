@@ -228,6 +228,14 @@ $(document).ready(function() {
         $categoryId = e.target.options[e.target.selectedIndex].value;
         callAjaxForCreateMenu($url, $categoryId);
     });
+    /**
+     * Btn Cancel clear data input
+     */
+     $('#clear-input').click(function (e) {
+        $('#select-food').empty();
+        $('#choose-food').html($('#choose-food').attr("data-text"));
+        $('#create-menu')[0].reset();
+     })
     //End for create dailyMenu
 
     /**
@@ -250,12 +258,6 @@ $(document).ready(function() {
         });
     };
     $('.btn-confirm').bind("click", confirm);
-    $('#date-sort').blur(function () {
-        window.location = "/" + $(this).attr("data-table") + "/?date=" + $(this).val();
-    });
-    $('#text-sort').change(function () {
-        window.location = "/" + $(this).attr("data-table") + "?keyword=" + $(this).val();
-    });
     $('.status-order').change(confirm);
 
     // Change quantity order
