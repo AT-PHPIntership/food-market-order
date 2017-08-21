@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderItem;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Mockery\Exception;
 
 class OrderController extends Controller
@@ -154,7 +156,7 @@ class OrderController extends Controller
                     $status = Response::HTTP_OK;
                 } else {
                     $message = __('Update Item Errors');
-                    $status = Response::HTTP_OT_FOUND;
+                    $status = Response::HTTP_NOT_FOUND;
                 }
             } else {
                 $message = __('Update Item Errors');

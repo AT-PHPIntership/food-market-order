@@ -272,7 +272,7 @@ $(document).ready(function() {
         });
         $('#payment-order').html(payment);
     });
-    $('.alert').hide();
+    $('#alert-detail-order').hide();
     $('.close').click(function() {
         $('.alert').hide();
     })
@@ -320,7 +320,7 @@ $(document).ready(function() {
                     }
                 },
                 error: function(data, status) {
-                    showArlert(data.responseJSON["message"],status)
+                    showArlert(data["message"],status)
                     $('#modal-confirm').modal("hide");
                 }
             });

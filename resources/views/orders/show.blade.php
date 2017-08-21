@@ -10,7 +10,7 @@
             <h1 class="box-title">{{ __('Order') }} {{ $order->id }} - {{ __('Date') }} : {{ $order->created_at }}</h1>
             <small></small>
         </div>
-        <div class="alert alert-dismissable">
+        <div class="alert alert-dismissable" id="alert-detail-order">
             <a href="#" class="close" aria-label="close">×</a>
             <span class="content-alert"><strong>Success!</strong> This alert box could indicate a successful or positive action.</span>
         </div>
