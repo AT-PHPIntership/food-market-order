@@ -12,7 +12,7 @@ class Material extends Model
 
     const ROWS_LIMIT = 10;
     protected $table = "materials";
-    protected $fillable = ['id', 'name', 'category_id', 'suppliers', 'price', 'description','image'];
+    protected $fillable = ['id', 'name', 'category_id', 'supplier_id', 'price', 'description','image', 'status'];
 
     /**
      * Material has many order item
@@ -42,5 +42,21 @@ class Material extends Model
     public function supplier()
     {
         return $this->belongsTo('App\Supplier', 'supplier_id', 'id');
+    }
+
+    /**
+     * Get Image Attribute
+     *
+     * @param string $image get attribute image
+     *
+     * @return string
+     */
+    public function getImageAttribute($image)
+    {
+        if ($image) {
+            return asset(config('constant.path_upload_materials') . $image);
+        } else {
+            return asset(config('constant.default_image'));
+        }
     }
 }

@@ -17,6 +17,8 @@ class ListTest extends DuskTestCase
     use WithoutMiddleware;
 
     /**
+     * @group dailymenu
+     *
      * A Dusk test URL admin view list daily menu.
      *
      * @return void
@@ -33,11 +35,29 @@ class ListTest extends DuskTestCase
     }
 
     /**
+     * @group dailymenu
+     *
+     * A Dusk test show content.
+     *
+     * @return void
+     */
+    public function testContent()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(1)
+                ->visit('/daily-menus')
+                ->assertSee("LIST DAILY MENUS");
+        });
+    }
+
+    /**
+     * @group dailymenu
+     *
      * A Dusk test count object in list=10.
      *
      * @return void
      */
-    public function testObject10()
+    public function testPaginationWith10Rows()
     {
         $category = factory(Category::class, 1)->create();
         $foods = factory(Food::class, 10)->create(['category_id' => 1]);
@@ -54,11 +74,13 @@ class ListTest extends DuskTestCase
     }
 
     /**
+     * @group dailymenu
+     *
      * A Dusk test count object in list=11.
      *
      * @return void
      */
-    public function testObject11()
+    public function testPaginationMorethan10Rows()
     {
         $category = factory(Category::class, 1)->create();
         $foods = factory(Food::class, 11)->create(['category_id' => 1]);
@@ -75,29 +97,37 @@ class ListTest extends DuskTestCase
     }
 
     /**
+     * @group dailymenu
+     *
      * A Dusk test show search
      *
      * @return void
      */
     public function testSearch()
     {
-        $category = factory(Category::class, 1)->create();
-        $foods = factory(Food::class, 1)->create(['category_id' => 1]);
-        $dailyMenus = factory(DailyMenu::class, 1)->create([
-            'food_id' => 1,
-            'date' => '1991-01-02'
-        ]);
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 1)->create()->each(function($c) {
+                $c->foods()->save(factory(Food::class)->make());
+            });
+            factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => '2017-09-11']);
+            factory(DailyMenu::class, 10)->create(['food_id' => 1]);
+            $element = 'tbody tr:nth-child(2)';
             $browser->loginAs(1)
                     ->visit('/daily-menus')
-                    ->type('date', '1991')
-                    ->assertSee('1991-01-02')
-                    ->type('date', '01')
-                    ->assertSee('1991-01-02');
+                    ->type('search', '2017')
+                    ->press('Search')
+                    ->assertSee('2017-09-11')
+                    ->screenshot('search')
+                    ->type('date', '05')
+                    ->press('Search')
+                    ->assertDontSee('2017-09-11')
+                    ->screenshot('search2');
         });
     }    
 
     /**
+     * @group dailymenu
+     *
      * A Dusk test show list daily menu
      *
      * @return void

@@ -41,7 +41,7 @@
                     <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">{{ __('Password') }}</label>
                         <div class="col-md-8">
-                            <input class="form-control" autocomplete="off" value="{{ $user->password }}" type="password"
+                            <input class="form-control" autocomplete="off" type="password"
                                    name="password">
 
                             @if ($errors->has('password'))

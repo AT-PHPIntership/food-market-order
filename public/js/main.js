@@ -228,6 +228,14 @@ $(document).ready(function() {
         $categoryId = e.target.options[e.target.selectedIndex].value;
         callAjaxForCreateMenu($url, $categoryId);
     });
+    /**
+     * Btn Cancel clear data input
+     */
+     $('#clear-input').click(function (e) {
+        $('#select-food').empty();
+        $('#choose-food').html($('#choose-food').attr("data-text"));
+        $('#create-menu')[0].reset();
+     })
     //End for create dailyMenu
 
     /**

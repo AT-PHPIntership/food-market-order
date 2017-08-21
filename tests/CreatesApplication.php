@@ -4,7 +4,6 @@ namespace Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Artisan;
-use App\User;
 use Illuminate\Support\Facades\DB;
 
 trait CreatesApplication
@@ -24,7 +23,7 @@ trait CreatesApplication
     }
 
     /**
-     * This functin is called before testcase
+     * This function is called before testcase
      */
     public function setUp()
     {
@@ -32,15 +31,16 @@ trait CreatesApplication
         Artisan::call('migrate');
 
         DB::table('users')->insert([
-            'full_name' => 'Testing',
-            'email' => 'admin@gmail.com',
+            'full_name' => 'DungVan',
+            'email' => 'admin'.'@gmail.com',
             'password' => bcrypt('123456'),
             'is_admin' => 1,
         ]);
+
     }
 
     /**
-     * This function is called after testcase
+     * This functin is called after testcase
      */
     public function tearDown()
     {
