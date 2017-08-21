@@ -26,18 +26,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         */
 
         'columns' => [
-            'full_name' => 10,
-            'email' => 8,
-            'birthday' => 5,
-            'address' => 2,
-            'phone_number' => 2,
+            'full_name',
+            'email',
+            'birthday',
+            'address',
+            'phone_number',
         ]
     ];
 

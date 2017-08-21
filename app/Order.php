@@ -19,18 +19,13 @@ class Order extends Model
      * @var array
      */
     protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         */
 
         'columns' => [
-            'users.full_name' => 10,
-            'orders.trans_at' => 8,
-            'orders.custom_address' => 5,
-            'orders.payment' => 2,
-            'orders.status' => 2,
+            'users.full_name',
+            'orders.trans_at',
+            'orders.custom_address',
+            'orders.payment',
+            'orders.status',
         ],
         'joins' => [
             'users' => ['orders.user_id', 'users.id']

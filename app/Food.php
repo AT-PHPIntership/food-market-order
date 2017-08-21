@@ -22,17 +22,12 @@ class Food extends Model
      * @var array
      */
     protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         */
 
         'columns' => [
-            'foods.name' => 10,
-            'categories.name' => 8,
-            'foods.description' => 5,
-            'foods.price' => 2,
+            'foods.name',
+            'categories.name',
+            'foods.description',
+            'foods.price',
         ],
         'joins' => [
             'categories' => ['foods.category_id', 'categories.id']

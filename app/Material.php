@@ -23,18 +23,13 @@ class Material extends Model
      * @var array
      */
     protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         */
 
         'columns' => [
-            'materials.name' => 10,
-            'categories.name' => 8,
-            'suppliers.name' => 8,
-            'materials.description' => 5,
-            'materials.price' => 2,
+            'materials.name',
+            'categories.name',
+            'suppliers.name',
+            'materials.description',
+            'materials.price',
         ],
         'joins' => [
             'categories' => ['materials.category_id', 'categories.id'],

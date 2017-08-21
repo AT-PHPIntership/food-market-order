@@ -19,8 +19,7 @@ trait Searchable
         $this->makeJoins($query);
 
         $keyword = request('search');
-        foreach ($this->getColumns() as $column => $priority) {
-            $priority = $priority;
+        foreach ($this->getColumns() as $column) {
             $query->orWhere($column, "LIKE", "%$keyword%");
         }
     }
@@ -32,17 +31,7 @@ trait Searchable
      */
     protected function getColumns()
     {
-        $columns = [];
-        foreach ($this->searchable['columns'] as $column => $priority) {
-            $columns[$column] = $priority;
-        }
-
-        /**
-         * Sort $columns in descending order, according to the $priority
-         */
-        arsort($columns);
-
-        return $columns;
+        return array_get($this->searchable, 'columns', []);
     }
 
     /**
