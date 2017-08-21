@@ -11,154 +11,154 @@
         <div class="panel-body inf-content">
             <div class="row">
                 <div class="col-xs-12">
-                <div class="box box-primary">
-                    <div class="box-header text-center">
-                        <h3 class="box-title">{{ __('User Information') }}</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="col-md-4">
-                            @if(!isset($user->image))
-                                <img alt="" title="" class="img-circle img-thumbnail isTooltip"
-                                     src="/images/users/default.jpg"
-                                     data-original-title="Usuario">
-                            @else
-                                <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip"
-                                     src="/images/users/{{ $user->image }}" data-original-title="Usuario">
-                            @endif
+                    <div class="box box-primary">
+                        <div class="box-header text-center">
+                            <h3 class="box-title">{{ __('User Information') }}</h3>
                         </div>
-                        <div class="col-md-8">
-                            <div class="table-responsive">
-                                <table class="table table-condensed table-responsive table-user-information">
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-asterisk text-primary"></span>
-                                                {{ __('Identification') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->id }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-user  text-primary"></span>
-                                                {{ __('Full Name') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->full_name }}
-                                        </td>
-                                    </tr>
+                        <div class="box-body">
+                            <div class="col-md-4">
+                                @if(!isset($user->image))
+                                    <img alt="" title="" class="img-circle img-thumbnail isTooltip"
+                                         src="/images/users/default.jpg"
+                                         data-original-title="Usuario">
+                                @else
+                                    <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip"
+                                         src="/images/users/{{ $user->image }}" data-original-title="Usuario">
+                                @endif
+                            </div>
+                            <div class="col-md-8">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-responsive table-user-information">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                                    {{ __('Identification') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->id }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-user  text-primary"></span>
+                                                    {{ __('Full Name') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->full_name }}
+                                            </td>
+                                        </tr>
 
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-bookmark text-primary"></span>
-                                                {{ __('Gender') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->gender == \App\User::MALE ? __('Male') : __('Female') }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
-                                                {{ __('User Type') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->is_admin == \App\User::ADMIN ? __('Admin') : __('Normal User') }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
-                                                {{ __('Email') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->email }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
-                                                {{ __('Birthday') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->birthday }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-home text-primary"></span>
-                                                {{ __('Address') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->address }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-phone text-primary"></span>
-                                                {{ __('Phone Number') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->phone_number }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
-                                                created
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->created_at }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
-                                                {{ __('Updated At') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $user->updated_at }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-shopping-cart text-primary"></span>
-                                                {{ __('Total Orders') }}
-                                            </strong>
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $totalOrders }}
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                                                    {{ __('Gender') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->gender == \App\User::MALE ? __('Male') : __('Female') }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                                    {{ __('User Type') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->is_admin == \App\User::ADMIN ? __('Admin') : __('Normal User') }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                    {{ __('Email') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->email }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                    {{ __('Birthday') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->birthday }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-home text-primary"></span>
+                                                    {{ __('Address') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->address }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-phone text-primary"></span>
+                                                    {{ __('Phone Number') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->phone_number }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                    created
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->created_at }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                    {{ __('Updated At') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $user->updated_at }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-shopping-cart text-primary"></span>
+                                                    {{ __('Total Orders') }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-primary">
+                                                {{ $totalOrders }}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
@@ -184,7 +184,8 @@
                             <h3>{{ __('No orders') }}</h3>
                         @else
                             <div class="box-body table-responsive no-padding">
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="table-order-history">
+                                    <thead>
                                     <tr>
                                         <th>{{ __('ID') }}</th>
                                         <th>{{ __('Ordered at') }}</th>
@@ -192,6 +193,8 @@
                                         <th>{{ __('Custom Address') }}</th>
                                         <th>{{ __('Payment') }}</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
                                     @foreach($orders as $order)
                                         <tr>
                                             <td>{{ $order->id }}</td>
@@ -211,6 +214,7 @@
                                             <td>{{ $order->payment }}</td>
                                         </tr>
                                     @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.box-body -->
