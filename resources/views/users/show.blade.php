@@ -19,11 +19,11 @@
                             <div class="col-md-4">
                                 @if(!isset($user->image))
                                     <img alt="" title="" class="img-circle img-thumbnail isTooltip"
-                                         src="/images/users/default.jpg"
+                                         src="{{ asset('/images/users/default.jpg') }}"
                                          data-original-title="Usuario">
                                 @else
                                     <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip"
-                                         src="/images/users/{{ $user->image }}" data-original-title="Usuario">
+                                         src="{{ asset('/images/users/'.$user->image) }}" data-original-title="Usuario">
                                 @endif
                             </div>
                             <div class="col-md-8">
@@ -149,7 +149,7 @@
                                                 </strong>
                                             </td>
                                             <td class="text-primary">
-                                                {{ $totalOrders }}
+                                                {{ $orders->total() }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -172,6 +172,7 @@
                         @else
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-hover">
+                                    <thead>
                                     <tr>
                                         <th>{{ __('ID') }}</th>
                                         <th>{{ __('Ordered at') }}</th>
@@ -179,18 +180,20 @@
                                         <th>{{ __('Custom Address') }}</th>
                                         <th>{{ __('Payment') }}</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
                                     @foreach($orders as $order)
                                         <tr>
                                             <td>{{ $order->id }}</td>
                                             <td>{{ $order->updated_at }}</td>
-                                            <td>@if($order->status == 0)
+                                            <td>@if($order->status == \App\Order::STATUS_CANCELED)
                                                     <span class="label label-danger">Canceled</span>
-                                                @elseif($order->status == 1)
+                                                @elseif($order->status == \App\Order::STATUS_PENDING)
                                                     <span class="label label-warning">Pending</span>
-                                                @elseif($order->status == 2)
+                                                @elseif($order->status == \App\Order::STATUS_APPROVED)
                                                     <span class="label label-success">Approved</span>
                                                 @else
-                                                    <span class="label label-primary">Finish</span>
+                                                    <span class="label label-primary">Finished</span>
                                                 @endif
                                             </td>
                                             <td>{{ $order->custom_address }}
@@ -198,6 +201,7 @@
                                             <td>{{ $order->payment }}</td>
                                         </tr>
                                     @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.box-body -->

@@ -145,9 +145,8 @@ class UserController extends Controller
     public function show($id)
     {
         $userToShow = $this->user->findOrFail($id);
-        $totalOrders = Order::where('user_id', $id)->count();
         $listOrders = Order::where('user_id', $id)->paginate(Order::ITEMS_PER_PAGE);
-        return view('users.show', ['user' => $userToShow, 'totalOrders' => $totalOrders, 'orders' => $listOrders]);
+        return view('users.show', ['user' => $userToShow, 'orders' => $listOrders]);
     }
 
     /**
