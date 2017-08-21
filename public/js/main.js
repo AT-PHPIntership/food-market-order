@@ -258,12 +258,6 @@ $(document).ready(function() {
         });
     };
     $('.btn-confirm').bind("click", confirm);
-    $('#date-sort').blur(function () {
-        window.location = "/" + $(this).attr("data-table") + "/?date=" + $(this).val();
-    });
-    $('#text-sort').change(function () {
-        window.location = "/" + $(this).attr("data-table") + "?keyword=" + $(this).val();
-    });
     $('.status-order').change(confirm);
 });
 $('#flash-overlay-modal').modal();

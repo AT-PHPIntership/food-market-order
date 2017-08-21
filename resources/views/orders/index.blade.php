@@ -5,6 +5,8 @@
     </h1>
 @endsection
 @section('main-content')
+
+    @include('flash::message')
     <div class="box box-primary">
         <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Order') }}</h3>
@@ -12,20 +14,31 @@
                 <i class="fa fa-plus"></i>
             </a>
         </div>
-        @include('flash::message')
         <!-- /.box-header -->
         <div class="box-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box-tools">
+                        <form action="" class="pull-left">
+                            <div class="input-group input-group-sm search-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}"
+                                       placeholder="type here for search">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        {{ $orders->links() }}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <input id="text-sort" class="form-control pull-left margin-bottom" type="text"
-                               value="{{ app('request')->has('keyword') ? app('request')->input('keyword') : '' }}"
-                               placeholder="{{ __('Key search') }}"
-                               data-table="{{ __('orders') }}">
-                        <input id="date-sort" class="form-control pull-right margin-bottom" type="date"
-                               value="{{ app('request')->has('date') ? app('request')->input('date') : date('Y-m-d') }}"
-                               data-table="{{ __('orders') }}">
-                        <table class="table table-bordered table-hover" role="grid">
+                        <table class="table table-bordered dataTable table-hover" role="grid">
                             <thead>
                             <tr>
                                 <th class="col-md-1">{{ __('ID') }}</th>
@@ -97,9 +110,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="box-footer">
-            {{ $orders->links() }}
         </div>
     </div>
     @include('layouts.partials.modal')
