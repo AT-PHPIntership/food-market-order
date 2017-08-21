@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class UserController extends Controller
     {
         $this->user = $user;
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +30,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->paginate(10);
+        $users = $this->user->paginate(User::ITEMS_PER_PAGE);
         return view('users.index')->with('users', $users);
     }
 
@@ -46,11 +47,11 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request store data user
+     * @param UserCreateRequest $request request store data user
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(UserCreateRequest $request)
     {
         $requestInput = $request->all();
 
@@ -81,9 +82,11 @@ class UserController extends Controller
         if (Auth::user()->id == $id) {
             flash(__('Cannot delete current user!'))->error()->important();
         } else {
-            if ($this->user->findOrFail($id)->delete()) {
+            try {
+                $userToDel = $this->user->findOrFail($id);
+                $userToDel->delete();
                 flash(__('Delete Successfully!'))->success()->important();
-            } else {
+            } catch (\Exception $ex) {
                 flash(__('Delete Error!'))->error()->important();
             }
         }
@@ -99,28 +102,27 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if ($user = $this->user->findOrFail($id)) {
-            return view('users.edit', ['user' => $user]);
-        } else {
-            flash(__('Error! nothing to show!'))->error()->important();
-            return redirect()->route('users.index');
-        }
+        $user = $this->user->findOrFail($id);
+        return view('users.edit', ['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request user update
-     * @param int                      $id      id user update
+     * @param UserUpdateRequest $request request user update
+     * @param int               $id      id user update
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         $requestInput = $request->except('_method', '_token');
-        $requestInput['password'] = ($requestInput['password'] === $this->user->findOrFail($id)) ? $requestInput['password'] : bcrypt($requestInput['password']);
+        if ($requestInput['password'] == null) {
+            unset($requestInput['password']);
+        }
         $requestInput['image'] = $this->getImageFileName($request);
-        if ($this->user->where('id', $id)->update($requestInput) >= 1) {
+        $userToUpdate = $this->user->findOrFail($id);
+        if ($userToUpdate->update($requestInput)) {
             if ($request->hasFile('image')) {
                 $this->storageImage($request->file('image'), $requestInput['image']);
             }
@@ -131,7 +133,7 @@ class UserController extends Controller
             return redirect()->route('users.edit', $id)->withInput();
         }
     }
-
+        
     /**
      * Get filename from request
      *

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class DailyMenuCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,9 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required',
-            'password' => 'required|min:6',
-            'birthday' => 'date',
-            'phone_number' => 'numeric|required',
-            'address' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'date' => 'required',
+            'food_id' => 'required',
+            'quantity' => 'required|integer|min:1'
         ];
     }
 }

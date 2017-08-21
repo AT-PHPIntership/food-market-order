@@ -7,24 +7,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Food extends Model
 {
     use softDeletes;
+    const ITEMS_PER_PAGE = 10;
     
     protected $table = "foods";
+
     protected $fillable = ['id', 'name', 'category_id', 'price', 'description','image'];
 
     /**
      * Food has many order item
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return mixed
      */
     public function orderItems()
     {
         return $this->morphMany(OrderItem::class, 'itemtable');
     }
-
+    
     /**
-     * Food has one Category
+     * Get the category for the food.
      *
-     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     * @return mixed
      */
     public function category()
     {

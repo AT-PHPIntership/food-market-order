@@ -1,5 +1,10 @@
 @extends('layouts.master')
-
+@section('main-header')
+    <h1>{{ __('UPDATE FOOD') }}
+        <small></small>
+        <a href="{{ route('foods.index') }}" class="pull-right"><span class="fa fa-arrow-left btn btn-primary"></span></a>
+    </h1>
+@endsection
 @section('main-content')
     @if(!isset($food))
         <h1>{{ __('Nothing to show!') }}</h1>
@@ -77,10 +82,8 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
+                            <input type="reset" class="btn btn-danger" value="{{ __('Reset') }}">
                             <input class="btn btn-primary" value="{{ __('Save Changes') }}" type="submit">
-                            <a href="{{ route('foods.index') }}">
-                                <button type="button" class="btn btn-danger">{{ __('Cancel') }}</button>
-                            </a>
                         </div>
                     </div>
                 </div>

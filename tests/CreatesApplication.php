@@ -38,8 +38,9 @@ trait CreatesApplication
         ]);
         factory(Category::class, 20)->create();
     }
+    
     /**
-     * This function is called after testcase
+     * This functin is called after testcase
      */
     public function tearDown()
     {

@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('id', 'DESC')->paginate(10);
+        $categories = $this->category->paginate(Category::ITEMS_PER_PAGE);
         return view('categories.index', ['categories' => $categories]);
     }
 
@@ -48,7 +48,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request Request from client
+     * @param CategoryRequest $request Request from client
      *
      * @return \Illuminate\Http\Response
      */
@@ -79,8 +79,8 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request Request from client
-     * @param int                      $id      It is id of category need update
+     * @param CategoryRequest $request Request from client
+     * @param int             $id      It is id of category need update
      *
      * @return \Illuminate\Http\Response
      */

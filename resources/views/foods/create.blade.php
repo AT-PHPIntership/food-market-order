@@ -1,75 +1,82 @@
 @extends('layouts.master')
-
+@section('main-header')
+    <h1>{{ __('CREATE FOOD PAGE') }}
+        <small></small>
+        <a href="{{ route('foods.index') }}" class=" btn btn-primary pull-right"><i
+                    class="fa fa-arrow-left"></i></a>
+    </h1>
+@endsection
 @section('main-content')
-<div class="row center">
-  <div class="col-md-12">
-    <div class="col-md-3">
-    </div>
-    @include('flash::message')
-    <div class="col-md-6">
-      <div class="box box-primary">
-        <div class="box-header with-border text-center">
-          <h3 class="box-title">{{ __('Create Food') }}</h3>
+    <div class="row center">
+        @include('flash::message')
+        <div class="col-md-12">
+        <div class="box box-primary">
+                <div class="box-header with-border text-center">
+                    <h3 class="box-title">{{ __('Create Food') }}</h3>
+                </div>
+                <form action="{{ route('foods.store') }}" enctype="multipart/form-data" method="POST">
+                    {{ csrf_field() }}
+                    <div class="col-md-2"></div>
+                    <div class="box-body col-md-8">
+                        <div class="form-group col-md-12 {{ $errors->has('name') ? ' has-error' : '' }}">
+                            <div class="col-md-2"><label>{{ __('Name') }}</label></div>
+                            <div class="col-md-10"><input type="text" class="form-control" name="name"
+                                                          value="{{ old('name') }}">
+                                @if($errors->first('name'))
+                                    <span class="help-block">{{ $errors->first('name') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 {{ $errors->has('category_id') ? ' has-error' : '' }}">
+                            <div class="col-md-2"><label>{{ __('Category') }}</label></div>
+                            <div class="col-md-10"><select class="form-control" name="category_id">
+                                    <option value="">{{ __('Choose Category') }}</option>
+                                    @foreach($categories as $category)
+                                        <option {{ (old('category_id') == $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if($errors->first('category_id'))
+                                    <span class="help-block">{{ $errors->first('category_id') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 {{ $errors->has('description') ? ' has-error' : '' }}">
+                            <div class="col-md-2"><label>{{ __('Description') }}</label></div>
+                            <div class="col-md-10"><textarea class="col-md-10 form-control" name="description"> {{ old('description', "") }}
+                            </textarea>
+                                @if($errors->first('description'))
+                                    <span class="help-block">{{ $errors->first('description') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 {{ $errors->has('price') ? ' has-error' : '' }}">
+                            <div class="col-md-2"><label>{{ __('Price') }}</label></div>
+                            <div class="col-md-10"><input type="text" class="form-control" name="price"
+                                                          value="{{ old('price') }}">
+                                @if($errors->first('price'))
+                                    <span class="help-block">{{ $errors->first('price') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 {{ $errors->has('image') ? ' has-error' : '' }}">
+                            <div class="col-md-2"><label>{{ __('Image') }}</label></div>
+                            <div class="col-md-10"><input type="file" name="image">
+                                @if($errors->first('image'))
+                                    <span class="help-block">{{ $errors->first('image') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="submit" class="btn btn-primary pull-left"
+                                   value="{{ __('Create') }}">
+                            <input type="reset" class="btn btn-danger pull-right"
+                                   value="{{ __('Reset') }}">
+                        </div>
+                    </div>
+                    <div class="box-footer text-center"></div>
+                </form>
+            </div>
         </div>
-        <form action="{{ route('foods.store') }}" enctype="multipart/form-data" method="POST">
-          {{ csrf_field() }}
-          <div class="box-body">
-            <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
-              <label>{{ __('Name') }}</label>
-              <input type="text" class="form-control" name="name" value="{{ old('name') }}">
-              @if($errors->first('name'))
-              <span class="help-block">{{ $errors->first('name') }}</span>
-              @endif
-            </div>
-            <div class="form-group  {{ $errors->has('category_id') ? ' has-error' : '' }}">
-              <label>{{ __('Category') }}</label>
-             <select class="form-group" name="category_id">
-                <option value="">{{ __('Choose Category') }}</option>
-                @foreach($categories as $category)
-                  <option {{ (old('category_id') == $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}
-                  </option>
-                @endforeach
-              </select>
-              @if($errors->first('category_id'))
-              <span class="help-block">{{ $errors->first('category_id') }}</span>
-              @endif
-            </div>
-            <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
-              <label>{{ __('Description') }}</label>
-              <textarea class="textarea" name="description" rows="5" cols="70" >
-              {{ old('description') }}
-              </textarea>
-            </div>
-              @if($errors->first('description'))
-              <span class="help-block">{{ $errors->first('description') }}</span>
-              @endif
-            </div>
-            <div class="form-group {{ $errors->has('price') ? ' has-error' : '' }}">
-              <label>{{ __('Price') }}</label>
-              <input type="text" class="form-control" name="price" value="{{ old('price') }}">
-              @if($errors->first('price'))
-              <span class="help-block">{{ $errors->first('price') }}</span>
-              @endif
-            </div>
-            <div class="form-group {{ $errors->has('image') ? ' has-error' : '' }}">
-              <label>{{ __('Image') }}</label>
-              <input type="file" name="image" >
-              @if($errors->first('image'))
-              <span class="help-block">{{ $errors->first('image') }}</span>
-              @endif
-            </div>
-          </div>
-          <div class="box-footer">
-            <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
-            <a href="{{ route('foods.index') }}">
-              <button type="button" class="btn  btn-danger">{{ __('Cancel') }}</button>
-            </a>
-          </div>
-        </form>
-      </div>
     </div>
-    <div class="col-md-3">
-    </div>
-  </div>
-</div>
 @endsection
