@@ -2,18 +2,35 @@
 
 namespace App;
 
+use App\Libraries\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
+    use Searchable;
     use softDeletes;
+
     const ITEMS_PER_PAGE = 10;
 
     protected $fillable = [
         'name',
         'description'
     ];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+
+        'columns' => [
+            'name',
+            'description',
+        ]
+    ];
+
     protected $dates = ['deleted_at'];
     
     /**

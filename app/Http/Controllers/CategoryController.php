@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->category->paginate(Category::ITEMS_PER_PAGE);
+        $categories = $this->category->search()->paginate(Category::ITEMS_PER_PAGE);
         return view('categories.index', ['categories' => $categories]);
     }
 

@@ -17,6 +17,25 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box-tools">
+                        <form action="" class="pull-left">
+                            <div class="input-group input-group-sm search-group">
+                                <input class="form-control" type="search" name="search" value="{{ request('search') }}"
+                                       placeholder="type here for search">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        {{ $suppliers->links() }}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
             <div class="table-responsive dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
@@ -63,9 +82,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="box-footer">
-            {{ $suppliers->links() }}
         </div>
     </div>
     @include('layouts.partials.modal')
