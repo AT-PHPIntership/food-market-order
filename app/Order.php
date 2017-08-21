@@ -12,6 +12,10 @@ class Order extends Model
     use SoftDeletes;
 
     const ITEMS_PER_PAGE = 10;
+    const STATUS_CANCELED = 0;
+    const STATUS_PENDING = 1;
+    const STATUS_APPROVED = 2;
+    const STATUS_FINISHED = 3;
 
     /**
      * Searchable rules.
