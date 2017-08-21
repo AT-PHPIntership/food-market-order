@@ -1,17 +1,38 @@
 <?php
 namespace App;
 
+use App\Libraries\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Food extends Model
 {
+    use Searchable;
     use softDeletes;
+
     const ITEMS_PER_PAGE = 10;
     
     protected $table = "foods";
 
     protected $fillable = ['id', 'name', 'category_id', 'price', 'description','image'];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+
+        'columns' => [
+            'foods.name',
+            'categories.name',
+            'foods.description',
+            'foods.price',
+        ],
+        'joins' => [
+            'categories' => ['foods.category_id', 'categories.id']
+        ]
+    ];
 
     /**
      * Food has many order item
