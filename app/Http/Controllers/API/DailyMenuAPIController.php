@@ -25,7 +25,7 @@ class DailyMenuAPIController extends Controller
      *
      * @return void
      */
-    public function __construct(DailyMenu $dailyMenu, Food $food, Category $category)
+    public function __construct(DailyMenu $dailyMenu)
     {
         $this->dailyMenu = $dailyMenu;
     }
@@ -44,7 +44,8 @@ class DailyMenuAPIController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param \Illuminate\Http\Response $request $request from client
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
