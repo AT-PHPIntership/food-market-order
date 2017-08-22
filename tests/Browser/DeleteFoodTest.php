@@ -37,6 +37,7 @@ class DeleteFoodTest extends DuskTestCase
     public function testDeleteSuccess()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 20)->create();
             factory(Food::class, 5)->create();
             $browser->loginAs(User::find(1))
                 ->resize(1920, 1080)
@@ -59,6 +60,7 @@ class DeleteFoodTest extends DuskTestCase
     public function testDeleteFail()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 20)->create();
             factory(Food::class, 5)->create();
             $browser->loginAs(User::find(1))
                 ->resize(1920, 1080)

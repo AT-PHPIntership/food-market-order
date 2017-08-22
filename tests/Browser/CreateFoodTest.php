@@ -7,6 +7,7 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Category;
 use App\Food;
 
 class CreateFoodTest extends DuskTestCase
@@ -56,6 +57,7 @@ class CreateFoodTest extends DuskTestCase
     public function testCreateFoodSuccess()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 20)->create();
             $browser->loginAs(User::find(1))
                     ->visit('/foods/create')
                     ->type('name', 'mi quang')
@@ -94,6 +96,7 @@ class CreateFoodTest extends DuskTestCase
         $price,
         $message
     ) {
+        factory(Category::class, 20)->create();
         DB::table('foods')->insert([
             'name' => 'pho bo hue',
             'category_id' => 1,
@@ -125,6 +128,7 @@ class CreateFoodTest extends DuskTestCase
     public function testButtonReset()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 20)->create();
             $browser->loginAs(User::find(1))
                     ->visit('/foods/create')
                     ->resize(1920, 2000)

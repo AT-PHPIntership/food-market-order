@@ -34,7 +34,7 @@ class ListCategoryTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                 ->visit('/categories')
                 ->assertSee('LIST CATEGORIES PAGE');
-            $elements = $browser->elements('.dataTable tbody tr');
+            $elements = $browser->elements('.table tbody tr');
             $numRecord = count($elements);
             $this->assertTrue($numRecord == 0);
         });
@@ -51,7 +51,7 @@ class ListCategoryTest extends DuskTestCase
             // Test data have 10 record
             factory(Category::class,10)->create();
             $elements = $browser->visit('/categories')
-                ->elements('.dataTable tbody tr');
+                ->elements('.table tbody tr');
             $numRecord = count($elements);
             $this->assertTrue($numRecord == 10);
 
@@ -59,17 +59,17 @@ class ListCategoryTest extends DuskTestCase
             factory(Category::class,2)->create();
             // Page 1 table have 10 record
             $elements = $browser->visit('/categories')
-                ->elements('.dataTable tbody tr');
+                ->elements('.table tbody tr');
             $numRecord = count($elements);
             $this->assertTrue($numRecord == 10);
             // Page 2 table have 2 record
             $elements = $browser->visit('/categories?page=2')
-                ->elements('.dataTable tbody tr');
+                ->elements('.table tbody tr');
             $numRecord = count($elements);
             $this->assertTrue($numRecord == 2);
             // Page 3 not access
             $elements = $browser->visit('/categories?page=3')
-                ->elements('.dataTable tbody tr');
+                ->elements('.table tbody tr');
             $numRecord = count($elements);
             $this->assertTrue($numRecord == 0);
         });

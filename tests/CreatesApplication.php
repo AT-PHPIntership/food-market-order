@@ -36,7 +36,6 @@ trait CreatesApplication
             'password' => bcrypt('123456'),
             'is_admin' => 1,
         ]);
-        factory(Category::class, 20)->create();
     }
     
     /**
