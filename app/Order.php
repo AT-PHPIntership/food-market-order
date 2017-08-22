@@ -54,6 +54,32 @@ class Order extends Model
     }
 
     /**
+     * Update Payment
+     *
+     * @param OrderItem $orderItem It is object order item.
+     * @param int       $quantity  It is quantity change.
+     *
+     * @return mixed
+     */
+    public function updatePayment(OrderItem $orderItem, $quantity)
+    {
+        $item = $orderItem->itemtable;
+        $order = $orderItem->order;
+        $quantityChange = $quantity - $orderItem->quantity;
+        $orderItem->quantity = $quantity;
+        $order->payment = $order->payment + $item->price * $quantityChange;
+        if ($order->save()) {
+            if ($orderItem->save()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * This is a recommended way to declare event handlers
      *
      * @return void

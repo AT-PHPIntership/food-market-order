@@ -307,7 +307,7 @@ $(document).ready(function() {
             });
             $.ajax({
                 type: "PUT",
-                url: "/orders/item/"+id,
+                url: "/orderitems/"+id,
                 data: data,
                 success: function(data, status) {
                     if (status == "success") {
@@ -350,7 +350,7 @@ $(document).ready(function() {
             });
             $.ajax({
                 type: "DELETE",
-                url: "/orders/item/"+id,
+                url: "/orderitems/"+id,
                 success: function(data, status) {
                     if (status == "success") {
                         parent.remove();
