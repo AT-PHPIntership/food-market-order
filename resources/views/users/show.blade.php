@@ -21,12 +21,10 @@
                                     <img alt="" title="" class="img-circle img-thumbnail isTooltip"
                                          src="{{ asset('/images/users/default.jpg') }}"
                                          data-original-title="Usuario">
-                                    @else
-                                        <img alt="" title=""
-                                             class="img-circle img-thumbnail isTooltip"
-                                             src="{{ asset('/images/users/'.$user->image) }}"
-                                             data-original-title="Usuario">
-                                    @endif
+                                @else
+                                    <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip"
+                                         src="{{ asset('/images/users/'.$user->image) }}" data-original-title="Usuario">
+                                @endif
                             </div>
                             <div class="col-md-8">
                                 <div class="table-responsive">
