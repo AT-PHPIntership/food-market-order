@@ -60,10 +60,9 @@ class Order extends Model
      */
     public function updateTotalPrice()
     {
-        $order = Order::with('orderItems.itemtable')->findOrFail($this->id);
-        $order->total_price = 0;
-        $this->total_price = $order->orderItems->sum(function ($item) {
-            return $item->price * $item->itemtable->price;
+        $this->load('orderItems', 'orderItems.itemtable');
+        $this->total_price = $this->orderItems->sum(function ($item) {
+            return $item->quantity * $item->itemtable->price;
         });
         return $this->save();
     }
