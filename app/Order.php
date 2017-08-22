@@ -56,23 +56,16 @@ class Order extends Model
     /**
      * Update Total Price of Order
      *
-     * @param int $id It is id of order need updateTotalPrice.
-     *
      * @return bool
      */
-    public function updateTotalPrice($id)
+    public function updateTotalPrice()
     {
-        $order = Order::with('orderItems.itemtable')->findOrFail($id);
+        $order = Order::with('orderItems.itemtable')->findOrFail($this->id);
         $order->total_price = 0;
-        foreach ($order->orderItems as $orderItem) {
-            $item = $orderItem->itemtable;
-            $order->total_price += $item->price * $orderItem->quantity;
-        }
-        if ($order->save()) {
-            return true;
-        } else {
-            return false;
-        }
+        $this->total_price = $order->orderItems->sum(function ($item) {
+            return $item->price * $item->itemtable->price;
+        });
+        return $this->save();
     }
 
     /**

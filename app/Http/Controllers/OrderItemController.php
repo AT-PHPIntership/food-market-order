@@ -51,7 +51,7 @@ class OrderItemController extends Controller
             $orderItem = $this->orderItem->with('order')->findOrFail($id);
             $orderItem->quantity = $request->quantity;
             if ($orderItem->save()) {
-                if ($this->order->updateTotalPrice($orderItem->order->id)) {
+                if ($orderItem->order->updateTotalPrice()) {
                     $message = __('Update Item ' . $id . ' Success');
                     $status = Response::HTTP_OK;
                 } else {
@@ -83,9 +83,8 @@ class OrderItemController extends Controller
     {
         try {
             $orderItem = $this->orderItem->with('order')->findOrFail($id);
-            $orderID = $orderItem->order->id;
             if ($orderItem->delete()) {
-                if ($this->order->updateTotalPrice($orderID)) {
+                if ($orderItem->order->updateTotalPrice()) {
                     $message = __('Delete Item ' . $id . ' Success');
                     $status = Response::HTTP_OK;
                 } else {
