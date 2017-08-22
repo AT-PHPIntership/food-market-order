@@ -28,28 +28,21 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $foods = $this->food->search()->paginate(Food::ITEMS_PER_PAGE);
-        return view('foods.index', ['foods' => $foods]);
-    }
-
-    /**
-     * Show the list food by id and name if exists.
-     *
      * @param \Illuminate\Http\Request $request request value
      *
      * @return \Illuminate\Http\Response
      */
-    public function getByCategory(Request $request)
+    public function index(Request $request)
     {
-        $categoryId = $request->category_id;
-        $foods = $this->food->where('category_id', $categoryId)
-                            ->where('name', 'like', '%'.$request->name.'%')
-                            ->paginate($this->food->ITEMS_PER_PAGE);
-        return response()->json($foods);
+        if ($request->ajax()) {
+            $categoryId = $request->category_id;
+            $foods = $this->food->where('category_id', $categoryId)
+                                ->where('name', 'like', '%'.$request->name.'%')
+                                ->paginate($this->food->ITEMS_PER_PAGE);
+            return response()->json($foods);
+        }
+        $foods = $this->food->search()->paginate(Food::ITEMS_PER_PAGE);
+        return view('foods.index', ['foods' => $foods]);
     }
 
     /**

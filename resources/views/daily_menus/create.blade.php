@@ -60,7 +60,7 @@
                 <td>
                     <select class="form-control" id="select-category">
                         <option value="null">{{ __('Choose category') }}</option>
-                        @foreach ($listCategory as $category)
+                        @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>

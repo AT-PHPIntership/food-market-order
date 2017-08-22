@@ -70,9 +70,9 @@ class DailyMenuController extends Controller
     {
         $categories = $this->category->get();
         if ($request->has('date')) {
-            return view('daily_menus.create', ['listCategory' => $categories, 'date' => $request['date']]);
+            return view('daily_menus.create', ['categories' => $categories, 'date' => $request['date']]);
         }
-        return view('daily_menus.create', ['listCategory' => $categories]);
+        return view('daily_menus.create', ['categories' => $categories]);
     }
 
     /**

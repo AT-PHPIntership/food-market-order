@@ -2,7 +2,7 @@
 	//url for ajax request
     foodURLs = {
             base: "{{ url('/') }}",
-            list_food_by_category: "{{ route('foods.get-by-category') }}"
+            list_food_by_category: "{{ route('foods.index') }}"
     }
 </script>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
