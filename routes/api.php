@@ -17,6 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('daily-menus', 'API\DailyMenuAPIController@index');
+Route::get('daily-menus', 'API\DailyMenuController@index');
 
-Route::get('daily-menus/{date}', 'API\DailyMenuAPIController@show');
+Route::get('daily-menus/{date}', 'API\DailyMenuController@show');

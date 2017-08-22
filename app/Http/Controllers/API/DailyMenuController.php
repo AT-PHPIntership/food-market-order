@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\DailyMenu;
-use App\Category;
-use App\Food;
 
-class DailyMenuAPIController extends Controller
+class DailyMenuController extends Controller
 {
     /**
      * The Daily Menu implementation.
@@ -44,14 +42,15 @@ class DailyMenuAPIController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \Illuminate\Http\Response $request $request from the client
+     * @param string $date The date to get menu to show
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($date)
     {
-        $date = $request['date'];
-        $dailyMenus = $this->dailyMenu->with('food.category')->where('date', $date)->paginate($this->dailyMenu->ITEMS_PER_PAGE);
-        return response()->json(['data' => $dailyMenus], Response::HTTP_OK);
+        if ($dailyMenus = $this->dailyMenu->with('food.category')->where('date', $date)->paginate($this->dailyMenu->ITEMS_PER_PAGE)) {
+        	return response()->json(['data' => $dailyMenus], Response::HTTP_OK);
+        }
+        return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
     }
 }

@@ -7,6 +7,7 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Category;
 use App\Food;
 
 class UpdateFoodTest extends DuskTestCase
@@ -21,6 +22,7 @@ class UpdateFoodTest extends DuskTestCase
     public function testUpdateFood()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 20)->create();
             factory(Food::class, 5)->create();
             $browser->loginAs(User::find(1))
                     ->visit('/foods')
@@ -38,6 +40,7 @@ class UpdateFoodTest extends DuskTestCase
     public function testValidationUpdateFood()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 20)->create();
             factory(Food::class, 5)->create();
             $browser->loginAs(User::find(1))
                     ->visit('/foods/2/edit')
@@ -60,6 +63,7 @@ class UpdateFoodTest extends DuskTestCase
     public function testUpdateFoodSuccess()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 20)->create();
             factory(Food::class, 5)->create();
             $browser->loginAs(User::find(1))
                     ->visit('/foods/2/edit')
@@ -97,6 +101,7 @@ class UpdateFoodTest extends DuskTestCase
         $price,
         $message
     ) {
+        factory(Category::class, 20)->create();
         DB::table('foods')->insert([
             'name' => 'pho bo hue',
             'category_id' => 1,
@@ -130,6 +135,7 @@ class UpdateFoodTest extends DuskTestCase
     public function testButtonReset()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 20)->create();
             factory(Food::class, 5)->create();
             $food = Food::find(2);
             $browser->loginAs(User::find(1))
