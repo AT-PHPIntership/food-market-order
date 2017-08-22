@@ -6,6 +6,7 @@ use Illuminate\Contracts\Console\Kernel;
 use App\Category;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use App\Category;
 
 trait CreatesApplication
 {
