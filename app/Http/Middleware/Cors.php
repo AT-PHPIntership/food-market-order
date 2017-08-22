@@ -15,7 +15,7 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        $trusted_domains = ["http://angular2.techalin.com:3000", "http://another-domain.com"];
+        $trusted_domains = ["http://localhost:4200", "http://another-domain.com"];
         if(isset($request->server()['HTTP_ORIGIN'])) {
             $origin = $request->server()['HTTP_ORIGIN'];
             if(in_array($origin, $trusted_domains)) {
