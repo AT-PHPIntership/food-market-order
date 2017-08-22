@@ -11,4 +11,4 @@
 <script src="{{ asset("/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js") }}"></script>
 <script src="{{ asset("/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
 <script src="{{ asset("/js/main.js") }}"></script>
-<script src="{{ asset("/js/select2.min.js") }}"></script>
+<script src="{{ asset("/bower_components/AdminLTE/plugins/select2/select2.min.js") }}"></script>
