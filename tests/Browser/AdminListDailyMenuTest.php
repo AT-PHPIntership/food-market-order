@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\DailyMenu;
+namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
@@ -11,7 +11,8 @@ use \App\DailyMenu;
 use \App\Food;
 use \App\Category;
 
-class ListTest extends DuskTestCase
+
+class AdminListDailyMenuTest extends DuskTestCase
 {
     use DatabaseTransactions;
     use WithoutMiddleware;
@@ -51,13 +52,30 @@ class ListTest extends DuskTestCase
     }
 
     /**
+     * Test data empty.
+     *
+     * @return void
+     */
+    public function testDataEmpty()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(1)
+                ->visit('/daily-menus')
+                ->assertSee('LIST DAILY MENUS ');
+            $elements = $browser->elements('.dataTable tbody tr');
+            $numRecord = count($elements);
+            $this->assertTrue($numRecord == 0);
+        });
+    }
+
+    /**
      * @group dailymenu
      *
      * A Dusk test count object in list=10.
      *
      * @return void
      */
-    public function testPaginationWith10Rows()
+    public function testHasOnePage()
     {
         $category = factory(Category::class, 1)->create();
         $foods = factory(Food::class, 10)->create(['category_id' => 1]);
@@ -68,8 +86,8 @@ class ListTest extends DuskTestCase
             $browser->loginAs(1)
             ->visit('/daily-menus')
             ->resize(1920, 2000);
-            $objectCount = $browser->elements('.table tr');
-            $this->assertTrue(count($objectCount)==11);
+            $objectCount = $browser->elements('.table tbody tr');
+            $this->assertTrue(count($objectCount)==10);
         });
     }
 
@@ -80,20 +98,26 @@ class ListTest extends DuskTestCase
      *
      * @return void
      */
-    public function testPaginationMorethan10Rows()
+    public function testPagination()
     {
         $category = factory(Category::class, 1)->create();
         $foods = factory(Food::class, 11)->create(['category_id' => 1]);
-        $dailyMenus = factory(DailyMenu::class, 11)->create([
+        factory(DailyMenu::class, 11)->create([
             'food_id' => 1
         ]);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
             ->visit('/daily-menus')
             ->resize(1920, 2000);
-            $objectCount = $browser->elements('.table tr');
-            $this->assertTrue(count($objectCount)==11);
+            //page 1 have 10 record
+            $objectCount = $browser->elements('.table tbody tr');
+            $this->assertTrue(count($objectCount)==10);
+            //page 2 have 1 record
+            $objectCount = $browser->visit('daily-menus?page=2')
+                ->elements('.table tbody tr');
+            $this->assertTrue(count($objectCount)==1);
         });
+
     }
 
     /**
@@ -111,33 +135,19 @@ class ListTest extends DuskTestCase
             });
             factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => '2017-09-11']);
             factory(DailyMenu::class, 10)->create(['food_id' => 1]);
-            $element = 'tbody tr:nth-child(2)';
+            $element = '.box-tools .fa fa-search';
             $browser->loginAs(1)
                     ->visit('/daily-menus')
                     ->type('search', '2017')
-                    ->press('Search')
+                    ->click('.box-body .box-tools form button')
                     ->assertSee('2017-09-11')
+                    ->assertQueryStringHas('search', '2017')
                     ->screenshot('search')
-                    ->type('date', '05')
-                    ->press('Search')
+                    ->type('search', '05')
+                    ->click('.box-body .box-tools form button')
                     ->assertDontSee('2017-09-11')
+                    ->assertQueryStringHas('search', '05')
                     ->screenshot('search2');
-        });
-    }    
-
-    /**
-     * @group dailymenu
-     *
-     * A Dusk test show list daily menu
-     *
-     * @return void
-     */
-    public function testShowList()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(1)
-                    ->visit('/daily-menus')
-                    ->assertSee('Daily Menu List');
         });
     }
 }
