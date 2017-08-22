@@ -24,7 +24,7 @@ class Order extends Model
             'users.full_name',
             'orders.trans_at',
             'orders.custom_address',
-            'orders.payment',
+            'orders.total_price',
             'orders.status',
         ],
         'joins' => [
@@ -54,26 +54,22 @@ class Order extends Model
     }
 
     /**
-     * Update Payment
+     * Update Total Price of Order
      *
-     * @param OrderItem $orderItem It is object order item.
-     * @param int       $quantity  It is quantity change.
+     * @param int $id It is id of order need updateTotalPrice.
      *
-     * @return mixed
+     * @return bool
      */
-    public function updatePayment(OrderItem $orderItem, $quantity)
+    public function updateTotalPrice($id)
     {
-        $item = $orderItem->itemtable;
-        $order = $orderItem->order;
-        $quantityChange = $quantity - $orderItem->quantity;
-        $orderItem->quantity = $quantity;
-        $order->payment = $order->payment + $item->price * $quantityChange;
+        $order = Order::with('orderItems.itemtable')->findOrFail($id);
+        $order->total_price = 0;
+        foreach ($order->orderItems as $orderItem) {
+            $item = $orderItem->itemtable;
+            $order->total_price += $item->price * $orderItem->quantity;
+        }
         if ($order->save()) {
-            if ($orderItem->save()) {
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         } else {
             return false;
         }

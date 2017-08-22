@@ -7,6 +7,7 @@ use App\OrderItem;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class OrderItemController extends Controller
 {
@@ -47,10 +48,16 @@ class OrderItemController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $orderItem = $this->orderItem->with('itemtable')->with('order')->findOrFail($id);
-            if ($this->order->updatePayment($orderItem, $request->quantity)) {
-                $message = __('Update Item ' . $id . ' Success');
-                $status = Response::HTTP_OK;
+            $orderItem = $this->orderItem->with('order')->findOrFail($id);
+            $orderItem->quantity = $request->quantity;
+            if ($orderItem->save()) {
+                if ($this->order->updateTotalPrice($orderItem->order->id)) {
+                    $message = __('Update Item ' . $id . ' Success');
+                    $status = Response::HTTP_OK;
+                } else {
+                    $message = __('Update Item Errors');
+                    $status = Response::HTTP_BAD_REQUEST;
+                }
             } else {
                 $message = __('Update Item Errors');
                 $status = Response::HTTP_BAD_REQUEST;
@@ -75,9 +82,10 @@ class OrderItemController extends Controller
     public function destroy($id)
     {
         try {
-            $orderItem = $this->orderItem->with('itemtable')->with('order')->findOrFail($id);
-            if ($this->order->updatePayment($orderItem, $orderItem->quantity)) {
-                if ($orderItem->delete()) {
+            $orderItem = $this->orderItem->with('order')->findOrFail($id);
+            $orderID = $orderItem->order->id;
+            if ($orderItem->delete()) {
+                if ($this->order->updateTotalPrice($orderID)) {
                     $message = __('Delete Item ' . $id . ' Success');
                     $status = Response::HTTP_OK;
                 } else {

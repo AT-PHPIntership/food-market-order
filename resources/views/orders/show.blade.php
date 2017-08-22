@@ -92,7 +92,7 @@
                             <tr role="row">
                                 <th colspan="5"></th>
                                 <th>Total</th>
-                                <th><span id="payment-order" class="pull-left">{{ number_format($order->payment,0,",",".") }}</span> {{ __('VND') }}</th>
+                                <th><span id="payment-order" class="pull-left">{{ number_format($order->total_price,0,",",".") }}</span> {{ __('VND') }}</th>
                                 <th></th>
                             </tr>
                             </thead>
