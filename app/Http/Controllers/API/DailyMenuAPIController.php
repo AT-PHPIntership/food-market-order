@@ -44,7 +44,7 @@ class DailyMenuAPIController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \Illuminate\Http\Response $request $request from client
+     * @param \Illuminate\Http\Response $request $request from the client
      *
      * @return \Illuminate\Http\Response
      */
