@@ -15,20 +15,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('users', 'UserController');
+Route::middleware(['web', 'auth'])->group(function () {
 
-Route::resource('categories', 'CategoryController');
+    Route::resource('users', 'UserController');
 
-Route::resource('suppliers', 'SupplierController');
+    Route::resource('categories', 'CategoryController');
 
-Route::resource('daily-menus', 'DailyMenuController');
+    Route::resource('suppliers', 'SupplierController');
 
-Route::resource('foods', 'FoodController');
+    Route::resource('daily-menus', 'DailyMenuController');
 
-Route::resource('materials', 'MaterialController');
+    Route::resource('foods', 'FoodController');
 
-Route::resource('orders', 'OrderController');
+    Route::resource('materials', 'MaterialController');
+
+    Route::resource('orders', 'OrderController');
+
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+});
 
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
