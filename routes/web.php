@@ -21,6 +21,8 @@ Route::resource('categories', 'CategoryController');
 
 Route::resource('suppliers', 'SupplierController');
 
+Route::get('foods/get-by-category', 'FoodController@getByCategory')->name('foods.get-by-category');
+
 Route::resource('daily-menus', 'DailyMenuController');
 
 Route::resource('foods', 'FoodController');

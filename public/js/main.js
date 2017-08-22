@@ -32,27 +32,6 @@ function callAjax($data, $eventTarget, $url, $method) {
         }
     });
 }
-function callAjaxForCreateMenu($url, $categoryId) {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-        }
-    });
-    $.ajax({
-        type: "GET",
-        url: $url,
-        data: {
-            category_id: $categoryId
-        },
-        success: function (data) {
-            data["data"].forEach(function (foodElement) {
-                //create food select
-                let $foodOption = $("<option>", {"text": foodElement["name"], "value": foodElement["id"]});
-                $('#select-food').append($foodOption);
-            })
-        }
-    });
-}
 // Handle Ajax response with @param:
 // data: response message from server
 // status: response status from server
@@ -88,6 +67,21 @@ function handleAjaxResponse(data, status, $eventTarget) {
     }
 }
 
+//for select2
+function formatSelectList (option) {
+    if (option.loading) return option.text;
+
+    var markup = '<div class="clearfix">' +
+    '<div class="col-sm-10">' + option.name + '</div>';
+
+    markup += '</div>';
+
+    return markup;
+}
+
+function formatSelection (option) {
+    return option.name || option.text;
+}
 $(document).ready(function() {
     //For dailyMenu
     /**
@@ -168,33 +162,6 @@ $(document).ready(function() {
         });
     }
     //For Create DailyMenu
-    //value to get page in selectbox
-    var $i = 1;
-    $('#select-food').hide();
-    $('#choose-food').click(function () {
-        $('#select-food').toggle();
-    })
-    $('#select-food').change(function (e) {
-        $('#select-food').toggle();
-        $('#choose-food').html($('#select-food option:selected').text());
-    });
-    //add event for scroll in select box
-    $('#select-food').scroll(function () {
-        if ($(this)[0].scrollHeight - $(this).scrollTop() <= $(this).outerHeight()) {
-            $i += 1;
-            //set url of pagination
-            $currentUrl = window.location.href;
-            if ($currentUrl.indexOf("date") > 0) {
-                $url = $currentUrl.substr(0, $currentUrl.length - 16);
-            } else {
-                $url = $currentUrl;
-            }
-            $url = $url + "?page=" + $i;
-            $categoryId = $('#select-category').find(":selected").val();
-            callAjaxForCreateMenu($url, $categoryId);
-        }
-    });
-
     /**
      * Get Menu Date and Current Date To Check Add item permission
      */
@@ -214,26 +181,45 @@ $(document).ready(function() {
     /**
      * Get Category and send ajax request to server
      */
-    $selectCate = document.getElementById("select-category");
     $('#select-category').change(function (e) {
-        //set page of paginate = 1
-        $i = 1;
         $('#select-food').empty();
-        $('#choose-food').html($('#choose-food').attr("data-text"));
-        if (window.location.href.indexOf("create") > 0) {
-            $url = window.location.href;
-        } else {
-            $url = window.location.href + "/create";
-        }
+        $url = foodURLs.list_food_by_category;
         $categoryId = e.target.options[e.target.selectedIndex].value;
-        callAjaxForCreateMenu($url, $categoryId);
+        $("#select-food").select2({
+          placeholder: 'Choose Food',
+          theme: "bootstrap",
+          ajax: {
+            url: $url,
+            type: 'GET',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                name: params.term, // search term
+                page: params.page,
+                category_id: $categoryId
+              };
+            },
+            processResults: function (data) {
+              return {
+                results: data.data,
+                pagination: {
+                  more: (data.current_page<data.last_page)?(true):(false)
+                }
+              };
+            },
+            cache: true
+          },
+          escapeMarkup: function (markup) { return markup; },
+          templateResult: formatSelectList,
+          templateSelection: formatSelection
+        });
     });
     /**
      * Btn Cancel clear data input
      */
      $('#clear-input').click(function (e) {
         $('#select-food').empty();
-        $('#choose-food').html($('#choose-food').attr("data-text"));
         $('#create-menu')[0].reset();
      })
     //End for create dailyMenu
