@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\API\UserCreateAPIRequest;
+use App\Http\Requests\Api\UserCreateApiRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 
-class UserAPIController extends Controller
+class UserApiController extends Controller
 {
     protected $user;
 
@@ -42,6 +42,11 @@ class UserAPIController extends Controller
      */
     public function store(UserCreateAPIRequest $request)
     {
-        return $this->user->create($request->all());
+        $user = $this->user->create($request->all());
+        if (!$user) {
+            return response()->json(['success' => 'false', 'message' => 'Cannot registry user right now!, please try again later!'], 500);
+        } else {
+            return response()->json(['success' => 'true', 'message' => 'Registry successfully!, please login and enjoy!'], 200);
+        }
     }
 }
