@@ -13,7 +13,7 @@ class UserCreateAPIRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,24 @@ class UserCreateAPIRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'full_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ];
+    }
+
+    /**
+     * Get the proper failed validation response for the request.
+     *
+     * @param  array  $errors
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function response(array $errors)
+    {
+        if ($this->expectsJson()) {
+            return new JsonResponse($errors, 422);
+        }
+
+        return response()->json($errors);
     }
 }

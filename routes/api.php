@@ -17,4 +17,4 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/user', 'API\UserAPIController@show');
 });
 
-Route::post('/user/create', 'API\UserAPIController@storage');
+Route::post('/user/create', 'API\UserAPIController@store');
