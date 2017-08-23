@@ -171,7 +171,7 @@
                             <h3>{{ __('No orders') }}</h3>
                         @else
                             <div class="box-body table-responsive no-padding">
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="table-order-history">
                                     <thead>
                                     <tr>
                                         <th>{{ __('ID') }}</th>

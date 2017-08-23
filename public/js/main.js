@@ -162,6 +162,11 @@ $(document).ready(function() {
         });
     }
     //For Create DailyMenu
+    $('#select-food').empty()
+                    .append('<option selected="selected" value="null">'
+                        + $('#select-food').attr('placeholder')
+                        +'</option>'
+                    );
     /**
      * Get Menu Date and Current Date To Check Add item permission
      */
