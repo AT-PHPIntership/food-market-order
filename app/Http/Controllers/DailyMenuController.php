@@ -55,7 +55,7 @@ class DailyMenuController extends Controller
      */
     public function index()
     {
-        $dailyMenus = $this->dailyMenu->search()->distinct()->orderBy('date', 'DESC')->paginate(DailyMenu::ITEMS_PER_PAGE);
+        $dailyMenus = $this->dailyMenu->search()->select('date')->distinct()->orderBy('date', 'DESC')->paginate(DailyMenu::ITEMS_PER_PAGE);
         return view('daily_menus.index', ['dailyMenus' => $dailyMenus]);
     }
 

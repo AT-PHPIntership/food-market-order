@@ -66,7 +66,7 @@
                     </select>
                 </td>
                 <td>
-                    <select class="form-control" name="food_id" id="select-food">
+                    <select class="form-control" name="food_id" id="select-food" placeholder="{{ __('Choose Food') }}">
 					  <option value="null" selected="selected">{{ __('Choose Food') }}</option>
 					</select>
                 </td>

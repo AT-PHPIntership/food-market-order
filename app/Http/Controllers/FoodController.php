@@ -10,6 +10,7 @@ use Image;
 use Storage;
 use App\Http\Requests\FoodCreateRequest;
 use File;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FoodController extends Controller
 {
@@ -67,10 +68,15 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->food->findOrFail($id)->delete()) {
-            flash(__('Delete Food Success'))->success()->important();
-        } else {
-            flash(__('Delete Food Error'))->error()->important();
+        try {
+            $food = $this->food->findOrFail($id);
+            if ($food->delete()) {
+                flash(__('Delete Food Success'))->success()->important();
+            } else {
+                flash(__('Delete Food Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Food Not Found!'))->error()->important();
         }
         return redirect()->route('foods.index');
     }
