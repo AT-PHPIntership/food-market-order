@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->datetime('trans_at');
             $table->text('custom_address');
             $table->timestamps();
-            $table->decimal('payment', 10, 2)->default(0);
+            $table->decimal('total_price', 10, 2)->default(0);
             $table->tinyInteger('status')->comment = 'PENDING = 0; APPROVED = 1; CANCEL = 2';
             $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
