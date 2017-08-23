@@ -3,10 +3,8 @@
 namespace Tests;
 
 use Illuminate\Contracts\Console\Kernel;
-use App\Category;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use App\Category;
 
 trait CreatesApplication
 {
@@ -37,7 +35,6 @@ trait CreatesApplication
             'password' => bcrypt('123456'),
             'is_admin' => 1,
         ]);
-        factory(Category::class, 20)->create();
     }
     
     /**
