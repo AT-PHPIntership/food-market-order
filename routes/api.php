@@ -19,4 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('categories', 'API\CategoryController@index');
 
-Route::get('categories/{categoryId}', 'API\FoodController@show');
+Route::get('categories/{categoryId}', 'API\CategoryController@show');
+
+Route::get('categories/{categoryId}/foods', 'API\FoodController@show');

@@ -90,7 +90,9 @@ class User extends Authenticatable
          * @return void
          */
         static::creating(function ($user) {
-            $user->password = bcrypt($user->password);
+            if (Hash::needsRehash($user->password)) {
+                $user->password = bcrypt($user->password);
+            }
         });
 
         /**
