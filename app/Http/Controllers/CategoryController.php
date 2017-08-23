@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoryController extends Controller
 {
@@ -31,7 +32,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->category->paginate(Category::ITEMS_PER_PAGE);
+        $categories = $this->category->search()->paginate(Category::ITEMS_PER_PAGE);
         return view('categories.index', ['categories' => $categories]);
     }
 
@@ -105,12 +106,17 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = $this->category->find($id);
-        if ($category->delete()) {
-            flash(__('Delete Category Success'))->success()->important();
-        } else {
-            flash(__('Delete Category Errors'))->error()->important();
+        try {
+            $category = $this->category->findOrFail($id);
+            if ($category->delete()) {
+                flash(__('Delete Category Success'))->success()->important();
+            } else {
+                flash(__('Delete Category Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Category Not Found!'))->error()->important();
         }
+
         return redirect()->route('categories.index');
     }
 }

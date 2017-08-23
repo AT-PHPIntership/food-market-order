@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SupplierRequest;
 use App\Supplier;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SupplierController extends Controller
 {
@@ -23,7 +24,7 @@ class SupplierController extends Controller
     {
         $this->supplier = $supplier;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +32,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = $this->supplier->paginate(Supplier::ITEMS_PER_PAGE);
+        $suppliers = $this->supplier->search()->paginate(Supplier::ITEMS_PER_PAGE);
         return view('suppliers.index', ['suppliers' => $suppliers]);
     }
 
@@ -94,5 +95,28 @@ class SupplierController extends Controller
             flash(__('Create Supplier Error'))->error()->important();
             return redirect()->route('suppliers.create');
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id It is supplier id want delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $supplier = $this->supplier->findOrFail($id);
+            if ($supplier->delete()) {
+                flash(__('Delete Supplier Success'))->success()->important();
+            } else {
+                flash(__('Delete Supplier Errors!'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Supplier Not Found!'))->error()->important();
+        }
+
+        return redirect()->route('suppliers.index');
     }
 }

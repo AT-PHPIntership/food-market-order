@@ -22,7 +22,7 @@
                     <!-- form start -->
                     <form role="form" action="{{ route('categories.update', ['id' => $category->id])}}" method="post">
                         {{ method_field('PUT') }}
-                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        {{ csrf_field() }}
                         <div class="col-md-2"></div>
                         <div class="box-body col-md-8">
                             <div class="form-group col-md-12 {{ $errors->has('name') ? 'has-error' : '' }}">
