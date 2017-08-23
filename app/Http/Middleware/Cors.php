@@ -9,18 +9,19 @@ class Cors
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request It is request from client
+     * @param \Closure                 $next    It is closure
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $trusted_domains = ["http://localhost:4200", "http://another-domain.com"];
-        if(isset($request->server()['HTTP_ORIGIN'])) {
+        $trustedDomains = ["http://localhost:4200", "http://another-domain.com"];
+        if (isset($request->server()['HTTP_ORIGIN'])) {
             $origin = $request->server()['HTTP_ORIGIN'];
-            if(in_array($origin, $trusted_domains)) {
+            if (in_array($origin, $trustedDomains)) {
                 header('Access-Control-Allow-Origin: ' . $origin);
-                header('Access-Control-Allow-Headers: Origin, Content-Type');
+                header('Access-Control-Allow-Headers: Content-Type, Accept, Authorization');
             }
         }
         return $next($request);
