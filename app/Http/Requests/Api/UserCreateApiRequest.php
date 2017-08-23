@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 
-class UserCreateAPIRequest extends FormRequest
+class UserCreateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,7 +34,8 @@ class UserCreateAPIRequest extends FormRequest
     /**
      * Get the proper failed validation response for the request.
      *
-     * @param  array  $errors
+     * @param array $errors fail information of validation
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function response(array $errors)
