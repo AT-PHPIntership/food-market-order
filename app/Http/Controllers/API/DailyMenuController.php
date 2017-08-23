@@ -36,7 +36,7 @@ class DailyMenuController extends Controller
     public function index()
     {
         $dailyMenus = $this->dailyMenu->search()->select('date')->distinct()->orderBy('date', 'DESC')->paginate(DailyMenu::ITEMS_PER_PAGE);
-        return response()->json(['data' => $dailyMenus], Response::HTTP_OK);
+        return response()->json(collect(['success' => true])->merge($dailyMenus));
     }
 
     /**
@@ -48,8 +48,12 @@ class DailyMenuController extends Controller
      */
     public function show($date)
     {
-        if ($dailyMenus = $this->dailyMenu->with('food.category')->where('date', $date)->paginate($this->dailyMenu->ITEMS_PER_PAGE)) {
-        	return response()->json(['data' => $dailyMenus], Response::HTTP_OK);
+        $error = __('Has error during access this page');
+        if ($dailyMenus = $this->dailyMenu->with('food.category')
+                                        ->where('date', $date)
+                                        ->paginate($this->dailyMenu->ITEMS_PER_PAGE)
+        ) {
+            return response()->json(['data' => $dailyMenus], Response::HTTP_OK);
         }
         return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
     }
