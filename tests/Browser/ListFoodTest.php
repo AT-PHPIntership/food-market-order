@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Category;
 use App\Food;
 use App\User;
 use Tests\TestCase;
@@ -52,6 +53,7 @@ class ListFoodTest extends DuskTestCase
      */
     public function testListHasRecord()
     {
+        factory(Category::class, 20)->create();
         factory(Food::class, 10)->create();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
@@ -71,6 +73,7 @@ class ListFoodTest extends DuskTestCase
     */
     public function testShowRecordPaginate()
     {
+        factory(Category::class, 20)->create();
         factory(Food::class, 21)->create();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
@@ -93,6 +96,7 @@ class ListFoodTest extends DuskTestCase
      */
     public function testPathPagination()
     {
+        factory(Category::class, 20)->create();
         factory(Food::class, 12)->create();
         $this->browse(function (Browser $browser) {
             $browser->visit('/foods?page=2');
