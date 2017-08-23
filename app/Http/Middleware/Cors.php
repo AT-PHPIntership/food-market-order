@@ -16,7 +16,7 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        $trustedDomains = ["http://localhost:4200", "http://another-domain.com"];
+        $trustedDomains = explode(',', env('TRUST_DOMAIN'));
         if (isset($request->server()['HTTP_ORIGIN'])) {
             $origin = $request->server()['HTTP_ORIGIN'];
             if (in_array($origin, $trustedDomains)) {
