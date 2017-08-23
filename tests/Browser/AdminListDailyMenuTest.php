@@ -52,6 +52,8 @@ class AdminListDailyMenuTest extends DuskTestCase
     }
 
     /**
+     * @group dailymenu
+     *
      * Test data empty.
      *
      * @return void
@@ -61,7 +63,7 @@ class AdminListDailyMenuTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
                 ->visit('/daily-menus')
-                ->assertSee('LIST DAILY MENUS ');
+                ->assertSee('LIST DAILY MENUS');
             $elements = $browser->elements('.dataTable tbody tr');
             $numRecord = count($elements);
             $this->assertTrue($numRecord == 0);
@@ -142,12 +144,12 @@ class AdminListDailyMenuTest extends DuskTestCase
                     ->click('.box-body .box-tools form button')
                     ->assertSee('2017-09-11')
                     ->assertQueryStringHas('search', '2017')
-                    ->screenshot('search')
+                    ->screenshot('searchDailyMenu')
                     ->type('search', '05')
                     ->click('.box-body .box-tools form button')
                     ->assertDontSee('2017-09-11')
                     ->assertQueryStringHas('search', '05')
-                    ->screenshot('search2');
+                    ->screenshot('searchDailyMenu2');
         });
     }
 }
