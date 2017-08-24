@@ -17,7 +17,7 @@ class ListMaterialTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
-     * A Dusk test URL material list.
+     * A Dusk test URL materials list.
      *
      * @return void
      */
