@@ -43,7 +43,7 @@ class AdminUpdateMenuTest extends DuskTestCase
             factory(Category::class, 1)->create()->each(function($c) {
                 $c->foods()->save(factory(Food::class)->make());
             });
-            factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => '2017-09-11']);
+            factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => date('Y-m-d', strtotime(' +1 day'))]);
             $elementMenu = '.dataTable tbody tr:nth-child(1)';
             $browser->loginAs(1)
                 ->resize(1920, 1080)
@@ -60,7 +60,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->assertSee('Daily Menu For')
                     ->screenshot('update menu');
         });
-        $this->assertDatabaseHas('daily_menus', ['date' => '2017-09-11', 'food_id' => 1, 'quantity' => 3]);
+        $this->assertDatabaseHas('daily_menus', ['date' => date('Y-m-d', strtotime(' +1 day')), 'food_id' => 1, 'quantity' => 3]);
     }
 
     /**
@@ -76,7 +76,7 @@ class AdminUpdateMenuTest extends DuskTestCase
             factory(Category::class, 1)->create()->each(function($c) {
                 $c->foods()->save(factory(Food::class)->make());
             });
-            factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => '2017-09-11']);
+            factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => date('Y-m-d', strtotime(' +1 day'))]);
             $elementMenu = '.dataTable tbody tr:nth-child(1)';
             $browser->loginAs(1)
                     ->resize(1920, 1080)
@@ -85,14 +85,68 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->waitFor(null, '5')
                     ->assertSee('Daily Menu For');
             $elementMenuItem = '.table tr:nth-child(2)';
-            $browser->type($elementMenuItem. ' .quantity', 0)
+            $browser->clear($elementMenuItem. ' .quantity')
                     ->click($elementMenuItem. ' .glyphicon-ok')
-                    ->waitFor(null)
-                    ->assertSee('The quantity must be at least 1.')
-                    ->clear($elementMenuItem. ' .quantity')
+                    ->waitForText('The quantity field is required.')
+                    ->type($elementMenuItem. ' .quantity', 0)
                     ->click($elementMenuItem. ' .glyphicon-ok')
-                    ->waitFor(null)
-                    ->assertSee('The quantity field is required.');
+                    ->waitFor(null, '5')
+                    ->assertSee('The quantity must be at least 1.');
+        });
+    }
+
+    /**
+     * @group dailymenu
+     *
+     * Test Permitted input quantity.
+     *
+     * @return void
+     */
+    public function testDisableInputQuantity()
+    {
+        $this->browse(function (Browser $browser) {
+            factory(Category::class, 1)->create()->each(function($c) {
+                $c->foods()->save(factory(Food::class)->make());
+            });
+            factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => date('Y-m-d', strtotime(' -1 day'))]);
+            $elementMenu = '.dataTable tbody tr:nth-child(1)';
+            $browser->loginAs(1)
+                    ->resize(1920, 1080)
+                    ->visit('/daily-menus')
+                    ->click($elementMenu. ' .fa-search-plus')
+                    ->waitFor(null, '5')
+                    ->assertSee('Daily Menu For')
+                    ->assertSourceHas('id="1" name="quantity" disabled="disabled"');
+        });
+    }
+
+    /**
+     * @group dailymenu
+     *
+     * Test Cancel button.
+     *
+     * @return void
+     */
+    public function testCancelButton()
+    {
+        $this->browse(function (Browser $browser) {
+            factory(Category::class, 1)->create()->each(function($c) {
+                $c->foods()->save(factory(Food::class)->make());
+            });
+            factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => date('Y-m-d', strtotime(' +1 day')), 'quantity' => 1]);
+            $elementMenu = '.dataTable tbody tr:nth-child(1)';
+            $browser->loginAs(1)
+                    ->resize(1920, 1080)
+                    ->visit('/daily-menus')
+                    ->click($elementMenu. ' .fa-search-plus')
+                    ->waitFor(null, '5')
+                    ->assertSee('Daily Menu For');
+            $elementMenuItem = '.table tr:nth-child(2)';
+            $browser->type($elementMenuItem. ' .quantity', '254')
+                    ->screenshot('first');
+            $browser->click($elementMenuItem. ' .glyphicon-ban-circle')
+                    ->waitFor(null, '1')
+                    ->assertDontSeeIn($elementMenuItem. ' td:nth-child(7)', '254');
         });
     }
 }
