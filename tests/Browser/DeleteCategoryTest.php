@@ -39,7 +39,7 @@ class DeleteCategoryTest extends DuskTestCase
             $browser->loginAs(1)
                 ->visit('/categories')
                 ->click($element. ' .fa-trash')
-                ->waitFor(null, '1')
+                ->waitFor(null, '5')
                 ->assertSee('Delete Category')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
