@@ -7,9 +7,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
+    use HasApiTokens;
     use Notifiable;
     use SoftDeletes;
     use Searchable;
@@ -90,7 +92,9 @@ class User extends Authenticatable
          * @return void
          */
         static::creating(function ($user) {
-            $user->password = bcrypt($user->password);
+            if (Hash::needsRehash($user->password)) {
+                $user->password = bcrypt($user->password);
+            }
         });
 
         /**
