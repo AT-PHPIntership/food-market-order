@@ -98,7 +98,7 @@ class AdminUpdateMenuTest extends DuskTestCase
     /**
      * @group dailymenu
      *
-     * Test Permitted input quantity.
+     * Test disabled input quantity when date < currentDate.
      *
      * @return void
      */
