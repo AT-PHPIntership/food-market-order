@@ -72,7 +72,7 @@ class AdminDeleteMenuTest extends DuskTestCase
                 $c->foods()->save(factory(Food::class)->make());
             });
             factory(DailyMenu::class, 1)->create(['food_id' => 1,'date' => '2017-11-11']);
-            factory(DailyMenu::class, 1)->create(['food_id' => 1,'date' => '2017-05-11']);
+            factory(DailyMenu::class, 1)->create(['food_id' => 1,'date' => '2017-06-11']);
             $browser->loginAs(1)
                 ->visit('/daily-menus');
             DB::table('daily_menus')->delete(1);
@@ -83,7 +83,7 @@ class AdminDeleteMenuTest extends DuskTestCase
                 ->assertSee('Delete Daily Menu')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
-                ->waitFor(null)
+                ->waitFor(null, '1')
                 ->assertSee('Has error during delete this');
         });
     }
