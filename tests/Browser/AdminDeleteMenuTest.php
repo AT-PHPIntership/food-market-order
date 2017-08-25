@@ -83,7 +83,7 @@ class AdminDeleteMenuTest extends DuskTestCase
                 ->assertSee('Delete Daily Menu')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
-                ->waitFor(null)
+                ->waitFor(null, '1')
                 ->assertSee('Has error during delete this');
         });
     }

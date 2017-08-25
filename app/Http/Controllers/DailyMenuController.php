@@ -55,7 +55,7 @@ class DailyMenuController extends Controller
      */
     public function index()
     {
-        $dailyMenus = $this->dailyMenu->search()->distinct()->orderBy('date', 'DESC')->paginate(DailyMenu::ITEMS_PER_PAGE);
+        $dailyMenus = $this->dailyMenu->search()->select('date')->distinct()->orderBy('date', 'DESC')->paginate(DailyMenu::ITEMS_PER_PAGE);
         return view('daily_menus.index', ['dailyMenus' => $dailyMenus]);
     }
 
@@ -68,15 +68,11 @@ class DailyMenuController extends Controller
      */
     public function create(Request $request)
     {
-        $listCategory = $this->category->get();
-        if ($request->ajax()) {
-            $categoryId = $request->category_id;
-            $listFood = $this->food->where('category_id', $categoryId)->paginate($this->dailyMenu->ITEMS_PER_PAGE);
-            return response()->json($listFood);
-        } elseif ($request->has('date')) {
-            return view('daily_menus.create', ['listCategory' => $listCategory, 'date' => $request['date']]);
+        $categories = $this->category->get();
+        if ($request->has('date')) {
+            return view('daily_menus.create', ['categories' => $categories, 'date' => $request['date']]);
         }
-        return view('daily_menus.create', ['listCategory' => $listCategory]);
+        return view('daily_menus.create', ['categories' => $categories]);
     }
 
     /**

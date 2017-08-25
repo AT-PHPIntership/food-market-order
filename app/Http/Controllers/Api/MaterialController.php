@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class MaterialController extends Controller
+class MaterialController extends ApiController
 {
     /**
      * Display a listing of the resource.

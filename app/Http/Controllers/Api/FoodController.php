@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class FoodController extends Controller
+class FoodController extends ApiController
 {
     /**
      * Display a listing of the resource.

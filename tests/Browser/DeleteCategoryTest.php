@@ -37,9 +37,10 @@ class DeleteCategoryTest extends DuskTestCase
             factory(Category::class, 5)->create();
             $element = '.dataTable tbody tr:nth-child(2)';
             $browser->loginAs(1)
+                ->resize(1920, 1080)
                 ->visit('/categories')
                 ->click($element. ' .fa-trash')
-                ->waitFor(null, '1')
+                ->waitFor(null, '3')
                 ->assertSee('Delete Category')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
@@ -57,6 +58,7 @@ class DeleteCategoryTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             factory(Category::class, 5)->create();
             $browser->loginAs(1)
+                ->resize(1920, 1080)
                 ->visit('/categories');
             DB::table('categories')->delete(2);
             $element = '.dataTable tbody tr:nth-child(2)';
