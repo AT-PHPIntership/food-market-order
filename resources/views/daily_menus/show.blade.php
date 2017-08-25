@@ -52,7 +52,7 @@
                                         <td class="form-control-sm">
                                             <div>
                                                 <div class="col-md-6">
-                                                    <input type="number" class="form-control-sm" value="{{ $menuItem->quantity }}" id="{{ $menuItem->id }}">
+                                                    <input type="number" class="form-control-sm quantity" value="{{ $menuItem->quantity }}" id="{{ $menuItem->id }}" name="quantity">
                                                     <span type="hidden" class="help-block" id="helpblock"></span>
                                                 </div>
                                                 <div class="col-md-6">
