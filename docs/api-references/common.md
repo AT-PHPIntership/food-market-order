@@ -129,6 +129,6 @@ Create a food
         "image": "http://link-to-image.com/image_name.npg"
     },
     "success": true,
-    "status": 200
+    "status": 201
 }
 ```
