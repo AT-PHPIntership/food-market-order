@@ -36,8 +36,6 @@ class FoodController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $categoryId = $request->category_id;
-            $name = $request->name;
             $foods = $this->food->ajaxSearch($request)->paginate($this->food->ITEMS_PER_PAGE);
             return response()->json($foods);
         }

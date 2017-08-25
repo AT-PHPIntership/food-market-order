@@ -28,7 +28,7 @@ class Order extends Model
             'users.full_name',
             'orders.trans_at',
             'orders.custom_address',
-            'orders.payment',
+            'orders.total_price',
             'orders.status',
         ],
         'joins' => [
@@ -55,6 +55,20 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * Update Total Price of Order
+     *
+     * @return bool
+     */
+    public function updateTotalPrice()
+    {
+        $this->load('orderItems', 'orderItems.itemtable');
+        $this->total_price = $this->orderItems->sum(function ($item) {
+            return $item->quantity * $item->itemtable->price;
+        });
+        return $this->save();
     }
 
     /**

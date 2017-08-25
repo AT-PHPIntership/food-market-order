@@ -10,8 +10,8 @@ trait AjaxSearchable
     /**
      * Search the result follow the ajax request and columns searchable
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query query model
-     * @param \Illuminate\Http\Request $request request value
+     * @param \Illuminate\Database\Eloquent\Builder $query   query model
+     * @param \Illuminate\Http\Request              $request request value
      *
      * @return void
      */
@@ -27,7 +27,7 @@ trait AjaxSearchable
                         $query->Where($column, "=", "$value");
                         break;
                     }
-                    $query->Where($column, "LIKE", "%$value%");
+                    $query->orWhere($column, "LIKE", "%$value%");
                     break;
                 }
             }
