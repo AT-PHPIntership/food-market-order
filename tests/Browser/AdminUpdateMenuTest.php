@@ -33,7 +33,7 @@ class AdminUpdateMenuTest extends DuskTestCase
     /**
      * @group dailymenu
      *
-     * A Dusk test delete success.
+     * A Dusk test update success.
      *
      * @return void
      */

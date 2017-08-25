@@ -16,13 +16,13 @@
                 <table class="table table-bordered" id="tab_logic">
                     <thead>
                     <tr>
-                        <th class="text-center col-xs-4">
+                        <th class="text-center col-xs-5">
                             {{ _('Category') }}
                         </th>
-                        <th class="text-center col-xs-4">
+                        <th class="text-center col-xs-5">
                             {{ _('Food') }}
                         </th>
-                        <th class="text-center col-xs-4">
+                        <th class="text-center col-xs-1">
                             {{ _('Quantity') }}
                         </th>
                     </tr>
@@ -55,24 +55,23 @@
                 <span class="btn-xl btn-primary btn">{{ _('Show Menu') }}</span>
             </a>
             @endif
-            <tbody id='myBody'>
+            <tbody>
             <tr>
                 <td>
                     <select class="form-control" id="select-category">
                         <option value="null">{{ __('Choose category') }}</option>
-                        @foreach ($listCategory as $category)
+                        @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </td>
                 <td>
-                    <p class="form-control" id="choose-food"
-                       data-text="{{ _('Click here to choose food') }}">{{ _('Click here to choose food') }}</p>
-                    <select class="form-control" id="select-food" name="food_id" form="create-menu" size="5">
-                    </select>
+                    <select class="form-control" name="food_id" id="select-food" placeholder="{{ __('Choose Food') }}">
+					  <option value="null" selected="selected">{{ __('Choose Food') }}</option>
+					</select>
                 </td>
-                <td id="quantityselect">
-                    <input type="number" class="form-control" name="quantity"/>
+                <td class="text-center" id="quantityselect">
+                    <input type="number" class="form-control text-center" name="quantity"/>
                 </td>
             </tr>
             </tbody>
