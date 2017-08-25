@@ -11,30 +11,31 @@ trait AjaxSearchable
      * Search the result follow the ajax request and columns searchable
      *
      * @param \Illuminate\Database\Eloquent\Builder $query query model
+     * @param \Illuminate\Http\Request $request request value
      *
      * @return void
      */
-    public function scopeAjaxSearch(Builder $query, $hardkey, $softkey)
+    public function scopeAjaxSearch(Builder $query, Request $request)
     {
         $table = $this->getTable();
         $query->select($this->getTable() . '.*');
         $this->ajMakeJoins($query);
-        foreach ($this->ajGetColumns() as $column) {
-            if ($table == 'foods') {
-                switch ($column) {
-                    case 'foods.category_id' :
-                        $query->Where($column, "=", "$hardkey");
+        foreach ($request->all() as $key => $value) {
+            foreach ($this->ajGetColumns() as $column) {
+                if ($table.'.'.$key == $column) {
+                    if (strpos($key, '_id')>-1) {
+                        $query->Where($column, "=", "$value");
                         break;
-                    default:
-                        $query->orWhere($column, "LIKE", "%$softkey%");
-                        break;
+                    }
+                    $query->Where($column, "LIKE", "%$value%");
+                    break;
                 }
             }
         }
     }
 
     /**
-     * Get columns searchable
+     * Get columns ajaxSearchable
      *
      * @return mixed
      */
