@@ -25,7 +25,7 @@ class DailyMenuCreateRequest extends FormRequest
     {
         return [
             'date' => 'required',
-            'food_id' => 'required',
+            'food_id' => 'required|integer',
             'quantity' => 'required|integer|min:1'
         ];
     }

@@ -58,7 +58,7 @@
             <tbody>
             <tr>
                 <td>
-                    <select class="form-control" id="select-category">
+                    <select class="form-control" name="category_id" id="select-category">
                         <option value="null">{{ __('Choose category') }}</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
