@@ -32,7 +32,7 @@ abstract class DuskTestCase extends BaseTestCase
         // return RemoteWebDriver::create(
         //     'http://localhost:9515', DesiredCapabilities::chrome()
         // );
-        $options = (new ChromeOptions)->addArguments(['--headless']);
+         $options = (new ChromeOptions)->addArguments(['--headless']);
 
     return RemoteWebDriver::create(
         'http://localhost:9515', DesiredCapabilities::chrome()->setCapability(

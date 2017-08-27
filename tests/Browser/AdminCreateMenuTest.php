@@ -52,6 +52,7 @@ class AdminCreateMenuTest extends DuskTestCase
                     ]);
             $elementSelect = 'tbody tr td:nth-child(2) span:nth-child(1)';
             $browser->select('category_id')
+                    ->waitFor(null, '1')
                     ->click($elementSelect)
                     ->waitFor(null, '1')
                     ->screenshot('AdminCreateMenu-CategorySelected');
@@ -86,6 +87,50 @@ class AdminCreateMenuTest extends DuskTestCase
                     ->assertSee('The food id must be an integer.')
                     ->assertSee('The quantity field is required.')
                     ->screenshot('AdminCreateMenu-Validation');
+        });
+    }
+
+    /**
+     * @group dailymenu
+     *
+     * Test input date invalid.
+     *
+     * @return void
+     */
+    public function testInvalidDateInput()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(1)
+                    ->visit('/daily-menus/create')
+                    ->script([
+                        "date = new Date(1995,03,29)",
+                        "document.querySelector('#chooser-date').value = date.toJSON().slice(0,10)"
+                    ]);
+            $browser->press('Add To Menu')
+                    ->waitFor(null, '1')
+                    ->assertSee('Please enter a valid value.');
+        });
+    }
+
+    /**
+     * @group dailymenu
+     *
+     * Test input date < current date.
+     *
+     * @return void
+     */
+    public function testInputDateLowerThanCurrentDate()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(1)
+                    ->visit('/daily-menus/create')
+                    ->resize(1920, 1080)
+                    ->script([
+                        "date = new Date(2008,09,03)",
+                        "document.querySelector('#chooser-date').value = date.toJSON().slice(0,10)"
+                    ]);
+            $browser->waitFor(null, '1')
+                    ->assertSourceHas('id="add-row" class="btn btn-primary" value="Add To Menu" disabled="disabled"');
         });
     }
 
@@ -157,6 +202,7 @@ class AdminCreateMenuTest extends DuskTestCase
                     ]);
             $elementSelect = 'tbody tr td:nth-child(2) span:nth-child(1)';
             $browser->select('category_id')
+                    ->waitFor(null, '1')
                     ->click($elementSelect)
                     ->waitFor(null, '1')
                     ->screenshot('AdminCreateMenu-CategorySelected');
@@ -165,9 +211,9 @@ class AdminCreateMenuTest extends DuskTestCase
                     ->waitFor(null, '1')
                     ->screenshot('AdminCreateMenu-FoodSelected')
                     ->type('quantity', 5)
-                    ->press('Cancel')
+                    ->click('#clear-input')
                     ->assertInputValue('date', null)
-                    ->assertInputValue('food_id', null)
+                    ->assertSelected('#select-food', null)
                     ->assertInputValue('quantity', null);
         });
     }
