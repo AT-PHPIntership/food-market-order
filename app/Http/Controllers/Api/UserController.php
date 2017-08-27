@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Api\UserUpdateRequest;
 use Illuminate\Http\Request;
+use App\User;
+use App\Http\Requests\Api\UserRegisterRequest;
 
 class UserController extends ApiController
 {
@@ -42,11 +43,11 @@ class UserController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserUpdateRequest $request request create
+     * @param UserRegisterRequest $request request store data user
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserUpdateRequest $request)
+    public function store(UserRegisterRequest $request)
     {
         $user = $this->user->create($request->all());
         if (!$user) {
@@ -59,9 +60,9 @@ class UserController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param int $id id user
+     * @param Request $request request get user information
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function show(Request $request)
     {

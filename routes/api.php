@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->group(function () {
 
-    Route::get('/user', 'Api\UserApiController@show');
+    Route::get('/user', 'Api\UserController@show');
 
 });
 
-Route::post('/user/create', 'Api\UserApiController@store');
+Route::post('/user/create', 'Api\UserController@store');

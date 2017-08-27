@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 
 class UserRegisterRequest extends FormRequest
 {
@@ -39,10 +40,6 @@ class UserRegisterRequest extends FormRequest
      */
     public function response(array $errors)
     {
-        if ($this->expectsJson()) {
-            return new JsonResponse($errors, 422);
-        }
-
-        return response()->json($errors);
+        return new JsonResponse($errors, 422);
     }
 }
