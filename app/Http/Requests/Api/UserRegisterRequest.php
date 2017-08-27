@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 
-class UserCreateApiRequest extends FormRequest
+class UserRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -39,10 +40,6 @@ class UserCreateApiRequest extends FormRequest
      */
     public function response(array $errors)
     {
-        if ($this->expectsJson()) {
-            return new JsonResponse($errors, 422);
-        }
-
-        return response()->json($errors);
+        return new JsonResponse($errors, 422);
     }
 }
