@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class MaterialUpdateRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class MaterialUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:6|max:100',
+            'name' => 'required|min:6|unique:materials,name,'.$this->id.',id',
             'category_id' => 'required',
             'supplier_id' => 'required',
             'description' => 'required|min:10|max:300',
