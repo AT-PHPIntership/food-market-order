@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderItem;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Mockery\Exception;
 
 class OrderController extends Controller
@@ -29,29 +31,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request Request from client
-     *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $orders = $this->order;
-        // Filter date and key input
-        if ($request->has('date')) {
-            $orders = $orders->with('user')
-                ->whereDate('updated_at', '=', $request->date)
-                ->orWhereDate('created_at', '=', $request->date)
-                ->orWhereDate('trans_at', '=', $request->date);
-        } elseif ($request->has('keyword')) {
-            $orders = $orders->whereHas('user', function ($query) use ($request) {
-                    $query->where('full_name', 'like', '%'.$request->keyword.'%');
-            })
-                ->orWhere('custom_address', 'like', '%'.$request->keyword.'%')
-                ->orWhere('payment', 'like', '%'.$request->keyword.'%');
-        } else {
-            $orders = $orders->with('user');
-        }
-        $orders = $orders->paginate(Order::ITEMS_PER_PAGE);
+        $orders = $this->order->search()->paginate(Order::ITEMS_PER_PAGE);
         return view('orders.index', ['orders' => $orders]);
     }
 
@@ -100,5 +84,18 @@ class OrderController extends Controller
             flash(__('Order Not Found'))->error()->important();
         }
         return back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id It is id of order need show detail
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $order = $this->order->with('orderItems.itemtable')->with('user')->findOrFail($id);
+        return view('orders.show', ['order' => $order]);
     }
 }

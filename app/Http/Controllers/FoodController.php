@@ -10,6 +10,7 @@ use Image;
 use Storage;
 use App\Http\Requests\FoodCreateRequest;
 use File;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FoodController extends Controller
 {
@@ -28,11 +29,17 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request request value
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $foods = $this->food->with('category')->paginate(Food::ITEMS_PER_PAGE);
+        if ($request->ajax()) {
+            $foods = $this->food->ajaxSearch($request)->paginate($this->food->ITEMS_PER_PAGE);
+            return response()->json($foods);
+        }
+        $foods = $this->food->search()->paginate(Food::ITEMS_PER_PAGE);
         return view('foods.index', ['foods' => $foods]);
     }
 
@@ -58,10 +65,15 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->food->findOrFail($id)->delete()) {
-            flash(__('Delete Food Success'))->success()->important();
-        } else {
-            flash(__('Delete Food Error'))->error()->important();
+        try {
+            $food = $this->food->findOrFail($id);
+            if ($food->delete()) {
+                flash(__('Delete Food Success'))->success()->important();
+            } else {
+                flash(__('Delete Food Errors'))->error()->important();
+            }
+        } catch (ModelNotFoundException $ex) {
+            flash(__('Food Not Found!'))->error()->important();
         }
         return redirect()->route('foods.index');
     }
