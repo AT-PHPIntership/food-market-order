@@ -22,13 +22,8 @@
                 {{ csrf_field() }}
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="text-center">
-                        @if(!isset($user->image))
-                            <img src="https://bootdey.com/img/Content/user-453533-fdadfd.png"
-                                 class="avatar img-circle img-thumbnail" alt=" avatar">
-                        @else
-                            <img src="/images/users/{{ $user->image }}" class="avatar img-circle img-thumbnail"
-                                 alt=" avatar">
-                        @endif
+                        <img src="{{ $user->image }}" class="avatar img-circle img-thumbnail"
+                             alt=" avatar">
                         <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">{{ __('Upload Image') }}</h6>
                         <input type="file" name="image" class="text-center center-block well well-sm">
 
