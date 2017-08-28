@@ -76,6 +76,28 @@ class DeleteMaterialTest extends DuskTestCase
     }
 
     /**
+     * A Dusk test Button Cancel.
+     *
+     * @return void
+     */
+    public function testButtonCancel()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->makeData(5);
+            $browser->loginAs(User::find(1))
+                ->resize(1920, 1080)
+                ->visit('/materials');
+            DB::table('materials')->delete(2);
+            $browser->click('.table tbody tr:nth-child(2) td:nth-child(7) .fa-trash')
+                ->waitFor(null, '1')
+                ->assertSee('Delete Material')
+                ->assertSee('Are you sure delete Material?')
+                ->click('#modal-confirm-footer .btn-danger')
+                ->assertPathIs('/materials');
+        });
+    }
+
+    /**
      * Make data for test.
      *
      * @return void
