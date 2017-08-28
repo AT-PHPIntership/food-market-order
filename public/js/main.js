@@ -32,27 +32,6 @@ function callAjax($data, $eventTarget, $url, $method) {
         }
     });
 }
-function callAjaxForCreateMenu($url, $categoryId) {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-        }
-    });
-    $.ajax({
-        type: "GET",
-        url: $url,
-        data: {
-            category_id: $categoryId
-        },
-        success: function (data) {
-            data["data"].forEach(function (foodElement) {
-                //create food select
-                let $foodOption = $("<option>", {"text": foodElement["name"], "value": foodElement["id"]});
-                $('#select-food').append($foodOption);
-            })
-        }
-    });
-}
 // Handle Ajax response with @param:
 // data: response message from server
 // status: response status from server
@@ -88,6 +67,21 @@ function handleAjaxResponse(data, status, $eventTarget) {
     }
 }
 
+//for select2
+function formatSelectList (option) {
+    if (option.loading) return option.text;
+
+    var markup = '<div class="clearfix">' +
+    '<div class="col-sm-10">' + option.name + '</div>';
+
+    markup += '</div>';
+
+    return markup;
+}
+
+function formatSelection (option) {
+    return option.name || option.text;
+}
 $(document).ready(function() {
     //For dailyMenu
     /**
@@ -168,33 +162,11 @@ $(document).ready(function() {
         });
     }
     //For Create DailyMenu
-    //value to get page in selectbox
-    var $i = 1;
-    $('#select-food').hide();
-    $('#choose-food').click(function () {
-        $('#select-food').toggle();
-    })
-    $('#select-food').change(function (e) {
-        $('#select-food').toggle();
-        $('#choose-food').html($('#select-food option:selected').text());
-    });
-    //add event for scroll in select box
-    $('#select-food').scroll(function () {
-        if ($(this)[0].scrollHeight - $(this).scrollTop() <= $(this).outerHeight()) {
-            $i += 1;
-            //set url of pagination
-            $currentUrl = window.location.href;
-            if ($currentUrl.indexOf("date") > 0) {
-                $url = $currentUrl.substr(0, $currentUrl.length - 16);
-            } else {
-                $url = $currentUrl;
-            }
-            $url = $url + "?page=" + $i;
-            $categoryId = $('#select-category').find(":selected").val();
-            callAjaxForCreateMenu($url, $categoryId);
-        }
-    });
-
+    $('#select-food').empty()
+                    .append('<option selected="selected" value="null">'
+                        + $('#select-food').attr('placeholder')
+                        +'</option>'
+                    );
     /**
      * Get Menu Date and Current Date To Check Add item permission
      */
@@ -214,26 +186,45 @@ $(document).ready(function() {
     /**
      * Get Category and send ajax request to server
      */
-    $selectCate = document.getElementById("select-category");
     $('#select-category').change(function (e) {
-        //set page of paginate = 1
-        $i = 1;
         $('#select-food').empty();
-        $('#choose-food').html($('#choose-food').attr("data-text"));
-        if (window.location.href.indexOf("create") > 0) {
-            $url = window.location.href;
-        } else {
-            $url = window.location.href + "/create";
-        }
+        $url = foodURLs.list_food_by_category;
         $categoryId = e.target.options[e.target.selectedIndex].value;
-        callAjaxForCreateMenu($url, $categoryId);
+        $("#select-food").select2({
+          placeholder: 'Choose Food',
+          theme: "bootstrap",
+          ajax: {
+            url: $url,
+            type: 'GET',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                name: params.term, // search term
+                page: params.page,
+                category_id: $categoryId
+              };
+            },
+            processResults: function (data) {
+              return {
+                results: data.data,
+                pagination: {
+                  more: (data.current_page<data.last_page)?(true):(false)
+                }
+              };
+            },
+            cache: true
+          },
+          escapeMarkup: function (markup) { return markup; },
+          templateResult: formatSelectList,
+          templateSelection: formatSelection
+        });
     });
     /**
      * Btn Cancel clear data input
      */
      $('#clear-input').click(function (e) {
         $('#select-food').empty();
-        $('#choose-food').html($('#choose-food').attr("data-text"));
         $('#create-menu')[0].reset();
      })
     //End for create dailyMenu
@@ -258,13 +249,123 @@ $(document).ready(function() {
         });
     };
     $('.btn-confirm').bind("click", confirm);
-    $('#date-sort').blur(function () {
-        window.location = "/" + $(this).attr("data-table") + "/?date=" + $(this).val();
-    });
-    $('#text-sort').change(function () {
-        window.location = "/" + $(this).attr("data-table") + "?keyword=" + $(this).val();
-    });
     $('.status-order').change(confirm);
+
+    // Change quantity order
+    $('.quantity-order-item').change(function () {
+
+        var price = $(this).parent().parent().find('.priceItem').html();
+        var payment = 0;
+        var total = $(this).parent().parent().find('.totalItem');
+        total.html(Number(this.value * price).toLocaleString('vi'));
+        $('tbody tr .totalItem').each(function() {
+            payment += Number($(this).html());
+        });
+        $('#payment-order').html(payment);
+    });
+    $('#alert-detail-order').hide();
+    $('.close').click(function() {
+        $('.alert').hide();
+    })
+    function showArlert(message, status) {
+        if (status == "success"){
+            $('.alert').removeClass('alert-danger');
+            $('.alert').addClass('alert-success');
+        } else {
+            $('.alert').removeClass('alert-success');
+            $('.alert').addClass('alert-danger');
+        }
+        $('.alert .content-alert').html(message);
+        $('.alert').show();
+    }
+
+    $('.quantity-order-item').blur(function (e) {
+        e.preventDefault();
+        var quantityBackUp = $(this).parent().parent().find('.quantity-back-up');
+        var quantity = this;
+        var title = $(this).attr("data-title");
+        var body = '<p>' + $(this).attr("data-confirm") + '</p>';
+        var id = $(this).attr("data-id");
+        $('#modal-confirm-title').html(title);
+        $('#modal-confirm-body').html(body);
+        $('#modal-confirm').modal("show");
+        $('#btn-modal-submit').one("click", function () {
+            var data = {"quantity":quantity.value};
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "PUT",
+                url: "/orderitems/"+id,
+                data: data,
+                success: function(data, status) {
+                    if (status == "success") {
+                        $(quantityBackUp).val($(quantity).val());
+                        showArlert(data["message"],status)
+                        $('#modal-confirm').modal("hide");
+                    } else {
+                        showArlert(data["message"],status)
+                        $('#modal-confirm').modal("hide");
+                    }
+                },
+                error: function(data, status) {
+                    showArlert(data["message"],status)
+                    $('#modal-confirm').modal("hide");
+                }
+            });
+
+        });
+        $('#modal-confirm').on("hidden.bs.modal", function () {
+            $('#btn-modal-submit').off("click");
+            $(quantity).val($(quantityBackUp).val());
+            $(quantity).change();
+        });
+    });
+
+    // Delete Order Item
+    $('.delete-order-item').click(function () {
+        var parent = $(this).parent().parent();
+        var title = $(this).attr("data-title");
+        var body = '<p>' + $(this).attr("data-confirm") + '</p>';
+        var id = $(this).attr("data-id");
+        $('#modal-confirm-title').html(title);
+        $('#modal-confirm-body').html(body);
+        $('#modal-confirm').modal("show");
+        $('#btn-modal-submit').one("click", function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "DELETE",
+                url: "/orderitems/"+id,
+                success: function(data, status) {
+                    if (status == "success") {
+                        parent.remove();
+                        $('.quantity-order-item').change();
+                        showArlert(data["message"],status);
+                        $('#modal-confirm').modal("hide");
+                    } else {
+                        showArlert(data["message"],status);
+                        $('#modal-confirm').modal("hide");
+                    }
+                },
+                error: function(data, status) {
+                    showArlert(data.responseJSON["message"],status)
+                    $('#modal-confirm').modal("hide");
+                }
+            });
+
+        });
+        $('#modal-confirm').on("hidden.bs.modal", function () {
+            $('#btn-modal-submit').off("click");
+            $(quantity).val($(quantityBackUp).val());
+            $(quantity).change();
+        });
+    })
 });
 $('#flash-overlay-modal').modal();
     

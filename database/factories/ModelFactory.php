@@ -20,8 +20,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'is_admin' => random_int(0,1),
-        'is_active' => random_int(0,1),
-        'remember_token' => str_random(10),
+        'is_active' => random_int(0,1)
     ];
 });
 $factory->define(App\Category::class, function (Faker\Generator $faker) {
@@ -74,7 +73,7 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
         'updated_at' => $faker->dateTime,
         'trans_at' => $faker->dateTime,
         'custom_address' => $faker->paragraph,
-        'payment' => 10000,
+        'total_price' => 10000,
         'status' => random_int(0, 3)
     ];
 });

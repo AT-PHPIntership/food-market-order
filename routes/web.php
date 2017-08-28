@@ -11,24 +11,41 @@
 |
 */
 
+# API document
+Route::get('/api-docs', function () {
+    return view('api_docs');
+});
+Route::get('/api-doc-builders', function () {
+    return view('api-doc-builders.index');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('users', 'UserController');
+# Food admin routes
+Route::middleware(['web', 'auth'])->group(function () {
 
-Route::resource('categories', 'CategoryController');
+    Route::resource('users', 'UserController');
 
-Route::resource('suppliers', 'SupplierController');
+    Route::resource('categories', 'CategoryController');
 
-Route::resource('daily-menus', 'DailyMenuController');
+    Route::resource('suppliers', 'SupplierController');
 
-Route::resource('foods', 'FoodController');
+    Route::resource('daily-menus', 'DailyMenuController');
 
-Route::resource('materials', 'MaterialController');
+    Route::resource('foods', 'FoodController');
 
-Route::resource('orders', 'OrderController');
+    Route::resource('materials', 'MaterialController');
+
+    Route::resource('orders', 'OrderController');
+
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+});
+
+Route::resource('orderitems', 'OrderItemController',['only' => [
+    'destroy', 'update'
+]]);
 
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

@@ -18,4 +18,14 @@ class OrderItem extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * OrderItem has one Order
+     *
+     * @return mixed
+     */
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
 }
