@@ -17,6 +17,7 @@ Get infomation about a food
         "category": {
         "id": 9,
         "name": "Balistreri, Schaden and Swaniawski"
+        }
     },
     "susccess": true
 }
