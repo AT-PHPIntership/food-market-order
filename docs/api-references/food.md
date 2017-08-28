@@ -15,8 +15,8 @@ Get infomation about a food
         "description": "descrition about material",
         "image": "http://food-ordermatrket/image_name.jpg",
         "category": {
-        "id": 9,
-        "name": "Balistreri, Schaden and Swaniawski"
+            "id": 9,
+            "name": "Balistreri, Schaden and Swaniawski"
         }
     },
     "susccess": true
