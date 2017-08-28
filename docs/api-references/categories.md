@@ -5,6 +5,11 @@
 /categories
 ```
 Get all categories list
+#### Request Header
+
+| Key | Value |
+|---|---|
+|Accept|application/json
 
 #### Sample Response
 ```json
@@ -104,38 +109,31 @@ Get all categories list
 ```
 /categories/{id}
 ```
-Get all information about this category
+Get all informations about this category
+#### Request Header
+| Key | Value |
+|---|---|
+|Accept|application/json
 
 #### Sample Response
 ```json
 {
-    "total": 3,
-    "per_page": 15,
-    "current_page": 1,
-    "last_page": 1,
-    "next_page_url": null,
-    "path": "http://link-to-host.com/api/categories/12",
-    "prev_page_url": null,
-    "from": 1,
-    "to": 3,
-    "data": [
-        {
-            "id": 12,
-            "name": "Kane Dickinson",
-            "description": "Possimus reiciendis aspernatur ab perferendis molestiae. Assumenda ex quia voluptas sint nam nulla. Commodi nesciunt eos et iure qui voluptatem."
-        }
-    ],
+    "id": 12,
+    "name": "Rice PLC",
+    "description": "Maxime maxime molestiae fugit culpa. Minima vel dolor sed voluptatum aut dignissimos est. Qui eos expedita quia accusantium.",
     "success": true
 }
-```
-
 ```
 
 ### `GET` Foods by Category
 ```
 /categories/{id}/foods
 ```
-Get all food in this category
+Get all foods by category id was given
+#### Request Header
+| Key | Value |
+|---|---|
+|Accept|application/json
 
 #### Sample Response
 ```json
@@ -170,6 +168,60 @@ Get all food in this category
             "id": 24,
             "name": "Prof. Dorian Sporer",
             "category_id": 12,
+            "price": "20.00",
+            "description": "Architecto atque expedita dicta odio magni. Et blanditiis saepe aut. Enim ut error maxime aut id cum. Labore quo vero alias blanditiis.",
+            "image": "http://link-to-host.com/images/foods/http://lorempixel.com/640/480/?14987"
+        }
+    ],
+    "success": true
+}
+```
+### `GET` Materials by Category
+```
+/categories/{id}/materials
+```
+Get all materials by category id was given
+#### Request Header
+| Key | Value |
+|---|---|
+|Accept|application/json
+
+#### Sample Response
+```json
+{
+    "total": 3,
+    "per_page": 15,
+    "current_page": 1,
+    "last_page": 1,
+    "next_page_url": null,
+    "path": "http://link-to-host.com/api/categories/12/materials",
+    "prev_page_url": null,
+    "from": 1,
+    "to": 3,
+    "data": [
+        {
+            "id": 2,
+            "name": "Kane Dickinson",
+            "category_id": 12,
+            "supplier_id": 5,
+            "price": "22.00",
+            "description": "Possimus reiciendis aspernatur ab perferendis molestiae. Assumenda ex quia voluptas sint nam nulla. Commodi nesciunt eos et iure qui voluptatem.",
+            "image": "http://link-to-host.com/images/foods/http://lorempixel.com/640/480/?44506"
+        },
+        {
+            "id": 13,
+            "name": "Alex Tillman",
+            "category_id": 12,
+            "supplier_id": 6,
+            "price": "83.00",
+            "description": "Laudantium at autem ipsa odio omnis ut explicabo. Dignissimos sint libero sed mollitia repudiandae voluptatem rerum eligendi.",
+            "image": "http://link-to-host.com/images/foods/http://lorempixel.com/640/480/?46294"
+        },
+        {
+            "id": 15,
+            "name": "Prof. Dorian Sporer",
+            "category_id": 12,
+            "supplier_id": 2,
             "price": "20.00",
             "description": "Architecto atque expedita dicta odio magni. Et blanditiis saepe aut. Enim ut error maxime aut id cum. Labore quo vero alias blanditiis.",
             "image": "http://link-to-host.com/images/foods/http://lorempixel.com/640/480/?14987"
