@@ -17,6 +17,8 @@ class Order extends Model
     const STATUS_APPROVED = 2;
     const STATUS_FINISHED = 3;
 
+    protected $fillable = ['id', 'user_id', 'trans_at', 'custom_address', 'status'];
+
     /**
      * Searchable rules.
      *
