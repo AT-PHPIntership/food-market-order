@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\Api\UserRegisterRequest;
+use Illuminate\Http\Response;
 
 class UserController extends ApiController
 {
@@ -51,10 +52,10 @@ class UserController extends ApiController
     {
         $user = $this->user->create($request->all());
         if (!$user) {
-            return response()->json(['success' => 'false', 'message' => 'Cannot registry user right now!, please try again later!'], 500);
-        } else {
-            return response()->json(['success' => 'true', 'message' => 'Registry successfully!, please login and enjoy!'], 200);
+            return response()->json(['success' => false, 'message' => 'Cannot registry user right now!, please try again later!'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
+        return response()->json(['data' => $user, 'success' => true, 'message' => 'Registry successfully!, please login and enjoy!'], Response::HTTP_OK);
     }
 
     /**
@@ -66,7 +67,13 @@ class UserController extends ApiController
      */
     public function show(Request $request)
     {
-        return $request->user();
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json(['data' => $user,'success' => true], Response::HTTP_OK);
     }
 
     /**
