@@ -41,7 +41,7 @@ Get all daily menu list
 ```
 /daily-menus/{date}
 ```
-Get all information about daily menu was given by date
+Get all informations about daily menu was given by date
 #### Request Header
 | Key | Value |
 |---|---|
