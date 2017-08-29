@@ -83,6 +83,8 @@ function formatSelection (option) {
     return option.name || option.text;
 }
 $(document).ready(function() {
+    //apply select2 for select tag
+    $('select').select2({theme: "bootstrap"});
     //For dailyMenu
     /**
      *
