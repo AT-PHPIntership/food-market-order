@@ -15,16 +15,16 @@ Get infomation about a food
 ```json
 {
     "data": {
-    "id": 123,
-    "name": "Foooood",
-    "category_id": 2,
-    "price": 1000,
-    "description": "",
-    "image": "http://link-to-image.com/image_name.npg",
-    "category": {
-        "id": 9,
-        "name": "Balistreri, Schaden and Swaniawski"
-    }
+        "id": 123,
+        "name": "Foooood",
+        "category_id": 2,
+        "price": 1000,
+        "description": "",
+        "image": "http://link-to-image.com/image_name.npg",
+        "category": {
+            "id": 9,
+            "name": "Balistreri, Schaden and Swaniawski"
+        }
     },
     "susccess": true
 }
