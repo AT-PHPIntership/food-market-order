@@ -4,6 +4,13 @@
 /foods/{id}
 ```
 Get infomation about a food
+
+#### Request Headers
+
+| Key | Value |
+|---|---|
+|Accept|application\json
+
 #### Response
 ```json
 {
@@ -27,6 +34,11 @@ Get infomation about a food
 /foods
 ```
 Get information list all foods
+#### Request Headers
+
+| Key | Value |
+|---|---|
+|Accept|application\json
 
 #### Response
 ```json
