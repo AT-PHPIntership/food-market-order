@@ -41,9 +41,9 @@ Registry a user
 | Key | Type | Required | Description |
 |---|---|---|---|
 | full_name | String | required | Name of user |
-| email | Email | required | email to login |
-| password | Password | required, least at 6 character | password |
-| password_confirmation | Password | required, map to password | password confirmation |
+| email | String | required | email to login |
+| password | String | required, least at 6 character | password |
+| password_confirmation | String | required | password confirmation |
 
 #### Request header
 | Key | Value |
@@ -93,9 +93,9 @@ Update profile of current user
 | birthday | Date | required | email to login |
 | gender | Integer | required | Default 0 : female, 1 : male  |
 | address | String | required | address of user |
-| phone_number | String | required, number | phone number of user |
-| password | Password | nullable, least at 6 character | password |
-| password_confirmation | Password | nullable, map to password | password confirmation |
+| phone_number | String | required | phone number of user |
+| password | String | nullable | password |
+| password_confirmation | String | nullable | password confirmation |
 
 #### Request header
 
