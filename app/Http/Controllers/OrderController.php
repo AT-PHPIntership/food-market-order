@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderItem;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Mockery\Exception;
 
 class OrderController extends Controller
@@ -82,5 +84,18 @@ class OrderController extends Controller
             flash(__('Order Not Found'))->error()->important();
         }
         return back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id It is id of order need show detail
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $order = $this->order->with('orderItems.itemtable')->with('user')->findOrFail($id);
+        return view('orders.show', ['order' => $order]);
     }
 }

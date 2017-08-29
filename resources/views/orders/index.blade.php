@@ -45,7 +45,7 @@
                                 <th class="col-md-2">{{ __('User Name') }}</th>
                                 <th class="col-md-2">{{ __('Transfer Date') }}</th>
                                 <th class="col-md-3">{{ __('Address') }}</th>
-                                <th class="col-md-1">{{ __('Payment') }}</th>
+                                <th class="col-md-1">{{ __('Total') }}</th>
                                 <th class="col-md-1">{{ __('Status') }}</th>
                                 <th class="col-md-2">{{ __('Action') }}</th>
                             </tr>
@@ -62,7 +62,7 @@
                                         <td>{{ $order->user->full_name }}</td>
                                         <td>{{ $order->trans_at }}</td>
                                         <td>{{ $order->custom_address }}</td>
-                                        <td>{{ number_format($order->payment,0,",",".") }} {{ __('VND') }}</td>
+                                        <td>{{ number_format($order->total_price,0,",",".") }} {{ __('VND') }}</td>
                                         <td>
                                             <select class="form-control status-order"
                                                     name="status"
@@ -84,11 +84,6 @@
                                                 <i class="fa fa-search-plus">
                                                 </i>
                                             </a>
-                                            <button class="btn-change-status btn-success btn btn-sm"
-                                                    data-title="{{ __('Confirm') }}"
-                                                    data-confirm="{{ __('Are you sure change status this?') }}">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                 </form>
                                 <form role="form" class="delete-item inline"
                                       action="{{ route('orders.destroy', $order->id) }}"

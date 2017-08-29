@@ -29,10 +29,16 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request request value
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $foods = $this->food->ajaxSearch($request)->paginate($this->food->ITEMS_PER_PAGE);
+            return response()->json($foods);
+        }
         $foods = $this->food->search()->paginate(Food::ITEMS_PER_PAGE);
         return view('foods.index', ['foods' => $foods]);
     }
