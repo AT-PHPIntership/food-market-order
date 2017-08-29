@@ -94,7 +94,7 @@ Update profile of current user
 | gender | Integer | required | Default 0 : female, 1 : male  |
 | address | String | required | address of user |
 | phone_number | String | required, number | phone number of user |
-| password | Password | n, least at 6 character | password |
+| password | Password | nullable, least at 6 character | password |
 | password_confirmation | Password | nullable, map to password | password confirmation |
 
 #### Request header
