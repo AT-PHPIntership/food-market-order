@@ -15,17 +15,17 @@ Get information about a current user login.
 ```json
 {
     "data": {
-                "id": 74,
-                "full_name": "dungvan2512",
-                "email": "dungvan@test.email.com",
-                "birthday": null,
-                "gender": 0,
-                "address": null,
-                "phone_number": null,
-                "image": "http://foodmarket.com/images/users/default.jpg",
-                "is_admin": 1,
-                "is_active": 0,
-            },
+        "id": 74,
+        "full_name": "dungvan2512",
+        "email": "dungvan@test.email.com",
+        "birthday": null,
+        "gender": 0,
+        "address": null,
+        "phone_number": null,
+        "image": "http://foodmarket.com/images/users/default.jpg",
+        "is_admin": 1,
+        "is_active": 0,
+    },
     "success": true
 }
 ```
