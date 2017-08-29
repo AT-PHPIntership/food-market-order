@@ -2,7 +2,7 @@
 
 ### `GET` User
 ```
-/api/user/
+/api/users/
 ```
 Get information about a current user login.
 
@@ -25,9 +25,6 @@ Get information about a current user login.
                 "image": "http://foodmarket.com/images/users/default.jpg",
                 "is_admin": 1,
                 "is_active": 0,
-                "created_at": "2017-08-23 04:13:40",
-                "updated_at": "2017-08-23 04:13:40",
-                "deleted_at": null
             },
     "success": true
 }
@@ -88,7 +85,7 @@ Registry a food
 ```
 /api/user/edit
 ```
-Registry a food
+Registry a user
 
 #### Parameters
 | Key | Type | Required | Description |
