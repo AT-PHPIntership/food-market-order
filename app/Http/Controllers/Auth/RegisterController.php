@@ -90,6 +90,7 @@ class RegisterController extends Controller
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
     }
+
     /**
      * Get the post register / login redirect path.
      *
