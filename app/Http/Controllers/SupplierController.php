@@ -54,7 +54,7 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      *
      * @param SupplierUpdateRequest $request Request from client
-     * @param int             $id      It is id of supplier need update
+     * @param int                   $id      It is id of supplier need update
      *
      * @return \Illuminate\Http\Response
      */

@@ -82,7 +82,7 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param CategoryUpdateRequest $request Request from client
-     * @param int             $id      It is id of category need update
+     * @param int                   $id      It is id of category need update
      *
      * @return \Illuminate\Http\Response
      */
