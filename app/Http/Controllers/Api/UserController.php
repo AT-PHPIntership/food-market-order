@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class UserController extends ApiController
@@ -37,6 +38,30 @@ class UserController extends ApiController
     {
         $request = $request;
     }
+
+    /**
+     * Login system and get token for client.
+     *
+     * @param \Illuminate\Http\Request $request request create
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function login(Request $request)
+    {
+        $http = new Client();
+        $response = $http->post(env('APP_URL').'/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'client_id' => 2,
+                'client_secret' => '9qVYHF8PXUJUKTv0pXPdfbdCeQ3m2BnuMBccW8PQ',
+                'username' => $request->email,
+                'password' => $request->password,
+                'scope' => '',
+            ],
+        ]);
+        return json_decode((string) $response->getBody(), true);
+    }
+
 
     /**
      * Display the specified resource.
