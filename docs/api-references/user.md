@@ -42,7 +42,7 @@ Registry a user
 |---|---|---|---|
 | full_name | String | required | Name of user |
 | email | String | required | email to login |
-| password | String | required, least at 6 character | password |
+| password | String | required | password |
 | password_confirmation | String | required | password confirmation |
 
 #### Request header
