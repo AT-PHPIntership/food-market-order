@@ -9,6 +9,8 @@ class OrderItem extends Model
 {
     use softDeletes;
 
+    protected $fillable = ['id', 'itemtable_id', 'order_id', 'itemtable_type', 'quantity'];
+
     /**
      * Material has many order items
      *

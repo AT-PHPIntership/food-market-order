@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Food;
+use App\Material;
 use App\Order;
+use App\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mockery\Exception;
 
 class OrderController extends ApiController
 {
@@ -16,13 +20,21 @@ class OrderController extends ApiController
     private $order;
 
     /**
+     * Variable common object Order
+     *
+     * @var OrderItem $orderItem
+     */
+    private $orderItem;
+
+    /**
      * OrderController constructor.
      *
      * @param Order $order It is param input constructors
      */
-    public function __construct(Order $order)
+    public function __construct(Order $order, OrderItem $orderItem)
     {
         $this->order = $order;
+        $this->orderItem = $orderItem;
     }
 
     /**
@@ -63,67 +75,82 @@ class OrderController extends ApiController
                     'custom_address' => $request->address_ship,
                     'status' => 1
                 ]);
-            dd($order);
+            if ($request->type == 'App\Food') {
+                $itemtable = new Food();
+            } else {
+                $itemtable = new Material();
+            }
+            foreach ($request->items as $item) {
+                $itemtable->findOrFail($item['id']);
+                $this->orderItem->create(
+                    [
+                        'itemtable_id' => $item['id'],
+                        'itemtable_type' => $request->input('type'),
+                        'quantity'=> $item['quantity'],
+                        'order_id' => $order->id
+                    ]
+                );
+            }
+            $order->updateTotalPrice();
             DB::commit();
-            return ['data' => $this->data];
-        } catch (EXCEPTION $e) {
+            return ['data' => $request->all()];
+        } catch (Exception $e) {
             DB::rollback();
-                    throw $e;
+            return null;
         }
-    //        return $request->all();
+        //    return $request->all();
     }
 
-/**
- * Display the specified resource.
- *
- * @param int $id id supplier
- *
- * @return \Illuminate\Http\Response
- */
-public
-function show($id)
-{
-    $id = $id;
-}
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id id supplier
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $id = $id;
+    }
 
-/**
- * Show the form for editing the specified resource.
- *
- * @param int $id id supplier
- *
- * @return \Illuminate\Http\Response
- */
-public
-function edit($id)
-{
-    $id = $id;
-}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id id supplier
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function edit($id)
+    {
+        $id = $id;
+    }
 
-/**
- * Update the specified resource in storage.
- *
- * @param \Illuminate\Http\Request $request request update
- * @param int $id id supplier update
- *
- * @return \Illuminate\Http\Response
- */
-public
-function update(Request $request, $id)
-{
-    $request = $request;
-    $id = $id;
-}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request request update
+     * @param int $id id supplier update
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function update(Request $request, $id)
+    {
+        $request = $request;
+        $id = $id;
+    }
 
-/**
- * Remove the specified resource from storage.
- *
- * @param int $id id delete
- *
- * @return \Illuminate\Http\Response
- */
-public
-function destroy($id)
-{
-    $id = $id;
-}
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id id delete
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function destroy($id)
+    {
+        $id = $id;
+    }
 }
