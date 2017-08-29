@@ -2,39 +2,40 @@
 
 ### `GET` User
 ```
-/api/users/
+/api/users/me
 ```
 Get information about a current user login.
 
 #### Request header
-```
-  "Accept": "application/json",
-  "Authorization": "{token_type} {access_token}"
-```
+| Key | Value |
+|---|---|
+| Accept | application/json |
+| Authorization | {token_type} {access_token} |
+
 #### Sample Response
 ```json
 {
-    "data": {
-        "id": 74,
-        "full_name": "dungvan2512",
-        "email": "dungvan@test.email.com",
-        "birthday": null,
-        "gender": 0,
-        "address": null,
-        "phone_number": null,
-        "image": "http://foodmarket.com/images/users/default.jpg",
-        "is_admin": 1,
-        "is_active": 0,
-    },
-    "success": true
+  "data": {
+    "id": 74,
+    "full_name": "dungvan2512",
+    "email": "dungvan@test.email.com",
+    "birthday": null,
+    "gender": 0,
+    "address": null,
+    "phone_number": null,
+    "image": "http://foodmarket.com/images/users/default.jpg",
+    "is_admin": 1,
+    "is_active": 0
+  },
+  "success": true
 }
 ```
 
 ### `Post` user
 ```
-/api/user/create
+/api/users
 ```
-Registry a food
+Registry a user
 
 #### Parameters
 | Key | Type | Required | Description |
@@ -45,47 +46,45 @@ Registry a food
 | password_confirmation | Password | required, map to password | password confirmation |
 
 #### Request header
-```
-  "Accept": "application/json",
-  "Authorization": "{token_type} {access_token}"
-```
+| Key | Value |
+|---|---|
+| Accept | application/json |
+|Content-Type| application/json |
 
 #### Sample Request body
 ```json
 {
-   "full_name": "Van Duc Dung",
-   "email": "vandung@test.email.com",
-   "password": "123456",
-   "password_confirmation": "123456"
+  "full_name": "Van Duc Dung",
+  "email": "vandung@test.email.com",
+  "password": "123456",
+  "password_confirmation": "123456"
 }
 ```
 
 #### Sample Response
 ```json
 {
-    "data": {
-        "id": 74,
-                        "full_name": "Van Duc Dung",
-                        "email": "vandung@test.email.com",
-                        "birthday": null,
-                        "gender": 0,
-                        "address": null,
-                        "phone_number": null,
-                        "image": "http://foodmarket.com/images/users/default.jpg",
-                        "is_admin": 0,
-                        "is_active": 0,
-                        "created_at": "2017-08-23 04:13:40",
-                        "updated_at": "2017-08-23 04:13:40",
-                        "deleted_at": null
-    },
-    "success": true
+  "data": {
+    "id": 74,
+    "full_name": "dungvan2512",
+    "email": "dungvan@test.email.com",
+    "birthday": null,
+    "gender": 0,
+    "address": null,
+    "phone_number": null,
+    "image": "http://foodmarket.com/images/users/default.jpg",
+    "is_admin": 1,
+    "is_active": 0
+  },
+  "success": true,
+  "message": "Registry successfully!, please login and enjoy!"
 }
 ```
 ### `Put` user
 ```
-/api/user/edit
+/api/users/me
 ```
-Registry a user
+Update profile of current user
 
 #### Parameters
 | Key | Type | Required | Description |
@@ -99,26 +98,28 @@ Registry a user
 | password_confirmation | Password | nullable, map to password | password confirmation |
 
 #### Request header
-```
-  "Content-Type": "application/json",
-  "Accept": "application/json",
-  "Authorization": "{token_type} {access_token}"
-```
+
+| Key | Value |
+|---|---|
+| Accept | application/json |
+|Content-Type| application/json |
+| Authorization | {token_type} {access_token} |
 
 #### Sample Request body
 ```json
 {
-"full_name":"dungvan25123",
-"birthday":"1994-03-12",
-"gender":1,
-"address":"DienDuong"
-,"phone_number":"123456789"	
+  "full_name":"dungvan25123",
+  "birthday":"1994-03-12",
+  "gender":1,
+  "address":"DienDuong",
+  "phone_number":"123456789"	
 }
 ```
 
 #### Sample Response
 ```json
 {
-    "success": true
+    "success": true,
+    "message": "Update successfully!"
 }
 ```
