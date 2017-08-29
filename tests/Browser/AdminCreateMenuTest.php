@@ -102,12 +102,9 @@ class AdminCreateMenuTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
                     ->visit('/daily-menus/create')
-                    ->script([
-                        "date = new Date(1995,03,29)",
-                        "document.querySelector('#chooser-date').value = date.toJSON().slice(0,10)"
-                    ]);
-            $browser->press('Add To Menu')
-                    ->waitFor(null, '1')
+                    ->click('#chooser-date')
+                    ->keys('#chooser-date', ['{ARROW_UP}', ''])
+                    ->click('#add-row')
                     ->assertSee('Please enter a valid value.');
         });
     }
@@ -125,12 +122,15 @@ class AdminCreateMenuTest extends DuskTestCase
             $browser->loginAs(1)
                     ->visit('/daily-menus/create')
                     ->resize(1920, 1080)
-                    ->script([
-                        "date = new Date(2008,09,03)",
-                        "document.querySelector('#chooser-date').value = date.toJSON().slice(0,10)"
-                    ]);
+                    ->click('#chooser-date')
+                    ->keys('#chooser-date', ['{ARROW_UP}', ''])
+                    ->keys('#chooser-date', ['{TAB}', ''])
+                    ->keys('#chooser-date', ['{ARROW_UP}', ''])
+                    ->keys('#chooser-date', ['{TAB}', ''])
+                    ->keys('#chooser-date', ['{ARROW_UP}', ''])
+                    ->keys('#chooser-date', ['{TAB}', '']);
             $browser->waitFor(null, '1')
-                    ->assertSourceHas('id="add-row" class="btn btn-primary" value="Add To Menu" disabled="disabled"');
+                    ->assertSourceHas('id="add-row" class="btn btn-primary" value="Add To Menu" disabled=""');
         });
     }
 
