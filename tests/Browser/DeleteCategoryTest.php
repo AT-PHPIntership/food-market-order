@@ -62,7 +62,7 @@ class DeleteCategoryTest extends DuskTestCase
                 ->visit('/categories');
             DB::table('categories')->delete(2);
             $element = '.dataTable tbody tr:nth-child(2)';
-            $browser->click($element. ' .fa-trash')
+            $browser->click($element. ' .btn-danger')
                 ->waitFor(null, '3')
                 ->assertSee('Delete Category')
                 ->assertSee('Are you want delete it?')
