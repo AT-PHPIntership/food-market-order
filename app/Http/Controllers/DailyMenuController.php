@@ -90,7 +90,7 @@ class DailyMenuController extends Controller
         $count = count($foods);
         DB::beginTransaction();
         try {
-            for($i = 0; $i < $count; $i++){
+            for ($i = 0; $i < $count; $i++) {
                 $matchDailyMenu = $matchDailyMenu = array('date' => $date, 'food_id' => $foods[$i]);
                 $this->dailyMenu->updateOrCreate($matchDailyMenu, ['quantity' => $quantities[$i]]);
             }
