@@ -9,7 +9,7 @@ use App\DailyMenu;
 use App\Http\Requests\DailyMenuUpdateItemRequest;
 use App\Category;
 use App\Food;
-use App\Http\Requests\DailyMenuCreateRequest;
+use Illuminate\Support\Facades\DB;
 
 class DailyMenuController extends Controller
 {
@@ -78,30 +78,42 @@ class DailyMenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param DailyMenuCreateRequest $request request value
+     * @param \Illuminate\Http\Request $request request value
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(DailyMenuCreateRequest $request)
+    public function store(Request $request)
     {
-        $date = $request['date'];
-        $foodId = $request['food_id'];
-        $quantity = $request['quantity'];
-        /**
-         * Check if food has existed in DB, if true then update new quantity,
-         * If false then add this food into menu
-         */
-        $matchDailyMenu = array('date' => $date, 'food_id' => $foodId);
-        $status = $this->dailyMenu->updateOrCreate($matchDailyMenu, ['quantity' => $quantity]);
-
-        if ($status) {
-            $request->session()->flash('message.level', 'success');
-            $request->session()->flash('message.content', __('Menu was successfully added!'));
-        } else {
-            $request->session()->flash('message.level', 'danger');
-            $request->session()->flash('message.content', __('Error'));
+        $date = $request->date;
+        $foods = $request->food_id;
+        $quantities = $request->quantity;
+        $count = count($foods);
+        DB::beginTransaction();
+        try {
+            for($i = 0; $i < $count; $i++){
+                $matchDailyMenu = $matchDailyMenu = array('date' => $date, 'food_id' => $foods[$i]);
+                $this->dailyMenu->updateOrCreate($matchDailyMenu, ['quantity' => $quantities[$i]]);
+            }
+            DB::commit();
+            $success = true;
+            $message = __('Menu was successfully added!');
+            $status = Response::HTTP_OK;
+        } catch (\Exception $e) {
+            $success = false;
+            DB::rollback();
+            $message = __('Has error during create new menu item!');
+            $status = Response::HTTP_NOT_FOUND;
+        } catch (ModelNotFoundException $ex) {
+            $success = false;
+            $message = __('Daily Menu Not Found');
+            $status = Response::HTTP_BAD_REQUEST;
+            DB::rollback();
         }
-        return redirect()->route('daily-menus.create', ['date' => $date]);
+        if ($success) {
+            return response()->json(['message' => $message, 'date' => $date], $status);
+        } else {
+            return response()->json(['message' => $message], $status);
+        }
     }
 
     /**

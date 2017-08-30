@@ -1,3 +1,45 @@
+/**
+ * Get Category and send ajax request to server
+ */
+function bindEventToSelect() {
+    $('.select-category').change(function (e) {
+        e.stopPropagation();
+        $selectFoodChild = $(e.target).parent().next().children('.select-food');
+        $selectFoodChild.empty();
+        $url = foodURLs.list_food_by_category;
+        $categoryId = e.target.options[e.target.selectedIndex].value;
+        $selectFoodChild.select2({
+          placeholder: 'Choose Food',
+          theme: "bootstrap",
+          ajax: {
+            url: $url,
+            type: 'GET',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                name: params.term, // search term
+                page: params.page,
+                category_id: $categoryId
+              };
+            },
+            processResults: function (data) {
+              return {
+                results: data.data,
+                pagination: {
+                  more: (data.current_page<data.last_page)?(true):(false)
+                }
+              };
+            },
+            cache: true
+          },
+          escapeMarkup: function (markup) { return markup; },
+          templateResult: formatSelectList,
+          templateSelection: formatSelection
+        });
+    });
+}
+
 function alertMessage($eventTarget, message) {
     var title = $eventTarget.attr('data-title');
     var body = '<p>'+message+'</p>'
@@ -83,6 +125,8 @@ function formatSelection (option) {
     return option.name || option.text;
 }
 $(document).ready(function() {
+    $stdRowCreateMenu = $('tbody tr:nth-child(1)').html();
+    $('tbody tr:nth-child(1)').find('.btn-success').hide();
     //Apply select2 for all selects tag
     $('select').select2({theme: "bootstrap"});
     //For dailyMenu
@@ -185,50 +229,76 @@ $(document).ready(function() {
             $('#add-row').prop("disabled", false);
         }
     })
-    /**
-     * Get Category and send ajax request to server
-     */
-    $('#select-category').change(function (e) {
-        $('#select-food').empty();
-        $url = foodURLs.list_food_by_category;
-        $categoryId = e.target.options[e.target.selectedIndex].value;
-        $("#select-food").select2({
-          placeholder: 'Choose Food',
-          theme: "bootstrap",
-          ajax: {
-            url: $url,
-            type: 'GET',
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-              return {
-                name: params.term, // search term
-                page: params.page,
-                category_id: $categoryId
-              };
-            },
-            processResults: function (data) {
-              return {
-                results: data.data,
-                pagination: {
-                  more: (data.current_page<data.last_page)?(true):(false)
-                }
-              };
-            },
-            cache: true
-          },
-          escapeMarkup: function (markup) { return markup; },
-          templateResult: formatSelectList,
-          templateSelection: formatSelection
-        });
-    });
+    bindEventToSelect();
     /**
      * Btn Cancel clear data input
      */
      $('#clear-input').click(function (e) {
-        $('#select-food').empty();
+        $('.select-food').empty();
         $('#create-menu')[0].reset();
+        $arrTR = $('tbody tr');
+        for (var i = 0; i < $arrTR.length - 1; i++) {
+            $arrTR[i].remove();
+        }
      })
+
+    //btn add new row
+    $('.btn-add-new-row').click(function() {
+        if( $('.btn-disable-row').css('display') == 'none' ){
+            $curTR = $(this).closest('tr');
+            $('tbody').prepend('<tr></tr>');
+            $firstElement = $('tbody tr:nth-child(1');
+            $firstElement.append($stdRowCreateMenu);
+            $firstElement.find('.btn-add-new-row').removeClass('btn-primary');
+            $firstElement.find('.btn-add-new-row').addClass('btn-warning');
+            $firstElement.find('.glyphicon').removeClass('glyphicon-plus ');
+            $firstElement.find('.glyphicon').addClass('glyphicon-minus');
+            $firstElement.find('.btn-add-new-row').click(function() {
+                $(this).closest('tr').remove();
+            })
+            $firstElement.find('.btn-disable-row').click(function() {
+                $parent = $(this).closest('tr');
+                console.log($parent.find('.select-food'), $parent.find('input'));
+                if ($parent.find('.select-food').val() && $parent.find('input').val()) {
+                    $parent.find('.select-category').prop('disabled', true);
+                    $parent.find('.select-food').prop('disabled', true);
+                    $parent.find('input').prop('disabled', true);
+                    $(this).hide();
+                } else {
+                    alertMessage($(this), $(this).attr('data-message'));
+                    $("#btn-modal-submit").next().hide();
+                }
+            })
+            bindEventToSelect();   
+        } else {
+            alertMessage($(this), $(this).attr('data-message'));
+            $("#btn-modal-submit").next().hide();
+        }
+    })
+    $('#create-menu').submit(function(e) {
+        e.preventDefault();
+        $('.select-food').prop('disabled', false);
+        $('input').prop('disabled', false);
+        $url = $(this).attr('action');
+        $.ajax({
+           type: "POST",
+           url: $url,
+           data: $('#create-menu').serializeArray(), // serializes the form's elements.
+           success: function(data)
+           {
+                alertMessage($(e.target), data['message']);
+                $("#btn-modal-submit").next().hide();
+                $newUrl = dailyMenuURLs.menu_detail_by_date.replace('date', data['date']);
+                window.setTimeout(function() {
+                    window.location = $newUrl;
+                }, 1000);
+           },
+           error: function(data){
+                alertMessage($(e.target), data['message']);
+                $("#btn-modal-submit").next().hide();
+          }
+        });
+    })
     //End for create dailyMenu
 
     /**
