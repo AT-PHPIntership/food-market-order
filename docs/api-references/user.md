@@ -76,8 +76,7 @@ Registry a user
     "is_admin": 1,
     "is_active": 0
   },
-  "success": true,
-  "message": "Registry successfully!, please login and enjoy!"
+  "success": true
 }
 ```
 ### `Put` user
@@ -119,7 +118,6 @@ Update profile of current user
 #### Sample Response
 ```json
 {
-    "success": true,
-    "message": "Update successfully!"
+    "success": true
 }
 ```
