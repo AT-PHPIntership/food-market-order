@@ -27,4 +27,3 @@ test:
     - php artisan dusk
     # Copy screenshots
     - cp -R tests/Browser/screenshots $CIRCLE_ARTIFACTS/screenshots
-    - cp -R storage/logs $CIRCLE_ARTIFACTS/logs
