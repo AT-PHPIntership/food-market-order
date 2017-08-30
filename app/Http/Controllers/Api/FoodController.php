@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use App\Food;
 use App\Http\Controllers\Controller;
 
-class FoodController extends Controller
+class FoodController extends ApiController
 {
     protected $food;
     
