@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\UserUpdateRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends ApiController
 {
@@ -65,15 +67,17 @@ class UserController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request update
-     * @param int                      $id      id user update
+     * @param UserUpdateRequest $request request update
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request)
     {
-        $request = $request;
-        $id = $id;
+        if ($request->user()->update($request->all())) {
+            return response()->json(['success' => 'true', 'message' => 'Update successfully!'], Response::HTTP_OK);
+        }
+
+        return response()->json(['success' => 'false', 'message' => 'Update Error!'], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
