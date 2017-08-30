@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class UserRegisterRequest extends FormRequest
 {
@@ -40,6 +41,6 @@ class UserRegisterRequest extends FormRequest
      */
     public function response(array $errors)
     {
-        return new JsonResponse($errors, 422);
+        return response()->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

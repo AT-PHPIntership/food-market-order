@@ -52,10 +52,10 @@ class UserController extends ApiController
     {
         $user = $this->user->create($request->all());
         if (!$user) {
-            return response()->json(['success' => false, 'message' => 'Cannot registry user right now!, please try again later!'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return response()->json(['data' => $user, 'success' => true, 'message' => 'Registry successfully!, please login and enjoy!'], Response::HTTP_OK);
+        return response()->json(['data' => $user, 'success' => true], Response::HTTP_OK);
     }
 
     /**
