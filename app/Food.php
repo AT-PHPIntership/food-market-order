@@ -10,7 +10,7 @@ class Food extends Model
 {
     use Searchable;
     use ajaxSearchable;
-    use softDeletes;
+    // use softDeletes;
 
     const ITEMS_PER_PAGE = 10;
     
