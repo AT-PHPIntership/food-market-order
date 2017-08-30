@@ -98,16 +98,16 @@ Vagrant.configure("2") do |config|
      echo "INSTALL bower"
      npm install -g bower
 
-     echo "INSTALL PHP-UNIT"
-     wget https://phar.phpunit.de/phpunit.phar
-     chmod +x phpunit.phar
-     sudo mv phpunit.phar /usr/bin/phpunit
-     sudo chown root:root /usr/bin/phpunit
-
      echo "INSTALL LARAVEL"
      composer global require "laravel/installer"
      echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
      source ~/.bashrc
+
+     echo "INSTALL GOOGLE DRIVER FOR DUSK TEST"
+     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+     sudo apt-get update && sudo apt-get install -y google-chrome-stable
+     sudo apt-get install -y xvfb
 
   SHELL
 end
