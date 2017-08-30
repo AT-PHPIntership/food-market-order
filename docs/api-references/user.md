@@ -90,7 +90,7 @@ Update profile of current user
 | Key | Type | Required | Description |
 |---|---|---|---|
 | full_name | String | required | Name of user |
-| birthday | Date | required | email to login |
+| birthday | String | required | email to login |
 | gender | Integer | required | Default 0 : female, 1 : male  |
 | address | String | required | address of user |
 | phone_number | String | required | phone number of user |
