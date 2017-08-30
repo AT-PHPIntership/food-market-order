@@ -125,8 +125,9 @@ function formatSelection (option) {
     return option.name || option.text;
 }
 $(document).ready(function() {
+    //get standard element to append new row for create daily menu
     $stdRowCreateMenu = $('tbody tr:nth-child(1)').html();
-    $('tbody tr:nth-child(1)').find('.btn-success').hide();
+    $('#create-menu-table tr:nth-child(1)').find('.btn-success').hide();
     //Apply select2 for all selects tag
     $('select').select2({theme: "bootstrap"});
     //For dailyMenu

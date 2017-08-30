@@ -43,7 +43,7 @@
                 <span class="btn-xl btn-primary btn">{{ _('Show Menu') }}</span>
             </a>
             @endif
-            <tbody>
+            <tbody id="create-menu-table">
             <tr>
                 <td>
                     <select class="form-control select-category required" required>
