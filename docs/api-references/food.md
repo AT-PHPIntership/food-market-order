@@ -31,7 +31,7 @@ Get infomation about a food
 ```
 ### `GET` List Foods
 ```
-/foods
+/api/foods
 ```
 Get information list all foods
 #### Request Headers
