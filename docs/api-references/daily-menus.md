@@ -39,7 +39,7 @@ Get all daily menu list
 
 ### `GET` Daily Menu Detail
 ```
-/daily-menus/{date}
+/api/daily-menus/{date}
 ```
 Get all informations about daily menu was given by date
 #### Request Header
