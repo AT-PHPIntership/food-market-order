@@ -29,7 +29,7 @@
                         </th>
                     </tr>
                     </thead>
-                    <form id="create-menu" method="POST" action="{{ route('daily-menus.store') }}" data-title="{{ __('Create New Menu') }}">
+                    <form id="create-menu" method="POST" action="{{ route('daily-menus.store') }}" data-title="{{ __('Create New Menu') }}" data-error="{{ __('Has error during create menu item, Are you sure that fill valid value into box?') }}">
                         {{ csrf_field() }}
                         <div class="form-group col-xs-4">
                             <label for="chooser-date">{{ _('Choose Date') }}: </label>
@@ -59,7 +59,7 @@
 					</select>
                 </td>
                 <td class="text-center">
-                    <input type="number" class="form-control text-center" name="quantity[]" form="create-menu" required>
+                    <input type="number" class="form-control text-center" name="quantity[]" form="create-menu" min="1" required>
                 </td>
                 <td class="text-center">
                     <span class="btn-xs btn btn-success btn-disable-row" data-title="{{ __('Add New Row')}}" data-message="{{ __('Please fill in all elements') }}"><i class = "glyphicon glyphicon-ok"></i></span>

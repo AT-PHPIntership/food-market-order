@@ -295,7 +295,7 @@ $(document).ready(function() {
                 }, 1000);
            },
            error: function(data){
-                alertMessage($(e.target), data['message']);
+                alertMessage($(e.target), $(e.target).attr('data-error'));
                 $("#btn-modal-submit").next().hide();
           }
         });

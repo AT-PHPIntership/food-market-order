@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\DailyMenu;
 use App\Http\Requests\DailyMenuUpdateItemRequest;
+use App\Http\Requests\DailyMenuCreateRequest;
 use App\Category;
 use App\Food;
 use Illuminate\Support\Facades\DB;
@@ -78,11 +79,11 @@ class DailyMenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request value
+     * @param DailyMenuCreateRequest $request request value
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DailyMenuCreateRequest $request)
     {
         $date = $request->date;
         $foods = $request->food_id;
