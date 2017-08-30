@@ -2,7 +2,7 @@
 
 ### `GET` List Category
 ```
-/categories
+/api/categories
 ```
 Get all categories list
 #### Request Header
@@ -107,7 +107,7 @@ Get all categories list
 
 ### `GET` Category Detail
 ```
-/categories/{id}
+/api/categories/{id}
 ```
 Get all informations about this category
 #### Request Header
@@ -118,16 +118,18 @@ Get all informations about this category
 #### Sample Response
 ```json
 {
-    "id": 12,
-    "name": "Rice PLC",
-    "description": "Maxime maxime molestiae fugit culpa. Minima vel dolor sed voluptatum aut dignissimos est. Qui eos expedita quia accusantium.",
+    "data": {
+        "id": 12,
+        "name": "Rice PLC",
+        "description": "Maxime maxime molestiae fugit culpa. Minima vel dolor sed voluptatum aut dignissimos est. Qui eos expedita quia accusantium."
+    },
     "success": true
 }
 ```
 
 ### `GET` Foods by Category
 ```
-/categories/{id}/foods
+/api/categories/{id}/foods
 ```
 Get all foods by category id was given
 #### Request Header
@@ -178,7 +180,7 @@ Get all foods by category id was given
 ```
 ### `GET` Materials by Category
 ```
-/categories/{id}/materials
+/api/categories/{id}/materials
 ```
 Get all materials by category id was given
 #### Request Header
