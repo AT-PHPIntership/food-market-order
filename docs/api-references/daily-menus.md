@@ -2,7 +2,7 @@
 
 ### `GET` List Daily Menu
 ```
-/daily-menus
+/api/daily-menus
 ```
 Get all daily menu list
 #### Request Header
