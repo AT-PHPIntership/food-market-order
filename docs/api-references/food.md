@@ -1,7 +1,7 @@
 ## Food Api
 ### `GET` Food
 ```
-/foods/{id}
+/api/foods/{id}
 ```
 Get infomation about a food
 
