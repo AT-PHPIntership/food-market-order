@@ -38,6 +38,27 @@ class Supplier extends Model
      */
     public function materials()
     {
-        return $this->hasMany('App\Material', 'category_id', 'id');
+        return $this->hasMany('App\Material', 'supplier_id', 'id');
+    }
+
+    /**
+     * This is a recommended way to declare event handlers
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * Register a deleting model event with the dispatcher.
+         *
+         * @param \Closure|string  $callback
+         *
+         * @return void
+         */
+        static::deleting(function ($supplier) {
+            $supplier->materials()->delete();
+        });
     }
 }
