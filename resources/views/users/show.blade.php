@@ -17,14 +17,9 @@
                         </div>
                         <div class="box-body">
                             <div class="col-md-4">
-                                @if(!isset($user->image))
-                                    <img alt="" title="" class="img-circle img-thumbnail isTooltip"
-                                         src="{{ asset('/images/users/default.jpg') }}"
-                                         data-original-title="Usuario">
-                                @else
-                                    <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip"
-                                         src="{{ asset('/images/users/'.$user->image) }}" data-original-title="Usuario">
-                                @endif
+                                <img alt="" title="" class="img-circle img-thumbnail isTooltip"
+                                     src="{{ $user->image }}"
+                                     data-original-title="Usuario">
                             </div>
                             <div class="col-md-8">
                                 <div class="table-responsive">
