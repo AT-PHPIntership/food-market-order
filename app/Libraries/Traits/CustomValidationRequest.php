@@ -4,7 +4,8 @@ namespace App\Libraries\Traits;
 
 use Illuminate\Http\Response;
 
-trait CustomValidationRequest {
+trait CustomValidationRequest
+{
 
     /**
      * Get the proper failed validation response for the request.

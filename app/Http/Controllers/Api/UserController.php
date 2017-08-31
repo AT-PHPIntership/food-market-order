@@ -68,9 +68,6 @@ class UserController extends ApiController
     public function show(Request $request)
     {
         $user = $request->user()->toArray();
-        unset($user['created_at']);
-        unset($user['updated_at']);
-        unset($user['deleted_at']);
 
         if (!$user) {
             return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
