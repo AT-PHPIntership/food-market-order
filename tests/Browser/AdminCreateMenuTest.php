@@ -50,21 +50,23 @@ class AdminCreateMenuTest extends DuskTestCase
                         "curDate.setDate(curDate.getDate() + 1);",
                         "document.querySelector('#chooser-date').value = curDate.toJSON().slice(0,10)"
                     ]);
-            $elementSelect = 'tbody tr td:nth-child(2) span:nth-child(1)';
-            $browser->select('category_id')
+            $categorySelect = 'tbody tr td:nth-child(1) span:nth-child(1)';
+            $cateOption = '#select2-select-category-results li:nth-child(2)';
+            $foodSelect = 'tbody tr td:nth-child(2) span:nth-child(1)';
+            $browser->click($categorySelect)
                     ->waitFor(null, '1')
-                    ->click($elementSelect)
+                    ->click($cateOption)
                     ->waitFor(null, '1')
-                    ->screenshot('AdminCreateMenu-CategorySelected');
+                    ->click($foodSelect)
+                    ->waitFor(null, '1');
             $option = '#select2-select-food-results li:nth-child(1)';
             $browser->click($option)
                     ->waitFor(null, '1')
                     ->screenshot('AdminCreateMenu-FoodSelected')
-                    ->type('quantity', 5)
+                    ->type('quantity[]', 5)
                     ->press('Add To Menu')
-                    ->waitFor(null, '1')
-                    ->assertSee('Menu was successfully added!')
-                    ->screenshot('AdminCreateMenu-Success');
+                    ->waitForText('Create New Menu')
+                    ->assertSee('Menu was successfully added!');
         });
         $this->assertDatabaseHas('daily_menus', ['date' => date('Y-m-d', strtotime(' +1 day')), 'food_id' => 1, 'quantity' => 5]);
     }
@@ -83,10 +85,7 @@ class AdminCreateMenuTest extends DuskTestCase
                     ->visit('/daily-menus/create')
                     ->press('Add To Menu')
                     ->waitFor(null, '1')
-                    ->assertSee('The date field is required.')
-                    ->assertSee('The food id must be an integer.')
-                    ->assertSee('The quantity field is required.')
-                    ->screenshot('AdminCreateMenu-Validation');
+                    ->assertDontSee('Please fill out this field!');
         });
     }
 
@@ -100,12 +99,30 @@ class AdminCreateMenuTest extends DuskTestCase
     public function testInvalidDateInput()
     {
         $this->browse(function (Browser $browser) {
+            factory(Category::class, 1)->create()->each(function($c) {
+                $c->foods()->save(factory(Food::class)->make());
+            });
             $browser->loginAs(1)
                     ->visit('/daily-menus/create')
                     ->click('#chooser-date')
-                    ->keys('#chooser-date', ['{ARROW_UP}', ''])
-                    ->click('#add-row')
-                    ->assertSee('Please enter a valid value.');
+                    ->keys('#chooser-date', ['{ARROW_UP}', '']);
+            $categorySelect = 'tbody tr td:nth-child(1) span:nth-child(1)';
+            $cateOption = '#select2-select-category-results li:nth-child(2)';
+            $foodSelect = 'tbody tr td:nth-child(2) span:nth-child(1)';
+            $browser->click($categorySelect)
+                    ->waitFor(null, '1')
+                    ->click($cateOption)
+                    ->waitFor(null, '1')
+                    ->click($foodSelect)
+                    ->waitFor(null, '1');
+            $option = '#select2-select-food-results li:nth-child(1)';
+            $browser->click($option)
+                    ->waitFor(null, '1')
+                    ->screenshot('AdminCreateMenu-FoodSelected')
+                    ->type('quantity[]', 5)
+                    ->press('Add To Menu')
+                    ->waitFor(null, '1')
+                    ->assertDontSee('Menu was successfully added!');
         });
     }
 
@@ -128,7 +145,7 @@ class AdminCreateMenuTest extends DuskTestCase
                     ->keys('#chooser-date', ['{ARROW_UP}', ''])
                     ->keys('#chooser-date', ['{TAB}', ''])
                     ->keys('#chooser-date', ['{ARROW_UP}', ''])
-                    ->keys('#chooser-date', ['{TAB}', '']);
+                    ->keys('#chooser-date', ['{TAB}', '']); //1/1/2017
             $browser->waitFor(null, '1')
                     ->assertSourceHas('id="add-row" class="btn btn-primary" value="Add To Menu" disabled=""');
         });
@@ -140,9 +157,9 @@ class AdminCreateMenuTest extends DuskTestCase
     public function listCaseTestValidationForCreateMenu()
     {
         return [
-            ['', 1, 1, 'The date field is required.'],
-            [date('Y-m-d', strtotime(' +1 day')), '', 1, 'The food id must be an integer.'],
-            [date('Y-m-d', strtotime(' +1 day')), 1, '', 'The quantity field is required.']
+            ['', 1, 1, 'Menu was successfully added!'],
+            [date('Y-m-d', strtotime(' +1 day')), '', 1, 'Menu was successfully added!'],
+            [date('Y-m-d', strtotime(' +1 day')), 1, '', 'Menu was successfully added!']
         ];
     }
 
@@ -172,12 +189,12 @@ class AdminCreateMenuTest extends DuskTestCase
             $browser->loginAs(1)
                 ->visit('/daily-menus/create')
                 ->value('#chooser-date', $date);
-            $browser->select('food_id', $food_id)
+            $browser->select('food_id[]', $food_id)
                     ->waitFor(null, '1')
-                    ->type('quantity', $quantity)
+                    ->type('quantity[]', $quantity)
                     ->press('Add To Menu')
                     ->assertPathIs('/daily-menus/create')
-                    ->assertSee($message);
+                    ->assertDontSee($message);
         });
     }
 
@@ -200,21 +217,24 @@ class AdminCreateMenuTest extends DuskTestCase
                         "curDate.setDate(curDate.getDate() + 1);",
                         "document.querySelector('#chooser-date').value = curDate.toJSON().slice(0,10)"
                     ]);
-            $elementSelect = 'tbody tr td:nth-child(2) span:nth-child(1)';
-            $browser->select('category_id')
+            $categorySelect = 'tbody tr td:nth-child(1) span:nth-child(1)';
+            $cateOption = '#select2-select-category-results li:nth-child(2)';
+            $foodSelect = 'tbody tr td:nth-child(2) span:nth-child(1)';
+            $browser->click($categorySelect)
                     ->waitFor(null, '1')
-                    ->click($elementSelect)
+                    ->click($cateOption)
                     ->waitFor(null, '1')
-                    ->screenshot('AdminCreateMenu-CategorySelected');
+                    ->click($foodSelect)
+                    ->waitFor(null, '1');
             $option = '#select2-select-food-results li:nth-child(1)';
             $browser->click($option)
                     ->waitFor(null, '1')
                     ->screenshot('AdminCreateMenu-FoodSelected')
-                    ->type('quantity', 5)
+                    ->type('quantity[]', 5)
                     ->click('#clear-input')
                     ->assertInputValue('date', null)
                     ->assertSelected('#select-food', null)
-                    ->assertInputValue('quantity', null);
+                    ->assertInputValue('quantity[]', null);
         });
     }
 }
