@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Libraries\Traits\CustomValidationRequest;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 
 class UserUpdateRequest extends FormRequest
 {
+    use CustomValidationRequest;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,17 +35,5 @@ class UserUpdateRequest extends FormRequest
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'nullable|min:6|confirmed',
         ];
-    }
-
-    /**
-     * Get the proper failed validation response for the request.
-     *
-     * @param array $errors list of validation error
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function response(array $errors)
-    {
-        return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

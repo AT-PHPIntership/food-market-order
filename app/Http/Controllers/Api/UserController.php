@@ -74,10 +74,10 @@ class UserController extends ApiController
     public function update(UserUpdateRequest $request)
     {
         if ($request->user()->update($request->all())) {
-            return response()->json(['success' => 'true', 'message' => 'Update successfully!'], Response::HTTP_OK);
+            return response()->json(['success' => true], Response::HTTP_OK);
         }
 
-        return response()->json(['success' => 'false', 'message' => 'Update Error!'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(['success' => false, 'message' => 'Error during update current user!'], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
