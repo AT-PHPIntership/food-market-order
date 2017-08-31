@@ -259,7 +259,6 @@ $(document).ready(function() {
             })
             $firstElement.find('.btn-disable-row').click(function() {
                 $parent = $(this).closest('tr');
-                console.log($parent.find('.select-food'), $parent.find('input'));
                 if ($parent.find('.select-food').val() && $parent.find('input').val()) {
                     $parent.find('.select-category').prop('disabled', true);
                     $parent.find('.select-food').prop('disabled', true);
