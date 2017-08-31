@@ -51,7 +51,7 @@ class DailyMenuController extends Controller
         $error = __('Has error during access this page');
         if ($menu = $this->dailyMenu->with('food.category')
                                         ->where('date', $date)
-                                        ->paginate($this->dailyMenu->ITEMS_PER_PAGE)
+                                        ->get(['daily_menus.date', 'daily_menus.food_id', 'daily_menus.quantity'])
         ) {
             return response()->json(collect(['success' => true])->merge($menu));
         }
