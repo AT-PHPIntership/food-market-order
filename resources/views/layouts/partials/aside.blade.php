@@ -45,8 +45,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Request::is('users', 'users/*')) active @endif"><a href="{{ route('users.index') }}"><i class="fa fa-circle-o"></i>{{ __('Users Management') }}</a></li>
-                    <li class="@if(Request::is('categories', 'categories/*')) active @endif"><a href="{{ route('categories.index') }}"><i class="fa fa-circle-o"></i>{{ __('Categories Management') }}</a></li>
+                    <li class="@if(Request::is('users', 'users/*')) active @endif"><a href="{{ route('users.index') }}"><i class="fa fa-users"></i>{{ __('Users Management') }}</a></li>
+                    <li class="@if(Request::is('categories', 'categories/*')) active @endif"><a href="{{ route('categories.index') }}"><i class="fa fa-shoping-backet"></i>{{ __('Categories Management') }}</a></li>
                     <li class="@if(Request::is('suppliers', 'suppliers/*')) active @endif"><a href="{{ route('suppliers.index') }}"><i class="fa fa-circle-o"></i>{{ __('Suppliers Management') }}</a></li>
                     <li class="@if(Request::is('orders', 'orders/*')) active @endif"><a href="{{ route('orders.index') }}"><i class="fa fa-circle-o"></i>{{ __('Orders Management') }}</a></li>
                     <li class="@if(Request::is('daily-menus', 'daily-menus/*')) active @endif"><a href="{{ route('daily-menus.index') }}"><i class="fa fa-circle-o"></i>{{ __('Daily Menu Management') }}</a></li>

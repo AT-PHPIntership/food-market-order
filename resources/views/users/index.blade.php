@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('main-header')
     <h1>
-        {{ __('List Users page') }}
+        {{ __('LIST USERS') }}
         <small></small>
     </h1>
 @endsection
@@ -10,20 +10,23 @@
     @include('flash::message')
     @if(isset($users))
         <div class="box box-primary">
-            <div class="box-header text-center">
+            <div class="box-header">
                 <h3 class="box-title">{{ __("User's Table Data") }}</h3>
-                <a href="{{ route('users.create') }}" class="btn btn-primary pull-right" id="btn-add-user">
-                    <i class=" fa fa-plus"></i>
-                </a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="box-tools">
-                            <form action="" class="pull-left">
+                            <form action="" class="pull-right">
+                                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm pull-right"
+                                   id="btn-add-user">
+                                    <i class=" fa fa-plus-circle"></i>
+                                    {{ __('Add User') }}
+                                </a>
                                 <div class="input-group input-group-sm search-group">
-                                    <input class="form-control" type="search" name="search" value="{{ request('search') }}"
+                                    <input class="form-control" type="search" name="search"
+                                           value="{{ request('search') }}"
                                            placeholder="type here for search">
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-primary">
@@ -32,7 +35,6 @@
                                     </div>
                                 </div>
                             </form>
-                            {{ $users->links() }}
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -91,6 +93,9 @@
                             </table>
                         </div>
                     </div>
+                </div>
+                <div class="box-tools">
+                    {{ $users->links() }}
                 </div>
             </div>
         </div>
