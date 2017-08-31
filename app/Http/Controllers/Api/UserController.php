@@ -52,7 +52,7 @@ class UserController extends ApiController
     {
         $user = $this->user->create($request->all());
         if (!$user) {
-            return response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['success' => false, 'message' => __('Error during create user')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json(['data' => $user, 'success' => true], Response::HTTP_OK);
@@ -67,10 +67,13 @@ class UserController extends ApiController
      */
     public function show(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user()->toArray();
+        unset($user['created_at']);
+        unset($user['updated_at']);
+        unset($user['deleted_at']);
 
         if (!$user) {
-            return response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json(['data' => $user,'success' => true], Response::HTTP_OK);

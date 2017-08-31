@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Libraries\Traits\CustomValidationRequest;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 
 class UserRegisterRequest extends FormRequest
 {
+    use CustomValidationRequest;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,17 +31,5 @@ class UserRegisterRequest extends FormRequest
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ];
-    }
-
-    /**
-     * Get the proper failed validation response for the request.
-     *
-     * @param array $errors fail information of validation
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function response(array $errors)
-    {
-        return response()->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

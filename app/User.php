@@ -76,6 +76,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Get Image Attribute
+     *
+     * @param string $image get attribute image
+     *
+     * @return string
+     */
+    public function getImageAttribute($image)
+    {
+        if ($image) {
+            return asset(config('constant.path_upload_users') . $image);
+        } else {
+            return asset(config('constant.default_image'));
+        }
+    }
+
+    /**
      * This is a recommended way to declare event handlers
      *
      * @return void
