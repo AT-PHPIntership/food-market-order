@@ -21,7 +21,7 @@ class UpdateMaterialTest extends DuskTestCase
      *
      * @return void
      */
-    public function testUpdateFood()
+    public function testUpdateMaterial()
     {
         $this->browse(function (Browser $browser) {
             $this->makeData(5);
@@ -88,6 +88,7 @@ class UpdateMaterialTest extends DuskTestCase
             ['Rau cai ngot', '1', '1', 'Rau cai dac san Mien Trung', '', '1', 'The price field is required.' ],
             ['Rau cai ngot', '1', '1','Rau cai dac san Mien Trung', 'a', '1','The price must be a number.' ],
             ['Rau cai ngot', '1', '1','Rau', '10', '1', 'The description must be at least 10 characters.' ],
+            ['hanh tay', '1', '1','Rau cu Da Nang', '10', '1', 'The name has already been taken.' ],
         ];
     }
 
