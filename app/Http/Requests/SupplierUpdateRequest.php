@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class MaterialUpdateRequest extends FormRequest
+class SupplierUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +24,8 @@ class MaterialUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:6|unique:materials,name,'.$this->id.',id',
-            'category_id' => 'required',
-            'supplier_id' => 'required',
-            'description' => 'required|min:10|max:300',
-            'price' => 'required|numeric',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'required|min:6|unique:suppliers,name,'.$this->id.',id',
+            'description' => 'required',
         ];
     }
 }
