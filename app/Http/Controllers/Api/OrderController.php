@@ -7,6 +7,7 @@ use App\Material;
 use App\Order;
 use App\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 
@@ -29,7 +30,8 @@ class OrderController extends ApiController
     /**
      * OrderController constructor.
      *
-     * @param Order $order It is param input constructors
+     * @param Order     $order     It is param input constructors
+     * @param OrderItem $orderItem It is param input constructors
      */
     public function __construct(Order $order, OrderItem $orderItem)
     {
@@ -74,7 +76,8 @@ class OrderController extends ApiController
                     'trans_at' => $request->input('trans_at'),
                     'custom_address' => $request->address_ship,
                     'status' => 1
-                ]);
+                ]
+            );
             if ($request->type == 'App\Food') {
                 $itemtable = new Food();
             } else {
@@ -93,10 +96,23 @@ class OrderController extends ApiController
             }
             $order->updateTotalPrice();
             DB::commit();
-            return ['data' => $request->all()];
+            $data = [
+                'order_id' => $order->id,
+                'user_id'=> $order->user_id,
+                'address_ship'=> $order->custom_address,
+                'trans_at'=> $order->trans_at,
+                'total_price'=> $order->total_price
+            ];
+            return response()->json([
+                'data' => $data,
+                'success' => true
+            ], Response::HTTP_OK);
         } catch (Exception $e) {
             DB::rollback();
-            return null;
+            return response()->json([
+                'error' => 'data_invalid',
+                'message' => true
+            ], Response::HTTP_BAD_REQUEST);
         }
         //    return $request->all();
     }
@@ -120,8 +136,7 @@ class OrderController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function edit($id)
+    public function edit($id)
     {
         $id = $id;
     }
@@ -130,12 +145,11 @@ class OrderController extends ApiController
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request request update
-     * @param int $id id supplier update
+     * @param int                      $id      id supplier update
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $request = $request;
         $id = $id;
@@ -148,8 +162,7 @@ class OrderController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         $id = $id;
     }
