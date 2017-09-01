@@ -2,44 +2,37 @@
 
 ### `POST` Add New Order
 ```
-api/orders/
+api/orders/create
 ```
 Add new order from client.
 #### Request Header
-```
-	"Accept": "application/json"
-	"Content-type": "application/json"
-	"Authorization": "Bearer <access_token>"
-```
+| Key | Value |
+|---|---|
+| Accept | application/json |
+|Content-Type| application/json |
+| Authorization | {token_type} {access_token} |
 #### Parameters
 | Key | Type | Required | Description |
 |---|---|---|---|
-| user-id | Integer | required | Id of user |
-| address-ship | String | required | Address shipping |
-| foods | Array | required | List item food |
-| material | Array | required | List item material |
+| user_id | Integer | required | Id of user |
+| address_ship | String | required | Address shipping |
+| tran_at | String | required | Date transport |
+| type | String | required | Type of item is Food or Material |
+| items | Array | required | List item |
 #### Sample Request
 ```json
 {
 	"user_id": 1,
 	"address_ship": "33 Trần Quý Cáp",
-	"foods": [ 
+	"trans_at": "2017-09-13",
+	"type": "App\\Food",
+	"items": [ 
 		{ 
 			"id" : 1,
 			"quantity" : 3
 		},
 		{ 
 			"id" : 5,
-			"quantity" : 10
-		}
-	],
-	"materials": [ 
-		{ 
-			"id" : 10,
-			"quantity" : 3
-		},
-		{ 
-			"id" : 3,
 			"quantity" : 10
 		}
 	]
@@ -55,7 +48,6 @@ Add new order from client.
 		"created_at": "2017-02-16 03:27:10",
 		"total_price": 50000 
 	},
-	"success": true,
-	"status": 200
+	"success": true
 }
 ```
