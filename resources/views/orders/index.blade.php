@@ -10,9 +10,6 @@
     <div class="box box-primary">
         <div class="box-header text-center">
             <h3 class="box-title">{{ __('List Order') }}</h3>
-            <a class="btn btn-primary pull-right" href="{{ route('orders.create')}}">
-                <i class="fa fa-plus"></i>
-            </a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
