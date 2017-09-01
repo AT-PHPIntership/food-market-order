@@ -52,7 +52,9 @@ class CategoryController extends ApiController
      */
     public function show($id)
     {
-        $category = $this->category->select('id', 'name', 'description')->findOrFail($id);
-        return response()->json($category);
+        if ($category = $this->category->select('id', 'name', 'description')->findOrFail($id)) {
+            return response()->json(collect(['success' => true])->merge(['data' => $category]));
+        }
+        return response()->json(['error' => $error]);
     }
 }
