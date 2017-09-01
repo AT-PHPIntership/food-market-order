@@ -2,12 +2,14 @@
 namespace App;
 
 use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\AjaxSearchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Food extends Model
 {
     use Searchable;
+    use ajaxSearchable;
     use softDeletes;
 
     const ITEMS_PER_PAGE = 10;
@@ -31,6 +33,19 @@ class Food extends Model
         ],
         'joins' => [
             'categories' => ['foods.category_id', 'categories.id']
+        ]
+    ];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $ajaxSearchable = [
+
+        'columns' => [
+            'foods.name',
+            'foods.category_id'
         ]
     ];
 

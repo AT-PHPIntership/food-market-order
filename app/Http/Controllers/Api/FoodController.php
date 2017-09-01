@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Food;
 
-class FoodController extends Controller
+class FoodController extends ApiController
 {
     /**
      * The Category implementation.
@@ -39,11 +39,12 @@ class FoodController extends Controller
     {
         $error = __('Has error during access this page');
         
-        if ($foods = $this->food->where('category_id', $categoryId)
-        						->paginate($this->food->ITEMS_PER_PAGE)
+        if ($foods = $this->food->select('id', 'name', 'description')
+                                ->where('category_id', $categoryId)
+                                ->paginate($this->food->ITEMS_PER_PAGE)
         ) {
-            return response()->json(['data' => $foods], Response::HTTP_OK);
+            return response()->json(collect(['success' => true])->merge($foods));
         }
-        return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
+        return response()->json(['error' => $error]);
     }
 }

@@ -11,10 +11,19 @@
 |
 */
 
+# API document
+Route::get('/api-docs', function () {
+    return view('api_docs');
+});
+Route::get('/api-doc-builders', function () {
+    return view('api-doc-builders.index');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
 
+# Food admin routes
 Route::middleware(['web', 'auth'])->group(function () {
 
     Route::resource('users', 'UserController');

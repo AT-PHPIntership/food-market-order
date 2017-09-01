@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Category;
 
-class CategoryController extends Controller
+class CategoryController extends ApiController
 {
     /**
      * The Category implementation.
@@ -35,8 +35,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->category->search()->paginate($this->category->ITEMS_PER_PAGE);
-        return response()->json(['data' => $categories], Response::HTTP_OK);
+        $error = __('Has error during access this page');
+
+        if ($categories = $this->category->select('id', 'name', 'description')->paginate($this->category->ITEMS_PER_PAGE)) {
+            return response()->json(collect(['success' => true])->merge($categories));
+        }
+        return response()->json(['error' => $error]);
     }
 
     /**
@@ -48,7 +52,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = $this->category->findOrFail($id);
+        $category = $this->category->select('id', 'name', 'description')->findOrFail($id);
         return response()->json($category);
     }
 }

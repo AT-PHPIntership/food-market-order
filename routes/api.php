@@ -13,12 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function () {
+
 });
 
-Route::get('categories', 'API\CategoryController@index');
+Route::get('categories', 'Api\CategoryController@index');
 
-Route::get('categories/{categoryId}', 'API\CategoryController@show');
+Route::get('categories/{category_id}', 'Api\CategoryController@show');
 
-Route::get('categories/{categoryId}/foods', 'API\FoodController@show');
+Route::get('categories/{category_id}/foods', 'Api\FoodController@show');
+
+Route::get('categories/{category_id}/materials', 'Api\MaterialController@show');
