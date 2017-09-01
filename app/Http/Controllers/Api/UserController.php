@@ -67,8 +67,7 @@ class UserController extends ApiController
      */
     public function show(Request $request)
     {
-        $user = $request->user()->toArray();
-
+        $user = $request->user();
         if (!$user) {
             return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
