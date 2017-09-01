@@ -52,7 +52,7 @@ class DailyMenuController extends Controller
 
         if ($menu = $this->dailyMenu->select('date', 'food_id', 'quantity')
                                     ->with(['food' => function ($food) {
-                                        $food->select('id', 'name', 'category_id');
+                                        $food->select('id', 'name', 'price', 'description', 'category_id');
                                     }, 'food.category' => function ($category) {
                                         $category->select('id', 'name', 'description');
                                     }])
