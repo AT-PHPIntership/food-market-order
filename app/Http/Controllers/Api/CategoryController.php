@@ -52,6 +52,8 @@ class CategoryController extends ApiController
      */
     public function show($id)
     {
+        $error = __('Has error during access this page');
+        
         if ($category = $this->category->select('id', 'name', 'description')->findOrFail($id)) {
             return response()->json(collect(['success' => true])->merge(['data' => $category]));
         }
