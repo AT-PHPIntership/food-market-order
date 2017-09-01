@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends ApiController
 {
@@ -49,17 +51,24 @@ class UserController extends ApiController
     public function login(Request $request)
     {
         $http = new Client();
-        $response = $http->post(env('APP_URL').'/oauth/token', [
-            'form_params' => [
-                'grant_type' => 'password',
-                'client_id' => 2,
-                'client_secret' => '9qVYHF8PXUJUKTv0pXPdfbdCeQ3m2BnuMBccW8PQ',
-                'username' => $request->email,
-                'password' => $request->password,
-                'scope' => '',
-            ],
-        ]);
-        return json_decode((string) $response->getBody(), true);
+        try {
+            $response = $http->post(env('APP_URL').'/oauth/token', [
+                'form_params' => [
+                    'grant_type' => 'password',
+                    'client_id' => 2,
+                    'client_secret' => '9qVYHF8PXUJUKTv0pXPdfbdCeQ3m2BnuMBccW8PQ',
+                    'username' => $request->email,
+                    'password' => $request->password,
+                    'scope' => '',
+                ],
+            ]);
+            return response()->json([
+                'data' => json_decode((string) $response->getBody(), true),
+                'success' => true
+            ],Response::HTTP_OK);
+        } catch (ClientException $ex) {
+           return json_decode($ex->getResponse()->getBody(),true);
+        }
     }
 
 
