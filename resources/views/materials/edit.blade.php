@@ -15,6 +15,7 @@
                   action="{{ route('materials.update', $material->id) }}" method="POST">
                 {{ method_field('PUT') }}
                 {{ csrf_field() }}
+                <input type="hidden" name="id" value="{{ $material->id }}">
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="text-center">
                         <img src="{{ $material->image }}" class="avatar img-circle img-thumbnail" alt=" avatar">`

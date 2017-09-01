@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\DailyMenu;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMenuItemRequest extends FormRequest
+class UserRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateMenuItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateMenuItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'quantity' => 'required|integer|min:1',
+            //
         ];
     }
 }

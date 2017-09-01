@@ -52,4 +52,26 @@ class Category extends Model
     {
         return $this->hasMany('App\Material', 'category_id', 'id');
     }
+
+    /**
+     * This is a recommended way to declare event handlers
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * Register a deleting model event with the dispatcher.
+         *
+         * @param \Closure|string  $callback
+         *
+         * @return void
+         */
+        static::deleting(function ($category) {
+            $category->foods()->delete();
+            $category->materials()->delete();
+        });
+    }
 }

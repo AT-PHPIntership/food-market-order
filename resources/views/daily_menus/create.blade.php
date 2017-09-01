@@ -16,37 +16,25 @@
                 <table class="table table-bordered" id="tab_logic">
                     <thead>
                     <tr>
-                        <th class="text-center col-xs-4">
-                            {{ _('Category') }}
+                        <th class="text-center col-xs-5">
+                            {{ __('Category') }}
                         </th>
-                        <th class="text-center col-xs-4">
-                            {{ _('Food') }}
+                        <th class="text-center col-xs-5">
+                            {{ __('Food') }}
                         </th>
-                        <th class="text-center col-xs-4">
-                            {{ _('Quantity') }}
+                        <th class="text-center col-xs-1">
+                            {{ __('Quantity') }}
+                        </th>
+                        <th class="text-center col-xs-1">
                         </th>
                     </tr>
                     </thead>
-                    <form id="create-menu" method="POST" action="{{ route('daily-menus.store') }}">
+                    <form id="create-menu" method="POST" action="{{ route('daily-menus.store') }}" data-title="{{ __('Create New Menu') }}" data-error="{{ __('Has error during create menu item, Are you sure that fill valid value into box?') }}">
                         {{ csrf_field() }}
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        @if(session()->has('message.level'))
-                            <div class="alert alert-{{ session('message.level') }}">
-                                {!! session('message.content') !!}
-                            </div>
-                        @endif
                         <div class="form-group col-xs-4">
                             <label for="chooser-date">{{ _('Choose Date') }}: </label>
                             @if(empty($date))
-                                <input type="date" class="form-control" id="chooser-date" name="date">
+                                <input type="date" class="form-control" id="chooser-date" name="date" required>
                         </div>
                         @else
                             <input type="date" class="form-control" id="chooser-date" name="date" value="{{ $date }}">
@@ -55,24 +43,27 @@
                 <span class="btn-xl btn-primary btn">{{ _('Show Menu') }}</span>
             </a>
             @endif
-            <tbody id='myBody'>
+            <tbody id="create-menu-table">
             <tr>
                 <td>
-                    <select class="form-control" id="select-category">
-                        <option value="null">{{ __('Choose category') }}</option>
-                        @foreach ($listCategory as $category)
+                    <select class="form-control select-category required" id="select-category" required>
+                        <option value=''>{{ __('Choose category') }}</option>
+                        @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </td>
                 <td>
-                    <p class="form-control" id="choose-food"
-                       data-text="{{ _('Click here to choose food') }}">{{ _('Click here to choose food') }}</p>
-                    <select class="form-control" id="select-food" name="food_id" form="create-menu" size="5">
-                    </select>
+                    <select class="form-control select-food required" name="food_id[]" id="select-food" placeholder="{{ __('Choose Food') }}" form="create-menu" required>
+                        <option value=''>{{ __('Choose food') }}</option>
+					</select>
                 </td>
-                <td id="quantityselect">
-                    <input type="number" class="form-control" name="quantity"/>
+                <td class="text-center">
+                    <input type="number" class="form-control text-center" name="quantity[]" form="create-menu" min="1" required>
+                </td>
+                <td class="text-center">
+                    <span class="btn-xs btn btn-success btn-disable-row" data-title="{{ __('Add New Row')}}" data-message="{{ __('Please fill in all elements') }}"><i class = "glyphicon glyphicon-ok"></i></span>
+                    <span class="btn-xs btn btn-primary btn-add-new-row" data-title="{{ __('Add New Row') }}" data-message="{{ __('Please finish your choose') }}"><i class = "glyphicon glyphicon-plus"></i></span>
                 </td>
             </tr>
             </tbody>
@@ -87,6 +78,7 @@
             <input type="submit" id="add-row" class="btn btn-primary"
                    value="{{ __('Add To Menu') }}">
         </div>
-        </form>
     </div>
+    </form>
 @endsection
+@include('layouts.partials.modal')
