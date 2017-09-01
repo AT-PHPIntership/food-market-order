@@ -39,7 +39,7 @@ class FoodController extends ApiController
     {
         $error = __('Has error during access this page');
         
-        if ($foods = $this->food->select('id', 'name', 'description')
+        if ($foods = $this->food->select('id', 'name', 'price', 'description')
                                 ->where('category_id', $categoryId)
                                 ->paginate($this->food->ITEMS_PER_PAGE)
         ) {
