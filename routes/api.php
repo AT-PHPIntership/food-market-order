@@ -20,3 +20,7 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::post('/users', 'Api\UserController@store');
+
+Route::resource('foods', 'Api\FoodController', ['only' => [
+    'index', 'show'
+]]);
