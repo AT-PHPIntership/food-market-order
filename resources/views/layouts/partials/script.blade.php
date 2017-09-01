@@ -4,6 +4,10 @@
             base: "{{ url('/') }}",
             list_food_by_category: "{{ route('foods.index') }}"
     }
+    dailyMenuURLs = {
+            base: "{{ url('/') }}",
+            menu_detail_by_date: "{{ route('daily-menus.show', ['date']) }}"
+    }
 </script>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>

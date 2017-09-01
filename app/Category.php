@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use Searchable;
-    // use softDeletes;
+    use softDeletes;
 
     const ITEMS_PER_PAGE = 10;
 

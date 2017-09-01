@@ -49,11 +49,11 @@ class DailyMenuController extends Controller
     public function show($date)
     {
         $error = __('Has error during access this page');
-        if ($menu = $this->dailyMenu->with(['food' => function($food) {
-                                        $food->select('id', 'name', 'category_id');
-                                    }, 'food.category' => function($category) {
-                                        $category->select('id', 'name', 'description');
-                                    }])
+        if ($menu = $this->dailyMenu->with(['food' => function ($food) {
+                $food->select('id', 'name', 'category_id');
+        }, 'food.category' => function ($category) {
+                $category->select('id', 'name', 'description');
+        }])
                                     ->where('date', $date)
                                     ->get(['daily_menus.date', 'daily_menus.food_id', 'daily_menus.quantity'])
         ) {
