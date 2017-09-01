@@ -11,7 +11,7 @@
         @include('flash::message')
         <div class="col-md-12">
         <div class="box box-primary">
-                <div class="box-header with-border text-center">
+                <div class="box-header text-center">
                     <h3 class="box-title">{{ __('Create Food') }}</h3>
                 </div>
                 <form action="{{ route('foods.store') }}" enctype="multipart/form-data" method="POST">

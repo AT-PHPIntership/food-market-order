@@ -2,8 +2,6 @@
 @section('main-header')
     <h1>{{ __('UPDATE CATEGORY PAGE') }}
         <small></small>
-        <a href="{{ route('suppliers.index') }}" class="pull-right"><span
-                    class="fa fa-arrow-left btn btn-primary"></span></a>
     </h1>
 @endsection
 @section('main-content')
@@ -15,7 +13,7 @@
             <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="box box-primary">
-                    <div class="box-header with-border text-center">
+                    <div class="box-header text-center">
                         <h3 class="box-title">{{__('Edit Supplier')}}</h3>
                     </div>
                     <!-- /.box-header -->

@@ -29,8 +29,8 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">{{ __('MAIN NAVIGATION') }}</li>
-            <li class="active">
-                <a href="#">
+            <li class="@if(Request::is('dashboard')) active @endif">
+                <a href="{{ route('dashboard') }}">
                     <i class="fa fa-dashboard"></i> <span>{{ __('Dashboard') }}</span>
                     <span class="pull-right-container">
                     </span>
@@ -45,13 +45,13 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Request::is('users', 'users/*')) active @endif"><a href="{{ route('users.index') }}"><i class="fa fa-users"></i>{{ __('Users Management') }}</a></li>
-                    <li class="@if(Request::is('categories', 'categories/*')) active @endif"><a href="{{ route('categories.index') }}"><i class="fa fa-shoping-backet"></i>{{ __('Categories Management') }}</a></li>
-                    <li class="@if(Request::is('suppliers', 'suppliers/*')) active @endif"><a href="{{ route('suppliers.index') }}"><i class="fa fa-circle-o"></i>{{ __('Suppliers Management') }}</a></li>
-                    <li class="@if(Request::is('orders', 'orders/*')) active @endif"><a href="{{ route('orders.index') }}"><i class="fa fa-circle-o"></i>{{ __('Orders Management') }}</a></li>
-                    <li class="@if(Request::is('daily-menus', 'daily-menus/*')) active @endif"><a href="{{ route('daily-menus.index') }}"><i class="fa fa-circle-o"></i>{{ __('Daily Menu Management') }}</a></li>
-                    <li class="@if(Request::is('foods', 'foods/*')) active @endif"><a href="{{ route('foods.index') }}"><i class="fa fa-circle-o"></i>{{ __('Food Management') }}</a></li>
-                    <li class="@if(Request::is('materials', 'materials/*')) active @endif"><a href="{{ route('materials.index') }}"><i class="fa fa-circle-o"></i>{{ __('Material Management') }}</a></li>
+                    <li class="@if(Request::is('users', 'users/*')) active @endif"><a href="{{ route('users.index') }}"><i class="fa fa-users" aria-hidden="true"></i>{{ __('Users Management') }}</a></li>
+                    <li class="@if(Request::is('categories', 'categories/*')) active @endif"><a href="{{ route('categories.index') }}"><i class="fa fa-tasks" aria-hidden="true"></i>{{ __('Categories Management') }}</a></li>
+                    <li class="@if(Request::is('suppliers', 'suppliers/*')) active @endif"><a href="{{ route('suppliers.index') }}"><i class="fa fa-building-o" aria-hidden="true"></i>{{ __('Suppliers Management') }}</a></li>
+                    <li class="@if(Request::is('orders', 'orders/*')) active @endif"><a href="{{ route('orders.index') }}"><i class="fa fa-ticket" aria-hidden="true"></i>{{ __('Orders Management') }}</a></li>
+                    <li class="@if(Request::is('daily-menus', 'daily-menus/*')) active @endif"><a href="{{ route('daily-menus.index') }}"><i class="fa fa-book" aria-hidden="true"></i>{{ __('Daily Menu Management') }}</a></li>
+                    <li class="@if(Request::is('foods', 'foods/*')) active @endif"><a href="{{ route('foods.index') }}"><i class="fa fa-shopping-bag" aria-hidden="true"></i>{{ __('Food Management') }}</a></li>
+                    <li class="@if(Request::is('materials', 'materials/*')) active @endif"><a href="{{ route('materials.index') }}"><i class="fa fa-shopping-basket" aria-hidden="true"></i>{{ __('Material Management') }}</a></li>
                 </ul>
             </li>
             <li class="">

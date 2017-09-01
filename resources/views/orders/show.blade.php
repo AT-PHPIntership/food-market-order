@@ -5,8 +5,8 @@
     </h1>
 @endsection
 @section('main-content')
-    <div class="box">
-        <div class="box-header text-center">
+    <div class="box box-primary">
+        <div class="box-header">
             <h1 class="box-title">{{ __('Order') }} {{ $order->id }} - {{ __('Date') }} : {{ $order->created_at }}</h1>
             <small></small>
         </div>

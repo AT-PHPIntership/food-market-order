@@ -2,8 +2,6 @@
 @section('main-header')
     <h1>{{ __('CREATE MATERIAL PAGE') }}
         <small></small>
-        <a href="{{ route('materials.index') }}" class=" btn btn-primary pull-right"><i
-                    class="fa fa-arrow-left"></i></a>
     </h1>
 @endsection
 @section('main-content')
@@ -11,7 +9,7 @@
         @include('flash::message')
         <div class="col-md-12">
         <div class="box box-primary">
-                <div class="box-header with-border text-center">
+                <div class="box-header">
                     <h3 class="box-title">{{ __('Create Material') }}</h3>
                 </div>
                 <form action="{{ route('materials.store') }}" enctype="multipart/form-data" method="POST">

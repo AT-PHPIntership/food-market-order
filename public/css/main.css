@@ -54,3 +54,25 @@ input[type=number] {
 	border-width:6px 3px 0;
 	margin-left:3px;
 }
+.back-button{
+	color: #fff;
+	float: left;
+	background-color: transparent;
+	background-image: none;
+	padding: 15px 15px;
+	font-family: fontAwesome;
+}
+.back-button:hover{
+	color: #F6F6F6;
+	background-color: #367fa9;
+	background: rgba(0,0,0,0.1);
+}
+.has-description tr td:nth-child(1){
+	width: 10em;
+}
+.dataTable tbody tr td:nth-last-child(1) {
+	text-align: center;
+}
+div {
+	overflow: hidden;
+}

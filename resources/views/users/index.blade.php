@@ -21,7 +21,7 @@
                             <form action="" class="pull-right">
                                 <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm pull-right"
                                    id="btn-add-user">
-                                    <i class=" fa fa-plus-circle"></i>
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
                                     {{ __('Add User') }}
                                 </a>
                                 <div class="input-group input-group-sm search-group">

@@ -20,7 +20,7 @@ class CreateMaterialsTable extends Migration
             $table->integer('supplier_id')->unsigned();
             $table->decimal('price', 10, 2);
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
+            $table->string('image')->default('default.jpg');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->timestamps();

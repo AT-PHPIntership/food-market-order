@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
-                <div class="box-header with-border text-center">
+                <div class="box-header text-center">
                     <h3 class="box-title">{{__('Create New Category')}}</h3>
                 </div>
                 <!-- /.box-header -->

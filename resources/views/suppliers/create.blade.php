@@ -2,8 +2,6 @@
 @section('main-header')
     <h1>{{ __('CREATE SUPPLIER PAGE') }}
         <small></small>
-        <a href="{{ route('suppliers.index') }}" class="pull-right"><span
-                    class="fa fa-arrow-left btn btn-primary"></span></a>
     </h1>
 @endsection
 @section('main-content')
@@ -14,7 +12,7 @@
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
-                <div class="box-header with-border text-center">
+                <div class="box-header">
                     <h3 class="box-title">{{__('Create New Supplier')}}</h3>
                 </div>
                 <!-- /.box-header -->
