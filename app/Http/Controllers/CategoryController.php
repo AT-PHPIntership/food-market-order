@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoryController extends Controller
@@ -80,12 +81,12 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param CategoryRequest $request Request from client
-     * @param int             $id      It is id of category need update
+     * @param CategoryUpdateRequest $request Request from client
+     * @param int                   $id      It is id of category need update
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
         $category = $this->category->findOrFail($id);
         $category->update($request->all());
