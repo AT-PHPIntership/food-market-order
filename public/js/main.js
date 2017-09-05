@@ -226,7 +226,6 @@ $(document).ready(function() {
         var month = $dateValue.substring(5, 7);
         var day = $dateValue.substring(8, 10);
         var $date = new Date(year, month - 1, day);
-        console.log($date, $today);
         if ($date < $today) {
             $('#add-row').prop("disabled", true);
         } else {

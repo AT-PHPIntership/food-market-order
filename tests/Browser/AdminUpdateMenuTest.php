@@ -55,10 +55,8 @@ class AdminUpdateMenuTest extends DuskTestCase
             $browser->type($elementMenuItem. ' .quantity', 3)
                     ->click($elementMenuItem. ' .glyphicon-ok')
                     ->waitFor(null, '1000')
-                    ->waitForText('Update menu item success')
-                    ->click('.btn-danger')
-                    ->assertSee('Daily Menu For')
-                    ->screenshot('update menu');
+                    ->waitForText('Update Menu Item')
+                    ->assertSee('Update menu item success');
         });
         $this->assertDatabaseHas('daily_menus', ['date' => date('Y-m-d', strtotime(' +1 day')), 'food_id' => 1, 'quantity' => 3]);
     }
