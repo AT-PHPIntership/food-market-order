@@ -55,8 +55,8 @@ class UserController extends ApiController
             $response = $http->post(env('APP_URL').'/oauth/token', [
                 'form_params' => [
                     'grant_type' => 'password',
-                    'client_id' => 2,
-                    'client_secret' => '9qVYHF8PXUJUKTv0pXPdfbdCeQ3m2BnuMBccW8PQ',
+                    'client_id' => env('CLIENT_ID'),
+                    'client_secret' => env('CLIENT_SECRET'),
                     'username' => $request->email,
                     'password' => $request->password,
                     'scope' => '',
