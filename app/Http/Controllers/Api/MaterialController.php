@@ -39,7 +39,7 @@ class MaterialController extends ApiController
     {
         $error = __('Has error during access this page');
         
-        if ($materials = $this->material->select('id', 'name', 'price', 'description')
+        if ($materials = $this->material->select('id', 'name', 'price', 'description', 'category_id', 'image')
                                 ->where('category_id', $categoryId)
                                 ->paginate($this->material->ITEMS_PER_PAGE)
         ) {
