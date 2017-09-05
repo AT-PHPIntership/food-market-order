@@ -23,6 +23,7 @@
                     <form role="form" action="{{ route('categories.update', ['id' => $category->id])}}" method="post">
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{ $category->id }}">
                         <div class="col-md-2"></div>
                         <div class="box-body col-md-8">
                             <div class="form-group col-md-12 {{ $errors->has('name') ? 'has-error' : '' }}">

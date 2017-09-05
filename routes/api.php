@@ -24,3 +24,7 @@ Route::get('categories/{category_id}', 'Api\CategoryController@show');
 Route::get('categories/{category_id}/foods', 'Api\FoodController@show');
 
 Route::get('categories/{category_id}/materials', 'Api\MaterialController@show');
+
+Route::resource('foods', 'Api\FoodController', ['only' => [
+    'index', 'show'
+]]);

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('main-header')
-    <h1>{{ __('UPDATE CATEGORY PAGE') }}
+    <h1>{{ __('UPDATE SUPPLIER PAGE') }}
         <small></small>
         <a href="{{ route('suppliers.index') }}" class="pull-right"><span
                     class="fa fa-arrow-left btn btn-primary"></span></a>
@@ -21,7 +21,9 @@
                     <!-- /.box-header -->
                     <!-- form start -->
                     <form role="form" action="{{ route('suppliers.update', ['id' => $supplier->id])}}" method="post">
-                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        {{ method_field('PUT') }}
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{ $supplier->id }}">
                         <div class="col-md-2"></div>
                         <div class="box-body col-md-8">
                             <div class="form-group col-md-12 {{ $errors->has('name') ? 'has-error' : '' }}">
