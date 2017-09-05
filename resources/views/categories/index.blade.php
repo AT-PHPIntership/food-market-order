@@ -18,7 +18,7 @@
                     <div class="box-tools">
                         <form action="" class="pull-right">
                             <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm pull-right"
-                               id="btn-add-user">
+                               id="btn-add-category">
                                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 {{ __('Add Category') }}
                             </a>

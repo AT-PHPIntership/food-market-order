@@ -46,7 +46,7 @@
             <tbody id="create-menu-table">
             <tr>
                 <td>
-                    <select class="form-control select-category required" required>
+                    <select class="form-control select-category required" id="select-category" required>
                         <option value=''>{{ __('Choose category') }}</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>

@@ -7,7 +7,7 @@ use App\User;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class TestOrderList extends DuskTestCase
+class OrderListTest extends DuskTestCase
 {
     /**
      * A Dusk test example.

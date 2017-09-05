@@ -10,7 +10,7 @@
     @else
         <div class="row">
             @include('flash::message')
-            <div class="box box-promary">
+            <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">{{ __('Material Information') }}</h3>
                 </div>
