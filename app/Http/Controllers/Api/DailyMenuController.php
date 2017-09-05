@@ -48,7 +48,6 @@ class DailyMenuController extends Controller
      */
     public function show($date)
     {
-        $error = __('Has error during access this page');
 
         if ($menu = $this->dailyMenu->select('date', 'food_id', 'quantity')
                                     ->with(['food' => function ($food) {
@@ -61,6 +60,7 @@ class DailyMenuController extends Controller
         ) {
             return response()->json(collect(['success' => true])->merge($menu));
         }
+        $error = __('Has error during access this page');
         return response()->json(['error' => $error]);
     }
 }
