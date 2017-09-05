@@ -17,6 +17,10 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
-Route::get('daily-menus', 'Api\DailyMenuController@index');
+Route::resource('daily-menus', 'Api\DailyMenuController', ['only' => [
+    'index', 'show'
+]]);
 
-Route::get('daily-menus/{date}', 'Api\DailyMenuController@show');
+Route::resource('foods', 'Api\FoodController', ['only' => [
+    'index', 'show'
+]]);
