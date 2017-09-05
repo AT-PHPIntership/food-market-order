@@ -47,7 +47,6 @@
                                 <th>{{ __('Category') }}</th>
                                 <th>{{ __('Supplier') }}</th>
                                 <th>{{ __('Price') }}</th>
-                                <th>{{ __('Description') }}</th>
                                 <th class="col-md-2">{{ __('Action') }}</th>
                             </tr>
                             </thead>
@@ -59,7 +58,6 @@
                                     <td>{{ $material->category->name }}</td>
                                     <td>{{ $material->supplier->name }}</td>
                                     <td>{{ $material->price }}</td>
-                                    <td>{{ $material->description }}</td>
                                     <td><a class="btn btn-info btn-sm"
                                            href="{{ route('materials.show', $material->id) }}" alt="{{ __('Detail') }}">
                                             <span class="glyphicon glyphicon-zoom-in" ></span>

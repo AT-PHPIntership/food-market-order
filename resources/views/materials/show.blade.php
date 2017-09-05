@@ -11,7 +11,7 @@
                 <div class="col-xs-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">{{ __('User Information') }}</h3>
+                            <h3 class="box-title">{{ __('Material Information') }}</h3>
                         </div>
                         <div class="box-body">
                             <div class="col-md-4 text-center">

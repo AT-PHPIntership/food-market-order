@@ -2,16 +2,14 @@
 @section('main-header')
     <h1>{{ __('CREATE FOOD PAGE') }}
         <small></small>
-        <a href="{{ route('foods.index') }}" class=" btn btn-primary pull-right"><i
-                    class="fa fa-arrow-left"></i></a>
     </h1>
 @endsection
 @section('main-content')
     <div class="row center">
         @include('flash::message')
         <div class="col-md-12">
-        <div class="box box-primary">
-                <div class="box-header text-center">
+            <div class="box box-primary">
+                <div class="box-header">
                     <h3 class="box-title">{{ __('Create Food') }}</h3>
                 </div>
                 <form action="{{ route('foods.store') }}" enctype="multipart/form-data" method="POST">
@@ -61,17 +59,19 @@
                         </div>
                         <div class="form-group col-md-12 {{ $errors->has('image') ? ' has-error' : '' }}">
                             <div class="col-md-2"><label>{{ __('Image') }}</label></div>
-                            <div class="col-md-10"><input type="file" name="image">
+                            <div class="col-md-10"><input class="form-control" type="file" name="image">
                                 @if($errors->first('image'))
                                     <span class="help-block">{{ $errors->first('image') }}</span>
                                 @endif
                             </div>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="submit" class="btn btn-primary pull-left"
-                                   value="{{ __('Create') }}">
-                            <input type="reset" class="btn btn-danger pull-right"
-                                   value="{{ __('Reset') }}">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary pull-left"
+                                       value="{{ __('Create') }}">
+                                <input type="reset" class="btn btn-danger pull-right"
+                                       value="{{ __('Reset') }}">
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer text-center"></div>

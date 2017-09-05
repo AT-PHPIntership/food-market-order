@@ -28,6 +28,10 @@ input[type=number] {
     padding: 0;
 }
 
+.select2-container {
+	width: 100%;
+}
+
 .select2-container--bootstrap .select2-selection {
 	border-radius:0px;
 	color:#555;
@@ -75,4 +79,7 @@ input[type=number] {
 }
 div {
 	overflow: hidden;
+}
+.no-pad-left{
+	padding-left: 0px;
 }
