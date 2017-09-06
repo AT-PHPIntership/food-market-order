@@ -35,7 +35,10 @@ class CategoryController extends ApiController
      */
     public function index()
     {
-        if ($categories = $this->category->select('id', 'name', 'description')->paginate($this->category->ITEMS_PER_PAGE)) {
+        $categories = $this->category->select('id', 'name', 'description')
+                                    ->paginate($this->category->ITEMS_PER_PAGE);
+
+        if ($categories) {
             return response()->json(collect(['success' => true])->merge($categories));
         }
         $error = __('Has error during access this page');
@@ -52,11 +55,13 @@ class CategoryController extends ApiController
      */
     public function show($id)
     {   
-        if ($category = $this->category->select('id', 'name', 'description')->findOrFail($id)) {
+        $category = $this->category->select('id', 'name', 'description')->findOrFail($id);
+        
+        if ($category) {
             return response()->json(collect(['success' => true])->merge(['data' => $category]));
         }
         $error = __('Has error during access this page');
-        
+
         return response()->json(['error' => $error]);
     }
 }
