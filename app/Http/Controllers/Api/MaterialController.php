@@ -36,15 +36,24 @@ class MaterialController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function show($categoryId)
-    {
-        $error = __('Has error during access this page');
-        
-        if ($materials = $this->material->select('id', 'name', 'price', 'description', 'category_id', 'image')
-                                ->where('category_id', $categoryId)
-                                ->paginate($this->material->ITEMS_PER_PAGE)
-        ) {
+    {   
+        $columns = [
+            'id',
+            'name',
+            'category_id',
+            'price',
+            'image',
+            'description'
+        ];
+        $materials = $this->material->select($columns)
+                                    ->where('category_id', $categoryId)
+                                    ->paginate($this->material->ITEMS_PER_PAGE);
+
+        if ($materials) {
             return response()->json(collect(['success' => true])->merge($materials));
         }
+        $error = __('Has error during access this page');
+
         return response()->json(['error' => $error]);
     }
 }
