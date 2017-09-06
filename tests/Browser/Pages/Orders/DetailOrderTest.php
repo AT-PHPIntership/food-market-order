@@ -100,6 +100,36 @@ class DetailOrderTest extends DuskTestCase
     }
 
     /**
+     * Test update item fail.
+     *
+     * @return void
+     */
+    public function testUpdateItemFail()
+    {
+        $this->browse(function (Browser $browser) {
+            // Test data have 10 record
+            factory(Order::class,10)->create();
+            factory(Category::class,10)->create();
+            factory(Supplier::class,10)->create();
+            factory(Food::class,10)->create();
+            factory(Material::class,10)->create();
+            factory(OrderItem::class,10)->create(['order_id' => 1,]);
+            $browser->loginAs(User::find(1))
+                ->resize(1920, 1080)
+                ->visit('/orders/1')
+                ->assertSee('DETAIL ORDERS');
+            $element = '.dataTable tbody tr:nth-child(1)';
+            $id_item = $browser ->text($element. ' td');
+            DB::table('order_items')->delete($id_item);
+            $browser->type('quantity',9)
+                ->click('.box-body')
+                ->waitFor(null,5)
+                ->click('#btn-modal-submit')
+                ->waitForText('Order Item Not Found');
+        });
+    }
+
+    /**
      * Test delete item success.
      *
      * @return void
