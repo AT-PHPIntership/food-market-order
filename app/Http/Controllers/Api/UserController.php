@@ -69,7 +69,7 @@ class UserController extends ApiController
         } catch (ClientException $ex) {
             return  response()->json([
                 json_decode($ex->getResponse()->getBody(), true)
-            ],$ex->getCode());
+            ], $ex->getCode());
         }
     }
 
