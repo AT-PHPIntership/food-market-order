@@ -17,3 +17,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::put('/users/me', 'Api\UserController@update');
 });
+Route::resource('foods', 'Api\FoodController', ['only' => [
+    'index', 'show'
+]]);

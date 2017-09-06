@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SupplierRequest;
+use App\Http\Requests\SupplierUpdateRequest;
 use App\Supplier;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -52,12 +53,12 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param SupplierRequest $request Request from client
-     * @param int             $id      It is id of supplier need update
+     * @param SupplierUpdateRequest $request Request from client
+     * @param int                   $id      It is id of supplier need update
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(SupplierRequest $request, $id)
+    public function update(SupplierUpdateRequest $request, $id)
     {
         $supplier = $this->supplier->findOrFail($id);
         $supplier->update($request->all());
