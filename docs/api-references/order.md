@@ -2,7 +2,7 @@
 
 ### `POST` Add New Order
 ```
-api/orders/create
+api/orders
 ```
 Add new order from client.
 #### Request Header
@@ -14,9 +14,8 @@ Add new order from client.
 #### Parameters
 | Key | Type | Required | Description |
 |---|---|---|---|
-| user_id | Integer | required | Id of user |
+| user_id | Integer | required | Id of current user |
 | address_ship | String | required | Address shipping |
-| tran_at | String | required | Date transport |
 | type | String | required | Type of item is Food or Material |
 | items | Array | required | List item |
 #### Sample Request
@@ -45,7 +44,6 @@ Add new order from client.
 		"order_id": 123,
 		"user_id": 3,
 		"address_ship": "33 Trần Quý Cáp",
-		"created_at": "2017-02-16 03:27:10",
 		"total_price": 50000 
 	},
 	"success": true
