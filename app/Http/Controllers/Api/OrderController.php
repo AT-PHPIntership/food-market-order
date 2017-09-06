@@ -100,7 +100,6 @@ class OrderController extends ApiController
                 'order_id' => $order->id,
                 'user_id'=> $order->user_id,
                 'address_ship'=> $order->custom_address,
-                'trans_at'=> $order->trans_at,
                 'total_price'=> $order->total_price
             ];
             return response()->json([
