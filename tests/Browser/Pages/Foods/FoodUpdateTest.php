@@ -26,7 +26,7 @@ class UpdateFoodTest extends DuskTestCase
             factory(Food::class, 5)->create();
             $browser->loginAs(User::find(1))
                     ->visit('/foods')
-                    ->click('.table tbody tr:nth-child(2) td:nth-child(6) .fa-edit')
+                    ->click('.table tbody tr:nth-child(2) td:nth-child(5) .fa-edit')
                     ->assertPathIs('/foods/2/edit')
                     ->assertSee('UPDATE FOOD');
         });

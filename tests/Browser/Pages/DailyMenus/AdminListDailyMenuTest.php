@@ -144,12 +144,10 @@ class AdminListDailyMenuTest extends DuskTestCase
                     ->click('.box-body .box-tools form button')
                     ->assertSee('2017-09-11')
                     ->assertQueryStringHas('search', '2017')
-                    ->screenshot('searchDailyMenu')
                     ->type('search', '05')
                     ->click('.box-body .box-tools form button')
                     ->assertDontSee('2017-09-11')
-                    ->assertQueryStringHas('search', '05')
-                    ->screenshot('searchDailyMenu2');
+                    ->assertQueryStringHas('search', '05');
         });
     }
 }

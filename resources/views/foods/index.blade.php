@@ -9,17 +9,18 @@
     @include('flash::message')
     @if(isset($foods))
     <div class="box box-primary">
-        <div class="box-header text-center">
+        <div class="box-header">
             <h3 class="box-title">{{ __('List Food') }}</h3>
-            <a href="{{ route('foods.create') }}" class="btn btn-primary btn-xl pull-right">
-                <i class=" fa fa-plus"></i>
-            </a>
         </div>
         <div class="box-body">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="box-tools">
-                        <form action="" class="pull-left">
+                        <form action="" class="pull-right">
+                            <a href="{{ route('foods.create') }}" class="btn btn-primary btn-sm pull-right">
+                                <i class=" fa fa-plus-circle"></i>
+                                {{ __('Add Food') }}
+                            </a>
                             <div class="input-group input-group-sm search-group">
                                 <input class="form-control" type="search" name="search" value="{{ request('search') }}"
                                        placeholder="type here for search">
@@ -30,7 +31,6 @@
                                 </div>
                             </div>
                         </form>
-                        {{ $foods->links() }}
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -46,7 +46,6 @@
                                 <th class="col-md-2">{{ __('Name') }}</th>
                                 <th class="col-md-2">{{ __('Category') }}</th>
                                 <th class="col-md-1">{{ __('Price') }}</th>
-                                <th class="col-md-4">{{ __('Description') }}</th>
                                 <th class="col-md-2">{{ __('Action') }}</th>
                             </tr>
                             </thead>
@@ -57,7 +56,6 @@
                                     <td>{{ $food->name }}</td>
                                     <td>{{ $food->category->name }}</td>
                                     <td>{{ $food->price }}</td>
-                                    <td>{{ $food->description }}</td>
                                     <td><a class="btn btn-info btn-sm " href="{{ route('foods.show', $food->id) }}" alt="{{ __('Detail') }}">
                                             <i class="fa fa-search-plus" ></i>
                                         </a>
@@ -81,6 +79,9 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="box-tools">
+                {{ $foods->links() }}
             </div>
         </div>
         @else
