@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Food;
 
 class FoodController extends ApiController
-{   
+{
     /**
      * The Category implementation.
      *
@@ -59,7 +59,7 @@ class FoodController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function show($categoryId)
-    {   
+    {
         $columns = [
             'id',
             'name',

@@ -54,9 +54,9 @@ class CategoryController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
+    {
         $category = $this->category->select('id', 'name', 'description')->findOrFail($id);
-        
+
         if ($category) {
             return response()->json(collect(['success' => true])->merge(['data' => $category]));
         }
