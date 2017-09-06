@@ -19,3 +19,4 @@ Route::middleware('auth:api')->group(function () {
 Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
+Route::post('/users/login', 'Api\UserController@login');
