@@ -67,7 +67,9 @@ class UserController extends ApiController
                 'success' => true
             ], Response::HTTP_OK);
         } catch (ClientException $ex) {
-            return json_decode($ex->getResponse()->getBody(), true);
+            return  response()->json([
+                json_decode($ex->getResponse()->getBody(), true)
+            ],$ex->getCode());
         }
     }
 
