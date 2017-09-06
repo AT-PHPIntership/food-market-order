@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\DailyMenu;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMenuItemRequest extends FormRequest
+class SupplierUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class UpdateMenuItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'quantity' => 'required|integer|min:1',
+            'name' => 'required|min:6|unique:suppliers,name,'.$this->id.',id',
+            'description' => 'required',
         ];
     }
 }
