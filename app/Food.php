@@ -76,12 +76,12 @@ class Food extends Model
      *
      * @return string
      */
-    // public function getImageAttribute($image)
-    // {
-    //     if ($image) {
-    //         return asset(config('constant.path_upload_foods') . $image);
-    //     } else {
-    //         return asset(config('constant.default_image'));
-    //     }
-    // }
+    public function getImageAttribute($image)
+    {
+        if ($image) {
+            return asset(config('constant.path_upload_foods') . $image);
+        } else {
+            return asset(config('constant.default_image'));
+        }
+    }
 }
