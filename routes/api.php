@@ -24,3 +24,4 @@ Route::post('/users', 'Api\UserController@store');
 Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
+Route::post('/users/login', 'Api\UserController@login');
