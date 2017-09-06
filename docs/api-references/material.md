@@ -24,7 +24,8 @@ Get infomation about a material
         "category": {
             "id": 9,
             "name": "Balistreri, Schaden and Swaniawski"
-        }"supplier": {
+        },
+        "supplier": {
             "id": 2,
             "name": "Schaden and Swaniawski"
         }
