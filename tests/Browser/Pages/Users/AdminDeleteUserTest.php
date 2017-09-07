@@ -23,8 +23,7 @@ class AdminDeleteUserTest extends DuskTestCase
             $browser->loginAs(1)
                 ->resize(1920, 1080)
                 ->visit('/users')
-                ->assertSee("User's Table Data")
-                ->screenshot('testContent');
+                ->assertSee("User's Table Data");
         });
     }
 
@@ -45,8 +44,7 @@ class AdminDeleteUserTest extends DuskTestCase
                 ->assertSee('Delete User')
                 ->assertSee('Are you sure to delete this user?')
                 ->click('#btn-modal-submit')
-                ->assertSee('Delete Successfully!')
-                ->screenshot('testDeleteSuccess');
+                ->assertSee('Delete Successfully!');
         });
     }
 
@@ -67,8 +65,7 @@ class AdminDeleteUserTest extends DuskTestCase
                 ->assertSee('Delete User')
                 ->assertSee('Are you sure to delete this user?')
                 ->click('#btn-modal-submit')
-                ->assertSee('Cannot delete current user!')
-                ->screenshot('testDeleteCurrentUser');
+                ->assertSee('Cannot delete current user!');
         });
     }
 
@@ -95,8 +92,7 @@ class AdminDeleteUserTest extends DuskTestCase
                 ->assertSee('Delete User')
                 ->assertSee('Are you sure to delete this user?')
                 ->click('#btn-modal-submit')
-                ->assertSee('Delete Error!')
-                ->screenshot('testDeleteError');
+                ->assertSee('Delete Error!');
         });
     }
 }

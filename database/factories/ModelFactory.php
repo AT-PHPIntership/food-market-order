@@ -42,8 +42,7 @@ $factory->define(App\Food::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'price' => $faker->numberBetween(10, 100),
         'category_id' => $faker->randomElement(App\Category::pluck('id')->toArray()),
-        'description' => $faker->paragraph,
-        'image' => $faker->imageUrl($width = 640, $height = 480)
+        'description' => $faker->paragraph
     ];
 });
 $factory->define(App\DailyMenu::class, function (Faker\Generator $faker) {
@@ -61,7 +60,6 @@ $factory->define(App\Material::class, function (Faker\Generator $faker) {
         'price' => $faker->numberBetween(10, 100),
         'category_id' => $faker->randomElement(App\Category::pluck('id')->toArray()),
         'description' => $faker->paragraph,
-        'image' => $faker->imageUrl($width = 640, $height = 480),
         'supplier_id' => $faker->randomElement(App\Supplier::pluck('id')->toArray())
     ];
 });
