@@ -9,17 +9,18 @@
     @include('flash::message')
     @if(isset($materials))
     <div class="box box-primary">
-        <div class="box-header text-center">
+        <div class="box-header">
             <h3 class="box-title">{{ __('List Materials') }}</h3>
-            <a href="{{ route('materials.create') }}" class="btn btn-primary btn-xl pull-right">
-                <i class="fa fa-plus"></i>
-            </a>
         </div>
         <div class="box-body">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="box-tools">
-                        <form action="" class="pull-left">
+                        <a href="{{ route('materials.create') }}" class="btn btn-sm btn-primary btn-xl pull-right">
+                            <i class="fa fa-plus-circle"></i>
+                            {{ __('Add Material') }}
+                        </a>
+                        <form action="" class="pull-right">
                             <div class="input-group input-group-sm search-group">
                                 <input class="form-control" type="search" name="search" value="{{ request('search') }}"
                                        placeholder="type here for search">
@@ -30,7 +31,6 @@
                                 </div>
                             </div>
                         </form>
-                        {{ $materials->links() }}
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -47,7 +47,6 @@
                                 <th>{{ __('Category') }}</th>
                                 <th>{{ __('Supplier') }}</th>
                                 <th>{{ __('Price') }}</th>
-                                <th>{{ __('Description') }}</th>
                                 <th class="col-md-2">{{ __('Action') }}</th>
                             </tr>
                             </thead>
@@ -59,7 +58,6 @@
                                     <td>{{ $material->category->name }}</td>
                                     <td>{{ $material->supplier->name }}</td>
                                     <td>{{ $material->price }}</td>
-                                    <td>{{ $material->description }}</td>
                                     <td><a class="btn btn-info btn-sm"
                                            href="{{ route('materials.show', $material->id) }}" alt="{{ __('Detail') }}">
                                             <span class="glyphicon glyphicon-zoom-in" ></span>
@@ -85,6 +83,9 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="box-tools">
+                {{ $materials->links() }}
             </div>
         </div>
     </div>

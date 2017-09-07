@@ -77,8 +77,7 @@ class AdminDeleteMenuTest extends DuskTestCase
                 ->visit('/daily-menus');
             DB::table('daily_menus')->delete(1);
             $element = '.dataTable tbody tr:nth-child(1)';
-            $browser->screenshot('list')
-                ->click($element. ' .fa-trash')
+            $browser->click($element. ' .fa-trash')
                 ->waitFor(null, '1')
                 ->assertSee('Delete Daily Menu')
                 ->assertSee('Are you want delete it?')

@@ -64,10 +64,11 @@ class SupplierController extends Controller
         $supplier->update($request->all());
         if ($supplier) {
             flash(__('Update Supplier Success'))->success()->important();
+            return redirect()->route('suppliers.index', $id);
         } else {
             flash(__('Update Supplier Errors'))->error()->important();
+            return redirect()->route('suppliers.edit', $id);
         }
-        return redirect()->route('suppliers.edit', $id);
     }
 
     /**

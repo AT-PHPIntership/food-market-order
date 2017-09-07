@@ -2,14 +2,13 @@
 
 namespace Tests\Browser\Pages\Materials;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Category;
 use App\Supplier;
-use App\Material;
 
 class CreateMaterialTest extends DuskTestCase
 {
@@ -25,7 +24,7 @@ class CreateMaterialTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/materials')
-                    ->click('.fa-plus')
+                    ->click('.fa-plus-circle')
                     ->assertPathIs('/materials/create')
                     ->assertSee('Create Material');
         });
