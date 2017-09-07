@@ -8,7 +8,7 @@
 
     @include('flash::message')
     <div class="box box-primary">
-        <div class="box-header text-center">
+        <div class="box-header">
             <h3 class="box-title">{{ __('List Order') }}</h3>
         </div>
         <!-- /.box-header -->
@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="box-tools">
-                        <form action="" class="pull-left">
+                        <form action="" class="pull-right">
                             <div class="input-group input-group-sm search-group">
                                 <input class="form-control" type="search" name="search" value="{{ request('search') }}"
                                        placeholder="type here for search">
@@ -27,7 +27,6 @@
                                 </div>
                             </div>
                         </form>
-                        {{ $orders->links() }}
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -101,6 +100,9 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="box-tools">
+                {{ $orders->links() }}
             </div>
         </div>
     </div>

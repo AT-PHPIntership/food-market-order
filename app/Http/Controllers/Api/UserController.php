@@ -6,10 +6,24 @@ use App\Http\Requests\Api\UserUpdateRequest;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
+use App\User;
+use App\Http\Requests\Api\UserRegisterRequest;
 use Illuminate\Http\Response;
 
 class UserController extends ApiController
 {
+    protected $user;
+
+    /**
+     * UserAPIController constructor.
+     *
+     * @param User $user Dependence injection
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,13 +47,18 @@ class UserController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request create
+     * @param UserRegisterRequest $request request store data user
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRegisterRequest $request)
     {
-        $request = $request;
+        $user = $this->user->create($request->all());
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => __('Error during create user')], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json(['data' => $user, 'success' => true], Response::HTTP_OK);
     }
 
     /**
@@ -76,13 +95,18 @@ class UserController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param int $id id user
+     * @param Request $request request get user information
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $id = $id;
+        $user = $request->user();
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json(['data' => $user,'success' => true], Response::HTTP_OK);
     }
 
     /**
