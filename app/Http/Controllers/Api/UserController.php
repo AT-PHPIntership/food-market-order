@@ -134,7 +134,7 @@ class UserController extends ApiController
             return response()->json(['success' => true], Response::HTTP_OK);
         }
 
-        return response()->json(['success' => false, 'message' => 'Error during update current user!'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(['success' => false, 'message' => __('Error during update current user!')], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
