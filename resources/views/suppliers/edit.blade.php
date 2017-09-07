@@ -2,8 +2,6 @@
 @section('main-header')
     <h1>{{ __('UPDATE SUPPLIER PAGE') }}
         <small></small>
-        <a href="{{ route('suppliers.index') }}" class="pull-right"><span
-                    class="fa fa-arrow-left btn btn-primary"></span></a>
     </h1>
 @endsection
 @section('main-content')
@@ -15,7 +13,7 @@
             <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="box box-primary">
-                    <div class="box-header with-border text-center">
+                    <div class="box-header">
                         <h3 class="box-title">{{__('Edit Supplier')}}</h3>
                     </div>
                     <!-- /.box-header -->
@@ -52,13 +50,13 @@
                                 </div>
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="submit" class="btn btn-primary pull-right" value="{{__('Update')}}">
-                                <input type="reset" class="btn btn-danger pull-left" value="{{__('Reset')}}">
+                                <div class="col-md-12">
+                                    <input type="submit" class="btn btn-primary pull-right" value="{{__('Update')}}">
+                                    <input type="reset" class="btn btn-danger pull-left" value="{{__('Reset')}}">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
-                        <div class="box-footer text-center">
-                        </div>
                         <div class="col-md-2"></div>
                     </form>
                 </div>

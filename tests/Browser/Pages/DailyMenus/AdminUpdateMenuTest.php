@@ -57,8 +57,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->waitFor(null, '1000')
                     ->waitForText('Update menu item success')
                     ->click('.btn-danger')
-                    ->assertSee('Daily Menu For')
-                    ->screenshot('update menu');
+                    ->assertSee('Daily Menu For');
         });
         $this->assertDatabaseHas('daily_menus', ['date' => date('Y-m-d', strtotime(' +1 day')), 'food_id' => 1, 'quantity' => 3]);
     }
@@ -90,7 +89,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->waitForText('The quantity field is required.')
                     ->type($elementMenuItem. ' .quantity', 0)
                     ->click($elementMenuItem. ' .glyphicon-ok')
-                    ->waitFor(null, '5')
+                    ->waitForText('The quantity must be at least 1.')
                     ->assertSee('The quantity must be at least 1.');
         });
     }
@@ -142,8 +141,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->waitFor(null, '5')
                     ->assertSee('Daily Menu For');
             $elementMenuItem = '.table tr:nth-child(2)';
-            $browser->type($elementMenuItem. ' .quantity', '254')
-                    ->screenshot('first');
+            $browser->type($elementMenuItem. ' .quantity', '254');
             $browser->click($elementMenuItem. ' .glyphicon-ban-circle')
                     ->waitFor(null, '1')
                     ->assertDontSeeIn($elementMenuItem. ' td:nth-child(7)', '254');

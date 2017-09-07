@@ -27,7 +27,7 @@ class UpdateMaterialTest extends DuskTestCase
             $this->makeData(5);
             $browser->loginAs(User::find(1))
                     ->visit('/materials')
-                    ->click('.table tbody tr:nth-child(2) td:nth-child(7) .fa-edit')
+                    ->click('.table tbody tr:nth-child(2) td:nth-child(6) .fa-edit')
                     ->assertPathIs('/materials/2/edit')
                     ->assertSee('UPDATE MATERIAL');
         });
