@@ -26,8 +26,7 @@ class AdminListUserTest extends DuskTestCase
                 ->visit('dashboard')
                 ->click('.sidebar-menu li:nth-child(3) a:nth-child(1)')
                 ->click('.sidebar-menu li:nth-child(3) ul li:nth-child(1)')
-                ->assertPathIs('/users')
-                ->screenshot('testClickRoute');
+                ->assertPathIs('/users');
         });
     }
 
@@ -57,7 +56,7 @@ class AdminListUserTest extends DuskTestCase
             $browser->loginAs(1)
                 ->visit('/users')
                 ->resize(1920, 2000)
-                ->assertSee("User's Table Data")->screenshot('testShowRecord');
+                ->assertSee("User's Table Data");
             $elements = $browser->elements('#table tbody tr');
             $row = count($elements);
             $this->assertTrue($row == 9);
@@ -77,7 +76,7 @@ class AdminListUserTest extends DuskTestCase
             $browser->loginAs(1)
                 ->visit('/users')
                 ->resize(1920, 2000)
-                ->assertSee("User's Table Data")->screenshot('testShowRecordPagnate');
+                ->assertSee("User's Table Data");
             $elements = $browser->elements('#table tbody tr');
             $row = count($elements);
             $this->assertTrue($row == 10);

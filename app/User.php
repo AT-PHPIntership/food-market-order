@@ -103,7 +103,7 @@ class User extends Authenticatable
         /**
          * Register a creating model event with the dispatcher.
          *
-         * @param \Closure|string  $callback
+         * @param \Closure|string $callback
          *
          * @return void
          */
@@ -116,7 +116,7 @@ class User extends Authenticatable
         /**
          * Register an updating model event with the dispatcher.
          *
-         * @param \Closure|string  $callback
+         * @param \Closure|string $callback
          *
          * @return void
          */
@@ -129,7 +129,7 @@ class User extends Authenticatable
         /**
          * Register a deleting model event with the dispatcher.
          *
-         * @param \Closure|string  $callback
+         * @param \Closure|string $callback
          *
          * @return void
          */

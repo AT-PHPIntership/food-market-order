@@ -8,18 +8,19 @@
     
     @include('flash::message')
     <div class="box box-primary">
-        <div class="box-header text-center">
+        <div class="box-header">
             <h3 class="box-title">{{ __('Daily Menu List') }}</h3>
-            <a class="btn btn-xl btn-primary pull-right" href="{{ route('daily-menus.create') }}">
-                <i class="fa fa-plus"></i>
-            </a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="box-tools">
-                        <form action="" class="pull-left">
+                        <form action="" class="pull-right">
+                            <a class="btn btn-sm btn-primary pull-right" href="{{ route('daily-menus.create') }}">
+                                <i class="fa fa-plus-circle"></i>
+                                {{ __('Add Menu') }}
+                            </a>
                             <div class="input-group input-group-sm search-group">
                                 <input class="form-control" type="search" name="search" value="{{ request('search') }}"
                                        placeholder="type here for search">
@@ -30,7 +31,6 @@
                                 </div>
                             </div>
                         </form>
-                        {{ $dailyMenus->links() }}
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -71,6 +71,9 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="box-tools">
+                {{ $dailyMenus->links() }}
             </div>
         </div>
     </div>

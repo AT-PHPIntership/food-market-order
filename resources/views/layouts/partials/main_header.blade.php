@@ -1,4 +1,4 @@
 
-<section class="content-header">
+<section class="content-header text-center">
     @yield('main-header')
 </section>

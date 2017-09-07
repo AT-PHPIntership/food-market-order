@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
-                <div class="box-header with-border text-center">
+                <div class="box-header text-center">
                     <h3 class="box-title">{{__('Create New Category')}}</h3>
                 </div>
                 <!-- /.box-header -->
@@ -38,28 +38,28 @@
                         </div>
                         <div class="form-group col-md-12 {{ $errors->has('description') ? 'has-error' : '' }}">
                             <div class="col-md-2">
-                            <label for="description">{{__('Description')}}</label></div>
-                        <div class="col-md-10">
+                                <label for="description">{{__('Description')}}</label></div>
+                            <div class="col-md-10">
                             <textarea class="form-control"
                                       name="description">{{ old('description') }}</textarea>
-                            @if ($errors->has('description'))
-                                <span class="help-block">
+                                @if ($errors->has('description'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary pull-right" value="{{__('Create')}}">
+                                <input type="reset" class="btn btn-danger pull-left" value="{{__('Reset')}}">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12 form-group">
-                        <input type="submit" class="btn btn-primary pull-right" value="{{__('Create')}}">
-                        <input type="reset" class="btn btn-danger pull-left" value="{{__('Reset')}}">
-                    </div>
+                    <!-- /.box-body -->
+                    <div class="col-md-2"></div>
+                </form>
             </div>
-            <!-- /.box-body -->
-            <div class="box-footer text-center">
-            </div>
-            <div class="col-md-2"></div>
-            </form>
         </div>
-    </div>
     </div>
 @endsection

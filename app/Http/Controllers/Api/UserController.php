@@ -2,10 +2,27 @@
 
 namespace App\Http\Controllers\Api;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
+use App\User;
+use App\Http\Requests\Api\UserRegisterRequest;
+use Illuminate\Http\Response;
 
 class UserController extends ApiController
 {
+    protected $user;
+
+    /**
+     * UserAPIController constructor.
+     *
+     * @param User $user Dependence injection
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,25 +46,66 @@ class UserController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
+     * @param UserRegisterRequest $request request store data user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UserRegisterRequest $request)
+    {
+        $user = $this->user->create($request->all());
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => __('Error during create user')], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json(['data' => $user, 'success' => true], Response::HTTP_OK);
+    }
+
+    /**
+     * Login system and get token for client.
+     *
      * @param \Illuminate\Http\Request $request request create
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        $request = $request;
+        $http = new Client();
+        try {
+            $response = $http->post(env('APP_URL').'/oauth/token', [
+                'form_params' => [
+                    'grant_type' => 'password',
+                    'client_id' => env('CLIENT_ID'),
+                    'client_secret' => env('CLIENT_SECRET'),
+                    'username' => $request->email,
+                    'password' => $request->password,
+                    'scope' => '',
+                ],
+            ]);
+            return response()->json([
+                'data' => json_decode((string) $response->getBody(), true),
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (ClientException $ex) {
+            return json_decode($ex->getResponse()->getBody(), true);
+        }
     }
+
 
     /**
      * Display the specified resource.
      *
-     * @param int $id id user
+     * @param Request $request request get user information
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $id = $id;
+        $user = $request->user();
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json(['data' => $user,'success' => true], Response::HTTP_OK);
     }
 
     /**
