@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class MaterialController extends ApiController
 {
+    protected $material;
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +14,20 @@ class MaterialController extends ApiController
      */
     public function index()
     {
-        //
+        $columns = [
+            'id',
+            'name',
+            'category_id',
+            'price',
+            'image',
+            'description'
+        ];
+        $with['category'] = function ($query) {
+            $query->select('id', 'name');
+        };
+        $foods = $this->food->select($columns)->with($with)->paginate(Food::ITEMS_PER_PAGE);
+
+        return response()->json($foods, Response::HTTP_OK);
     }
 
     /**

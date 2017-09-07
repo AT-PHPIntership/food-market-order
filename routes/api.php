@@ -15,8 +15,18 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->group(function () {
 
+    Route::get('/users/me', 'Api\UserController@show');
+
 });
+
+Route::post('/users', 'Api\UserController@store');
+
 Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
+
 Route::post('/users/login', 'Api\UserController@login');
+
+Route::resource('materials', 'Api\MaterialController', ['only' => [
+    'index', 'show'
+]]);
