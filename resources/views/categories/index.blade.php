@@ -8,19 +8,20 @@
 
     @include('flash::message')
     <div class="box box-primary">
-        <div class="box-header text-center">
+        <div class="box-header">
             <h3 class="box-title">{{__("Category's Table Data")}}</h3>
-            <a id="btn-add-category" class="btn btn-primary pull-right" href="{{ route('categories.create') }}"
-               title="{{__('Add Category')}}">
-                <i class="fa fa-plus "></i>
-            </a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="box-tools">
-                        <form action="" class="pull-left">
+                        <form action="" class="pull-right">
+                            <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm pull-right"
+                               id="btn-add-category">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                {{ __('Add Category') }}
+                            </a>
                             <div class="input-group input-group-sm search-group">
                                 <input class="form-control" type="search" name="search" value="{{ request('search') }}"
                                        placeholder="type here for search">
@@ -31,7 +32,6 @@
                                 </div>
                             </div>
                         </form>
-                        {{ $categories->links() }}
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -80,6 +80,9 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="box-tools">
+                {{ $categories->links() }}
             </div>
         </div>
     </div>
