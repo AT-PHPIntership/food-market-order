@@ -47,6 +47,7 @@ function alertMessage($eventTarget, message) {
     $('#modal-confirm-body').html(body);
     $('#modal-confirm').modal("show");
     $("#btn-modal-submit").hide();
+    $("#btn-modal-submit").next().hide();
 }
 
 // Call Ajax request with @param:
@@ -220,6 +221,7 @@ $(document).ready(function() {
      * Get Menu Date and Current Date To Check Add item permission
      */
     var $today = new Date();
+    $today.setHours(0, 0, 0, 0);
     $('#chooser-date').change(function (e) {
         $dateValue = $('#chooser-date').val();
         var year = $dateValue.substring(0, 4);
