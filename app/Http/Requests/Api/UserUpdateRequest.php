@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Libraries\Traits\CustomValidationRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends FormRequest
 {
+    use CustomValidationRequest;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +16,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +27,13 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+
+            'full_name' => 'required',
+            'birthday' => 'date',
+            'phone_number' => 'required|numeric',
+            'address' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'password' => 'nullable|min:6|confirmed',
         ];
     }
 }
