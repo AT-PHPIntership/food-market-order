@@ -1,10 +1,10 @@
-## Counts - API
+## Statistic - API
 
-### `GET` List Count Value
+### `GET` List Resources Count Value
 ```
-/api/counts
+/api/statistics/counts
 ```
-Get all object and its count value
+Count data for Category, DailyMenu, Food, Material, Order, Supplier, User
 #### Request Header
 
 | Key | Value |
@@ -14,16 +14,15 @@ Get all object and its count value
 #### Sample Response
 ```json
 {
-    "success": true,
     "data": {
-        "Category": 30,
-        "DailyMenu": 58,
-        "Food": 89,
-        "Material": 42,
-        "Order": 50,
-        "OrderItem": 134,
-        "Supplier": 4,
-        "User": 92
-    }
+        "categories": 30,
+        "daily-menus": 58,
+        "foods": 89,
+        "materials": 42,
+        "orders": 50,
+        "suppliers": 4,
+        "users": 92
+    },
+    "success": true
 }
 ```
