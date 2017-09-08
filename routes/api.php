@@ -36,14 +36,4 @@ Route::resource('foods', 'Api\FoodController', ['only' => [
 ]]);
 Route::post('/users/login', 'Api\UserController@login');
 
-Route::get('/counts', function () {
-	$model_files = \File::files('../app/');
-
-	foreach($model_files as $model_file)
-	{
-		$fileName = File::name($model_file);
-		$counts[$fileName] = ('App\\'.$fileName)::count();
-	}
-
-	return response()->json(collect(['success' => true])->merge(['data' => $counts]));
-});
+Route::get('/statistics/counts', 'Api\StatisticController@countResources');
