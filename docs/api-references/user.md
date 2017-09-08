@@ -25,7 +25,10 @@ Get information about a current user login.
     "phone_number": null,
     "image": "http://foodmarket.com/images/users/default.jpg",
     "is_admin": 1,
-    "is_active": 0
+    "is_active": 0,
+    "created_at": "2017-09-01 02:22:32",
+    "updated_at": "2017-09-01 02:22:32",
+    "deleted_at": null
   },
   "success": true
 }
@@ -74,7 +77,10 @@ Registry a user
     "phone_number": null,
     "image": "http://foodmarket.com/images/users/default.jpg",
     "is_admin": 1,
-    "is_active": 0
+    "is_active": 0,
+    "created_at": "2017-09-01 02:22:32",
+    "updated_at": "2017-09-01 02:22:32",
+    "deleted_at": null
   },
   "success": true
 }

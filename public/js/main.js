@@ -47,6 +47,7 @@ function alertMessage($eventTarget, message) {
     $('#modal-confirm-body').html(body);
     $('#modal-confirm').modal("show");
     $("#btn-modal-submit").hide();
+    $("#btn-modal-submit").next().hide();
 }
 
 // Call Ajax request with @param:
@@ -130,6 +131,8 @@ $(document).ready(function() {
     $('#create-menu-table tr:nth-child(1)').find('.btn-success').hide();
     //Apply select2 for all selects tag
     $('select').select2({theme: "bootstrap"});
+
+    $('.select2').removeAttr('style');
     //For dailyMenu
     /**
      *
@@ -218,6 +221,7 @@ $(document).ready(function() {
      * Get Menu Date and Current Date To Check Add item permission
      */
     var $today = new Date();
+    $today.setHours(0, 0, 0, 0);
     $('#chooser-date').change(function (e) {
         $dateValue = $('#chooser-date').val();
         var year = $dateValue.substring(0, 4);
@@ -383,7 +387,7 @@ $(document).ready(function() {
                     }
                 },
                 error: function(data, status) {
-                    showArlert(data["message"],status)
+                    showArlert(data.responseJSON["message"],status)
                     $('#modal-confirm').modal("hide");
                 }
             });
@@ -440,4 +444,3 @@ $(document).ready(function() {
     })
 });
 $('#flash-overlay-modal').modal();
-    
