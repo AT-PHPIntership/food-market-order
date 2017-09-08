@@ -19,8 +19,10 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
+Route::resource('daily-menus', 'Api\DailyMenuController', ['only' => [
+    'index', 'show'
+]]);
 Route::post('/users', 'Api\UserController@store');
-
 Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
