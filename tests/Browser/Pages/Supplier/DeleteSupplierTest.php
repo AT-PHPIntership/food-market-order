@@ -36,8 +36,8 @@ class DeleteSupplierTest extends DuskTestCase
             $browser->loginAs(1)
                 ->visit('/suppliers')
                 ->click($element. ' .fa-trash')
-                ->waitFor('#modal-confirm', '3');
-            $browser->assertSee('Delete Supplier')
+                ->waitFor(null, '3')
+                ->assertSee('Delete Supplier')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Delete Supplier Success');
