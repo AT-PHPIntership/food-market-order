@@ -24,7 +24,7 @@ class CreateFoodTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/foods')
-                    ->click('.fa-plus')
+                    ->click('.fa-plus-circle')
                     ->assertPathIs('/foods/create')
                     ->assertSee('Create Food');
         });

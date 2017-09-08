@@ -35,7 +35,7 @@ class MaterialController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($categoryId)
+    public function showBy($categoryId)
     {
         $columns = [
             'id',

@@ -69,8 +69,7 @@ class AdminCreateUserTest extends DuskTestCase
                 ]);
             $browser->press('Create')
                 ->assertPathIs('/users')
-                ->assertSee('User Created!')
-                ->screenShot('testCreateUserSuccess');
+                ->assertSee('User Created!');
         });
         $this->assertDatabaseHas('users', ['email' => 'test.user@gmail.com']);
     }
@@ -157,8 +156,7 @@ class AdminCreateUserTest extends DuskTestCase
                 ->assertInputValue('email', null)
                 ->assertInputValue('birthday', null)
                 ->assertInputValue('phone_number', null)
-                ->assertInputValue('address', null)
-                ->screenShot('testBtnReset');
+                ->assertInputValue('address', null);
         });
     }
 }

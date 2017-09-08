@@ -52,13 +52,29 @@ class FoodController extends ApiController
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param int $id of food
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $food = $this->food->select('id', 'name', 'price', 'description', 'category_id', 'image')->with(['category' => function ($query) {
+            $query->select('id', 'name');
+        }])->findOrFail($id);
+
+        return response()->json($food, Response::HTTP_OK);
+    }
+
+    /**
      * Display the list food by category id.
      *
      * @param integer $categoryId The categoryId to get foods
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($categoryId)
+    public function showBy($categoryId)
     {
         $columns = [
             'id',

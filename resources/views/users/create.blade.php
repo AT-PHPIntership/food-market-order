@@ -2,9 +2,6 @@
 @section('main-header')
     <h1>{{ __('CREATE USER PAGE') }}
         <small>create new user active by admin</small>
-        <a href="{{ route('users.index') }}" class="btn btn-primary pull-right">
-            <i class="fa fa-arrow-left "></i>
-        </a>
     </h1>
 @endsection
 @section('main-content')
@@ -15,7 +12,7 @@
         @include('flash::message')
         <!-- general form elements -->
             <div class="box box-primary">
-                <div class="box-header with-border text-center">
+                <div class="box-header">
                     <h3 class="box-title">{{ __('Create New User') }}</h3>
                 </div>
                 <!-- form start -->
@@ -60,25 +57,27 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <div class="col-md-4"><label>{{ __('Gender') }}</label></div>
-                            <div class="col-md-8">
-                                <select name="gender" class="form-control">
-                                    <option selected value="1">{{ __('Male') }}</option>
-                                    <option value="0">{{ __('Female') }}</option>
-                                </select>
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group no-padding">
+                                <div class="col-md-4"><label>{{ __('Gender') }}</label></div>
+                                <div class="col-md-8">
+                                    <select name="gender" class="form-control">
+                                        <option selected value="1">{{ __('Male') }}</option>
+                                        <option value="0">{{ __('Female') }}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
-                            <div class="col-md-3"><label>{{ __('Birthday') }}</label></div>
-                            <div class="date col-md-9">
-                                <input name="birthday" type="date" class="form-control"
-                                       id="date-picker" value="{{ old('birthday') }}">
-                                @if ($errors->has('birthday'))
-                                    <span class="help-block">
+                            <div class="col-md-6 form-group no-padding {{ $errors->has('birthday') ? ' has-error' : '' }}">
+                                <div class="col-md-3"><label>{{ __('Birthday') }}</label></div>
+                                <div class="date col-md-9">
+                                    <input name="birthday" type="date" class="form-control"
+                                           id="date-picker" value="{{ old('birthday') }}">
+                                    @if ($errors->has('birthday'))
+                                        <span class="help-block">
                                               <strong>{{ $errors->first('birthday') }}</strong>
                                             </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="form-group col-md-12 {{ $errors->has('address') ? ' has-error' : '' }}">
@@ -106,28 +105,33 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <div class="col-md-4"><label>{{ __('Role') }}</label></div>
-                            <div class="col-md-8">
-                                <select name="is_admin" class="form-control">
-                                    <option selected value="0">{{ __('User') }}</option>
-                                    <option value="1">{{ __('Admin') }}</option>
-                                </select>
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group no-padding">
+                                <div class="col-md-4"><label>{{ __('Role') }}</label></div>
+                                <div class="col-md-8">
+                                    <select name="is_admin" class="form-control">
+                                        <option selected value="0">{{ __('User') }}</option>
+                                        <option value="1">{{ __('Admin') }}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group col-md-6 {{ $errors->has('image') ? ' has-error' : '' }}">
-                            <div class="col-md-3"><label for="exampleInputFile">{{ __('Image') }}</label></div>
-                            <div class="col-md-9"><input name="image" class="form-control" type="file" id="exampleInputFile">
-                                @if ($errors->has('image'))
-                                    <span class="help-block">
+                            <div class="form-group col-md-6 no-padding {{ $errors->has('image') ? ' has-error' : '' }}">
+                                <div class="col-md-3"><label for="exampleInputFile">{{ __('Image') }}</label></div>
+                                <div class="col-md-9"><input name="image" class="form-control" type="file"
+                                                             id="exampleInputFile">
+                                    @if ($errors->has('image'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('image') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-primary pull-left">{{ __('Create') }}</button>
-                            <button type="reset" class="btn btn-danger pull-right">{{ __('Reset') }}</button>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                                <button type="reset" class="btn btn-danger pull-right">{{ __('Reset') }}</button>
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer">

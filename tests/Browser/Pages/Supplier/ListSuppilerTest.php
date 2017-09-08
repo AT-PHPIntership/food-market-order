@@ -125,8 +125,8 @@ class ListSuppilerTest extends DuskTestCase
                 ->text($element. ' td');
             $browser->visit('/suppliers')
                 ->click($element. ' .fa-trash')
-                ->waitFor(null,3)
-                ->assertSeeIn('#modal-confirm-title','Delete Supplier');
+                ->waitForText('Delete Supplier')
+                ->assertSee('Are you want delete it?');
         });
     }
 }
