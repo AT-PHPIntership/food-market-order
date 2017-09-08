@@ -14,11 +14,11 @@
 <div class="wrapper">
 
     <!-- Header -->
-    
+
     @include('layouts.partials.header')
     <!-- Left side column. contains the logo and sidebar -->
     @include('layouts.partials.aside')
-    
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @include('layouts.partials.main_header')
