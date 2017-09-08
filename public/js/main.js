@@ -385,7 +385,7 @@ $(document).ready(function() {
                     }
                 },
                 error: function(data, status) {
-                    showArlert(data["message"],status)
+                    showArlert(data.responseJSON["message"],status)
                     $('#modal-confirm').modal("hide");
                 }
             });
