@@ -14,14 +14,16 @@
 <div class="wrapper">
 
     <!-- Header -->
+    
     @include('layouts.partials.header')
     <!-- Left side column. contains the logo and sidebar -->
     @include('layouts.partials.aside')
-<!-- Content Wrapper. Contains page content -->
+    
+    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-    @include('layouts.partials.main_header')
+        @include('layouts.partials.main_header')
 
-    <!-- Main content -->
+        <!-- Main content -->
         <section class="content">
 
             <!-- Your Page Content Here -->
@@ -35,9 +37,9 @@
 
     <!-- Main Footer -->
 
-@include('layouts.partials.footer')
+    @include('layouts.partials.footer')
 
-<!-- Add the sidebar's background. This div must be placed
+    <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
