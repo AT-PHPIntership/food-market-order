@@ -40,6 +40,47 @@ function bindEventToSelect() {
     });
 }
 
+(function($) {
+    $.fn.replaceClass = function (oldClass, newClass) {
+        return this.removeClass(oldClass).addClass(newClass);
+    };
+}(jQuery));
+
+function showModal(title, body) {
+    $('#modal-confirm-title').html(title);
+    $('#modal-confirm-body').html(body);
+    $('#modal-confirm').modal("show");
+}
+
+function ajaxRequest(functionHandle, method, urlRequest, dataRequest, $target = null) {
+    $.ajax({
+       type: method,
+       url: urlRequest,
+       data: dataRequest,
+       success: function(data, status)
+       {
+            functionHandle($target, data, status);
+       },
+       error: function(data, status){
+            functionHandle($target, data, status);
+      }
+    });
+}
+
+function handleCreateResponse($target, data = null, status = null) {
+    if (status === 'success') {
+        alertMessage($target, data['message']);
+        $("#btn-modal-submit").next().hide();
+        $newUrl = dailyMenuURLs.menu_detail_by_date.replace('date', data['date']);
+        window.setTimeout(function() {
+            window.location = $newUrl;
+        }, 1000);
+    } else {
+        alertMessage($target, $target.attr('data-error'));
+        $("#btn-modal-submit").next().hide();
+    }
+}
+
 function alertMessage($eventTarget, message) {
     var title = $eventTarget.attr('data-title');
     var body = '<p>'+message+'</p>'
@@ -50,41 +91,16 @@ function alertMessage($eventTarget, message) {
     $("#btn-modal-submit").next().hide();
 }
 
-// Call Ajax request with @param:
-// $data: data which being send to server
-// $eventTarget: get target button was clicked to handle after request
-// $url: route
-// $method: method request
-// @Return: Call handleAjaxResponse if request successes
-function callAjax($data, $eventTarget, $url, $method) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        type: $method,
-        url: $url,
-        data: $data,
-        success: function(data, status) {
-            handleAjaxResponse(data, status, $eventTarget);
-        },
-        error: function(data, status) {
-            //display error
-            handleAjaxResponse(data, status, $eventTarget);
-        }
-    });
-}
 // Handle Ajax response with @param:
 // data: response message from server
 // status: response status from server
 // $eventTarget: get target button was clicked to handle
 // @Return: setting something to display
-function handleAjaxResponse(data, status, $eventTarget) {
+function handleUpdateDelete($eventTarget, data, status) {
     if ($eventTarget.attr('name') == 'btn-edit') {
         $tdHasError = $eventTarget.parents().eq(2);
         $helpElement = $tdHasError.find('span');
-        if (status === "success") {
+        if (status == "success") {
             alertMessage($eventTarget, data['message']);
             $tdHasError.removeClass('has-error');
             $helpElement.html('');
@@ -99,8 +115,8 @@ function handleAjaxResponse(data, status, $eventTarget) {
     } else if ($eventTarget.attr('name') == 'btn-del') {
         if (status == "success") {
             //delete record in table
-            $eventTarget.parents().eq(1).remove();
-            alertMessage($eventTarget, data['message']);
+            $eventTarget.closest('tr').remove();
+            alertMessage($eventTarget, data.message);
             if ($('#daily-menu-table tr').length == 1) {
                 window.location.replace('../daily-menus');
             }
@@ -126,6 +142,11 @@ function formatSelection (option) {
     return option.name || option.text;
 }
 $(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     //get standard element to append new row for create daily menu
     $stdRowCreateMenu = $('tbody tr:nth-child(1)').html();
     $('#create-menu-table tr:nth-child(1)').find('.btn-success').hide();
@@ -169,7 +190,7 @@ $(document).ready(function() {
                         'menuId': menuId,
                         'quantity': newQuantity
                 });
-                callAjax(menuItem[0], $(edit.target), './daily-menus', 'PUT');
+                ajaxRequest(handleUpdateDelete, 'PUT', './daily-menus', menuItem[0], $(edit.target));
             })
             $btnCancel.click(function(cancel) {
                 $btnEdit.hide();
@@ -193,16 +214,14 @@ $(document).ready(function() {
         $arrBtnDel.click(function(event) {
             var title = $(this).attr('data-title');
             var body = '<p>'+$(this).attr('data-confirm')+'</p>'
-            $('#modal-confirm-title').html(title);
-            $('#modal-confirm-body').html(body);
+            showModal(title, body);
             $('#btn-modal-submit').show();
-            $('#modal-confirm').modal("show");
+            $("#btn-modal-submit").next().show();
             $('#btn-modal-submit').click(function(e){
                 let menuId = $(event.target).val();
                 let menu = [];
                 menu.push({'menuId': menuId});
-                callAjax(menu[0], $(event.target), './daily-menus', 'DELETE');
-                $('#modal-confirm').modal('hide');
+                ajaxRequest(handleUpdateDelete, 'DELETE', './daily-menus', menu[0], $(event.target));
             })
             $("#modal-confirm").on("hide.bs.modal", function () {
                 $('#btn-modal-submit').off('click');
@@ -246,25 +265,22 @@ $(document).ready(function() {
      })
 
     //btn add new row
-    $('.btn-add-new-row').click(function() {
-        if( $('.btn-disable-row').css('display') == 'none' ){
+    $('#add-row').click(function() {
+        if( $('#disable-row').css('display') == 'none' ){
             $curTR = $(this).closest('tr');
             $('tbody').prepend('<tr></tr>');
             $firstElement = $('tbody tr:nth-child(1');
             $firstElement.append($stdRowCreateMenu);
-            $firstElement.find('.btn-add-new-row').removeClass('btn-primary');
-            $firstElement.find('.btn-add-new-row').addClass('btn-warning');
-            $firstElement.find('.glyphicon').removeClass('glyphicon-plus ');
-            $firstElement.find('.glyphicon').addClass('glyphicon-minus');
-            $firstElement.find('.btn-add-new-row').click(function() {
-                $(this).closest('tr').remove();
-            })
-            $firstElement.find('.btn-disable-row').click(function() {
+            $firstElement.find('i').replaceClass('glyphicon-plus', 'glyphicon-minus');
+            $firstElement.find('#add-row')
+                        .replaceClass('btn-primary', 'btn-warning')
+                        .click(function() {
+                            $(this).closest('tr').remove();
+                        });
+            $firstElement.find('#disable-row').click(function() {
                 $parent = $(this).closest('tr');
                 if ($parent.find('.select-food').val() && $parent.find('input').val()) {
-                    $parent.find('.select-category').prop('disabled', true);
-                    $parent.find('.select-food').prop('disabled', true);
-                    $parent.find('input').prop('disabled', true);
+                    $parent.find('.select-category, .select-food, input').prop('disabled', true);
                     $(this).hide();
                 } else {
                     alertMessage($(this), $(this).attr('data-message'));
@@ -279,27 +295,9 @@ $(document).ready(function() {
     })
     $('#create-menu').submit(function(e) {
         e.preventDefault();
-        $('.select-food').prop('disabled', false);
-        $('input').prop('disabled', false);
+        $('.select-food, input').prop("disabled", false);
         $url = $(this).attr('action');
-        $.ajax({
-           type: "POST",
-           url: $url,
-           data: $('#create-menu').serializeArray(), // serializes the form's elements.
-           success: function(data)
-           {
-                alertMessage($(e.target), data['message']);
-                $("#btn-modal-submit").next().hide();
-                $newUrl = dailyMenuURLs.menu_detail_by_date.replace('date', data['date']);
-                window.setTimeout(function() {
-                    window.location = $newUrl;
-                }, 1000);
-           },
-           error: function(data){
-                alertMessage($(e.target), $(e.target).attr('data-error'));
-                $("#btn-modal-submit").next().hide();
-          }
-        });
+        ajaxRequest(handleCreateResponse, "POST", $url, $('#create-menu').serializeArray(), $(e.target));
     })
     //End for create dailyMenu
 
@@ -311,9 +309,7 @@ $(document).ready(function() {
         var form = $(this.form);
         var title = $(this).attr("data-title");
         var body = '<p>' + $(this).attr("data-confirm") + '</p>'
-        $('#modal-confirm-title').html(title);
-        $('#modal-confirm-body').html(body);
-        $('#modal-confirm').modal("show");
+        showModal(title, body);
         $('#btn-modal-submit').one("click", function () {
             form.submit();
             $('#modal-confirm').modal("hide");
@@ -343,11 +339,9 @@ $(document).ready(function() {
     })
     function showArlert(message, status) {
         if (status == "success"){
-            $('.alert').removeClass('alert-danger');
-            $('.alert').addClass('alert-success');
+            $('.alert').replaceClass('alert-danger', 'alert-success');
         } else {
-            $('.alert').removeClass('alert-success');
-            $('.alert').addClass('alert-danger');
+            $('.alert').replaceClass('alert-success', 'alert-danger');
         }
         $('.alert .content-alert').html(message);
         $('.alert').show();
@@ -360,16 +354,9 @@ $(document).ready(function() {
         var title = $(this).attr("data-title");
         var body = '<p>' + $(this).attr("data-confirm") + '</p>';
         var id = $(this).attr("data-id");
-        $('#modal-confirm-title').html(title);
-        $('#modal-confirm-body').html(body);
-        $('#modal-confirm').modal("show");
+        showModal(title, body);
         $('#btn-modal-submit').one("click", function () {
             var data = {"quantity":quantity.value};
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
             $.ajax({
                 type: "PUT",
                 url: "/orderitems/"+id,
@@ -404,15 +391,8 @@ $(document).ready(function() {
         var title = $(this).attr("data-title");
         var body = '<p>' + $(this).attr("data-confirm") + '</p>';
         var id = $(this).attr("data-id");
-        $('#modal-confirm-title').html(title);
-        $('#modal-confirm-body').html(body);
-        $('#modal-confirm').modal("show");
+        showModal(title, body);
         $('#btn-modal-submit').one("click", function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
             $.ajax({
                 type: "DELETE",
                 url: "/orderitems/"+id,
