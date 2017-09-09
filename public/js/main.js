@@ -52,24 +52,6 @@ function showModal(title, body) {
     $('#modal-confirm').modal("show");
 }
 
-function updateOrderQuantitySuccess(target, data, status) {
-    quantityBackUp = $(target).parent().parent().find('.quantity-back-up')
-    quantity = target;
-    if (status == "success") {
-        $(quantityBackUp)
-        $(quantityBackUp).val($(quantity).val());
-        showArlert(data["message"],status)
-        $('#modal-confirm').modal("hide");
-    } else {
-        showArlert(data["message"],status)
-        $('#modal-confirm').modal("hide");
-    }
-}
-function updateOrderQuantityError(target, data, status) {
-    showArlert(data.responseJSON["message"],status);
-    $('#modal-confirm').modal("hide");
-}
-
 function showArlert(message, status) {
     if (status == "success"){
         $('.alert').replaceClass('alert-danger', 'alert-success');
@@ -152,6 +134,19 @@ function handleUpdateDelete($eventTarget, data, status) {
     }
 }
 
+function updateOrderQuantitySuccess(target, data, status) {
+    quantityBackUp = $(target).parent().parent().find('.quantity-back-up')
+    quantity = target;
+    if (status == "success") {
+        $(quantityBackUp).val($(quantity).val());
+        showArlert(data["message"],status)
+        $('#modal-confirm').modal("hide");
+    } else {
+        showArlert(data["message"],status)
+        $('#modal-confirm').modal("hide");
+    }
+}
+
 function deleteOrderSuccess(target, data, status) {
     if (status == "success") {
         target.remove();
@@ -164,8 +159,8 @@ function deleteOrderSuccess(target, data, status) {
     }
 }
 
-function deleteOrderError(target, data, status) {
-    showArlert(data.responseJSON["message"],status)
+function updateDeleteOrderError(target, data, status) {
+    showArlert(data.responseJSON["message"],status);
     $('#modal-confirm').modal("hide");
 }
 
@@ -394,7 +389,7 @@ $(document).ready(function() {
         showModal(title, body);
         $('#btn-modal-submit').one("click", function () {
             var data = {"quantity":quantity.value};
-            ajaxRequest(updateOrderQuantitySuccess, "PUT", "/orderitems/"+id, data, updateOrderQuantityError, eventTarget);
+            ajaxRequest(updateOrderQuantitySuccess, "PUT", "/orderitems/"+id, data, updateDeleteOrderError, eventTarget);
         });
         $('#modal-confirm').on("hidden.bs.modal", function () {
             $('#btn-modal-submit').off("click");
@@ -412,7 +407,7 @@ $(document).ready(function() {
         let id = $(this).attr("data-id");
         showModal(title, body);
         $('#btn-modal-submit').one("click", function () {
-            ajaxRequest(deleteOrderSuccess, "DELETE", "/orderitems/"+id, null, deleteOrderError, parent);
+            ajaxRequest(deleteOrderSuccess, "DELETE", "/orderitems/"+id, null, updateDeleteOrderError, parent);
         });
         $('#modal-confirm').on("hidden.bs.modal", function () {
             $('#btn-modal-submit').off("click");
