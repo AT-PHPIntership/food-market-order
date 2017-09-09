@@ -75,7 +75,7 @@
             <span class="btn-xl btn-danger btn" id="clear-input"> {{ __('Cancel') }}</span>
         </div>
         <div class="col-md-offset-1 col-md-4">
-            <input type="submit" id="add-row" class="btn btn-primary"
+            <input type="submit" id="add-to-menu" class="btn btn-primary"
                    value="{{ __('Add To Menu') }}">
         </div>
     </div>

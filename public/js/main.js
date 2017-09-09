@@ -52,17 +52,45 @@ function showModal(title, body) {
     $('#modal-confirm').modal("show");
 }
 
-function ajaxRequest(functionHandle, method, urlRequest, dataRequest, $target = null) {
+function updateOrderQuantitySuccess(target, data, status) {
+    quantityBackUp = $(target).parent().parent().find('.quantity-back-up')
+    quantity = target;
+    if (status == "success") {
+        $(quantityBackUp)
+        $(quantityBackUp).val($(quantity).val());
+        showArlert(data["message"],status)
+        $('#modal-confirm').modal("hide");
+    } else {
+        showArlert(data["message"],status)
+        $('#modal-confirm').modal("hide");
+    }
+}
+function updateOrderQuantityError(target, data, status) {
+    showArlert(data.responseJSON["message"],status);
+    $('#modal-confirm').modal("hide");
+}
+
+function showArlert(message, status) {
+    if (status == "success"){
+        $('.alert').replaceClass('alert-danger', 'alert-success');
+    } else {
+        $('.alert').replaceClass('alert-success', 'alert-danger');
+    }
+    $('.alert .content-alert').html(message);
+    $('.alert').show();
+}
+
+function ajaxRequest(handleSuccess, method, urlRequest, dataRequest, handleError, $target = null) {
     $.ajax({
        type: method,
        url: urlRequest,
        data: dataRequest,
        success: function(data, status)
        {
-            functionHandle($target, data, status);
+            handleSuccess($target, data, status);
        },
        error: function(data, status){
-            functionHandle($target, data, status);
+            handleError($target, data, status);
       }
     });
 }
@@ -84,9 +112,7 @@ function handleCreateResponse($target, data = null, status = null) {
 function alertMessage($eventTarget, message) {
     var title = $eventTarget.attr('data-title');
     var body = '<p>'+message+'</p>'
-    $('#modal-confirm-title').html(title);
-    $('#modal-confirm-body').html(body);
-    $('#modal-confirm').modal("show");
+    showModal(title, body);
     $("#btn-modal-submit").hide();
     $("#btn-modal-submit").next().hide();
 }
@@ -124,6 +150,23 @@ function handleUpdateDelete($eventTarget, data, status) {
             alertMessage($eventTarget, data['error']);
         }
     }
+}
+
+function deleteOrderSuccess(target, data, status) {
+    if (status == "success") {
+        target.remove();
+        $('.quantity-order-item').change();
+        showArlert(data["message"],status);
+        $('#modal-confirm').modal("hide");
+    } else {
+        showArlert(data["message"],status);
+        $('#modal-confirm').modal("hide");
+    }
+}
+
+function deleteOrderError(target, data, status) {
+    showArlert(data.responseJSON["message"],status)
+    $('#modal-confirm').modal("hide");
 }
 
 //for select2
@@ -192,12 +235,12 @@ $(document).ready(function() {
                         'menuId': menuId,
                         'quantity': newQuantity
                 });
-                ajaxRequest(handleUpdateDelete, 'PUT', './daily-menus', menuItem[0], $(edit.target));
+                ajaxRequest(handleUpdateDelete, 'PUT', './daily-menus', menuItem[0], handleUpdateDelete,$(edit.target));
             })
             $btnCancel.click(function(cancel) {
                 $btnEdit.hide();
                 $(this).hide();
-                $quantityElement = $(this).parents().eq(1).find('input[type=number]');
+                $quantityElement = $(this).closest('tr').find('input[type=number]');
                 $quantityElement.val(oldQuantity);
                 $tdHasError = $(event.target).parents().eq(2);
                 $tdHasError.removeClass('has-error');
@@ -223,7 +266,7 @@ $(document).ready(function() {
                 let menuId = $(event.target).val();
                 let menu = [];
                 menu.push({'menuId': menuId});
-                ajaxRequest(handleUpdateDelete, 'DELETE', './daily-menus', menu[0], $(event.target));
+                ajaxRequest(handleUpdateDelete, 'DELETE', './daily-menus', menu[0], handleUpdateDelete, $(event.target));
             })
             $("#modal-confirm").on("hide.bs.modal", function () {
                 $('#btn-modal-submit').off('click');
@@ -248,9 +291,9 @@ $(document).ready(function() {
         var day = $dateValue.substring(8, 10);
         var $date = new Date(year, month - 1, day);
         if ($date < $today) {
-            $('#add-row').prop("disabled", true);
+            $('#add-to-menu').prop("disabled", true);
         } else {
-            $('#add-row').prop("disabled", false);
+            $('#add-to-menu').prop("disabled", false);
         }
     })
     bindEventToSelect();
@@ -299,7 +342,7 @@ $(document).ready(function() {
         e.preventDefault();
         $('.select-food, input').prop("disabled", false);
         $url = $(this).attr('action');
-        ajaxRequest(handleCreateResponse, "POST", $url, $('#create-menu').serializeArray(), $(e.target));
+        ajaxRequest(handleCreateResponse, "POST", $url, $('#create-menu').serializeArray(), handleCreateResponse, $(e.target));
     })
     //End for create dailyMenu
 
@@ -339,46 +382,19 @@ $(document).ready(function() {
     $('.close').click(function() {
         $('.alert').hide();
     })
-    function showArlert(message, status) {
-        if (status == "success"){
-            $('.alert').replaceClass('alert-danger', 'alert-success');
-        } else {
-            $('.alert').replaceClass('alert-success', 'alert-danger');
-        }
-        $('.alert .content-alert').html(message);
-        $('.alert').show();
-    }
 
     $('.quantity-order-item').blur(function (e) {
         e.preventDefault();
-        var quantityBackUp = $(this).parent().parent().find('.quantity-back-up');
-        var quantity = this;
-        var title = $(this).attr("data-title");
-        var body = '<p>' + $(this).attr("data-confirm") + '</p>';
-        var id = $(this).attr("data-id");
+        let eventTarget = this;
+        let quantityBackUp = $(this).parent().parent().find('.quantity-back-up');
+        let quantity = this;
+        let title = $(this).attr("data-title");
+        let body = '<p>' + $(this).attr("data-confirm") + '</p>';
+        let id = $(this).attr("data-id");
         showModal(title, body);
         $('#btn-modal-submit').one("click", function () {
             var data = {"quantity":quantity.value};
-            $.ajax({
-                type: "PUT",
-                url: "/orderitems/"+id,
-                data: data,
-                success: function(data, status) {
-                    if (status == "success") {
-                        $(quantityBackUp).val($(quantity).val());
-                        showArlert(data["message"],status)
-                        $('#modal-confirm').modal("hide");
-                    } else {
-                        showArlert(data["message"],status)
-                        $('#modal-confirm').modal("hide");
-                    }
-                },
-                error: function(data, status) {
-                    showArlert(data.responseJSON["message"],status)
-                    $('#modal-confirm').modal("hide");
-                }
-            });
-
+            ajaxRequest(updateOrderQuantitySuccess, "PUT", "/orderitems/"+id, data, updateOrderQuantityError, eventTarget);
         });
         $('#modal-confirm').on("hidden.bs.modal", function () {
             $('#btn-modal-submit').off("click");
@@ -386,35 +402,17 @@ $(document).ready(function() {
             $(quantity).change();
         });
     });
-
     // Delete Order Item
     $('.delete-order-item').click(function () {
-        var parent = $(this).parent().parent();
-        var title = $(this).attr("data-title");
-        var body = '<p>' + $(this).attr("data-confirm") + '</p>';
-        var id = $(this).attr("data-id");
+        let quantityBackUp = $(this).parent().parent().find('.quantity-back-up');
+        let quantity = this;
+        let parent = $(this).parent().parent();
+        let title = $(this).attr("data-title");
+        let body = '<p>' + $(this).attr("data-confirm") + '</p>';
+        let id = $(this).attr("data-id");
         showModal(title, body);
         $('#btn-modal-submit').one("click", function () {
-            $.ajax({
-                type: "DELETE",
-                url: "/orderitems/"+id,
-                success: function(data, status) {
-                    if (status == "success") {
-                        parent.remove();
-                        $('.quantity-order-item').change();
-                        showArlert(data["message"],status);
-                        $('#modal-confirm').modal("hide");
-                    } else {
-                        showArlert(data["message"],status);
-                        $('#modal-confirm').modal("hide");
-                    }
-                },
-                error: function(data, status) {
-                    showArlert(data.responseJSON["message"],status)
-                    $('#modal-confirm').modal("hide");
-                }
-            });
-
+            ajaxRequest(deleteOrderSuccess, "DELETE", "/orderitems/"+id, null, deleteOrderError, parent);
         });
         $('#modal-confirm').on("hidden.bs.modal", function () {
             $('#btn-modal-submit').off("click");
