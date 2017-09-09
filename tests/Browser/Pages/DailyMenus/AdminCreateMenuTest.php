@@ -41,7 +41,7 @@ class AdminCreateMenuTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             factory(Category::class, 1)->create()->each(function($c) {
-                $c->foods()->save(factory(Food::class)->make());
+                $c->foods()->save(factory(Food::class)->make(['name' => 'food1']));
             });
             $browser->loginAs(1)
                     ->visit('/daily-menus/create')
@@ -58,14 +58,13 @@ class AdminCreateMenuTest extends DuskTestCase
                     ->click($cateOption)
                     ->waitFor(null, '1')
                     ->click($foodSelect)
-                    ->waitFor(null, '1');
+                    ->waitForText('food1');
             $option = '#select2-select-food-results li:nth-child(1)';
             $browser->click($option)
                     ->waitFor(null, '1')
-                    ->screenshot('AdminCreateMenu-FoodSelected')
                     ->type('quantity[]', 5)
                     ->press('Add To Menu')
-                    ->waitForText('Create New Menu')
+                    ->waitForText('Menu was successfully added!')
                     ->assertSee('Menu was successfully added!');
         });
         $this->assertDatabaseHas('daily_menus', ['date' => date('Y-m-d', strtotime(' +1 day')), 'food_id' => 1, 'quantity' => 5]);
@@ -100,7 +99,7 @@ class AdminCreateMenuTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             factory(Category::class, 1)->create()->each(function($c) {
-                $c->foods()->save(factory(Food::class)->make());
+                $c->foods()->save(factory(Food::class)->make(['name' => 'food1']));
             });
             $browser->loginAs(1)
                     ->visit('/daily-menus/create')
@@ -114,11 +113,10 @@ class AdminCreateMenuTest extends DuskTestCase
                     ->click($cateOption)
                     ->waitFor(null, '1')
                     ->click($foodSelect)
-                    ->waitFor(null, '1');
+                    ->waitForText('food1');
             $option = '#select2-select-food-results li:nth-child(1)';
             $browser->click($option)
                     ->waitFor(null, '1')
-                    ->screenshot('AdminCreateMenu-FoodSelected')
                     ->type('quantity[]', 5)
                     ->press('Add To Menu')
                     ->waitFor(null, '1')
@@ -208,7 +206,7 @@ class AdminCreateMenuTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             factory(Category::class, 1)->create()->each(function($c) {
-                $c->foods()->save(factory(Food::class)->make());
+                $c->foods()->save(factory(Food::class)->make(['name' => 'food1']));
             });
             $browser->loginAs(1)
                     ->visit('/daily-menus/create')
@@ -225,11 +223,10 @@ class AdminCreateMenuTest extends DuskTestCase
                     ->click($cateOption)
                     ->waitFor(null, '1')
                     ->click($foodSelect)
-                    ->waitFor(null, '1');
+                    ->waitForText('food1');
             $option = '#select2-select-food-results li:nth-child(1)';
             $browser->click($option)
                     ->waitFor(null, '1')
-                    ->screenshot('AdminCreateMenu-FoodSelected')
                     ->type('quantity[]', 5)
                     ->click('#clear-input')
                     ->assertInputValue('date', null)

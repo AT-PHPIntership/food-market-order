@@ -2,7 +2,7 @@
 
 @section('main-content')
     <div class="box box-primary">
-        <div class="box-header text-center">
+        <div class="box-header">
             <h3 class="box-title">
                 @if((!empty($date))||(session()->has('date')))
                     {{ _('Add Item For') }} {{ $date }}{!! session('date') !!}

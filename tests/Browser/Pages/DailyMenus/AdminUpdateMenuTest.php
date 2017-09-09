@@ -40,7 +40,7 @@ class AdminUpdateMenuTest extends DuskTestCase
     public function testUpdateSuccess()
     {
         $this->browse(function (Browser $browser) {
-            factory(Category::class, 1)->create()->each(function($c) {
+            factory(Category::class, 1)->create()->each(function ($c) {
                 $c->foods()->save(factory(Food::class)->make());
             });
             factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => date('Y-m-d', strtotime(' +1 day'))]);
@@ -71,7 +71,7 @@ class AdminUpdateMenuTest extends DuskTestCase
     public function testValidationUpdateMenuItem()
     {
         $this->browse(function (Browser $browser) {
-            factory(Category::class, 1)->create()->each(function($c) {
+            factory(Category::class, 1)->create()->each(function ($c) {
                 $c->foods()->save(factory(Food::class)->make());
             });
             factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => date('Y-m-d', strtotime(' +1 day'))]);
@@ -88,7 +88,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->waitForText('The quantity field is required.')
                     ->type($elementMenuItem. ' .quantity', 0)
                     ->click($elementMenuItem. ' .glyphicon-ok')
-                    ->waitFor(null, '5')
+                    ->waitForText('The quantity must be at least 1.')
                     ->assertSee('The quantity must be at least 1.');
         });
     }
@@ -103,7 +103,7 @@ class AdminUpdateMenuTest extends DuskTestCase
     public function testDisableInputQuantity()
     {
         $this->browse(function (Browser $browser) {
-            factory(Category::class, 1)->create()->each(function($c) {
+            factory(Category::class, 1)->create()->each(function ($c) {
                 $c->foods()->save(factory(Food::class)->make());
             });
             factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => date('Y-m-d', strtotime(' -1 day'))]);
@@ -128,7 +128,7 @@ class AdminUpdateMenuTest extends DuskTestCase
     public function testCancelButton()
     {
         $this->browse(function (Browser $browser) {
-            factory(Category::class, 1)->create()->each(function($c) {
+            factory(Category::class, 1)->create()->each(function ($c) {
                 $c->foods()->save(factory(Food::class)->make());
             });
             factory(DailyMenu::class, 1)->create(['food_id' => 1, 'date' => date('Y-m-d', strtotime(' +1 day')), 'quantity' => 1]);
@@ -140,8 +140,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->waitFor(null, '5')
                     ->assertSee('Daily Menu For');
             $elementMenuItem = '.table tr:nth-child(2)';
-            $browser->type($elementMenuItem. ' .quantity', '254')
-                    ->screenshot('first');
+            $browser->type($elementMenuItem. ' .quantity', '254');
             $browser->click($elementMenuItem. ' .glyphicon-ban-circle')
                     ->waitFor(null, '1')
                     ->assertDontSeeIn($elementMenuItem. ' td:nth-child(7)', '254');

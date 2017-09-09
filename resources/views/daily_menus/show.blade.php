@@ -4,16 +4,16 @@
         <div class="box-header">
             <h3 class="box-title">{{ __('Daily Menu For') }}<span class="label label-info" id="menu-date"> {{ $date }}</span></h3>
             <span class="pull-right">
-                <a href="{{ route('daily-menus.create', ['date' => $date]) }}" class="btn btn-primary">
-                    <i class=" fa fa-plus"></i>
-                </a>
-                <a href="{{ route('daily-menus.index') }}" class="btn btn-primary">
-                    <span class="fa fa-arrow-left"></span>
-                </a>
             </span>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+            <div class="box-tools">
+                <a href="{{ route('daily-menus.create', ['date' => $date]) }}" class="btn btn-primary pull-right">
+                    <i class=" fa fa-plus-circle"></i>
+                    {{ __('Add More') }}
+                </a>
+            </div>
             <div class="form-group has-success">
             </div>
             <div class="form-group has-warning">

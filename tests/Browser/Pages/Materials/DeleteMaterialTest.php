@@ -43,9 +43,9 @@ class DeleteMaterialTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                 ->resize(1920, 1080)
                 ->visit('/materials')
-                ->click('.table tbody tr:nth-child(2) td:nth-child(7) .fa-trash')
+                ->click('.table tbody tr:nth-child(2) td:nth-child(6) .fa-trash')
                 ->waitFor(null, '1')
-                ->assertSee('Delete Material')
+                ->waitForText('Delete Material')
                 ->assertSee('Are you sure delete Material?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Delete Material Success');
@@ -66,7 +66,7 @@ class DeleteMaterialTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/materials');
             DB::table('materials')->delete(2);
-            $browser->click('.table tbody tr:nth-child(2) td:nth-child(7) .fa-trash')
+            $browser->click('.table tbody tr:nth-child(2) td:nth-child(6) .fa-trash')
                 ->waitFor(null, '1')
                 ->assertSee('Delete Material')
                 ->assertSee('Are you sure delete Material?')
@@ -88,7 +88,7 @@ class DeleteMaterialTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/materials');
             DB::table('materials')->delete(2);
-            $browser->click('.table tbody tr:nth-child(2) td:nth-child(7) .fa-trash')
+            $browser->click('.table tbody tr:nth-child(2) td:nth-child(6) .fa-trash')
                 ->waitFor(null, '1')
                 ->assertSee('Delete Material')
                 ->assertSee('Are you sure delete Material?')

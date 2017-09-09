@@ -43,4 +43,20 @@ class FoodController extends ApiController
 
         return response()->json($foods, Response::HTTP_OK);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id of food
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $food = $this->food->select('id', 'name', 'price', 'description', 'category_id', 'image')->with(['category' => function ($query) {
+            $query->select('id', 'name');
+        }])->findOrFail($id);
+
+        return response()->json($food, Response::HTTP_OK);
+    }
 }

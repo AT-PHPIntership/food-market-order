@@ -39,8 +39,7 @@ class AdminUpdateUserTest extends DuskTestCase
                 ->assertPathIs('/users/1/edit')
                 ->assertInputValue('full_name', 'DungVan')
                 ->assertInputValue('email', 'admin@gmail.com')
-                ->assertSelected('gender', 0)
-                ->screenshot('testFormUpdateUser');
+                ->assertSelected('gender', 0);
         });
     }
 
@@ -69,8 +68,7 @@ class AdminUpdateUserTest extends DuskTestCase
                 ->assertSelected('gender', 1)
                 ->assertInputValue('phone_number', '12345678')
                 ->assertInputValue('address', 'test address')
-                ->assertInputValue('birthday', '2017-02-23')
-                ->screenShot('testUpdateUserSuccess');
+                ->assertInputValue('birthday', '2017-02-23');
         });
         $this->assertDatabaseHas('users', ['email' => 'admin@gmail.com', 'full_name' => 'test user']);
     }
@@ -149,8 +147,7 @@ class AdminUpdateUserTest extends DuskTestCase
                 ->assertInputValueIsNot('full_name', 'test user')
                 ->assertInputValueIsNot('birthday', '2017-02-23')
                 ->assertInputValueIsNot('phone_number', '12345678')
-                ->assertInputValueIsNot('address', 'test address')
-                ->screenShot('testBtnReset');
+                ->assertInputValueIsNot('address', 'test address');
         });
     }
 }
