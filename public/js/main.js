@@ -312,11 +312,9 @@ $(document).ready(function() {
             $firstElement = $('tbody tr:nth-child(1');
             $firstElement.append($stdRowCreateMenu);
             $firstElement.find('i').replaceClass('glyphicon-plus', 'glyphicon-minus');
-            $firstElement.find('#add-row')
-                        .replaceClass('btn-primary', 'btn-warning')
-                        .click(function() {
-                            $(this).closest('tr').remove();
-                        });
+            $firstElement.find('#add-row').replaceClass('btn-primary', 'btn-warning').click(function() {
+                $(this).closest('tr').remove();
+            });
             $firstElement.find('#disable-row').click(function() {
                 $parent = $(this).closest('tr');
                 if ($parent.find('.select-food').val() && $parent.find('input').val()) {

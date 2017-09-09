@@ -62,8 +62,8 @@
                     <input type="number" class="form-control text-center" name="quantity[]" form="create-menu" min="1" required>
                 </td>
                 <td class="text-center">
-                    <span class="btn-xs btn btn-success" id="disable-row" data-title="{{ __('Add New Row')}}" data-message="{{ __('Please fill in all elements') }}"><i class = "glyphicon glyphicon-ok"></i></span>
-                    <span class="btn-xs btn btn-primary" id="add-row" data-title="{{ __('Add New Row') }}" data-message="{{ __('Please finish your choose') }}"><i class = "glyphicon glyphicon-plus"></i></span>
+                    <span class="btn-sm btn btn-success" id="disable-row" data-title="{{ __('Add New Row')}}" data-message="{{ __('Please fill in all elements') }}"><i class = "fa fa-check"></i></span>
+                    <span class="btn-sm btn btn-primary" id="add-row" data-title="{{ __('Add New Row') }}" data-message="{{ __('Please finish your choose') }}"><i class = "fa fa-plus-circle"></i></span>
                 </td>
             </tr>
             </tbody>
