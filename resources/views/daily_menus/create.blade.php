@@ -2,7 +2,7 @@
 
 @section('main-content')
     <div class="box box-primary">
-        <div class="box-header text-center">
+        <div class="box-header">
             <h3 class="box-title">
                 @if((!empty($date))||(session()->has('date')))
                     {{ _('Add Item For') }} {{ $date }}{!! session('date') !!}
@@ -46,7 +46,7 @@
             <tbody id="create-menu-table">
             <tr>
                 <td>
-                    <select class="form-control select-category required" required>
+                    <select class="form-control select-category required" id="select-category" required>
                         <option value=''>{{ __('Choose category') }}</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -62,8 +62,8 @@
                     <input type="number" class="form-control text-center" name="quantity[]" form="create-menu" min="1" required>
                 </td>
                 <td class="text-center">
-                    <span class="btn-xs btn btn-success btn-disable-row" data-title="{{ __('Add New Row')}}" data-message="{{ __('Please fill in all elements') }}"><i class = "glyphicon glyphicon-ok"></i></span>
-                    <span class="btn-xs btn btn-primary btn-add-new-row" data-title="{{ __('Add New Row') }}" data-message="{{ __('Please finish your choose') }}"><i class = "glyphicon glyphicon-plus"></i></span>
+                    <span class="btn-sm btn btn-success btn-disable-row" data-title="{{ __('Add New Row')}}" data-message="{{ __('Please fill in all elements') }}"><i class = "fa fa-check"></i></span>
+                    <span class="btn-sm btn btn-primary btn-add-new-row" data-title="{{ __('Add New Row') }}" data-message="{{ __('Please finish your choose') }}"><i class = "fa fa-plus-circle"></i></span>
                 </td>
             </tr>
             </tbody>

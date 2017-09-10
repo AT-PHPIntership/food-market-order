@@ -1,9 +1,7 @@
 @extends('layouts.master')
 @section('main-header')
     <h1>{{ __('DETAIL USER') }}
-        <small>user's profile and orders history</small>
-        <a href="{{ route('users.index') }}" class="pull-right"><span
-                    class="fa fa-arrow-left btn btn-primary"></span></a>
+        <small></small>
     </h1>
 @endsection
 @section('main-content')
@@ -12,18 +10,18 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-primary">
-                        <div class="box-header text-center">
+                        <div class="box-header">
                             <h3 class="box-title">{{ __('User Information') }}</h3>
                         </div>
                         <div class="box-body">
-                            <div class="col-md-4">
+                            <div class="col-md-4 text-center">
                                 <img alt="" title="" class="img-circle img-thumbnail isTooltip"
                                      src="{{ $user->image }}"
                                      data-original-title="Usuario">
                             </div>
                             <div class="col-md-8">
                                 <div class="table-responsive">
-                                    <table class="table table-condensed table-responsive table-user-information">
+                                    <table class="table table-condensed table-responsive table-user-information has-description">
                                         <tbody>
                                         <tr>
                                             <td>
@@ -147,6 +145,20 @@
                                                 {{ $orders->total() }}
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    <span class="text-primary"></span>
+                                                    {{ __('Action') }}
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('users.edit', $user->id) }}"><span
+                                                            class="btn btn-sm btn-primary">{{ __('Edit') }}</span></a>
+                                                <a href="{{ route('users.index') }}"><span
+                                                            class="btn btn-sm btn-danger">{{ __('Go to List') }}</span></a>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -158,7 +170,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-primary">
-                        <div class="box-header text-center">
+                        <div class="box-header">
                             <h3 class="box-title">{{ __('Total Orders') }}</h3>
                         </div>
                         <!-- /.box-header -->
@@ -193,22 +205,21 @@
                                             </td>
                                             <td>{{ $order->custom_address }}
                                             </td>
-                                            <td>{{ $order->payment }}</td>
+                                            <td>{{ $order->total_price }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
+                                <div class="box-tools">
+                                    {{ $orders->links() }}
+                                </div>
                             </div>
                             <!-- /.box-body -->
-                            <div class="box-footer">
-                                {{ $orders->links() }}
-                            </div>
                         @endif
                     </div>
                     <!-- /.box -->
                 </div>
             </div>
-        </div>
         </div>
     @else
         <h1>{{ __('Nothing to show!') }}</h1>

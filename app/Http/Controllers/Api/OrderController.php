@@ -6,6 +6,7 @@ use App\Food;
 use App\Material;
 use App\Order;
 use App\OrderItem;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -106,14 +107,12 @@ class OrderController extends ApiController
                 'data' => $data,
                 'success' => true
             ], Response::HTTP_OK);
-        } catch (Exception $e) {
+        } catch (ClientException $e) {
             DB::rollback();
-            return response()->json([
-                'error' => 'data_invalid',
-                'message' => true
-            ], Response::HTTP_BAD_REQUEST);
+            response()->json([
+                json_decode($e->getResponse()->getBody(), true)
+            ], $e->getCode());
         }
-        //    return $request->all();
     }
 
     /**

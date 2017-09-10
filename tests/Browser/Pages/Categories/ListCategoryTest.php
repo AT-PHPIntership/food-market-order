@@ -105,7 +105,7 @@ class ListCategoryTest extends DuskTestCase
 
             $browser->visit('/categories')
                 ->click($element. ' .fa-edit')
-                ->assertPathIs('/categories/'.$id.'/edit')->screenshot('abc2');
+                ->assertPathIs('/categories/'.$id.'/edit');
         });
     }
 

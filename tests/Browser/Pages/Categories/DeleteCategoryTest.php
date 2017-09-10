@@ -2,14 +2,13 @@
 
 namespace Tests\Browser;
 
-use App\Order;
-use App\User;
+use App\Category;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\DB;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Support\Facades\DB;
 
-class DeleteOrderTest extends DuskTestCase
+class DeleteCategoryTest extends DuskTestCase
 {
     use DatabaseTransactions;
 
@@ -22,9 +21,8 @@ class DeleteOrderTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
-                ->resize(1920, 1080)
-                ->visit('/orders')
-                ->assertSee("LIST ORDERS");
+                ->visit('/categories')
+                ->assertSee("LIST CATEGORIES PAGE");
         });
     }
 
@@ -36,17 +34,17 @@ class DeleteOrderTest extends DuskTestCase
     public function testDeleteSuccess()
     {
         $this->browse(function (Browser $browser) {
-            factory(User::class, 10)->create();
-            factory(Order::class, 5)->create();
+            factory(Category::class, 5)->create();
+            $element = '.dataTable tbody tr:nth-child(2)';
             $browser->loginAs(1)
                 ->resize(1920, 1080)
-                ->visit('/orders')
-                ->click( 'tbody tr:nth-child(2) .fa-trash')
-                ->waitFor(null, '1')
-                ->assertSee('Delete Order')
+                ->visit('/categories')
+                ->click($element. ' .fa-trash')
+                ->waitFor(null, '3')
+                ->assertSee('Delete Category')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
-                ->assertSee('Delete Order Success');
+                ->assertSee('Delete Category Success');
         });
     }
 
@@ -58,17 +56,17 @@ class DeleteOrderTest extends DuskTestCase
     public function testDeleteFail()
     {
         $this->browse(function (Browser $browser) {
-            factory(User::class, 10)->create();
-            factory(Order::class, 5)->create();
+            factory(Category::class, 5)->create();
             $browser->loginAs(1)
-                ->visit('/orders');
-            DB::table('orders')->delete(2);
-            $browser->click('tbody tr:nth-child(2) .fa-trash')
-                ->waitFor(null, '1')
-                ->assertSee('Delete Order')
+                ->resize(1920, 1080)
+                ->visit('/categories');
+            DB::table('categories')->delete(2);
+            $element = '.dataTable tbody tr:nth-child(2)';
+            $browser->click($element. ' .btn-danger')
+                ->waitForText('Delete Category')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
-                ->assertSee('Order Not Found');
+                ->assertSee('Category Not Found!');
         });
     }
 }

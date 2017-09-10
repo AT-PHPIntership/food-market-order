@@ -3,9 +3,31 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\DailyMenu;
 
-class DailyMenuController extends ApiController
+class DailyMenuController extends Controller
 {
+    /**
+     * The Daily Menu implementation.
+     *
+     * @var DailyMenu
+     */
+    protected $dailyMenu;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param DailyMenu $dailyMenu instance of DailyMenu
+     *
+     * @return void
+     */
+    public function __construct(DailyMenu $dailyMenu)
+    {
+        $this->dailyMenu = $dailyMenu;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,78 +35,32 @@ class DailyMenuController extends ApiController
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request request create
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request = $request;
+        $dailyMenus = $this->dailyMenu->search()->select('date')->distinct()->orderBy('date', 'DESC')->paginate(DailyMenu::ITEMS_PER_PAGE);
+        return response()->json(collect(['success' => true])->merge($dailyMenus));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id id daily menu
+     * @param string $date The date to get menu to show
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($date)
     {
-        $id = $id;
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id id daily menu
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $id = $id;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request request update
-     * @param int                      $id      id daily menu update
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $request = $request;
-        $id = $id;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id id delete
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $id = $id;
+        if ($menu = $this->dailyMenu->select('date', 'food_id', 'quantity')
+                                    ->with(['food' => function ($food) {
+                                        $food->select('id', 'name', 'price', 'description', 'category_id', 'image');
+                                    }, 'food.category' => function ($category) {
+                                        $category->select('id', 'name', 'description');
+                                    }])
+                                    ->where('date', $date)
+                                    ->paginate($this->dailyMenu->ITEMS_PER_PAGE)
+        ) {
+            return response()->json(collect(['success' => true])->merge($menu));
+        }
+        $error = __('Has error during access this page');
+        return response()->json(['error' => $error]);
     }
 }
