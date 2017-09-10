@@ -4,4 +4,4 @@
 {!! file_get_contents(base_path('docs/api-references/user.md')) !!}
 {!! file_get_contents(base_path('docs/api-references/daily-menus.md')) !!}
 {!! file_get_contents(base_path('docs/api-references/order.md')) !!}
-{!! file_get_contents(base_path('docs/api-references/counts.md')) !!}
+{!! file_get_contents(base_path('docs/api-references/statistic.md')) !!}
