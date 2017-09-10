@@ -90,7 +90,6 @@ class UserController extends ApiController
         }
     }
 
-
     /**
      * Display the specified resource.
      *
