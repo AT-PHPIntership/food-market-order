@@ -37,3 +37,4 @@ Route::resource('foods', 'Api\FoodController', ['only' => [
 Route::post('/users/login', 'Api\UserController@login');
 
 Route::get('/statistics/counts', 'Api\StatisticController@countResources');
+Route::get('/statistics/trends', 'Api\StatisticController@getTrends');
