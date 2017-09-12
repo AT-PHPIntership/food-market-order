@@ -18,10 +18,10 @@ class StatisticController extends ApiController
      */
     public function countResources()
     {
-        $model_files = \File::files('../app/');
+        $modelFiles = \File::files('../app/');
 
-        foreach ($model_files as $model_file) {
-            $fileName = \File::name($model_file);
+        foreach ($modelFiles as $modelFile) {
+            $fileName = \File::name($modelFile);
             if ($fileName == 'OrderItem') {
                 continue;
             }
