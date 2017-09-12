@@ -59,7 +59,7 @@ class OrderController extends ApiController
      */
     public function create()
     {
-        return "Add order";
+        //
     }
 
     /**
