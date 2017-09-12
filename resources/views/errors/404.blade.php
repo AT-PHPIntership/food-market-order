@@ -1,10 +1,9 @@
-@extends('layouts.master')
-@section('main-header')
-    <h1>
-        {{ __('404 Error Page') }}
-    </h1>
-@endsection
-@section('main-content')
+<html>
+<head>
+    <title>{{ __('404 Error') }}</title>
+    @include('layouts.partials.style')
+</head>
+<body>
     <div class="error-page">
         <h2 class="headline text-yellow"> 404</h2>
 
@@ -19,4 +18,5 @@
         </div>
         <!-- /.error-content -->
     </div>
-@endsection
+</body>
+</html>
