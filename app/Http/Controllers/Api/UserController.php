@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\UpdateImageRequest;
 use App\Http\Requests\Api\UserUpdateRequest;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\Api\UserRegisterRequest;
 use Illuminate\Http\Response;
+use Image;
 
 class UserController extends ApiController
 {
@@ -132,10 +134,18 @@ class UserController extends ApiController
      */
     public function update(UserUpdateRequest $request)
     {
-        if ($request->user()->update($request->all())) {
+        $arrayData = $request->all();
+        if (!isset($arrayData['image'])) {
+            unset($arrayData['image']);
+        }
+
+        if ($request->user()->update($arrayData)) {
             return response()->json(['success' => true], Response::HTTP_OK);
         }
 
+        if (isset($request->all()['image'])) {
+            File::delete(public_path(config('constant.path_upload_user') . $request->get('image')));
+        }
         return response()->json(['success' => false, 'message' => __('Error during update current user!')], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
@@ -149,5 +159,20 @@ class UserController extends ApiController
     public function destroy($id)
     {
         $id = $id;
+    }
+
+    /**
+     * Save image and response image name
+     *
+     * @param UpdateImageRequest $request request has image file
+     *
+     * @return string
+     */
+    public function postUploadImage(UpdateImageRequest $request)
+    {
+        $image = $request->file('file');
+        $imageName = time().$image->getClientOriginalName();
+        Image::make($image)->resize(300, 300)->save(public_path('images/users/' . $imageName));
+        return $imageName;
     }
 }

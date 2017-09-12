@@ -35,3 +35,5 @@ Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
 Route::post('/users/login', 'Api\UserController@login');
+
+Route::post('/users/upload-image', 'Api\UserController@postUploadImage');

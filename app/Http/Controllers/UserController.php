@@ -177,6 +177,6 @@ class UserController extends Controller
      */
     public function storageImage($file, $fileName)
     {
-        Image::make($file)->save(public_path('images/users/' . $fileName));
+        Image::make($file)->resize(300, 300)->save(public_path('images/users/' . $fileName));
     }
 }
