@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
 use App\Food;
 
 class FoodController extends ApiController
@@ -20,8 +18,6 @@ class FoodController extends ApiController
      * Create a new controller instance.
      *
      * @param Food $food instance of Food
-     *
-     * @return void
      */
     public function __construct(Food $food)
     {
@@ -35,6 +31,8 @@ class FoodController extends ApiController
      */
     public function index()
     {
+        $withs = $filters = $orders = true;
+
         $columns = [
             'foods.id',
             'foods.name',
@@ -43,7 +41,10 @@ class FoodController extends ApiController
             'foods.image',
             'foods.description'
         ];
-        $foods = $this->food->search()->select($columns)->paginate(Food::ITEMS_PER_PAGE);
+
+        $this->food->setColumnsFilter(request()->only(['category_id']));
+        $this->food->setColumnsOrder(request()->only(['created_at', 'name', 'price']));
+        $foods = $this->food->search($withs, $filters, $orders)->select($columns)->paginate(Food::ITEMS_PER_PAGE);
 
         return response()->json($foods, Response::HTTP_OK);
     }
@@ -57,8 +58,8 @@ class FoodController extends ApiController
      */
     public function show($id)
     {
-        $food = $this->food->search()->findOrFail($id);
-
+        $withs = true;
+        $food = $this->food->search($withs)->findOrFail($id);
         return response()->json($food, Response::HTTP_OK);
     }
 }
