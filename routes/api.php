@@ -35,3 +35,7 @@ Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
 Route::post('/users/login', 'Api\UserController@login');
+
+Route::post('/foods/getCart', 'Api\FoodController@getCart');
+
+Route::post('/materials/getCart', 'Api\MaterialController@getCart');
