@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DailyMenu;
 use App\Food;
 use App\Material;
 use App\Order;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
+use Psy\Exception\ErrorException;
 
 class OrderController extends ApiController
 {
@@ -81,20 +83,39 @@ class OrderController extends ApiController
             );
             if ($request->type == 'App\Food') {
                 $itemtable = new Food();
+                foreach ($request->items as $item) {
+                    $dailyItem = DailyMenu::whereDate('date', '=', $request->trans_at)
+                        ->where('food_id', '=', $item['id'])
+                        ->take(1)->get();
+                    if (count($dailyItem->all()) != 0) {
+                        $itemtable->findOrFail($dailyItem[0]->food_id);
+                        $this->orderItem->create(
+                            [
+                                'itemtable_id' => $item['id'],
+                                'itemtable_type' => $request->input('type'),
+                                'quantity'=> $item['quantity'],
+                                'order_id' => $order->id
+                            ]
+                        );
+                        $dailyItem[0]->quantity -= $item['quantity'];
+                        $dailyItem[0]->saveOrFail();
+                    }
+                }
             } else {
                 $itemtable = new Material();
+                foreach ($request->items as $item) {
+                    $itemtable->findOrFail($item['id']);
+                    $this->orderItem->create(
+                        [
+                            'itemtable_id' => $item['id'],
+                            'itemtable_type' => $request->input('type'),
+                            'quantity'=> $item['quantity'],
+                            'order_id' => $order->id
+                        ]
+                    );
+                }
             }
-            foreach ($request->items as $item) {
-                $itemtable->findOrFail($item['id']);
-                $this->orderItem->create(
-                    [
-                        'itemtable_id' => $item['id'],
-                        'itemtable_type' => $request->input('type'),
-                        'quantity'=> $item['quantity'],
-                        'order_id' => $order->id
-                    ]
-                );
-            }
+
             $order->updateTotalPrice();
             DB::commit();
             $data = [
