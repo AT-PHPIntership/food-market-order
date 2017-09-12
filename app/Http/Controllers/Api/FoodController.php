@@ -104,7 +104,7 @@ class FoodController extends ApiController
      */
     public function getCart(Request $request)
     {
-        $foods = $this->food->whereIn('id',$request->all())->get();
+        $foods = $this->food->whereIn('id', $request->all())->get();
         return response()->json([
             'data' => $foods,
             'success' => true

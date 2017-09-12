@@ -66,7 +66,7 @@ class MaterialController extends ApiController
      */
     public function getCart(Request $request)
     {
-        $material = $this->material->whereIn('id',$request->all())->get();
+        $material = $this->material->whereIn('id', $request->all())->get();
         return response()->json([
             'data' => $material,
             'success' => true
