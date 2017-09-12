@@ -3,9 +3,31 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Category;
 
 class CategoryController extends ApiController
 {
+    /**
+     * The Category implementation.
+     *
+     * @var Category
+     */
+    protected $category;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param Category $category instance of Category
+     *
+     * @return void
+     */
+    public function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,78 +35,33 @@ class CategoryController extends ApiController
      */
     public function index()
     {
-        //
-    }
+        $categories = $this->category->select('id', 'name', 'description')
+                                    ->paginate($this->category->ITEMS_PER_PAGE);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        if ($categories) {
+            return response()->json(collect(['success' => true])->merge($categories));
+        }
+        $error = __('Has error during access this page');
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request request create
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request = $request;
+        return response()->json(['error' => $error]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id id category
+     * @param int $id of category
      *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $id = $id;
-    }
+        $category = $this->category->select('id', 'name', 'description')->findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id id category
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $id = $id;
-    }
+        if ($category) {
+            return response()->json(collect(['success' => true])->merge(['data' => $category]));
+        }
+        $error = __('Has error during access this page');
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request request update
-     * @param int                      $id      id category update
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $request = $request;
-        $id = $id;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id id delete
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $id = $id;
+        return response()->json(['error' => $error]);
     }
 }
