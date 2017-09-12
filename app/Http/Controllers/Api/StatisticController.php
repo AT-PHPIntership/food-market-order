@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Food;
@@ -41,12 +42,13 @@ class StatisticController extends ApiController
      * Get top of order by table type
      *
      * @param string $tableType type of target table
-     * @param string $tableName name of target table
      *
      * @return array
      */
-    public function getTopOrderOf($tableType, $tableName)
+    public function getTopOrderOf($tableType)
     {
+        $modelInstance = new $tableType;
+        $tableName = $modelInstance->getTable();
         $columns = [
             $tableName.'.id',
             $tableName.'.name',
@@ -72,11 +74,16 @@ class StatisticController extends ApiController
      */
     public function getTrends()
     {
-        $topFoods = $this->getTopOrderOf('App\\Food', 'foods');
-        $topMaterials = $this->getTopOrderOf('App\\Material', 'materials');
-        return response()->json(collect([
+        $topFoods = $this->getTopOrderOf('App\\Food');
+        $topMaterials = $this->getTopOrderOf('App\\Material');
+
+        if ($topFoods && $topMaterials) {
+            return response()->json(collect([
                             'foods' => $topFoods,
                             'materials' => $topMaterials
                         ])->merge(['success' => true]));
+        }
+        $error = __('Has error during access this page');
+        return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
     }
 }
