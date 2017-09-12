@@ -79,9 +79,10 @@ class StatisticController extends ApiController
 
         if ($topFoods && $topMaterials) {
             return response()->json(collect([
+                        'data' => [
                             'foods' => $topFoods,
                             'materials' => $topMaterials
-                        ])->merge(['success' => true]));
+                        ]])->merge(['success' => true]));
         }
         $error = __('Has error during access this page');
         return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
