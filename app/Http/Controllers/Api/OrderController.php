@@ -7,7 +7,9 @@ use App\Food;
 use App\Material;
 use App\Order;
 use App\OrderItem;
+use Faker\Provider\DateTime;
 use GuzzleHttp\Exception\ClientException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -83,8 +85,9 @@ class OrderController extends ApiController
             );
             if ($request->type == 'App\Food') {
                 $itemtable = new Food();
+//                dd(date("d/m/Y", strtotime($request->trans_at)));
                 foreach ($request->items as $item) {
-                    $dailyItem = DailyMenu::whereDate('date', '=', $request->trans_at)
+                    $dailyItem = DailyMenu::where('date', '=', date("Y-m-d", strtotime($request->trans_at)))
                         ->where('food_id', '=', $item['id'])
                         ->take(1)->get();
                     if (count($dailyItem->all()) != 0) {
@@ -130,9 +133,15 @@ class OrderController extends ApiController
             ], Response::HTTP_OK);
         } catch (ClientException $e) {
             DB::rollback();
-            response()->json([
+            return response()->json([
                 json_decode($e->getResponse()->getBody(), true)
             ], $e->getCode());
+        } catch (QueryException $ex) {
+            DB::rollback();
+            return response()->json([
+                'error' => $ex->errorInfo[0],
+                'message' => $ex->errorInfo[2]
+            ], 404);
         }
     }
 
