@@ -33,6 +33,9 @@ class Food extends Model
         ],
         'joins' => [
             'categories' => ['foods.category_id', 'categories.id']
+        ],
+        'withs' => [
+            'category' => ['categories.id', 'categories.name']
         ]
     ];
 

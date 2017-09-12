@@ -3,10 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Material;
+use Illuminate\Http\Response;
 
 class MaterialController extends ApiController
 {
     protected $material;
+
+    /**
+     * MaterialController constructor.
+     *
+     * @param Material $material dependence injection
+     */
+    public function __construct(Material $material)
+    {
+        $this->material = $material;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,19 +28,18 @@ class MaterialController extends ApiController
     public function index()
     {
         $columns = [
-            'id',
-            'name',
-            'category_id',
-            'price',
-            'image',
-            'description'
+            'materials.id',
+            'materials.name',
+            'materials.category_id',
+            'materials.supplier_id',
+            'materials.price',
+            'materials.image',
+            'materials.description',
+            'materials.status'
         ];
-        $with['category'] = function ($query) {
-            $query->select('id', 'name');
-        };
-        $foods = $this->food->select($columns)->with($with)->paginate(Food::ITEMS_PER_PAGE);
+        $materials = $this->material->search()->select($columns)->paginate(Material::ITEMS_PER_PAGE);
 
-        return response()->json($foods, Response::HTTP_OK);
+        return response()->json($materials, Response::HTTP_OK);
     }
 
     /**
@@ -61,7 +73,9 @@ class MaterialController extends ApiController
      */
     public function show($id)
     {
-        $id = $id;
+        $material = $this->material->search()->findOrFail($id);
+
+        return response()->json($material, Response::HTTP_OK);
     }
 
     /**

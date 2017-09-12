@@ -29,18 +29,29 @@ class FoodController extends ApiController
     public function index()
     {
         $columns = [
-            'id',
-            'name',
-            'category_id',
-            'price',
-            'image',
-            'description'
+            'foods.id',
+            'foods.name',
+            'foods.category_id',
+            'foods.price',
+            'foods.image',
+            'foods.description'
         ];
-        $with['category'] = function ($query) {
-            $query->select('id', 'name');
-        };
-        $foods = $this->food->select($columns)->with($with)->paginate(Food::ITEMS_PER_PAGE);
+        $foods = $this->food->search()->select($columns)->paginate(Food::ITEMS_PER_PAGE);
 
         return response()->json($foods, Response::HTTP_OK);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id of food
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $food = $this->food->search()->findOrFail($id);
+
+        return response()->json($food, Response::HTTP_OK);
     }
 }

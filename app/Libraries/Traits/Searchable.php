@@ -22,6 +22,8 @@ trait Searchable
         foreach ($this->getColumns() as $column) {
             $query->orWhere($column, "LIKE", "%$keyword%");
         }
+
+        $this->makeWiths($query);
     }
 
     /**
@@ -45,6 +47,16 @@ trait Searchable
     }
 
     /**
+     * Get withs
+     *
+     * @return mixed
+     */
+    protected function getWiths()
+    {
+        return array_get($this->searchable, 'withs', []);
+    }
+
+    /**
      * Make joins
      *
      * @param Builder $query query model
@@ -57,6 +69,21 @@ trait Searchable
             $query->leftJoin($table, function ($join) use ($keys) {
                 $join->on($keys[0], '=', $keys[1]);
             });
+        }
+    }
+
+    /**
+     * Make withs
+     *
+     * @param Builder $query
+     */
+    protected function makeWiths(Builder $query)
+    {
+        foreach ($this->getWiths() as $table => $keys) {
+            $with[$table] = function ($query1) use ($keys){
+                $query1->select($keys);
+            };
+            $query->with($with);
         }
     }
 }

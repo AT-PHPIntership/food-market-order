@@ -34,6 +34,10 @@ class Material extends Model
         'joins' => [
             'categories' => ['materials.category_id', 'categories.id'],
             'suppliers' => ['materials.supplier_id', 'suppliers.id']
+        ],
+        'withs' => [
+            'category' => ['categories.id', 'categories.name'],
+            'supplier' => ['suppliers.id', 'suppliers.name']
         ]
     ];
 
