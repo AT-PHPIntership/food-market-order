@@ -83,3 +83,6 @@ div {
 .no-pad-left{
 	padding-left: 0px;
 }
+.navbar-custom-menu > .navbar-nav > li {
+	position: static;
+}
