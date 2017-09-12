@@ -14,7 +14,7 @@ class DashboardController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param string $date current date
+     * @param Carbon\Carbon $carbon carbon instance
      *
      * @return void
      */
