@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -89,6 +90,14 @@ class User extends Authenticatable
         } else {
             return asset(config('constant.default_image'));
         }
+    }
+
+    public function topUserActive()
+    {
+        $query = User::withCount('orders')->with(['orders' => function($query) {
+            $query->selectRaw('status, count(*) as total2')->groupBy('status');
+        }])->orderBy('orders_count', 'desc')->take(3)->get();
+        return $query;
     }
 
     /**

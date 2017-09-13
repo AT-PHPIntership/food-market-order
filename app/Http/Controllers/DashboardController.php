@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DailyMenu;
 use App\Material;
+use App\Order;
+use App\User;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -53,6 +55,12 @@ class DashboardController extends Controller
         $statistics->date = $this->curDate;
 
         return $statistics;
+    }
+
+    public function topOrder()
+    {
+        $user = new User;
+        return $user->topUserActive();
     }
 
     /**
