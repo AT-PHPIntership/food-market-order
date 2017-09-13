@@ -5,11 +5,13 @@ namespace App;
 use App\Libraries\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Libraries\Traits\NewestStatistic;
 
 class Order extends Model
 {
     use Searchable;
     use SoftDeletes;
+    use NewestStatistic;
 
     const ITEMS_PER_PAGE = 10;
     const STATUS_CANCELED = 0;

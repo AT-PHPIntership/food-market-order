@@ -49,4 +49,3 @@ Route::resource('orderitems', 'OrderItemController',['only' => [
 
 Auth::routes();
 
-Route::get('test', 'DashboardController@topOrder');
