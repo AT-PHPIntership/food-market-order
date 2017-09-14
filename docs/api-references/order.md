@@ -49,3 +49,58 @@ Add new order from client.
 	"success": true
 }
 ```
+
+### `GET` Order Item of A Order
+```
+/api/orders/getItems/{id}
+```
+Get order item of a order.
+
+#### Request header
+| Key | Value |
+|---|---|
+| Accept | application/json |
+| Authorization | {token_type} {access_token} |
+
+#### Sample Response
+```json
+{
+  "data": {
+    "id": 74,
+    "user_id": 3,
+    "created_at": "1999-02-16 03:27:10",
+    "updated_at": "1999-02-16 03:27:10",
+    "trans_at": "1999-02-16 06:33:10",
+    "total_price": 92500,
+    "status": 2,
+    "address": "140 Hoàng Diệu, Tp Đà Nẵng",
+    "order_items": [
+    	{
+    		"id": 23,
+    		"itemtable" : {
+    			"id": 34,
+                "name": "Food 34",
+                "price": 5500.00,
+                "image": "https://lorempixel.com/640/480/?78294",
+                "status": 1
+    		},
+    		"itemtable_type": "App\\Food",
+    		"quantity": 10
+    	},
+		{
+            "id": 42,
+            "itemtable" : {
+            	"id": 14,
+            	"name": "Food 14",
+            	"price": 7500.00,
+            	"image": "https://lorempixel.com/640/480/?52948",
+            	"status": 1
+            },
+            "itemtable_type": "App\\Food",
+            "quantity": 5	
+        }
+    ]
+  },
+  "success": true
+}
+```
