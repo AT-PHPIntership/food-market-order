@@ -117,11 +117,23 @@ class UserApiTest extends TestCase
             [
                 [
                     'full_name' => 'test register',
-                    'email' => '', 'password' => '123456',
+                    'email' => '',
+                    'password' => '123456',
                     'password_confirmation' => '123456'
                 ],
                 [
                     'email' => ['The email field is required.']
+                ]
+            ],
+            [
+                [
+                    'full_name' => 'test register',
+                    'email' => 'admin@gmail.com',
+                    'password' => '123456',
+                    'password_confirmation' => '123456'
+                ],
+                [
+                    'email' => ['The email has already been taken.']
                 ]
             ],
             [
