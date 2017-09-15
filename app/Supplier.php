@@ -2,14 +2,14 @@
 
 namespace App;
 
-use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supplier extends Model
 {
     use softDeletes;
-    use Searchable;
+    use SearchAndRelationShip;
 
     const ITEMS_PER_PAGE = 10;
 

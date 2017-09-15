@@ -9,44 +9,17 @@ trait Searchable
     /**
      * Search the result follow the search request and columns searchable
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query     query model
-     * @param bool                                  $makeWiths to make the relationship
-     * @param bool                                  $filter    to filter with specify columns
-     * @param bool                                  $order     to make order by specify columns
+     * @param \Illuminate\Database\Eloquent\Builder $query query model
      *
      * @return void
      */
-    public function scopeSearch(Builder $query, $makeWiths = false, $filter = false, $order = false)
+    public function scopeSearch(Builder $query)
     {
-        $keyword = request('search');
         $query->select($this->getTable() . '.*');
         $this->makeJoins($query);
-
-        if ($filter) {
-            $query->where(function ($subQuery) use ($keyword) {
-                foreach ($this->getColumnsSearch() as $column) {
-                    $subQuery->orWhere($column, "LIKE", "%$keyword%");
-                }
-            })->where(function ($subQuery) {
-                foreach ($this->getColumnsFilter() as $column => $key) {
-                    $subQuery->where($column, 'LIKE', "$key");
-                };
-            });
-        } else {
-            foreach ($this->getColumnsSearch() as $column) {
-                $query->orWhere($column, "LIKE", "%$keyword%");
-            }
-        }
-
-        if ($order) {
-            foreach ($this->getColumnsOrder() as $column => $byKey) {
-                $query = $query->orderBy($column, $byKey);
-            }
-        }
-
-        if ($makeWiths) {
-            $this->makeWiths($query);
-        }
+        $this->makeSearch($query);
+        $this->makeFilters($query);
+        $this->makeOrderBy($query);
     }
 
     /**
@@ -60,13 +33,13 @@ trait Searchable
     }
 
     /**
-     * Get columns filterable
+     * Get columns condition
      *
      * @return mixed
      */
-    protected function getColumnsFilter()
+    protected function getColumnsCondition()
     {
-        $array =  array_get($this->searchable, 'filters', []);
+        $array = array_get($this->searchable, 'conditions', []);
         return $this->unsetIfNullValue($array);
     }
 
@@ -82,6 +55,17 @@ trait Searchable
     }
 
     /**
+     * Get columns orderable
+     *
+     * @return mixed
+     */
+    protected function getColumnsFilter()
+    {
+        $array = array_get($this->searchable, 'filters', []);
+        return $this->unsetIfNullValue($array);
+    }
+
+    /**
      * Get joins
      *
      * @return mixed
@@ -92,69 +76,9 @@ trait Searchable
     }
 
     /**
-     * Get withs
-     *
-     * @return mixed
-     */
-    protected function getWiths()
-    {
-        return array_get($this->searchable, 'withs', []);
-    }
-
-    /**
-     * Make joins
-     *
-     * @param Builder $query query model
-     *
-     * @return void
-     */
-    protected function makeJoins(Builder $query)
-    {
-        foreach ($this->getJoins() as $table => $keys) {
-            $query->leftJoin($table, function ($join) use ($keys) {
-                $join->on($keys[0], '=', $keys[1]);
-            });
-        }
-    }
-
-    /**
-     * Make withs
-     *
-     * @param Builder $query query model
-     *
-     * @return void
-     */
-    protected function makeWiths(Builder $query)
-    {
-        foreach ($this->getWiths() as $table => $keys) {
-            $with[$table] = function ($subQuery) use ($keys) {
-                $subQuery->select($keys);
-            };
-            $query->with($with);
-        }
-    }
-
-    /**
-     * Unset element has null value
-     *
-     * @param Array $array array need to unset null value
-     *
-     * @return mixed
-     */
-    protected function unsetIfNullValue($array)
-    {
-        foreach ($array as $key => $value) {
-            if (!isset($value)) {
-                unset($array[$key]);
-            }
-        }
-        return $array;
-    }
-
-    /**
      * Set search columns for searchable
      *
-     * @param Array $array ['column1', 'column2', ...]
+     * @param array $array [ 'table1' => ['column1', 'column2', ...], 'table2' => ['column3', 'column4', ...], ...]
      *
      * @return void
      */
@@ -164,27 +88,39 @@ trait Searchable
     }
 
     /**
-     * Set filter columns for searchable
+     * Set condition columns for condition search
      *
-     * @param Array $array ['columns1' => 'value1', 'columns2' => 'value2', ...]
+     * @param array $array [ 'table1' => ['column1', 'column2', ...], 'table2' => ['column3', 'column4', ...], ...]
      *
      * @return void
      */
-    public function setColumnsFilter($array)
+    public function setColumnsCondition($array)
     {
-        $this->searchable['filters'] = $array;
+        $this->searchable['conditions'] = $array;
     }
 
     /**
-     * Set order-by columns for searchable
+     * Set order-by columns for order by
      *
-     * @param Array $array ['columns1' => 'desc', 'columns2' => 'asc', ...]
+     * @param array $array ['table1' => ['columns1' => 'desc', 'columns2' => 'asc', ...], 'table2' => ['columns1' => 'desc', 'columns2' => 'asc', ...], ...]
      *
      * @return void
      */
     public function setColumnsOrder($array)
     {
         $this->searchable['orders'] = $array;
+    }
+
+    /**
+     * Set order-by columns for filter
+     *
+     * @param array $array ['columns1' => 'desc', 'columns2' => 'asc', ...]
+     *
+     * @return void
+     */
+    public function setColumnsFilter($array)
+    {
+        $this->searchable['filters'] = $array;
     }
 
     /**
@@ -200,14 +136,101 @@ trait Searchable
     }
 
     /**
-     * Set relationship table for searchable
+     * Make joins
      *
-     * @param Array $array ['relation1' => ['column1', 'column2', ...], 'relation2' => ['column1', 'column2', ...], ...]
+     * @param Builder $query query model
      *
      * @return void
      */
-    public function setWiths($array)
+    protected function makeJoins(Builder $query)
     {
-        $this->searchable['withs'] = $array;
+        foreach ($this->getJoins() as $table => $foreign) {
+            $query->leftJoin($table, function ($join) use ($table, $foreign) {
+                foreach ($foreign as $key => $foreignKey) {
+                    $join->on($this->getTable() . '.' . $key, '=', $table . '.' . $foreignKey);
+                }
+            });
+        }
+    }
+
+    /**
+     * Make order by
+     *
+     * @param Builder $query query model
+     *
+     * @return void
+     */
+    protected function makeOrderBy(Builder $query)
+    {
+        foreach ($this->getColumnsOrder() as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $column => $orderType) {
+                    $query = $query->orderBy($key . '.' . $column, $orderType);
+                }
+            } else {
+                $query = $query->orderBy($this->getTable() . '.' . $key, $value);
+            }
+        }
+    }
+
+    /**
+     * Make search
+     *
+     * @param Builder $query query model
+     *
+     * @return void
+     */
+    protected function makeSearch(Builder $query)
+    {
+        $keyword = request('search');
+        if (isset($this->searchable['keyword'])) {
+            $keyword = $this->searchable['keyword'];
+        }
+        $query->where(function ($subQuery) use ($keyword) {
+            foreach ($this->getColumnsSearch() as $key => $value) {
+                if (is_array($value)) {
+                    foreach ($value as $column) {
+                        $subQuery->orWhere($key . '.' . $column, "LIKE", "%$keyword%");
+                    }
+                } else {
+                    $subQuery->orWhere($this->getTable() . '.' . $value, "LIKE", "%$keyword%");
+                }
+            }
+        })->where(function ($subQuery) {
+            foreach ($this->getColumnsCondition() as $key => $value) {
+                if (is_array($value)) {
+                    foreach ($value as $column => $valueColumn) {
+                        $subQuery->where($key . '.' . $column, 'LIKE', "$valueColumn");
+                    }
+                } else {
+                    $subQuery->where($this->getTable() . '.' . $key, 'LIKE', "$value");
+                }
+            };
+        });
+    }
+
+    /**
+     * Make filter
+     *
+     * @param Builder $query query model
+     *
+     * @return void
+     */
+    protected function makeFilters(Builder $query)
+    {
+        $filters = [];
+        foreach ($this->getColumnsFilter() as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $column) {
+                    array_push($filters, $key . '.' . $column);
+                }
+            } else {
+                array_push($filters, $this->getTable() . '.' . $value);
+            }
+        }
+        if ($filters == []) {
+            return;
+        }
+        $query->select($filters);
     }
 }

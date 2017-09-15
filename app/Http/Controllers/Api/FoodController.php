@@ -31,20 +31,18 @@ class FoodController extends ApiController
      */
     public function index()
     {
-        $withs = $filters = $orders = true;
-
-        $columns = [
-            'foods.id',
-            'foods.name',
-            'foods.category_id',
-            'foods.price',
-            'foods.image',
-            'foods.description'
-        ];
-
-        $this->food->setColumnsFilter(request()->only(['category_id']));
-        $this->food->setColumnsOrder(request()->only(['created_at', 'name', 'price']));
-        $foods = $this->food->search($withs, $filters, $orders)->select($columns)->paginate(Food::ITEMS_PER_PAGE);
+        $this->food->setColumnsFilter([
+            'foods' => [
+                'id',
+                'name',
+                'category_id',
+                'price',
+                'image',
+                'description'
+            ]
+        ]);
+        $this->food->initQueryData(request()->all());
+        $foods = $this->food->search()->withs()->paginate(Food::ITEMS_PER_PAGE);
 
         return response()->json($foods, Response::HTTP_OK);
     }

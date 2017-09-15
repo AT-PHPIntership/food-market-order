@@ -2,13 +2,13 @@
 
 namespace App;
 
-use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use Searchable;
+    use SearchAndRelationShip;
     use softDeletes;
 
     const ITEMS_PER_PAGE = 10;

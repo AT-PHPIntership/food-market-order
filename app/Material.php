@@ -3,12 +3,13 @@
 namespace App;
 
 use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Material extends Model
 {
-    use Searchable;
+    use SearchAndRelationShip;
     use softDeletes;
 
     const ITEMS_PER_PAGE = 10;
@@ -23,22 +24,22 @@ class Material extends Model
      * @var array
      */
     protected $searchable = [
-
         'columns' => [
-            'materials.name',
-            'categories.name',
-            'suppliers.name',
-            'materials.description',
-            'materials.price',
+            'categories' => ['name', 'description'],
+            'suppliers'=> ['name', 'description'],
+            'name',
+            'description',
+            'price'
         ],
         'joins' => [
-            'categories' => ['materials.category_id', 'categories.id'],
-            'suppliers' => ['materials.supplier_id', 'suppliers.id']
-        ],
-        'withs' => [
-            'category' => ['categories.id', 'categories.name'],
-            'supplier' => ['suppliers.id', 'suppliers.name']
+            'categories' => ['category_id' => 'id'],
+            'suppliers' => ['supplier_id' => 'id']
         ]
+    ];
+
+    protected $withRelations = [
+        'category' => ['categories.id', 'categories.name'],
+        'supplier' => ['suppliers.id', 'suppliers.name']
     ];
 
     /**

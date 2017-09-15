@@ -1,14 +1,14 @@
 <?php
 namespace App;
 
-use App\Libraries\Traits\Searchable;
 use App\Libraries\Traits\AjaxSearchable;
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Food extends Model
 {
-    use Searchable;
+    use SearchAndRelationShip;
     use ajaxSearchable;
     use softDeletes;
 
@@ -26,17 +26,18 @@ class Food extends Model
     protected $searchable = [
 
         'columns' => [
-            'foods.name',
-            'categories.name',
-            'foods.description',
-            'foods.price',
+            'categories' => ['name', 'description'],
+            'name',
+            'description',
+            'price',
         ],
         'joins' => [
-            'categories' => ['foods.category_id', 'categories.id']
-        ],
-        'withs' => [
-            'category' => ['categories.id', 'categories.name']
+            'categories' => ['category_id' => 'id']
         ]
+    ];
+
+    protected $withRelations = [
+        'category' => ['id', 'name']
     ];
 
     /**
