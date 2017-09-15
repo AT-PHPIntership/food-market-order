@@ -108,6 +108,9 @@ class OrderController extends ApiController
         DB::beginTransaction();
         try {
             $order = $this->order->findOrFail($id);
+            // Test order of user request.
+            $user = $request->user();
+            if ($order->user_id != $user->id) return false;
             $order->custom_address = $request->address_ship;
             $order->trans_at = $request->trans_at;
             // order is not pending return false
