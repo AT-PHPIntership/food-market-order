@@ -52,7 +52,7 @@ Add new order from client.
 
 ### `GET` Order Item of A Order
 ```
-/api/orders/getItems/{id}
+/api/orders/{id}/getItems
 ```
 Get order item of a order.
 
