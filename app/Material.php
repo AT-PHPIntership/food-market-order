@@ -2,14 +2,15 @@
 
 namespace App;
 
-use App\Libraries\Traits\Searchable;
 use App\Libraries\Traits\SearchAndRelationShip;
+use App\Libraries\Traits\Deletable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Material extends Model
 {
     use SearchAndRelationShip;
+    use Deletable;
     use softDeletes;
 
     const ITEMS_PER_PAGE = 10;
@@ -40,6 +41,18 @@ class Material extends Model
     protected $withRelations = [
         'category' => ['categories.id', 'categories.name'],
         'supplier' => ['suppliers.id', 'suppliers.name']
+    ];
+
+    /**
+     * Relates model.
+     *
+     * @var array
+     */
+    protected $relates = [
+
+        'relates' => [
+            'orderItems'
+        ]
     ];
 
     /**
