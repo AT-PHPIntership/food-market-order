@@ -53,7 +53,9 @@
                                                 </strong>
                                             </td>
                                             <td class="text-primary">
-                                                {{ $material->category->name }}
+                                                <a href="{{ route('categories.edit', $material->category->id) }}">
+                                                    {{ $material->category->name }}
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -64,7 +66,9 @@
                                                 </strong>
                                             </td>
                                             <td class="text-primary">
-                                                {{ $material->supplier->name }}
+                                                <a href="{{ route('suppliers.edit', $material->supplier->id) }}">
+                                                    {{ $material->supplier->name }}
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
