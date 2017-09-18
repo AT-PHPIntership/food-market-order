@@ -47,7 +47,7 @@ class MaterialController extends ApiController
         ];
         $materials = $this->material->select($columns)
                                     ->where('category_id', $categoryId)
-                                    ->paginate($this->material->ITEMS_PER_PAGE);
+                                    ->paginate(Material::ITEMS_PER_PAGE);
 
         if ($materials) {
             return response()->json(collect(['success' => true])->merge($materials));

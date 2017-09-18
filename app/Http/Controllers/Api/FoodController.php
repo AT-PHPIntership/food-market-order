@@ -86,7 +86,7 @@ class FoodController extends ApiController
         ];
         $foods = $this->food->select($columns)
                             ->where('category_id', $categoryId)
-                            ->paginate($this->food->ITEMS_PER_PAGE);
+                            ->paginate(Food::ITEMS_PER_PAGE);
         if ($foods) {
             return response()->json(collect(['success' => true])->merge($foods));
         }

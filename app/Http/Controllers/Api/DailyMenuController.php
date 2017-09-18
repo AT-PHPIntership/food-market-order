@@ -56,7 +56,7 @@ class DailyMenuController extends Controller
                                         $category->select('id', 'name', 'description');
                                     }])
                                     ->where('date', $date)
-                                    ->paginate($this->dailyMenu->ITEMS_PER_PAGE)
+                                    ->paginate(DailyMenu::ITEMS_PER_PAGE)
         ) {
             return response()->json(collect(['success' => true])->merge($menu));
         }
