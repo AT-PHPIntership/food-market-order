@@ -80,12 +80,11 @@ class OrderController extends ApiController
                     'user_id' => $request->input('user_id'),
                     'trans_at' => $request->input('trans_at'),
                     'custom_address' => $request->address_ship,
-                    'status' => 1
+                    'status' => Order::STATUS_PENDING
                 ]
             );
             if ($request->type == 'App\Food') {
                 $itemtable = new Food();
-//                dd(date("d/m/Y", strtotime($request->trans_at)));
                 foreach ($request->items as $item) {
                     $dailyItem = DailyMenu::where('date', '=', date("Y-m-d", strtotime($request->trans_at)))
                         ->where('food_id', '=', $item['id'])
@@ -104,7 +103,7 @@ class OrderController extends ApiController
                         $dailyItem[0]->saveOrFail();
                     }
                 }
-            } else {
+            } elseif ($request->type == 'App\Material') {
                 $itemtable = new Material();
                 foreach ($request->items as $item) {
                     $itemtable->findOrFail($item['id']);
@@ -133,15 +132,10 @@ class OrderController extends ApiController
             ], Response::HTTP_OK);
         } catch (ClientException $e) {
             DB::rollback();
-            return response()->json([
-                json_decode($e->getResponse()->getBody(), true)
-            ], $e->getCode());
-        } catch (QueryException $ex) {
-            DB::rollback();
-            return response()->json([
-                'error' => $ex->errorInfo[0],
-                'message' => $ex->errorInfo[2]
-            ], 404);
+            return response()->json(
+                json_decode($e->getResponse()->getBody(), true),
+                $e->getCode()
+            );
         }
     }
 

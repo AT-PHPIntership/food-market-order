@@ -44,8 +44,16 @@
                                 @foreach ($menuOnDate as $menuItem)
                                     <tr>
                                         <td>{{ $menuItem->id }}</td>
-                                        <td>{{ $menuItem->food->name }}</td>
-                                        <td>{{ $menuItem->food->category->name }}</td>
+                                        <td>
+                                            <a href="{{ route('foods.show', $menuItem->food->id) }}">
+                                                {{ $menuItem->food->name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('categories.edit', $menuItem->food->category->id) }}">
+                                                {{ $menuItem->food->category->name }}
+                                            </a>
+                                        </td>
                                         <td>{{ number_format($menuItem->food->price, 0, ',', '.') }} {{ __('VND') }}</td>
                                         <td>{{ $menuItem->created_at }}</td>
                                         <td>{{ $menuItem->updated_at }}</td>

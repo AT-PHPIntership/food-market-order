@@ -3,88 +3,57 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Material;
 
 class MaterialController extends ApiController
 {
     /**
-     * Display a listing of the resource.
+     * The Material implementation.
      *
-     * @return \Illuminate\Http\Response
+     * @var Material
      */
-    public function index()
+    protected $material;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param Material $material instance of Food
+     *
+     * @return void
+     */
+    public function __construct(Material $material)
     {
-        //
+        $this->material = $material;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the list material by category id.
+     *
+     * @param integer $categoryId The categoryId to get materials
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function showBy($categoryId)
     {
-        //
-    }
+        $columns = [
+            'id',
+            'name',
+            'category_id',
+            'price',
+            'image',
+            'description'
+        ];
+        $materials = $this->material->select($columns)
+                                    ->where('category_id', $categoryId)
+                                    ->paginate($this->material->ITEMS_PER_PAGE);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request request create
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request = $request;
-    }
+        if ($materials) {
+            return response()->json(collect(['success' => true])->merge($materials));
+        }
+        $error = __('Has error during access this page');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id id material
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $id = $id;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id id material
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $id = $id;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request request update
-     * @param int                      $id      id material update
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $request = $request;
-        $id = $id;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id id delete
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $id = $id;
+        return response()->json(['error' => $error]);
     }
 }
