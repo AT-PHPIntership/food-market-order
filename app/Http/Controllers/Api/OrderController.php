@@ -85,10 +85,7 @@ class OrderController extends ApiController
                     'custom_address as address'])
                 ->with(['orderItems' => function ($query) {
                     $query->select(['id', 'itemtable_type', 'quantity', 'order_id', 'itemtable_id']);
-                    $query->with(['itemtable' => function ($query) {
-                        $query->select(['itemtable.id','itemtable.price' ,'itemtable.name' , 'itemtable.image']);
-                    }]);
-                }])->findOrFail($id);
+                }, 'orderItems.itemtable'])->findOrFail($id);
             if ($user->id == $order->user_id) {
                 $data = $order;
             }
