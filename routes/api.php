@@ -39,6 +39,6 @@ Route::post('/users/login', 'Api\UserController@login');
 Route::get('/statistics/counts', 'Api\StatisticController@countResources');
 Route::get('/statistics/trends', 'Api\StatisticController@getTrends');
 
-Route::post('/foods/getCart', 'Api\FoodController@getCart');
+Route::post('/carts/getCartFoods', 'Api\CartController@getCartFoods');
 
-Route::post('/materials/getCart', 'Api\MaterialController@getCart');
+Route::post('/carts/getCartMaterials', 'Api\CartController@getCartMaterials');

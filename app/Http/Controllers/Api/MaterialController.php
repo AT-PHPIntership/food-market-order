@@ -56,20 +56,4 @@ class MaterialController extends ApiController
 
         return response()->json(['error' => $error]);
     }
-
-    /**
-     * Get list materials in cart.
-     *
-     * @param \Illuminate\Http\Request $request request get cart
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getCart(Request $request)
-    {
-        $material = $this->material->whereIn('id', $request->all())->get();
-        return response()->json([
-            'data' => $material,
-            'success' => true
-        ], Response::HTTP_OK);
-    }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
 use App\Food;
 
 class FoodController extends ApiController
@@ -93,21 +91,5 @@ class FoodController extends ApiController
         $error = __('Has error during access this page');
 
         return response()->json(['error' => $error]);
-    }
-
-    /**
-     * Get list foods in cart.
-     *
-     * @param \Illuminate\Http\Request $request request get cart
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getCart(Request $request)
-    {
-        $foods = $this->food->whereIn('id', $request->all())->get();
-        return response()->json([
-            'data' => $foods,
-            'success' => true
-        ], Response::HTTP_OK);
     }
 }
