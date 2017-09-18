@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function () {
     Route::put('/users/me', 'Api\UserController@update');
     Route::get('/users/me', 'Api\UserController@show');
+    Route::post('/orders', 'Api\OrderController@store');
 });
 
 Route::get('categories', 'Api\CategoryController@index');
