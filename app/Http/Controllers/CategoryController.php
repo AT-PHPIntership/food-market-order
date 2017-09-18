@@ -109,8 +109,11 @@ class CategoryController extends Controller
     {
         try {
             $category = $this->category->findOrFail($id);
-            if ($category->delete()) {
+            $result = $category->deletable();
+            if ($result['message'] === true) {
                 flash(__('Delete Category Success'))->success()->important();
+            } else if ($result['message'] === false) {
+                flash(__('Please make sure you deleted food and material items belong to this category before!'))->error()->important();
             } else {
                 flash(__('Delete Category Errors'))->error()->important();
             }

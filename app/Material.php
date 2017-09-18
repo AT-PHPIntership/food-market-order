@@ -3,12 +3,14 @@
 namespace App;
 
 use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\Deletable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Material extends Model
 {
     use Searchable;
+    use Deletable;
     use softDeletes;
 
     const ITEMS_PER_PAGE = 10;
@@ -34,6 +36,18 @@ class Material extends Model
         'joins' => [
             'categories' => ['materials.category_id', 'categories.id'],
             'suppliers' => ['materials.supplier_id', 'suppliers.id']
+        ]
+    ];
+
+    /**
+     * Relates model.
+     *
+     * @var array
+     */
+    protected $relates = [
+
+        'relates' => [
+            'orderItems'
         ]
     ];
 

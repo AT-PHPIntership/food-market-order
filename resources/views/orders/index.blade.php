@@ -55,7 +55,11 @@
                                         {{ method_field('PUT') }}
                                         {{ csrf_field() }}
                                         <td>{{ $order->id }}</td>
-                                        <td>{{ $order->user->full_name }}</td>
+                                        <td>
+                                            <a href="{{ route('users.show', $order->user->id) }}">
+                                            {{ $order->user->full_name }}
+                                            </a>
+                                        </td>
                                         <td>{{ $order->trans_at }}</td>
                                         <td>{{ $order->custom_address }}</td>
                                         <td>{{ number_format($order->total_price,0,",",".") }} {{ __('VND') }}</td>
