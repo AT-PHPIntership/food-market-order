@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\Deletable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -10,6 +11,7 @@ class Category extends Model
 {
     use Searchable;
     use softDeletes;
+    use Deletable;
 
     const ITEMS_PER_PAGE = 10;
 
@@ -28,6 +30,19 @@ class Category extends Model
         'columns' => [
             'name',
             'description',
+        ]
+    ];
+
+    /**
+     * Relates model.
+     *
+     * @var array
+     */
+    protected $relates = [
+
+        'relates' => [
+            'foods',
+            'materials',
         ]
     ];
 
@@ -51,27 +66,5 @@ class Category extends Model
     public function materials()
     {
         return $this->hasMany('App\Material', 'category_id', 'id');
-    }
-
-    /**
-     * This is a recommended way to declare event handlers
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        /**
-         * Register a deleting model event with the dispatcher.
-         *
-         * @param \Closure|string  $callback
-         *
-         * @return void
-         */
-        static::deleting(function ($category) {
-            $category->foods()->delete();
-            $category->materials()->delete();
-        });
     }
 }
