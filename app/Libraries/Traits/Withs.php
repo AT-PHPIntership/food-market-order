@@ -25,6 +25,8 @@ trait Withs
     }
 
     /**
+     * Make with relations
+     *
      * @param Query $query query injection
      * @param array $withs array of with relations
      *
