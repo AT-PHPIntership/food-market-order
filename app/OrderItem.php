@@ -12,6 +12,8 @@ class OrderItem extends Model
 
     const TREND_ITEMS = 5;
 
+    protected $fillable = ['id', 'itemtable_id', 'order_id', 'itemtable_type', 'quantity'];
+
     /**
      * Material has many order items
      *
