@@ -52,7 +52,7 @@ class OrderController extends ApiController
      */
     public function index()
     {
-//        $user_id = request()->user(
+        //
     }
 
     /**
