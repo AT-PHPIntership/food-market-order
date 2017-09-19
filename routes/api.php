@@ -35,7 +35,10 @@ Route::post('/users', 'Api\UserController@store');
 Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
-Route::post('/users/login', 'Api\UserController@login');
 
+Route::post('/users/login', 'Api\UserController@login');
+Route::resource('materials', 'Api\MaterialController', ['only' => [
+    'index', 'show'
+]]);
 Route::get('/statistics/counts', 'Api\StatisticController@countResources');
 Route::get('/statistics/trends', 'Api\StatisticController@getTrends');
