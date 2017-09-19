@@ -74,7 +74,7 @@ class UserController extends ApiController
     {
         $http = new Client();
         try {
-            $response = $http->post(env('APP_URL').'/oauth/token', [
+            $response = $http->post(env('APP_URL') . '/oauth/token', [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => env('CLIENT_ID'),
@@ -85,11 +85,11 @@ class UserController extends ApiController
                 ],
             ]);
             return response()->json([
-                'data' => json_decode((string) $response->getBody(), true),
+                'data' => json_decode((string)$response->getBody(), true),
                 'success' => true
             ], Response::HTTP_OK);
         } catch (ClientException $ex) {
-            return  response()->json([
+            return response()->json([
                 json_decode($ex->getResponse()->getBody(), true)
             ], $ex->getCode());
         }
@@ -110,7 +110,7 @@ class UserController extends ApiController
             return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return response()->json(['data' => $user,'success' => true], Response::HTTP_OK);
+        return response()->json(['data' => $user, 'success' => true], Response::HTTP_OK);
     }
 
     /**
@@ -144,7 +144,7 @@ class UserController extends ApiController
         }
 
         if (isset($request->all()['image'])) {
-            File::delete(public_path(config('constant.path_upload_user') . $request->get('image')));
+            unlink(public_path(config('constant.path_upload_user') . $request->get('image')));
         }
         return response()->json(['success' => false, 'message' => __('Error during update current user!')], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
@@ -170,9 +170,17 @@ class UserController extends ApiController
      */
     public function postUploadImage(UpdateImageRequest $request)
     {
-        $image = $request->file('file');
-        $imageName = time().$image->getClientOriginalName();
-        Image::make($image)->resize(300, 300)->save(public_path('images/users/' . $imageName));
-        return $imageName;
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+            $imageName = time() . $image->getClientOriginalName();
+            Image::make($image)->resize(300, 300)->save(public_path('images/users/' . $imageName));
+            return $imageName;
+        } else {
+            $fileName = $request->get('fileName');
+            if (unlink(public_path('images/users/' . $fileName))) {
+                return response()->json(__('cancel upload image success'));
+            }
+            return response()->json(__('cancel upload image fail'));
+        }
     }
 }
