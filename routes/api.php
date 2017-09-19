@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function () {
     Route::put('/users/me', 'Api\UserController@update');
     Route::get('/users/me', 'Api\UserController@show');
+    Route::post('/orders', 'Api\OrderController@store');
     Route::put('/orders/{id}', 'Api\OrderController@update');
 });
 
@@ -36,3 +37,6 @@ Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
 Route::post('/users/login', 'Api\UserController@login');
+
+Route::get('/statistics/counts', 'Api\StatisticController@countResources');
+Route::get('/statistics/trends', 'Api\StatisticController@getTrends');

@@ -58,7 +58,11 @@
                             @foreach ($order->orderItems as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>{{ $item->itemtable->name }}</td>
+                                    <td>
+                                        <a href="{{ route((substr($item->itemtable_type,4)==='Food')?'foods.show':'materials.show', $item->itemtable->id)}}">
+                                            {{ $item->itemtable->name }}
+                                        </a>
+                                    </td>
                                     <td>
                                         <img src="{{ $item->itemtable->image }}" height="30px" width="30px"/>
                                     </td>
