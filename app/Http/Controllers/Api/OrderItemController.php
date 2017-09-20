@@ -64,7 +64,7 @@ class OrderItemController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        $request = $request;
     }
 
     /**
