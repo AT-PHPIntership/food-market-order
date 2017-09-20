@@ -181,7 +181,7 @@ class OrderController extends ApiController
      * Remove the specified resource from storage.
      *
      * @param \Illuminate\Http\Request $request request delete
-     * @param int $id id delete
+     * @param int                      $id      id delete
      *
      * @return \Illuminate\Http\Response
      */
