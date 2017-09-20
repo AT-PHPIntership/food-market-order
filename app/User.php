@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,7 +14,7 @@ class User extends Authenticatable
     use HasApiTokens;
     use Notifiable;
     use SoftDeletes;
-    use Searchable;
+    use SearchAndRelationShip;
 
     const MALE = 1;
     const FEMALE = 0;

@@ -2,13 +2,13 @@
 
 namespace App;
 
-use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use Searchable;
+    use SearchAndRelationShip;
     use SoftDeletes;
 
     const ITEMS_PER_PAGE = 10;
@@ -16,6 +16,8 @@ class Order extends Model
     const STATUS_PENDING = 1;
     const STATUS_APPROVED = 2;
     const STATUS_FINISHED = 3;
+
+    protected $fillable = ['id', 'user_id', 'trans_at', 'custom_address', 'status'];
 
     /**
      * Searchable rules.
@@ -25,14 +27,14 @@ class Order extends Model
     protected $searchable = [
 
         'columns' => [
-            'users.full_name',
-            'orders.trans_at',
-            'orders.custom_address',
-            'orders.total_price',
-            'orders.status',
+            'users' => ['full_name'],
+            'trans_at',
+            'custom_address',
+            'total_price',
+            'status',
         ],
         'joins' => [
-            'users' => ['orders.user_id', 'users.id']
+            'users' => ['user_id' => 'id']
         ]
     ];
 

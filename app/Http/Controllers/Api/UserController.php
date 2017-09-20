@@ -85,16 +85,16 @@ class UserController extends ApiController
                 ],
             ]);
             return response()->json([
-                'data' => json_decode((string)$response->getBody(), true),
+                'data' => json_decode((string) $response->getBody(), true),
                 'success' => true
             ], Response::HTTP_OK);
         } catch (ClientException $ex) {
-            return response()->json([
-                json_decode($ex->getResponse()->getBody(), true)
-            ], $ex->getCode());
+            return  response()->json(
+                json_decode($ex->getResponse()->getBody(), true),
+                $ex->getCode()
+            );
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -178,9 +178,9 @@ class UserController extends ApiController
         } else {
             $fileName = $request->get('fileName');
             if (unlink(public_path('images/users/' . $fileName))) {
-                return response()->json(__('cancel upload image success'));
+                return response()->json(['success' => true]);
             }
-            return response()->json(__('cancel upload image fail'));
+            return response()->json(['success' => false, 'message' => __('Error during remove image')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
