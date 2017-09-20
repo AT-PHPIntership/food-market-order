@@ -56,7 +56,9 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            {{ $food->category->name }}
+                                            <a href="{{ route('categories.edit', $food->category->id) }}">
+                                                {{ $food->category->name }}
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr>

@@ -1,14 +1,16 @@
 <?php
 namespace App;
 
-use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\Deletable;
 use App\Libraries\Traits\AjaxSearchable;
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Food extends Model
 {
-    use Searchable;
+    use SearchAndRelationShip;
+    use Deletable;
     use ajaxSearchable;
     use softDeletes;
 
@@ -26,14 +28,18 @@ class Food extends Model
     protected $searchable = [
 
         'columns' => [
-            'foods.name',
-            'categories.name',
-            'foods.description',
-            'foods.price',
+            'categories' => ['name', 'description'],
+            'name',
+            'description',
+            'price',
         ],
         'joins' => [
-            'categories' => ['foods.category_id', 'categories.id']
+            'categories' => ['category_id' => 'id']
         ]
+    ];
+
+    protected $withRelations = [
+        'category' => ['id', 'name']
     ];
 
     /**
@@ -48,6 +54,29 @@ class Food extends Model
             'foods.category_id'
         ]
     ];
+
+    /**
+     * Relates model.
+     *
+     * @var array
+     */
+    protected $relates = [
+
+        'relates' => [
+            'menuItems',
+            'orderItems'
+        ]
+    ];
+
+    /**
+     * Food has many menu item
+     *
+     * @return mixed
+     */
+    public function menuItems()
+    {
+        return $this->hasMany(DailyMenu::class, 'food_id', 'id');
+    }
 
     /**
      * Food has many order item
