@@ -61,7 +61,7 @@ or
 ```json
 {
   "success": false,
-  "message": "Error during remove image"git add --a
+  "message": "Error during remove image"
   
 }
 ```
