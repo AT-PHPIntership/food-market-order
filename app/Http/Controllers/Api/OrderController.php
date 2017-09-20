@@ -180,12 +180,30 @@ class OrderController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
+     * @param \Illuminate\Http\Request $request request delete
      * @param int $id id delete
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $id = $id;
+        $order = $this->order->findOrFail($id);
+        if ($order->user_id != $request->user()->id || $order->status != 1) {
+            return response()->json(['message' => 'Client Authentication'], 403);
+        }
+        if ($order->delete()) {
+            $order = $this->order->onlyTrashed()
+                ->select(['orders.id as id', 'user_id', 'orders.created_at', 'orders.deleted_at', 'total_price',])
+                ->with(['orderItems' => function ($query) {
+                    $query->onlyTrashed()->select(['id', 'itemtable_type', 'quantity', 'order_id', 'itemtable_id']);
+                }])->findOrFail($id);
+            return response()->json([
+                'data' => $order,
+                'success' => true
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json(['message' => 'The request is for something forbidden.'], 403);
+        }
     }
 }
