@@ -53,8 +53,7 @@ class MaterialController extends ApiController
      */
     public function show($id)
     {
-        $withs = true;
-        $material = $this->material->search($withs)->findOrFail($id);
+        $material = $this->material->withs()->findOrFail($id);
         return response()->json($material, Response::HTTP_OK);
     }
 }
