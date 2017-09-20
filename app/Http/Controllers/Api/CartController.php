@@ -38,33 +38,27 @@ class CartController extends ApiController
     }
 
     /**
-     * Get list foods in cart.
+     * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request request get cart
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getCartFoods(Request $request)
-    {
-        $foods = $this->food->whereIn('id', $request->all())->get();
-        return response()->json([
-            'data' => $foods,
-            'success' => true
-        ], Response::HTTP_OK);
-    }
-
-    /**
-     * Get list materials in cart.
-     *
-     * @param \Illuminate\Http\Request $request request get cart
+     * @param \Illuminate\Http\Request $request request refresh cart
      *
      * @return \Illuminate\Http\Response
      */
-    public function getCartMaterials(Request $request)
+    public function index(Request $request)
     {
-        $material = $this->material->whereIn('id', $request->all())->get();
+        $foodIds = explode(',', $request->input('foods'));
+        $materialIds = explode(',', $request->input('materials'));
+        $foods = $this->food
+            ->select(['id', 'name', 'price', 'image'])
+            ->whereIn('id', $foodIds)->get();
+        $materials = $this->material
+            ->select(['id', 'name', 'price', 'image'])
+            ->whereIn('id', $materialIds)->get();
         return response()->json([
-            'data' => $material,
+            'data' => [
+                'foods' => $foods,
+                'materials' => $materials
+            ],
             'success' => true
         ], Response::HTTP_OK);
     }
