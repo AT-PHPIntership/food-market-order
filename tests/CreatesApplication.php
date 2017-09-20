@@ -21,28 +21,4 @@ trait CreatesApplication
 
         return $app;
     }
-
-    /**
-     * This functin is called before testcase
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        Artisan::call('migrate');
-        DB::table('users')->insert([
-            'full_name' => 'DungVan',
-            'email' => 'admin' . '@gmail.com',
-            'password' => bcrypt('123456'),
-            'is_admin' => 1,
-        ]);
-    }
-    
-    /**
-     * This functin is called after testcase
-     */
-    public function tearDown()
-    {
-        Artisan::call('migrate:rollback');
-        parent::tearDown();
-    }
 }

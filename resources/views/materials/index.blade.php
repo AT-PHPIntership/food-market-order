@@ -55,8 +55,16 @@
                                 <tr>
                                     <td>{{ $material->id }}</td>
                                     <td>{{ $material->name }}</td>
-                                    <td>{{ $material->category->name }}</td>
-                                    <td>{{ $material->supplier->name }}</td>
+                                    <td>
+                                        <a href="{{ route('categories.edit', $material->category->id) }}">
+                                            {{ $material->category->name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('suppliers.edit', $material->supplier->id) }}">
+                                            {{ $material->supplier->name }}
+                                        </a>
+                                    </td>
                                     <td>{{ $material->price }}</td>
                                     <td><a class="btn btn-info btn-sm"
                                            href="{{ route('materials.show', $material->id) }}" alt="{{ __('Detail') }}">
