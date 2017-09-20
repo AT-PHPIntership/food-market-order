@@ -2,7 +2,7 @@
 
 ### `POST` Get Food List In Cart
 ```
-api/carts/getCartFoods
+api/carts/foods
 ```
 Get food list in cart.
 #### Request header
@@ -10,10 +10,22 @@ Get food list in cart.
 |---|---|
 | Accept | application/json |
 | Authorization | {token_type} {access_token} |
-
+#### Parameters
+| Key | Type | Required | Description |
+|---|---|---|---|
+| items | Array | required | List id food |
 #### Sample Request
 ```json
-[2,33]
+{  
+    "items":[  
+        {  
+            "id": 21
+        },
+        {  
+            "id": 33
+        }
+    ]
+}
 ```
 
 #### Sample Response
@@ -42,7 +54,7 @@ Get food list in cart.
 
 ### `POST` Get Material List In Cart
 ```
-api/carts/getCartMaterials
+api/carts/materials
 ```
 Get material list in cart.
 #### Request header
@@ -50,10 +62,22 @@ Get material list in cart.
 |---|---|
 | Accept | application/json |
 | Authorization | {token_type} {access_token} |
-
+#### Parameters
+| Key | Type | Required | Description |
+|---|---|---|---|
+| items | Array | required | List id material |
 #### Sample Request
 ```json
-[21,33]
+{  
+    "items":[  
+        {  
+            "id": 21
+        },
+        {  
+            "id": 33
+        }
+    ]
+}
 ```
 
 #### Sample Response
