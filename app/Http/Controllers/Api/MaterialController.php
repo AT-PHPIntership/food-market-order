@@ -57,4 +57,32 @@ class MaterialController extends ApiController
         $material = $this->material->search($withs)->findOrFail($id);
         return response()->json($material, Response::HTTP_OK);
     }
+
+    /**
+     * Display the list material by category id.
+     *
+     * @param integer $categoryId The categoryId to get materials
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showBy($categoryId)
+    {
+        $this->material->setColumnsFilter([
+            'id',
+            'name',
+            'category_id',
+            'price',
+            'image',
+            'description'
+        ]);
+        $this->material->setColumnsCondition(['category_id' => $categoryId]);
+        $materials = $this->material->search()->paginate(Material::ITEMS_PER_PAGE);
+
+        if ($materials) {
+            return response()->json(collect(['success' => true])->merge($materials));
+        }
+        $error = __('Has error during access this page');
+
+        return response()->json(['error' => $error]);
+    }
 }

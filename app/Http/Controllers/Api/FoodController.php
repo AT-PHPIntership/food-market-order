@@ -60,4 +60,34 @@ class FoodController extends ApiController
         $food = $this->food->search($withs)->findOrFail($id);
         return response()->json($food, Response::HTTP_OK);
     }
+
+    /**
+     * Display the list food by category id.
+     *
+     * @param integer $categoryId The categoryId to get foods
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showBy($categoryId)
+    {
+        $this->food->setColumnsFilter([
+            'id',
+            'name',
+            'category_id',
+            'price',
+            'image',
+            'description'
+        ]);
+        $this->food->setColumnsCondition([
+            'category_id' => $categoryId
+        ]);
+        $foods = $this->food->search()->paginate(Food::ITEMS_PER_PAGE);
+
+        if ($foods) {
+            return response()->json(collect(['success' => true])->merge($foods));
+        }
+        $error = __('Has error during access this page');
+
+        return response()->json(['error' => $error]);
+    }
 }
