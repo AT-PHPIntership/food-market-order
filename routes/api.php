@@ -40,6 +40,8 @@ Route::post('/users/login', 'Api\UserController@login');
 
 Route::post('/users/upload-image', 'Api\UserController@postUploadImage');
 
+Route::get('/users/remove-image', 'Api\UserController@getRemoveImage');
+
 Route::resource('materials', 'Api\MaterialController', ['only' => [
     'index', 'show'
 ]]);

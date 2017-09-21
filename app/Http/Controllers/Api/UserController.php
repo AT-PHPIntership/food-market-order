@@ -84,6 +84,7 @@ class UserController extends ApiController
                     'scope' => '',
                 ],
             ]);
+
             return response()->json([
                 'data' => json_decode((string) $response->getBody(), true),
                 'success' => true
@@ -173,14 +174,25 @@ class UserController extends ApiController
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             $imageName = time() . $image->getClientOriginalName();
-            Image::make($image)->resize(300, 300)->save(public_path('images/users/' . $imageName));
+            Image::make($image)->save(public_path('images/users/' . $imageName));
             return $imageName;
-        } else {
-            $fileName = $request->get('fileName');
-            if (unlink(public_path('images/users/' . $fileName))) {
-                return response()->json(['success' => true]);
-            }
-            return response()->json(['success' => false, 'message' => __('Error during remove image')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+        return \response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Remove image with file name
+     *
+     * @param Request $request to remove image
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRemoveImage(Request $request)
+    {
+        $fileName = $request->get('file_name');
+        if (unlink(public_path('images/users/' . $fileName))) {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false, 'message' => __('Error during remove image')], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
