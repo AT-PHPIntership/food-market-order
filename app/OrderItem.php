@@ -2,15 +2,19 @@
 
 namespace App;
 
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class OrderItem extends Model
 {
+    use SearchAndRelationShip;
     use softDeletes;
 
     const TREND_ITEMS = 5;
+
+    protected $fillable = ['id', 'itemtable_id', 'order_id', 'itemtable_type', 'quantity'];
 
     /**
      * Material has many order items

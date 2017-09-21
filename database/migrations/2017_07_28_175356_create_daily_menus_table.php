@@ -16,7 +16,7 @@ class CreateDailyMenusTable extends Migration
         Schema::create('daily_menus', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('food_id')->unsigned();
-            $table->integer('quantity');
+            $table->integer('quantity')->unsigned();
             $table->date('date');
             $table->foreign('food_id')->references('id')->on('foods');
             $table->timestamps();
