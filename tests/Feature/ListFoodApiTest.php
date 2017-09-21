@@ -67,10 +67,20 @@ class ListFoodApiTest extends TestCase
             'last_page' => 2
         ])
             ->assertJsonStructure([
-                'data' => [
-                    '*' =>  array_keys((new Food())->toArray())
-                ]
-            ]);
+            'data'=> [
+                '*' => [
+                    'id',
+                    'name',
+                    'category_id',
+                    'price',
+                    'image',
+                    'category' => [
+                        'id',
+                        'name'
+                    ],
+                ],
+            ],
+        ]);
         $response->assertStatus(200);
     }
 
