@@ -1,10 +1,10 @@
-### Upload Image API
-#### `POST` Image
+### `POST` Image
+
+**Upload Image API**
 
 ```
 /api/users/upload-image
 ```
-**Upload image**
 
 ##### Request header
 | Key | Value |
@@ -31,7 +31,13 @@
 }
 ```
 
-**Remove image**
+### `GET` Image
+
+**Remove Image API**
+
+```
+/api/users/remove-image
+```
 
 ##### Request parameter
 
