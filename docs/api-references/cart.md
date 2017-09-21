@@ -2,7 +2,7 @@
 
 ### `GET` Refresh Item In Cart
 ```
-api/carts/refresh
+api/carts
 ```
 Refresh item in cart.
 #### Request header
@@ -12,7 +12,7 @@ Refresh item in cart.
 | Content-type | application/json |
 #### Sample Request
 ```
-GET: api/carts/refresh?foods=2,33&materials=21,33
+GET: api/carts?foods=2,33&materials=21,33
 ```
 #### Sample Response
 ```json
