@@ -22,12 +22,12 @@
 
 | Key | Type | Description |
 |---|---|---|
-| fileName | string | the name of image |
+| file_name | string | the name of image |
 
 ##### Sample Response the name of file save success
 ```json
 {
-  "imageName": "1505789329number-1.png"
+  "file_name": "1505789329number-1.png"
 }
 ```
 
@@ -43,7 +43,7 @@
 ##### Sample Request body
 ```json
 {
-  "fileName": "fileName.jpg"
+  "file_name": "fileName.jpg"
 }
 ```
 
