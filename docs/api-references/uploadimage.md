@@ -33,6 +33,12 @@
 
 **Remove image**
 
+##### Request parameter
+
+| Key | Type | Description |
+|---|---|---|
+| file_name | string | the name of image |
+
 ##### Request header
 | Key | Value |
 |---|---|
@@ -43,7 +49,7 @@
 ##### Sample Request body
 ```json
 {
-  "file_name": "fileName.jpg"
+  "file_name": "file_name.jpg"
 }
 ```
 
