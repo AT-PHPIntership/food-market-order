@@ -187,7 +187,7 @@ class UserController extends ApiController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getRemoveImage(Request $request)
+    public function deleteImage(Request $request)
     {
         $fileName = $request->get('file_name');
         if (unlink(public_path('images/users/' . $fileName))) {

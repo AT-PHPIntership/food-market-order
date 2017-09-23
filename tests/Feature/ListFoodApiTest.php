@@ -2,15 +2,16 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Faker\Factory as Faker;
 use App\Category;
 use App\Food;
 
 class ListFoodApiTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTransactions;
 
     /**
      * Test status code.
@@ -24,12 +25,13 @@ class ListFoodApiTest extends TestCase
     }
 
     /**
-     * Test status code.
+     * Test structure
      *
      * @return void
      */
-    public function testStructJson()
+    public function testStructureJson()
     {
+        Artisan::call('migrate:refresh');
         $this->makeData(5);
         $response = $this->json('GET', 'api/foods');
         $response->assertJsonStructure([
@@ -56,6 +58,7 @@ class ListFoodApiTest extends TestCase
      */
     public function testGetPaginationResult()
     {
+        Artisan::call('migrate:refresh');
         $this->makeData(15);
         $response = $this->json('GET', 'api/foods');
         $response->assertJson([
@@ -91,6 +94,7 @@ class ListFoodApiTest extends TestCase
      */
     public function testCompareDatabase()
     {
+        Artisan::call('migrate:refresh');
         $this->makeData(2);
         $response = $this->json('GET', 'api/foods');
         $data = json_decode($response->getContent());
