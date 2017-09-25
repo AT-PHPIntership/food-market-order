@@ -42,3 +42,5 @@ Route::resource('materials', 'Api\MaterialController', ['only' => [
 ]]);
 Route::get('/statistics/counts', 'Api\StatisticController@countResources');
 Route::get('/statistics/trends', 'Api\StatisticController@getTrends');
+
+Route::get('/carts', 'Api\CartController@index');
