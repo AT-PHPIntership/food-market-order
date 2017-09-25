@@ -17,6 +17,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/users/me', 'Api\UserController@update');
     Route::get('/users/me', 'Api\UserController@show');
     Route::post('/orders', 'Api\OrderController@store');
+    Route::get('/orders', 'Api\OrderController@index');
     Route::put('/orders/{id}', 'Api\OrderController@update');
 });
 
@@ -36,7 +37,12 @@ Route::post('/users', 'Api\UserController@store');
 Route::resource('foods', 'Api\FoodController', ['only' => [
     'index', 'show'
 ]]);
-Route::post('/users/login', 'Api\UserController@login');
 
+Route::post('/users/login', 'Api\UserController@login');
+Route::resource('materials', 'Api\MaterialController', ['only' => [
+    'index', 'show'
+]]);
 Route::get('/statistics/counts', 'Api\StatisticController@countResources');
 Route::get('/statistics/trends', 'Api\StatisticController@getTrends');
+
+Route::get('/carts', 'Api\CartController@index');

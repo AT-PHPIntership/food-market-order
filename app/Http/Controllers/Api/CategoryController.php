@@ -36,7 +36,7 @@ class CategoryController extends ApiController
     public function index()
     {
         $categories = $this->category->select('id', 'name', 'description')
-                                    ->paginate($this->category->ITEMS_PER_PAGE);
+                                    ->paginate(Category::ITEMS_PER_PAGE);
 
         if ($categories) {
             return response()->json(collect(['success' => true])->merge($categories));

@@ -48,11 +48,21 @@ class OrderController extends ApiController
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request request get order
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $this->order->setColumnsFilter([
+            'id',
+            'status',
+            'created_at',
+            'total_price'
+        ]);
+        $this->order->setColumnsCondition(['user_id' => $request->user()->id]);
+        $order = $this->order->search()->paginate(Order::ITEMS_PER_PAGE);
+        return $order;
     }
 
     /**
@@ -177,17 +187,17 @@ class OrderController extends ApiController
         DB::beginTransaction();
         try {
             $order = $this->order->findOrFail($id);
+            // order is not pending return false
+            if ($order->status != 1) {
+                return response()->json(['message' => __('Client Authentication')], 403);
+            }
             // Test order of user request.
             $user = $request->user();
             if ($order->user_id != $user->id) {
-                return response()->json(['message' => 'Client Authentication'], 403);
+                return response()->json(['message' => __('Client Authentication')], 403);
             }
             $order->custom_address = $request->address_ship;
             $order->trans_at = $request->trans_at;
-            // order is not pending return false
-            if ($order->status != 1) {
-                return response()->json(['message' => 'Client Authentication'], 403);
-            }
             $order->saveOrFail();
             foreach ($request->items as $item) {
                 $orderItem = $this->orderItem->where('order_id', $id)
@@ -195,7 +205,7 @@ class OrderController extends ApiController
                 if ($orderItem->itemtable_type == 'App\Food') {
                     $dailyItem = DailyMenu::where('date', '=', date("Y-m-d", strtotime($request->trans_at)))
                         ->where('food_id', '=', $item['id'])
-                        ->take(1)->first();
+                        ->first();
                     if (count($dailyItem->all()) != 0) {
                         $dailyItem->quantity -=  $item['quantity'] - $orderItem->quantity;
                         $dailyItem->saveOrFail();
