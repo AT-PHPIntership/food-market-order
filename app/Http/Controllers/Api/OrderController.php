@@ -47,11 +47,21 @@ class OrderController extends ApiController
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request request get order
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $this->order->setColumnsFilter([
+            'id',
+            'status',
+            'created_at',
+            'total_price'
+        ]);
+        $this->order->setColumnsCondition(['user_id' => $request->user()->id]);
+        $order = $this->order->search()->paginate(Order::ITEMS_PER_PAGE);
+        return $order;
     }
 
     /**
