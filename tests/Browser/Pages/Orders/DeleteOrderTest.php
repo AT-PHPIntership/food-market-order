@@ -42,7 +42,6 @@ class DeleteOrderTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/orders')
                 ->click( 'tbody tr:nth-child(2) .fa-trash')
-                ->waitFor(null, '1')
                 ->waitForText('Delete Order')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
@@ -64,7 +63,6 @@ class DeleteOrderTest extends DuskTestCase
                 ->visit('/orders');
             DB::table('orders')->delete(2);
             $browser->click('tbody tr:nth-child(2) .fa-trash')
-                ->waitFor(null, '1')
                 ->waitForText('Delete Order')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')

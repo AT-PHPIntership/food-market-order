@@ -49,12 +49,10 @@ class AdminUpdateMenuTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/daily-menus')
                 ->click($elementMenu. ' .fa-search-plus')
-                ->waitFor(null, '5')
-                ->assertSee('Daily Menu For');
+                ->waitForText('Daily Menu For');
             $elementMenuItem = '.table tr:nth-child(2)';
             $browser->type($elementMenuItem. ' .quantity', 3)
                     ->click($elementMenuItem. ' .glyphicon-ok')
-                    ->waitFor(null, '1000')
                     ->waitForText('Update Menu Item')
                     ->assertSee('Update menu item success');
         });
@@ -80,8 +78,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->resize(1920, 1080)
                     ->visit('/daily-menus')
                     ->click($elementMenu. ' .fa-search-plus')
-                    ->waitFor(null, '5')
-                    ->assertSee('Daily Menu For');
+                    ->waitForText('Daily Menu For');
             $elementMenuItem = '.table tr:nth-child(2)';
             $browser->clear($elementMenuItem. ' .quantity')
                     ->click($elementMenuItem. ' .glyphicon-ok')
@@ -112,8 +109,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->resize(1920, 1080)
                     ->visit('/daily-menus')
                     ->click($elementMenu. ' .fa-search-plus')
-                    ->waitFor(null, '5')
-                    ->assertSee('Daily Menu For')
+                    ->waitForText('Daily Menu For')
                     ->assertSourceHas('id="1" name="quantity" disabled="disabled"');
         });
     }
@@ -137,8 +133,7 @@ class AdminUpdateMenuTest extends DuskTestCase
                     ->resize(1920, 1080)
                     ->visit('/daily-menus')
                     ->click($elementMenu. ' .fa-search-plus')
-                    ->waitFor(null, '5')
-                    ->assertSee('Daily Menu For');
+                    ->waitForText('Daily Menu For');
             $elementMenuItem = '.table tr:nth-child(2)';
             $browser->type($elementMenuItem. ' .quantity', '254');
             $browser->click($elementMenuItem. ' .glyphicon-ban-circle')

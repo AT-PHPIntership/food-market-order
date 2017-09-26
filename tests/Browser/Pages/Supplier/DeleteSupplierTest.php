@@ -36,8 +36,7 @@ class DeleteSupplierTest extends DuskTestCase
             $browser->loginAs(1)
                 ->visit('/suppliers')
                 ->click($element. ' .fa-trash')
-                ->waitFor(null, '3')
-                ->assertSee('Delete Supplier')
+                ->waitForText('Delete Supplier')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Delete Supplier Success');
@@ -58,8 +57,7 @@ class DeleteSupplierTest extends DuskTestCase
             DB::table('suppliers')->delete(2);
             $element = '.dataTable tbody tr:nth-child(2)';
             $browser->click($element. ' .fa-trash')
-                ->waitFor(null, '3')
-                ->assertSee('Delete Supplier')
+                ->waitForText('Delete Supplier')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Supplier Not Found!');

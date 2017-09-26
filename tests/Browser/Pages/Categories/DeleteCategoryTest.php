@@ -40,8 +40,7 @@ class DeleteCategoryTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/categories')
                 ->click($element. ' .fa-trash')
-                ->waitFor(null, '3')
-                ->assertSee('Delete Category')
+                ->waitForText('Delete Category')
                 ->assertSee('Are you want delete it?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Delete Category Success');
