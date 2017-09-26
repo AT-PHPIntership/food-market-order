@@ -40,8 +40,7 @@ class AdminDeleteUserTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/users')
                 ->click('#table tbody tr:nth-child(2) td:nth-child(7) button')
-                ->waitFor(null, '1')
-                ->assertSee('Delete User')
+                ->waitForText('Delete User')
                 ->assertSee('Are you sure to delete this user?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Delete Successfully!');
@@ -61,8 +60,7 @@ class AdminDeleteUserTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/users')
                 ->click('#table tbody tr:nth-child(1) td:nth-child(7) button')
-                ->waitFor(null, '1')
-                ->assertSee('Delete User')
+                ->waitForText('Delete User')
                 ->assertSee('Are you sure to delete this user?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Cannot delete current user!');
@@ -88,8 +86,7 @@ class AdminDeleteUserTest extends DuskTestCase
                 ->visit('/users');
             DB::table('users')->delete(2);
             $browser->click('#table tbody tr:nth-child(2) td:nth-child(7) button')
-                ->waitFor(null, '1')
-                ->assertSee('Delete User')
+                ->waitForText('Delete User')
                 ->assertSee('Are you sure to delete this user?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Delete Error!');
