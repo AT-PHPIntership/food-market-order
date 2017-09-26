@@ -31,7 +31,7 @@
 }
 ```
 
-### `GET` Image
+### `DELETE` Image
 
 **Remove Image API**
 
