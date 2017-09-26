@@ -43,8 +43,7 @@ class DeleteFoodTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/foods')
                 ->click('.table tbody tr:nth-child(2) td:nth-child(5) .fa-trash')
-                ->waitFor(null, '1')
-                ->assertSee('Delete Food')
+                ->waitForText('Delete Food')
                 ->assertSee('Are you sure delete food?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Delete Food Success');
@@ -67,8 +66,7 @@ class DeleteFoodTest extends DuskTestCase
                 ->visit('/foods');
             DB::table('foods')->delete(2);
             $browser->click('.table tbody tr:nth-child(2) td:nth-child(5) .fa-trash')
-                ->waitFor(null, '1')
-                ->assertSee('Delete Food')
+                ->waitForText('Delete Food')
                 ->assertSee('Are you sure delete food?')
                 ->click('#btn-modal-submit')
                 ->assertSee('Food Not Found');
