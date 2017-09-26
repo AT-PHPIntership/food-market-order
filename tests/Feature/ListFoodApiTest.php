@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 use Faker\Factory as Faker;
@@ -11,7 +11,7 @@ use App\Food;
 
 class ListFoodApiTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * Test status code.

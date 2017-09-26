@@ -12,13 +12,12 @@ use App\Category;
 use App\Material;
 use App\Supplier;
 use Faker\Factory;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class MaterialApiTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * Test status code.
