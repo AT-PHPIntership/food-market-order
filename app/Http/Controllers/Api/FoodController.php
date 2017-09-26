@@ -56,8 +56,7 @@ class FoodController extends ApiController
      */
     public function show($id)
     {
-        $withs = true;
-        $food = $this->food->search($withs)->findOrFail($id);
+        $food = $this->food->withs()->findOrFail($id);
         return response()->json($food, Response::HTTP_OK);
     }
 }
