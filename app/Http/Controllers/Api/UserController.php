@@ -37,16 +37,6 @@ class UserController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param UserRegisterRequest $request request store data user
@@ -115,18 +105,6 @@ class UserController extends ApiController
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id id user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $id = $id;
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param UserUpdateRequest $request request update
@@ -148,18 +126,6 @@ class UserController extends ApiController
             unlink(public_path(config('constant.path_upload_user') . $request->get('image')));
         }
         return response()->json(['success' => false, 'message' => __('Error during update current user!')], Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id id delete
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $id = $id;
     }
 
     /**
