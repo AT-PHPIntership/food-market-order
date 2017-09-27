@@ -113,7 +113,7 @@ class SupplierController extends Controller
             $result = $supplier->deletable();
             if ($result['message'] === true) {
                 flash(__('Delete Supplier Success'))->success()->important();
-            } else if ($result['message'] === false) {
+            } elseif ($result['message'] === false) {
                 flash(__('Please make sure you deleted materials belong to this supplier before!'))->error()->important();
             } else {
                 flash(__('Delete Supplier Errors'))->error()->important();
