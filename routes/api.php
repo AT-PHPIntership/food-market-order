@@ -20,6 +20,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/orders', 'Api\OrderController@index');
     Route::post('/users/upload-image', 'Api\UserController@postUploadImage');
     Route::delete('/users/remove-image', 'Api\UserController@deleteImage');
+    Route::put('/orders/{id}', 'Api\OrderController@update');
     Route::delete('/order-items/{id}', 'Api\OrderItemController@destroy');
 });
 
