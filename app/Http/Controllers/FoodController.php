@@ -70,7 +70,7 @@ class FoodController extends Controller
             $result = $food->deletable();
             if ($result['message'] === true) {
                 flash(__('Delete Food Success'))->success()->important();
-            } else if ($result['message'] === false) {
+            } elseif ($result['message'] === false) {
                 flash(__('Please make sure you deleted order and daily menu items has this food before!'))->error()->important();
             } else {
                 flash(__('Delete Food Errors'))->error()->important();
