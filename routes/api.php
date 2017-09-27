@@ -19,6 +19,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/orders', 'Api\OrderController@store');
     Route::get('/orders', 'Api\OrderController@index');
     Route::get('/orders/{id}/getItems', 'Api\OrderController@show');
+    Route::delete('/order-items/{id}', 'Api\OrderItemController@destroy');
 });
 
 Route::get('categories', 'Api\CategoryController@index');
