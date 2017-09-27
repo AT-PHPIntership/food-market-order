@@ -112,6 +112,7 @@ class OrderListTest extends DuskTestCase
                 ->select('.status-order',2)
                 ->waitForText('Change Status')
                 ->assertSee('Change Status');
+
         });
     }
 
