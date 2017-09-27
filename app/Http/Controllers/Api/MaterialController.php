@@ -2,26 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
 use App\Material;
+use Illuminate\Http\Response;
 
 class MaterialController extends ApiController
 {
-    /**
-     * The Material implementation.
-     *
-     * @var Material
-     */
     protected $material;
 
     /**
-     * Create a new controller instance.
+     * MaterialController constructor.
      *
-     * @param Material $material instance of Food
-     *
-     * @return void
+     * @param Material $material dependence injection
      */
     public function __construct(Material $material)
     {
@@ -29,31 +20,40 @@ class MaterialController extends ApiController
     }
 
     /**
-     * Display the list material by category id.
-     *
-     * @param integer $categoryId The categoryId to get materials
+     * The Material implementation.
      *
      * @return \Illuminate\Http\Response
      */
-    public function showBy($categoryId)
+    public function index()
     {
-        $columns = [
-            'id',
-            'name',
-            'category_id',
-            'price',
-            'image',
-            'description'
-        ];
-        $materials = $this->material->select($columns)
-                                    ->where('category_id', $categoryId)
-                                    ->paginate($this->material->ITEMS_PER_PAGE);
+        $this->material->setColumnsFilter([
+            'materials' => [
+                'id',
+                'name',
+                'category_id',
+                'supplier_id',
+                'price',
+                'image',
+                'description',
+                'status'
+            ]
+        ]);
+        $this->material->initQueryData(request()->all());
+        $materials = $this->material->search()->withs()->paginate(Material::ITEMS_PER_PAGE);
 
-        if ($materials) {
-            return response()->json(collect(['success' => true])->merge($materials));
-        }
-        $error = __('Has error during access this page');
+        return response()->json($materials, Response::HTTP_OK);
+    }
 
-        return response()->json(['error' => $error]);
+    /**
+     * Display the specified resource.
+     *
+     * @param Integer $id of material
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        $material = $this->material->withs()->findOrFail($id);
+        return response()->json($material, Response::HTTP_OK);
     }
 }

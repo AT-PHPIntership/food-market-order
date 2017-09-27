@@ -54,7 +54,11 @@
                                 <tr>
                                     <td>{{ $food->id }}</td>
                                     <td>{{ $food->name }}</td>
-                                    <td>{{ $food->category->name }}</td>
+                                    <td>
+                                        <a href="{{ route('categories.edit', $food->category->id) }}">
+                                            {{ $food->category->name }}
+                                        </a>
+                                    </td>
                                     <td>{{ $food->price }}</td>
                                     <td><a class="btn btn-info btn-sm " href="{{ route('foods.show', $food->id) }}" alt="{{ __('Detail') }}">
                                             <i class="fa fa-search-plus" ></i>

@@ -2,25 +2,29 @@
 
 namespace App;
 
-use App\Libraries\Traits\Searchable;
+use App\Libraries\Traits\SearchAndRelationShip;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\DB;
+use App\Libraries\Traits\NewestStatistic;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use Notifiable;
     use SoftDeletes;
-    use Searchable;
+    use NewestStatistic;
+    use SearchAndRelationShip;
 
     const MALE = 1;
     const FEMALE = 0;
     const ADMIN = 1;
     const NORMAL_USER = 0;
     const ITEMS_PER_PAGE = 10;
+    const TOP_ACTIVE = 3;
 
     /**
      * Searchable rules.
@@ -89,6 +93,32 @@ class User extends Authenticatable
         } else {
             return asset(config('constant.default_image'));
         }
+    }
+
+    /**
+     * Get Users have most total order
+     *
+     * @return object
+     */
+    public function topUserActive()
+    {
+        $users = self::withCount([
+                'orders',
+                'orders as pending_orders' => function ($pendingQuery) {
+                    $pendingQuery->where('status', Order::STATUS_PENDING);
+                },
+                'orders as canceled_orders' => function ($canceledQuery) {
+                    $canceledQuery->where('status', Order::STATUS_CANCELED);
+                },
+                'orders as approved_orders' => function ($approvedQuery) {
+                    $approvedQuery->where('status', Order::STATUS_APPROVED);
+                },
+                'orders as finished_orders' => function ($finishedQuery) {
+                    $finishedQuery->where('status', Order::STATUS_FINISHED);
+                }
+            ])->orderBy('orders_count', 'desc')->take(self::TOP_ACTIVE)->get();
+
+        return $users;
     }
 
     /**
