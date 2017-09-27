@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\DailyMenu;
 use App\Food;
+use App\Http\Requests\Api\OrderCreateRequest;
 use App\Material;
 use App\Order;
 use App\OrderItem;
@@ -78,11 +79,11 @@ class OrderController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request create
+     * @param OrderCreateRequest $request request create
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderCreateRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -128,7 +129,6 @@ class OrderController extends ApiController
                     );
                 }
             }
-
             $order->updateTotalPrice();
             DB::commit();
             $data = [
