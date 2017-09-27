@@ -68,8 +68,7 @@ class CreateMaterialTest extends DuskTestCase
                     ->type('description', 'hanh tay thom ngon')
                     ->type('price', '100')
                     ->press('Create')
-                    ->assertPathIs('/materials')
-                    ->assertSee('Created Material Success');
+                    ->waitForText('Created Material Success');
         });
         $this->assertDatabaseHas('materials', ['name' => 'hanh tay']);
     }

@@ -37,16 +37,6 @@ class UserController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param UserRegisterRequest $request request store data user
@@ -74,7 +64,7 @@ class UserController extends ApiController
     {
         $http = new Client();
         try {
-            $response = $http->post(env('APP_URL').'/oauth/token', [
+            $response = $http->post(env('APP_URL') . '/oauth/token', [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => env('CLIENT_ID'),
@@ -84,17 +74,18 @@ class UserController extends ApiController
                     'scope' => '',
                 ],
             ]);
+
             return response()->json([
                 'data' => json_decode((string) $response->getBody(), true),
                 'success' => true
             ], Response::HTTP_OK);
         } catch (ClientException $ex) {
-            return  response()->json([
-                json_decode($ex->getResponse()->getBody(), true)
-            ], $ex->getCode());
+            return  response()->json(
+                json_decode($ex->getResponse()->getBody(), true),
+                $ex->getCode()
+            );
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -109,20 +100,7 @@ class UserController extends ApiController
         if (!$user) {
             return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        return response()->json(['data' => $user,'success' => true], Response::HTTP_OK);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id id user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $id = $id;
+        return response()->json(['data' => $user, 'success' => true], Response::HTTP_OK);
     }
 
     /**
@@ -144,21 +122,9 @@ class UserController extends ApiController
         }
 
         if (isset($request->all()['image'])) {
-            File::delete(public_path(config('constant.path_upload_user') . $request->get('image')));
+            unlink(public_path(config('constant.path_upload_user') . $request->get('image')));
         }
         return response()->json(['success' => false, 'message' => __('Error during update current user!')], Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id id delete
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $id = $id;
     }
 
     /**
@@ -170,9 +136,28 @@ class UserController extends ApiController
      */
     public function postUploadImage(UpdateImageRequest $request)
     {
-        $image = $request->file('file');
-        $imageName = time().$image->getClientOriginalName();
-        Image::make($image)->resize(300, 300)->save(public_path('images/users/' . $imageName));
-        return $imageName;
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+            $imageName = time() . $image->getClientOriginalName();
+            Image::make($image)->save(public_path('images/users/' . $imageName));
+            return $imageName;
+        }
+        return response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Remove image with file name
+     *
+     * @param Request $request to remove image
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteImage(Request $request)
+    {
+        $fileName = $request->get('file_name');
+        if (unlink(public_path('images/users/' . $fileName))) {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false, 'message' => __('Error during remove image')], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

@@ -150,10 +150,13 @@ class MaterialController extends Controller
     {
         try {
             $material = $this->material->findOrFail($id);
-            if ($material->delete()) {
+            $result = $material->deletable();
+            if ($result['message'] === true) {
                 flash(__('Delete Material Success'))->success()->important();
+            } elseif ($result['message'] === false) {
+                flash(__('Please make sure you deleted order items has this material before!'))->error()->important();
             } else {
-                flash(__('Delete Material Error'))->error()->important();
+                flash(__('Delete Material Errors'))->error()->important();
             }
         } catch (ModelNotFoundException $ex) {
             flash(__('Material Not Found!'))->error()->important();

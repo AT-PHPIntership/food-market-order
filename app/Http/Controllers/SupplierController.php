@@ -110,10 +110,13 @@ class SupplierController extends Controller
     {
         try {
             $supplier = $this->supplier->findOrFail($id);
-            if ($supplier->delete()) {
+            $result = $supplier->deletable();
+            if ($result['message'] === true) {
                 flash(__('Delete Supplier Success'))->success()->important();
+            } elseif ($result['message'] === false) {
+                flash(__('Please make sure you deleted materials belong to this supplier before!'))->error()->important();
             } else {
-                flash(__('Delete Supplier Errors!'))->error()->important();
+                flash(__('Delete Supplier Errors'))->error()->important();
             }
         } catch (ModelNotFoundException $ex) {
             flash(__('Supplier Not Found!'))->error()->important();

@@ -44,7 +44,6 @@ class DeleteMaterialTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->visit('/materials')
                 ->click('.table tbody tr:nth-child(2) td:nth-child(6) .fa-trash')
-                ->waitFor(null, '1')
                 ->waitForText('Delete Material')
                 ->assertSee('Are you sure delete Material?')
                 ->click('#btn-modal-submit')
@@ -89,8 +88,7 @@ class DeleteMaterialTest extends DuskTestCase
                 ->visit('/materials');
             DB::table('materials')->delete(2);
             $browser->click('.table tbody tr:nth-child(2) td:nth-child(6) .fa-trash')
-                ->waitFor(null, '1')
-                ->assertSee('Delete Material')
+                ->waitForText('Delete Material')
                 ->assertSee('Are you sure delete Material?')
                 ->click('#modal-confirm-footer .btn-danger')
                 ->assertPathIs('/materials');
