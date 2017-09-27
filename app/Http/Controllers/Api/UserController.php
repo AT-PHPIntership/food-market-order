@@ -37,16 +37,6 @@ class UserController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param UserRegisterRequest $request request store data user
@@ -110,20 +100,7 @@ class UserController extends ApiController
         if (!$user) {
             return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
         return response()->json(['data' => $user, 'success' => true], Response::HTTP_OK);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id id user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $id = $id;
     }
 
     /**
@@ -151,18 +128,6 @@ class UserController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id id delete
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $id = $id;
-    }
-
-    /**
      * Save image and response image name
      *
      * @param UpdateImageRequest $request request has image file
@@ -177,7 +142,7 @@ class UserController extends ApiController
             Image::make($image)->save(public_path('images/users/' . $imageName));
             return $imageName;
         }
-        return \response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -187,7 +152,7 @@ class UserController extends ApiController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getRemoveImage(Request $request)
+    public function deleteImage(Request $request)
     {
         $fileName = $request->get('file_name');
         if (unlink(public_path('images/users/' . $fileName))) {

@@ -11,8 +11,6 @@ class UserApiTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected $header;
-    protected $token;
     /**
      * This function is called before testcase
      */
