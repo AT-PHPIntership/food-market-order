@@ -64,7 +64,6 @@ class StatisticApiTest extends TestCase
      */
     public function testJsonStructureForTrends()
     {
-        $this->seed('DatabaseSeeder');
         $response = $this->json('GET', '/api/statistics/trends');
         $response->assertJsonStructure([
             'data' => [

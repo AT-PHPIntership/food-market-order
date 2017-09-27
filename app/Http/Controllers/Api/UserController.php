@@ -143,7 +143,7 @@ class UserController extends ApiController
             Image::make($image)->save(public_path('images/users/' . $imageName));
             return $imageName;
         }
-        return \response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
