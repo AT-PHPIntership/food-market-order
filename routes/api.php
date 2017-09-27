@@ -19,6 +19,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/orders', 'Api\OrderController@store');
     Route::get('/orders', 'Api\OrderController@index');
     Route::get('/orders/{id}/items', 'Api\OrderController@show');
+    Route::post('/users/upload-image', 'Api\UserController@postUploadImage');
+    Route::delete('/users/remove-image', 'Api\UserController@deleteImage');
     Route::put('/orders/{id}', 'Api\OrderController@update');
     Route::delete('/order-items/{id}', 'Api\OrderItemController@destroy');
 });
@@ -41,6 +43,7 @@ Route::resource('foods', 'Api\FoodController', ['only' => [
 ]]);
 
 Route::post('/users/login', 'Api\UserController@login');
+
 Route::resource('materials', 'Api\MaterialController', ['only' => [
     'index', 'show'
 ]]);
