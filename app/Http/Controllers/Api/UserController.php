@@ -108,6 +108,7 @@ class UserController extends ApiController
         if (!$user) {
             return response()->json(['success' => false, 'message' => __('Error during get current user')], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
         return response()->json(['data' => $user,'success' => true], Response::HTTP_OK);
     }
 
