@@ -252,7 +252,7 @@ class OrderController extends ApiController
     {
         $id = $id;
         $order = $this->order->findOrFail($id);
-        if ($order->user_id != $request->user()->id || $order->status != 1) {
+        if ($order->user_id != $request->user()->id || $order->status != Order::STATUS_PENDING) {
             return response()->json(['message' => __('Client Authentication')], 403);
         }
         if ($order->delete()) {
