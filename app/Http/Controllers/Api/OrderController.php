@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\DailyMenu;
 use App\Food;
+use App\Http\Requests\Api\OrderCreateRequest;
 use App\Material;
 use App\Order;
 use App\OrderItem;
@@ -47,11 +48,21 @@ class OrderController extends ApiController
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request request get order
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $this->order->setColumnsFilter([
+            'id',
+            'status',
+            'created_at',
+            'total_price'
+        ]);
+        $this->order->setColumnsCondition(['user_id' => $request->user()->id]);
+        $order = $this->order->search()->paginate(Order::ITEMS_PER_PAGE);
+        return $order;
     }
 
     /**
@@ -67,11 +78,11 @@ class OrderController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request create
+     * @param OrderCreateRequest $request request create
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderCreateRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -117,7 +128,6 @@ class OrderController extends ApiController
                     );
                 }
             }
-
             $order->updateTotalPrice();
             DB::commit();
             $data = [

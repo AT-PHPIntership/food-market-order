@@ -49,6 +49,58 @@ Add new order from client.
 	"success": true
 }
 ```
+### `GET` Order by User Current
+```
+/api/orders
+```
+Get order item of a order.
+
+#### Request header
+| Key | Value |
+|---|---|
+| Accept | application/json |
+| Authorization | {token_type} {access_token} |
+
+#### Sample Response
+```json
+{
+  "current_page": 1,
+  "data": [
+      {
+          "id": 51,
+          "status": 1,
+          "created_at": "2017-09-19 02:02:48",
+          "total_price": "0.00"
+      },
+      {
+          "id": 52,
+          "status": 1,
+          "created_at": "2017-09-19 02:27:17",
+          "total_price": "0.00"
+      },
+      {
+          "id": 53,
+          "status": 1,
+          "created_at": "2017-09-19 02:28:41",
+          "total_price": "0.00"
+      },
+      {
+          "id": 54,
+          "status": 1,
+          "created_at": "2017-09-19 02:29:03",
+          "total_price": "2440.00"
+      }
+  ],
+  "from": 1,
+  "last_page": 1,
+  "next_page_url": null,
+  "path": "http://192.168.33.10/api/orders",
+  "per_page": 10,
+  "prev_page_url": null,
+  "to": 4,
+  "total": 4
+}
+```
 
 ### `GET` Order Item of A Order
 ```
@@ -155,4 +207,46 @@ Update order from client.
 	},
 	"success": true
 }
+```
+### `DELETE` Delete An Order
+```
+/api/orders/{id}
+```
+Delete an order.
+
+#### Request header
+| Key | Value |
+|---|---|
+| Accept | application/json |
+| Authorization | {token_type} {access_token} |
+
+#### Sample Response
+```json
+{
+    "data": {
+        "id": 74,
+        "user_id": 3,
+        "created_at": "1999-02-16 03:27:10",
+        "deleted_at": "1999-02-16 03:27:10",
+        "total_price": 92500,
+        "order_items": [
+            {
+                "id": 23,
+                "itemtable_type": "App\\Food",
+                "itemtable_id": 34,
+                "quantity": 10,
+                "order_id": 74
+            },
+            {
+                "id": 42,
+                "itemtable_type": "App\\Food",
+                "quantity": 5,
+                "itemtable_id": 14,
+                "order_id": 74
+            }
+        ]
+    },
+    "success": true
+}
+
 ```

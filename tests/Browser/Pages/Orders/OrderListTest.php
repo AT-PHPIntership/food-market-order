@@ -110,8 +110,8 @@ class OrderListTest extends DuskTestCase
                 ->text($element. ' td');
             $browser->visit('/orders')
                 ->select('.status-order',2)
-                ->waitFor(null,3)
-                ->assertSeeIn('#modal-confirm-title','Change Status');
+                ->waitForText('Change Status')
+                ->assertSee('Change Status');
 
         });
     }
@@ -131,8 +131,8 @@ class OrderListTest extends DuskTestCase
                 ->text($element. ' td');
             $browser->visit('/orders')
                 ->click($element. ' .btn-danger')
-                ->waitFor(null,3)
-                ->assertSeeIn('#modal-confirm-title','Delete Order');
+                ->waitForText('Delete Order')
+                ->assertSee('Delete Order');
         });
     }
 }
