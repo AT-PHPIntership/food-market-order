@@ -208,3 +208,45 @@ Update order from client.
 	"success": true
 }
 ```
+### `DELETE` Delete An Order
+```
+/api/orders/{id}
+```
+Delete an order.
+
+#### Request header
+| Key | Value |
+|---|---|
+| Accept | application/json |
+| Authorization | {token_type} {access_token} |
+
+#### Sample Response
+```json
+{
+    "data": {
+        "id": 74,
+        "user_id": 3,
+        "created_at": "1999-02-16 03:27:10",
+        "deleted_at": "1999-02-16 03:27:10",
+        "total_price": 92500,
+        "order_items": [
+            {
+                "id": 23,
+                "itemtable_type": "App\\Food",
+                "itemtable_id": 34,
+                "quantity": 10,
+                "order_id": 74
+            },
+            {
+                "id": 42,
+                "itemtable_type": "App\\Food",
+                "quantity": 5,
+                "itemtable_id": 14,
+                "order_id": 74
+            }
+        ]
+    },
+    "success": true
+}
+
+```
