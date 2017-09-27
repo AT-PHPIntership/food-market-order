@@ -5,20 +5,16 @@
  * Date: 21/09/17
  * Time: 15:28
  */
-
 namespace Tests\Feature;
-
 use App\Category;
 use App\Material;
 use App\Supplier;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-
 class MaterialApiTest extends TestCase
 {
     use DatabaseMigrations;
-
     /**
      * Test status code.
      *
@@ -29,7 +25,6 @@ class MaterialApiTest extends TestCase
         $response = $this->json('GET', 'api/materials');
         $response->assertStatus(200);
     }
-
     /**
      * Test structure json
      */
@@ -54,7 +49,6 @@ class MaterialApiTest extends TestCase
             ]
         ]);
     }
-
     /**
      * Test result pagination.
      *
@@ -95,7 +89,6 @@ class MaterialApiTest extends TestCase
             ]);
         $response->assertStatus(200);
     }
-
     /**
      * Test check some object compare database.
      *
@@ -116,7 +109,6 @@ class MaterialApiTest extends TestCase
         ];
         $this->assertDatabaseHas('materials', $arrayCompare);
     }
-
     /**
      * Make data for test.
      *
