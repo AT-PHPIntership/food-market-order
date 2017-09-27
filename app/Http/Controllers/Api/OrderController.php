@@ -253,7 +253,7 @@ class OrderController extends ApiController
         $id = $id;
         $order = $this->order->findOrFail($id);
         if ($order->user_id != $request->user()->id || $order->status != 1) {
-            return response()->json(['message' => 'Client Authentication'], 403);
+            return response()->json(['message' => __('Client Authentication')], 403);
         }
         if ($order->delete()) {
             $order = $this->order->onlyTrashed()
@@ -266,7 +266,7 @@ class OrderController extends ApiController
                 'success' => true
             ], Response::HTTP_OK);
         } else {
-            return response()->json(['message' => 'The request is for something forbidden.'], 403);
+            return response()->json(['message' => __('The request is for something forbidden.')], 403);
         }
     }
 }
