@@ -103,16 +103,11 @@ class OrderListTest extends DuskTestCase
     public function testSelectStatus()
     {
         factory(Order::class, 10)->create();
+        Order::find(1)->update(['status' => 1]);
         $this->browse(function (Browser $browser) {
-            // Click button add category
-            $element = 'tbody tr:nth-child(2)';
-            $id = $browser->visit('/orders')
-                ->text($element. ' td');
             $browser->visit('/orders')
-                ->select('.status-order',2)
-                ->waitForText('Change Status')
-                ->assertSee('Change Status');
-
+                ->select('.status-order:nth-child(1)',2)
+                ->waitForText('Change Status');
         });
     }
 
