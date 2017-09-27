@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api;
 use App\Libraries\Traits\CustomValidationRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserUpdateRequest extends FormRequest
+class OrderCreateRequest extends FormRequest
 {
     use CustomValidationRequest;
 
@@ -27,12 +27,11 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'full_name' => 'required',
-            'birthday' => 'date',
-            'phone_number' => 'required|numeric',
-            'address' => 'required',
-            'password' => 'nullable|min:6|confirmed',
+            'user_id' => 'required',
+            'address_ship' => 'required',
+            'trans_at' => 'required',
+            'type' => 'required',
+            'items' => 'required',
         ];
     }
 }
