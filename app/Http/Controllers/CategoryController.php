@@ -112,7 +112,7 @@ class CategoryController extends Controller
             $result = $category->deletable();
             if ($result['message'] === true) {
                 flash(__('Delete Category Success'))->success()->important();
-            } else if ($result['message'] === false) {
+            } elseif ($result['message'] === false) {
                 flash(__('Please make sure you deleted food and material items belong to this category before!'))->error()->important();
             } else {
                 flash(__('Delete Category Errors'))->error()->important();

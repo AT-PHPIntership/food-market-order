@@ -2,13 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use App\User;
 
 class StatisticApiTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * A basic test status code for statistic counts api.
@@ -64,6 +63,7 @@ class StatisticApiTest extends TestCase
      */
     public function testJsonStructureForTrends()
     {
+        $this->seed('DatabaseSeeder');
         $response = $this->json('GET', '/api/statistics/trends');
         $response->assertJsonStructure([
             'data' => [

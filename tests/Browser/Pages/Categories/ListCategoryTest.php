@@ -125,8 +125,7 @@ class ListCategoryTest extends DuskTestCase
                 ->text($element. ' td');
             $browser->visit('/categories')
                 ->click($element. ' .fa-trash')
-                ->waitFor(null,3)
-                ->assertSeeIn('#modal-confirm-title','Delete Category');
+                ->waitForText('Delete Category');
         });
     }
 }

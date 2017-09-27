@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\DailyMenu;
 use App\Food;
+use App\Http\Requests\Api\OrderCreateRequest;
 use App\Material;
 use App\Order;
 use App\OrderItem;
+
 use Faker\Provider\DateTime;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\QueryException;
@@ -77,11 +79,11 @@ class OrderController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request request create
+     * @param OrderCreateRequest $request request create
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderCreateRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -127,7 +129,6 @@ class OrderController extends ApiController
                     );
                 }
             }
-
             $order->updateTotalPrice();
             DB::commit();
             $data = [
@@ -177,25 +178,95 @@ class OrderController extends ApiController
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request request update
-     * @param int                      $id      id supplier update
+     * @param int                      $id      id order update
      *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $request = $request;
-        $id = $id;
+        DB::beginTransaction();
+        try {
+            $order = $this->order->findOrFail($id);
+            // order is not pending return false
+            if ($order->status != 1) {
+                return response()->json(['message' => __('Client Authentication')], 403);
+            }
+            // Test order of user request.
+            $user = $request->user();
+            if ($order->user_id != $user->id) {
+                return response()->json(['message' => __('Client Authentication')], 403);
+            }
+            $order->custom_address = $request->address_ship;
+            $order->trans_at = $request->trans_at;
+            $order->saveOrFail();
+            foreach ($request->items as $item) {
+                $orderItem = $this->orderItem->where('order_id', $id)
+                    ->where('itemtable_id', $item['id'])->first();
+                if ($orderItem->itemtable_type == 'App\Food') {
+                    $dailyItem = DailyMenu::where('date', '=', date("Y-m-d", strtotime($request->trans_at)))
+                        ->where('food_id', '=', $item['id'])
+                        ->first();
+                    if (count($dailyItem->all()) != 0) {
+                        $dailyItem->quantity -=  $item['quantity'] - $orderItem->quantity;
+                        $dailyItem->saveOrFail();
+                        $orderItem->quantity = $item['quantity'];
+                    }
+                    $orderItem->saveOrFail();
+                }
+                if ($orderItem->itemtable_type == 'App\Material') {
+                    $orderItem->quantiy = $item['quantity'];
+                    $orderItem->saveOrFail();
+                }
+            }
+            $order->updateTotalPrice();
+
+            DB::commit();
+            $data = [
+                'order_id' => $order->id,
+                'user_id'=> $order->user_id,
+                'address_ship'=> $order->custom_address,
+                'total_price'=> $order->total_price
+            ];
+            return response()->json([
+                'data' => $data,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (ClientException $e) {
+            DB::rollback();
+            return response()->json(
+                json_decode($e->getResponse()->getBody(), true),
+                $e->getCode()
+            );
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id id delete
+     * @param \Illuminate\Http\Request $request request delete
+     * @param int                      $id      id delete
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $id = $id;
+        $order = $this->order->findOrFail($id);
+        if ($order->user_id != $request->user()->id || $order->status != Order::STATUS_PENDING) {
+            return response()->json(['message' => __('Client Authentication')], 403);
+        }
+        if ($order->delete()) {
+            $order = $this->order->onlyTrashed()
+                ->select(['orders.id as id', 'user_id', 'orders.created_at', 'orders.deleted_at', 'total_price',])
+                ->with(['orderItems' => function ($query) {
+                    $query->onlyTrashed()->select(['id', 'itemtable_type', 'quantity', 'order_id', 'itemtable_id']);
+                }])->findOrFail($id);
+            return response()->json([
+                'data' => $order,
+                'success' => true
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json(['message' => __('The request is for something forbidden.')], 403);
+        }
     }
 }
