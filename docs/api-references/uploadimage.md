@@ -67,13 +67,3 @@
 }
   
 ```
-
-or
-
-```json
-{
-  "success": false,
-  "message": "Error during remove image"
-  
-}
-```
