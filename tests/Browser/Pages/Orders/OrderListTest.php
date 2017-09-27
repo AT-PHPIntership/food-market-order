@@ -101,7 +101,8 @@ class OrderListTest extends DuskTestCase
      * @return void
      */
     public function testSelectStatus()
-    {factory(Order::class, 10)->create();
+    {
+        factory(Order::class, 10)->create();
         Order::find(1)->update(['status' => 1]);
         $this->browse(function (Browser $browser) {
             $browser->visit('/orders')

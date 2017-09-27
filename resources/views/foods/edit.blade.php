@@ -20,6 +20,7 @@
                               action="{{ route('foods.update', $food->id) }}" method="POST">
                             {{ method_field('PUT') }}
                             {{ csrf_field() }}
+                            <input type="hidden" value="{{ $food->id }}" name="id">
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <div class="text-center">
                                     <img src="{{ $food->image }}" class="avatar img-circle img-thumbnail" alt=" avatar">`
