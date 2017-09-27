@@ -1,6 +1,6 @@
-#GET DATA WITH SEARCH AND WITH
-##Syntax convention 
-###Search module
+# GET DATA WITH SEARCH AND WITH
+## Syntax convention 
+### Search module
 
 #### RULE
 
@@ -85,7 +85,7 @@
     SELECT * FROM `users` ORDER BY `users`.`id` DESC, `users`.`name` ASC
 ```
 
-####Example
+#### Example
 
 ```
     .../users/search=dung|users*age:23-gender:male&join=posts*post_id:id
@@ -101,8 +101,8 @@
   ORDER BY `users`.`id` DESC
 ```
 
-###With-relations function
-####RULE
+### With-relations function
+#### RULE
 
 ```
     .../users/with=posts*id-title-comments:id~user_id
@@ -126,9 +126,7 @@
       "id": 7,
       "user_id": 3
     }
-    ...
   }
-  ...
 }
 ```
 
