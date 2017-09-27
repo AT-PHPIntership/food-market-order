@@ -18,7 +18,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/users/me', 'Api\UserController@show');
     Route::post('/orders', 'Api\OrderController@store');
     Route::get('/orders', 'Api\OrderController@index');
-    Route::get('/orders/{id}/getItems', 'Api\OrderController@show');
+    Route::get('/orders/{id}/tems', 'Api\OrderController@show');
     Route::delete('/order-items/{id}', 'Api\OrderItemController@destroy');
 });
 
