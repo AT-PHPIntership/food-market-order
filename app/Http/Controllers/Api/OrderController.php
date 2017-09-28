@@ -184,7 +184,6 @@ class OrderController extends ApiController
         }
     }
 
-    
     /**
      * Show the form for editing the specified resource.
      *
