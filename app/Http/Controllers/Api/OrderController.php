@@ -153,13 +153,35 @@ class OrderController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param int $id id supplier
+     * @param int                      $id      id of order
+     * @param \Illuminate\Http\Request $request request get items
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $id = $id;
+        try {
+            $user = $request->user();
+            $data = [];
+            $order = $this->order
+                ->select(['orders.id as id', 'user_id', 'orders.created_at', 'orders.updated_at', 'trans_at', 'total_price', 'status',
+                    'custom_address as address'])
+                ->with(['orderItems' => function ($query) {
+                    $query->select(['id', 'itemtable_type', 'quantity', 'order_id', 'itemtable_id']);
+                }, 'orderItems.itemtable'])->findOrFail($id);
+            if ($user->id == $order->user_id) {
+                $data = $order;
+            }
+            return response()->json([
+                'data' => $data,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (ClientException $ex) {
+            return  response()->json(
+                json_decode($ex->getResponse()->getBody(), true),
+                $ex->getCode()
+            );
+        }
     }
 
     /**
@@ -243,12 +265,30 @@ class OrderController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id id delete
+     * @param \Illuminate\Http\Request $request request delete
+     * @param int                      $id      id delete
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $id = $id;
+        $order = $this->order->findOrFail($id);
+        if ($order->user_id != $request->user()->id || $order->status != Order::STATUS_PENDING) {
+            return response()->json(['message' => __('Client Authentication')], 403);
+        }
+        if ($order->delete()) {
+            $order = $this->order->onlyTrashed()
+                ->select(['orders.id as id', 'user_id', 'orders.created_at', 'orders.deleted_at', 'total_price',])
+                ->with(['orderItems' => function ($query) {
+                    $query->onlyTrashed()->select(['id', 'itemtable_type', 'quantity', 'order_id', 'itemtable_id']);
+                }])->findOrFail($id);
+            return response()->json([
+                'data' => $order,
+                'success' => true
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json(['message' => __('The request is for something forbidden.')], 403);
+        }
     }
 }

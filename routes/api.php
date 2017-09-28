@@ -17,7 +17,8 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/users/me', 'Api\UserController@update');
     Route::get('/users/me', 'Api\UserController@show');
     Route::post('/orders', 'Api\OrderController@store');
-    Route::get('/orders', 'Api\OrderController@index');
+    Route::delete('/orders/{id}', 'Api\OrderController@destroy');
+    Route::get('/orders/{id}/items', 'Api\OrderController@show');
     Route::post('/users/upload-image', 'Api\UserController@postUploadImage');
     Route::delete('/users/remove-image', 'Api\UserController@deleteImage');
     Route::put('/orders/{id}', 'Api\OrderController@update');
