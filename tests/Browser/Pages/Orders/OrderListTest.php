@@ -107,12 +107,8 @@ class OrderListTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('/orders')
                 ->select('.status-order:nth-child(1)',2)
-<<<<<<< HEAD
-                ->waitForText('Change Status');
-=======
                 ->waitForText('Change Status')
                 ->assertSee('Change Status');
->>>>>>> master
         });
     }
 
