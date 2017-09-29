@@ -7,14 +7,55 @@
 **Search**
 
 ```
+    .../foods?search=keyword
+```
+
+- The query has something like this:
+
+```mysql
+    SELECT 
+            *
+        FROM
+            `foods`
+        WHERE
+            `foods`.`name` LIKE '%keyword%'
+                OR `foods`.`description` LIKE '%keyword%'
+```
+
+***condition***
+
+```
+    .../foods?search|name:ca%20ngu-category_id:23
+```
+- Query:
+
+```mysql
+    SELECT 
+            *
+        FROM
+            `foods`
+        WHERE
+          `foods.name` = 'ca ngu'
+                AND `foods.category_id` = 23
+```
+***Search with condition***
+
+```
     .../foods?search=keyword|name:ca%20ngu-category_id:23
 ```
 
 - Query will have something like this
 
 ```mysql
-    SELECT * FROM `foods` WHERE (`foods.name` LIKE "%keyword%" OR ... LIKE "%keyword%" ...) 
-    AND `foods.name` = 'ca ngu' AND `foods.category_id` = 23
+    SELECT 
+        *
+    FROM
+        `foods`
+    WHERE
+        (`foods`.`name` LIKE '%keyword%'
+            OR `foods`.`description` LIKE '%keyword%')
+            AND `foods.name` = 'ca ngu'
+            AND `foods.category_id` = 23
 ```
 
 - The Response will like this
@@ -38,8 +79,14 @@
 - Query:
 
 ```mysql
-    SELECT * FROM `materials` LEFT JOIN `categories` ON `materials`.`category_id` = `categories`.`id`
-    LEFT JOIN `suppliers` ON `materials`.`supplier_id` = `suppliers`.`id`
+    SELECT 
+        *
+    FROM
+        `materials`
+            LEFT JOIN
+        `categories` ON `materials`.`category_id` = `categories`.`id`
+            LEFT JOIN
+        `suppliers` ON `materials`.`supplier_id` = `suppliers`.`id`
 ```
 
 **SearchField**
@@ -53,7 +100,14 @@
 - Query:
 
 ```mysql
-    SELECT * FROM `foods` WHERE `foods`.`name` LIKE "%keyword%" OR `foods`.`category_id` LIKE "%keyword%" OR `foods`.`description` LIKE "%keyword%"
+    SELECT 
+        *
+    FROM
+        `foods`
+    WHERE
+        `foods`.`name` LIKE '%keyword%'
+            OR `foods`.`category_id` LIKE '%keyword%'
+            OR `foods`.`description` LIKE '%keyword%'
 ```
 - If want to search with column of another table has joins with current table:
 
@@ -63,7 +117,17 @@
 - Query:
 
 ```mysql
-    SELECT * FROM `foods` LEFT JOIN `categories` ON `foods`.`category_id` = `categories`.`id` WHERE `foods`.`name` LIKE "%keyword%" OR `foods`.`description` LIKE "%keyword%" OR `categories`.`name` LIKE "%keyword%"
+    SELECT 
+        *
+    FROM
+        `foods`
+            LEFT JOIN
+        `categories` ON `foods`.`category_id` = `categories`.`id`
+    WHERE
+        `foods`.`name` LIKE '%keyword%'
+            OR `foods`.`description` LIKE '%keyword%'
+            OR `categories`.`name` LIKE '%keyword%'
+
 ```
 
 **Filter**
@@ -77,7 +141,10 @@
 - The query like this:
 
 ```mysql
-    SELECT `foods`.`name`, `foods`.`description` FROM `foods`
+    SELECT 
+        `foods`.`name`, `foods`.`description`
+    FROM
+        `foods`
 ```
 - If want to filter with column of another table has joins with current table:
 
@@ -87,7 +154,12 @@
 - Query:
 
 ```mysql
-    SELECT `foods`.`name`, `categories`.`name` as `category_name` FROM `foods` LEFT JOIN `categories` ON `foods`.`category_id` = `categories`.`id`
+    SELECT 
+        `foods`.`name`, `categories`.`name` AS `category_name`
+    FROM
+        `foods`
+            LEFT JOIN
+        `categories` ON `foods`.`category_id` = `categories`.`id`
 ```
 
 **OrderBy**
@@ -98,7 +170,11 @@
 - Explain : use order by with column id of table foods is desc, column name of table foods is asc
 
 ```mysql
-    SELECT * FROM `foods` ORDER BY `foods`.`id` DESC, `foods`.`name` ASC
+    SELECT 
+        *
+    FROM
+        `foods`
+    ORDER BY `foods`.`id` DESC , `foods`.`name` ASC
 ```
 
 - If want to order by with column of another table has join with current table
@@ -109,7 +185,13 @@
 - Query:
 
 ```mysql
-    SELECT * FROM `foods` LEFT JOIN `categories` ON `foods`.`category_id` = `categories`.`id` ORDER BY `categories`.`id` ASC, `foods`.`id` DESC, `foods`.`name` ASC
+    SELECT 
+        *
+    FROM
+        `foods`
+            LEFT JOIN
+        `categories` ON `foods`.`category_id` = `categories`.`id`
+    ORDER BY `categories`.`id` ASC , `foods`.`id` DESC , `foods`.`name` ASC
 ``` 
 
 ### With-relations function
@@ -124,7 +206,7 @@
 - `posts` : the relation ship of users
 - `id`, `title`: the column of table relation to get data of table posts
 - `comment`: the relation ship of posts
-- `id`, `user_id`: the column of table relation to get data of table comments
+g- `id`, `user_id`: the column of table relation to get data of table comments
 
 - The response will have something like this
 
