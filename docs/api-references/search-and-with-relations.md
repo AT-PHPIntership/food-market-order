@@ -25,7 +25,7 @@
 ***condition***
 
 ```
-    .../foods?search|name:ca%20ngu-category_id:23
+    .../foods?search=|name:ca%20ngu-category_id:23
 ```
 - Query:
 
