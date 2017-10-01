@@ -77,9 +77,6 @@ input[type=number] {
 .dataTable tbody tr td:nth-last-child(1) {
 	text-align: center;
 }
-div {
-	overflow: hidden;
-}
 .no-pad-left{
 	padding-left: 0px;
 }

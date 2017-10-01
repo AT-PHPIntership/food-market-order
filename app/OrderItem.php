@@ -56,12 +56,19 @@ class OrderItem extends Model
             $tableName.'.description',
             DB::raw('count(*) as total_order')
         ];
-        return self::select($columns)
-                    ->join($tableName, $tableName.'.id', '=', 'itemtable_id')
-                    ->groupBy(['itemtable_id', 'itemtable_type'])
-                    ->where('itemtable_type', $tableType)
-                    ->orderBy('total_order', 'desc')
-                    ->take(self::TREND_ITEMS)
-                    ->get();
+
+        if ($tableName == 'foods') {
+            return Food::select($columns)
+                ->groupBy(['id'])
+                ->orderBy('total_order', 'desc')
+                ->take(self::TREND_ITEMS)
+                ->get();
+        } else {
+            return Material::select($columns)
+                ->groupBy(['id'])
+                ->orderBy('total_order', 'desc')
+                ->take(self::TREND_ITEMS)
+                ->get();
+        }
     }
 }
