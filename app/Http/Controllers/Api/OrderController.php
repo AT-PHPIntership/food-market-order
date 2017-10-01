@@ -236,7 +236,7 @@ class OrderController extends ApiController
                     $orderItem->saveOrFail();
                 }
                 if ($orderItem->itemtable_type == 'App\Material') {
-                    $orderItem->quantiy = $item['quantity'];
+                    $orderItem->quantity = $item['quantity'];
                     $orderItem->saveOrFail();
                 }
             }
