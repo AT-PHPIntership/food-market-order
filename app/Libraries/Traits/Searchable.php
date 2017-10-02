@@ -200,7 +200,11 @@ trait Searchable
             foreach ($this->getColumnsCondition() as $key => $value) {
                 if (is_array($value)) {
                     foreach ($value as $column => $valueColumn) {
-                        $subQuery->where($key . '.' . $column, 'LIKE', "$valueColumn");
+                        if (is_array($valueColumn)) {
+                            $subQuery->where($key . '.' . $column, $valueColumn[0], $valueColumn[1]);
+                        } else {
+                            $subQuery->where($this->getTable() . '.' . $key, $value[0], $value[1]);
+                        }
                     }
                 } else {
                     $subQuery->where($this->getTable() . '.' . $key, 'LIKE', "$value");
