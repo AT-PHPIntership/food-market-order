@@ -38,8 +38,12 @@ class MaterialController extends ApiController
                 'status'
             ]
         ]);
+        $perPage = Material::ITEMS_PER_PAGE;
+        if (request()->has('size')) {
+            $perPage = request()->get('size') == null ? $perPage : request()->get('size');
+        }
         $this->material->initQueryData(request()->all());
-        $materials = $this->material->search()->withs()->paginate(Material::ITEMS_PER_PAGE);
+        $materials = $this->material->search()->withs()->paginate($perPage);
 
         return response()->json($materials, Response::HTTP_OK);
     }
