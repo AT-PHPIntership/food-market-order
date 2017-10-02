@@ -15,7 +15,7 @@
                         </div>
                         <div class="box-body">
                             <div class="col-md-4 text-center">
-                                <img alt="" title="" class="img-circle img-thumbnail isTooltip"
+                                <img alt="" title="" class="avt-main img-thumbnail isTooltip"
                                      src="{{ $user->image }}"
                                      data-original-title="Usuario">
                             </div>

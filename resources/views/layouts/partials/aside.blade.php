@@ -4,7 +4,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ Auth::user()->image }}" class="img-circle" alt="User Image">
+                <img src="{{ Auth::user()->image }}" class="avt-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 @if(Auth::guest())

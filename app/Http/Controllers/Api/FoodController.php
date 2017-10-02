@@ -41,8 +41,12 @@ class FoodController extends ApiController
                 'description'
             ]
         ]);
+        $perPage = Food::ITEMS_PER_PAGE;
+        if (request()->has('size')) {
+            $perPage = request()->get('size') == null ? $perPage : request()->get('size');
+        }
         $this->food->initQueryData(request()->all());
-        $foods = $this->food->search()->withs()->paginate(Food::ITEMS_PER_PAGE);
+        $foods = $this->food->search()->withs()->paginate($perPage);
 
         return response()->json($foods, Response::HTTP_OK);
     }

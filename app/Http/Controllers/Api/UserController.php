@@ -117,6 +117,10 @@ class UserController extends ApiController
             unset($arrayData['image']);
         }
 
+        if (!isset($arrayData['password'])) {
+            unset($arrayData['password']);
+        }
+
         if ($request->user()->update($arrayData)) {
             return response()->json(['success' => true], Response::HTTP_OK);
         }

@@ -45,7 +45,7 @@ class StatisticApiTest extends TestCase
         $response->assertJsonStructure([            
             'data' => [
                 'categories',
-                'daily-menus',
+                'daily_menus',
                 'foods',
                 'materials',
                 'orders',
@@ -94,7 +94,7 @@ class StatisticApiTest extends TestCase
         $data = json_decode($response->getContent())->data;
         $arrayCompare = [
             'categories' => \App\Category::count(),
-            'daily-menus' => \App\DailyMenu::where('date', $curDate)->count(),
+            'daily_menus' => \App\DailyMenu::where('date', $curDate)->count(),
             'foods' => \App\Food::count(),
             'materials' => \App\Material::count(),
             'orders' => \App\Order::count(),

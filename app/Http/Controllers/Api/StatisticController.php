@@ -44,7 +44,7 @@ class StatisticController extends ApiController
     {
         $curDate = date('Y-m-d');
         $counts['categories'] = Category::count();
-        $counts['daily-menus'] = DailyMenu::where('date', '=', $curDate)->count();
+        $counts['daily_menus'] = DailyMenu::where('date', '=', $curDate)->count();
         $counts['foods'] = Food::count();
         $counts['materials'] = Material::count();
         $counts['orders'] = Order::count();

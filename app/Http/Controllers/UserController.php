@@ -121,7 +121,9 @@ class UserController extends Controller
         if ($requestInput['password'] == null) {
             unset($requestInput['password']);
         }
-        $requestInput['image'] = $this->getImageFileName($request);
+        if ($request->hasFile('image')) {
+            $requestInput['image'] = $this->getImageFileName($request);
+        }
         $userToUpdate = $this->user->findOrFail($id);
         if ($userToUpdate->update($requestInput)) {
             if ($request->hasFile('image')) {
@@ -177,6 +179,6 @@ class UserController extends Controller
      */
     public function storageImage($file, $fileName)
     {
-        Image::make($file->save(public_path('images/users/' . $fileName)));
+        Image::make($file)->save(public_path('images/users/' . $fileName));
     }
 }

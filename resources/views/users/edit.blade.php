@@ -22,7 +22,7 @@
                         {{ csrf_field() }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="text-center">
-                                <img src="{{ $user->image }}" class="avatar img-circle img-thumbnail"
+                                <img src="{{ $user->image }}" class="avatar avt-main img-thumbnail"
                                      alt=" avatar">
                                 <h6 class="{{ $errors->has('image') ? ' has-error' : '' }}">{{ __('Upload Image') }}</h6>
                                 <div class="input-chosen">
