@@ -62,8 +62,8 @@
                     <input type="number" class="form-control text-center" name="quantity[]" form="create-menu" min="1" required>
                 </td>
                 <td class="text-center">
-                    <span class="btn-sm btn btn-success btn-disable-row" data-title="{{ __('Add New Row')}}" data-message="{{ __('Please fill in all elements') }}"><i class = "fa fa-check"></i></span>
-                    <span class="btn-sm btn btn-primary btn-add-new-row" data-title="{{ __('Add New Row') }}" data-message="{{ __('Please finish your choose') }}"><i class = "fa fa-plus-circle"></i></span>
+                    <span class="btn-sm btn btn-success" id="disable-row" data-title="{{ __('Add New Row')}}" data-message="{{ __('Please fill in all elements') }}"><i class = "fa fa-check"></i></span>
+                    <span class="btn-sm btn btn-primary" id="add-row" data-title="{{ __('Add New Row') }}" data-message="{{ __('Please finish your choose') }}"><i class = "fa fa-plus-circle"></i></span>
                 </td>
             </tr>
             </tbody>
@@ -75,7 +75,7 @@
             <span class="btn-xl btn-danger btn" id="clear-input"> {{ __('Cancel') }}</span>
         </div>
         <div class="col-md-offset-1 col-md-4">
-            <input type="submit" id="add-row" class="btn btn-primary"
+            <input type="submit" id="add-to-menu" class="btn btn-primary"
                    value="{{ __('Add To Menu') }}">
         </div>
     </div>

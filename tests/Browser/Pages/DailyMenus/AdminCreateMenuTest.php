@@ -145,7 +145,7 @@ class AdminCreateMenuTest extends DuskTestCase
                     ->keys('#chooser-date', ['{ARROW_UP}', ''])
                     ->keys('#chooser-date', ['{TAB}', '']); //1/1/2017
             $browser->waitFor(null, '1')
-                    ->assertSourceHas('id="add-row" class="btn btn-primary" value="Add To Menu" disabled=""');
+                    ->assertSourceHas('id="add-to-menu" class="btn btn-primary" value="Add To Menu" disabled=""');
         });
     }
 
