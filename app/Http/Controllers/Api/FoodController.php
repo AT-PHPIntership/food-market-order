@@ -42,7 +42,7 @@ class FoodController extends ApiController
             ]
         ]);
         $this->food->initQueryData(request()->all());
-        $foods = $this->food->search()->withs()->paginate(Food::ITEMS_PER_PAGE);
+        $foods = $this->food->search()->withs()->paginate(isset(request()->get('size')) ? request()->get('size') : Food::ITEMS_PER_PAGE);
 
         return response()->json($foods, Response::HTTP_OK);
     }

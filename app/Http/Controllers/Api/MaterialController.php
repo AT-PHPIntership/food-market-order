@@ -39,7 +39,7 @@ class MaterialController extends ApiController
             ]
         ]);
         $this->material->initQueryData(request()->all());
-        $materials = $this->material->search()->withs()->paginate(Material::ITEMS_PER_PAGE);
+        $materials = $this->material->search()->withs()->paginate(isset(request()->get('size')) ? request()->get('size') : Material::ITEMS_PER_PAGE);
 
         return response()->json($materials, Response::HTTP_OK);
     }
