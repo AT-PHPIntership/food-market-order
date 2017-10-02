@@ -46,8 +46,8 @@
                             <tr role="row">
                                 <th class="col-md-1">{{__('ID')}}</th>
                                 <th class="col-md-2">{{__('Name')}}</th>
-                                <th class="col-md-8">{{__('Description')}}</th>
-                                <th class="col-md-1">{{__('Action')}}</th>
+                                <th class="col-md-7">{{__('Description')}}</th>
+                                <th class="col-md-2">{{__('Action')}}</th>
                             </tr>
                             </thead>
                             <tbody>
